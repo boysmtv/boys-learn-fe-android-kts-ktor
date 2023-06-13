@@ -4,6 +4,11 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
+    alias(libs.plugins.hilt)
+}
+
+apply {
+    from("$rootDir/buildConfig/common-config.gradle")
 }
 
 android {
@@ -18,6 +23,8 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
 
+    implementation(libs.androidx.activity.activity.ktx)
+    implementation(libs.androidx.activity.fragment.ktx)
     implementation(libs.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -27,8 +34,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.bundles.ktor)
     implementation(libs.hilt.android)
+
+    implementation(libs.bundles.ktor)
+    implementation(libs.bundles.viewmodel)
+
     kapt(libs.hilt.compiler)
 
     debugImplementation(libs.chucker.debug)

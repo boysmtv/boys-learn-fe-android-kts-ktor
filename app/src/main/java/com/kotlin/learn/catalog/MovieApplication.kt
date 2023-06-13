@@ -2,6 +2,8 @@ package com.kotlin.learn.catalog
 
 import android.app.Application
 import com.google.android.material.color.DynamicColors
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -10,7 +12,6 @@ class MovieApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        DynamicColors.applyToActivitiesIfAvailable(this)
         Timber.plant(Timber.DebugTree())
     }
 

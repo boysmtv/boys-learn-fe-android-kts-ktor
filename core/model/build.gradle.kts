@@ -6,6 +6,10 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+apply {
+    from("$rootDir/buildConfig/common-config.gradle")
+}
+
 android {
     namespace = "com.kotlin.learn.catalog.core.model"
 }

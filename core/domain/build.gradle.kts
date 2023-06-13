@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
 }
 
+apply {
+    from("$rootDir/buildConfig/common-config.gradle")
+}
+
 android {
     namespace = "com.kotlin.learn.catalog.core.domain"
 }

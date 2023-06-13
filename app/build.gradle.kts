@@ -3,6 +3,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
+    alias(libs.plugins.hilt)
+}
+
+apply {
+    from("$rootDir/buildConfig/common-config.gradle")
 }
 
 android {
@@ -11,12 +16,6 @@ android {
 
     defaultConfig {
         applicationId = "com.kotlin.learn.catalog"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -28,16 +27,11 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
+    implementation(project(":feature:movie"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -47,10 +41,13 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.timber)
 
+    kapt(libs.hilt.compiler)
+
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
 
     debugImplementation(libs.chucker.debug)
     releaseImplementation(libs.chucker.release)
+
 }

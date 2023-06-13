@@ -36,6 +36,8 @@ timber = "5.0.1"
 org-jetbrains-kotlin-android = "1.8.0"
 junit = "1.1.5"
 constraintlayout = "2.1.4"
+arch = "2.2.0"
+androidxFragment = "1.5.7"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -110,6 +112,20 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
+# Lifecycle ViewModel
+androidx-lifecycle-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-common-java8 = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-reactivestreams-ktx = { group = "androidx.lifecycle", name = "lifecycle-reactivestreams-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-lifecycle-runtime-testing = { group = "androidx.lifecycle", name = "lifecycle-runtime-testing", version.ref = "androidxLifecycle" }
+androidx-arch-core-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch" }
+androidx-activity-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
+androidx-activity-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
@@ -122,3 +138,12 @@ org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "o
 [bundles]
 ktor = ["ktor-content-negotiation", "ktor-core", "ktor-logging", "ktor-okhttp", "ktor-resources", "ktor-serialization-json", "ktor-serialization-auth"]
 hilt = ["ktor-content-negotiation", "ktor-core", "ktor-logging", "ktor-okhttp", "ktor-resources", "ktor-serialization-json"]
+viewmodel = ["androidx-lifecycle-lifecycle-livedata-ktx","androidx-lifecycle-lifecycle-runtime-ktx","androidx-lifecycle-lifecycle-viewmodel-savedstate","androidx-lifecycle-lifecycle-compiler","androidx-lifecycle-lifecycle-common-java8","androidx-lifecycle-lifecycle-service","androidx-lifecycle-lifecycle-process","androidx-lifecycle-lifecycle-reactivestreams-ktx","androidx-lifecycle-lifecycle-runtime-testing"]
+
+
+
+
+
+
+
+

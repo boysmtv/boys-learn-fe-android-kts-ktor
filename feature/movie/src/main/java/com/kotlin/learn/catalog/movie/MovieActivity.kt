@@ -2,11 +2,12 @@ package com.kotlin.learn.catalog.movie
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.kotlin.learn.catalog.feature.movie.R
+import androidx.activity.viewModels
 import com.kotlin.learn.catalog.feature.movie.databinding.ActivityMovieBinding
 import com.kotlin.learn.catalog.movie.adapter.MovieAdapter
 import com.kotlin.learn.catalog.movie.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MovieActivity : AppCompatActivity() {

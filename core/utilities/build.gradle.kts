@@ -4,6 +4,10 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
 }
 
+apply {
+    from("$rootDir/buildConfig/common-config.gradle")
+}
+
 android {
     namespace = "com.kotlin.learn.catalog.core.utilities"
 }

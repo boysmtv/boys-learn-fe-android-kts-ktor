@@ -2,7 +2,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.org.jetbrains.kotlin.kapt)
+}
+
+apply {
+    from("$rootDir/buildConfig/common-config.gradle")
 }
 
 android {
@@ -13,5 +16,4 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
-    kapt(libs.hilt.compiler)
 }
