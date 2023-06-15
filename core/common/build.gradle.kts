@@ -13,6 +13,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:utilities"))
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)

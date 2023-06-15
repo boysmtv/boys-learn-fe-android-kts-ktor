@@ -11,3 +11,7 @@ apply {
 android {
     namespace = "com.kotlin.learn.catalog.core.utilities"
 }
+
+dependencies{
+    implementation(libs.androidx.annotation.jvm)
+}

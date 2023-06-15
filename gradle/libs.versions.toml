@@ -38,6 +38,10 @@ junit = "1.1.5"
 constraintlayout = "2.1.4"
 arch = "2.2.0"
 androidxFragment = "1.5.7"
+pagingCommonKtx = "3.1.1"
+shimmer = "0.5.0"
+annotationJvm = "1.6.0"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -105,6 +109,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 paging-runtime = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntime" }
 timber = { group = "com.jakewharton.timber", name  = "timber", version.ref = "timber" }
+facebook-shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -125,6 +130,8 @@ androidx-lifecycle-lifecycle-runtime-testing = { group = "androidx.lifecycle", n
 androidx-arch-core-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch" }
 androidx-activity-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
+androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

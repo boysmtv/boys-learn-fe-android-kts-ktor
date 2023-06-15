@@ -2,7 +2,8 @@
 package com.kotlin.learn.catalog.core.utilities
 
 object Constant {
-    const val BASE_URL = "api.themoviedb.org/3/"
+    const val BASE_URL = "api.themoviedb.org/3"
+    const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p/original"
     const val TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZmIzYTg2OWRkYTIyNjRjNDQ4MjYxY2Q4YWRlMjExMCIsInN1YiI6IjYyZjI0NzExMTUxMWFhMDA3YTdjZjNlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XD4B4kbOGL-p_XqYStuxFeeki8FC3NBYm_RX7zpNEmE"
 
     const val MINUS_ONE = -1
@@ -26,6 +27,8 @@ object Constant {
     const val TWO_THOUSAND_LONG = 2000L
 
     const val ZERO_DOUBLE = 0.0
+    const val FIVE_HUNDRED = 500
+    const val FIVE_HUNDRED_LONG = 500L
 
     const val STRIP = "-"
     const val UNDERSCORE = "_"

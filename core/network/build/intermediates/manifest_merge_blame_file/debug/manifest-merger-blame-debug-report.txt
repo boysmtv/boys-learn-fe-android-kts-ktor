@@ -3,6 +3,6 @@
 3    package="com.kotlin.learn.catalog.core.network" >
 4
 5    <uses-sdk android:minSdkVersion="24" />
-5-->/Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16766567755787706744.xml
+5-->/Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest3778114189424201305.xml
 6
 7</manifest>

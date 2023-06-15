@@ -38,6 +38,11 @@ dependencies {
 
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.viewmodel)
+    implementation(libs.paging.runtime)
+    implementation(libs.facebook.shimmer)
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.svg)
+    implementation(libs.androidx.swiperefreshlayout)
 
     kapt(libs.hilt.compiler)
 

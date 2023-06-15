@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml:2:13-83
-INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml:2:13-83
-INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml:2:13-83
+ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml:2:13-83
+INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml:2:13-83
+INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml:2:13-83
 	package
-		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml:2:13-83
-		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
+		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml:2:13-83
+		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
 	xmlns:android
-		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml:2:23-81
+		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml:2:23-81
 uses-sdk
-INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml reason: use-sdk injection requested
-INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
+INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml reason: use-sdk injection requested
+INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
 	android:targetSdkVersion
-		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
+		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
 	android:minSdkVersion
-		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
-		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15936273244900968502.xml
+		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+		ADDED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+		INJECTED from /Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml

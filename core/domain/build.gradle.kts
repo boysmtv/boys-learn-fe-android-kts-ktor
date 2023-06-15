@@ -17,10 +17,18 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
-    implementation(libs.hilt.android)
+    implementation(project(":core:utilities"))
+
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.svg)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.bundles.ktor)
+    implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
 
     kapt(libs.hilt.compiler)
+
+    debugImplementation(libs.chucker.debug)
+    releaseImplementation(libs.chucker.release)
 }

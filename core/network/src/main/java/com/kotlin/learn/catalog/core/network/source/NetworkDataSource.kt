@@ -7,4 +7,10 @@ interface NetworkDataSource {
 
     suspend fun getMovies(page: Int): NetworkMovie
 
+    suspend fun getPopular(page: Int): NetworkMovie
+
+    suspend fun getTopRated(page: Int): NetworkMovie
+
+    suspend fun getUpComing(page: Int): NetworkMovie
+
 }

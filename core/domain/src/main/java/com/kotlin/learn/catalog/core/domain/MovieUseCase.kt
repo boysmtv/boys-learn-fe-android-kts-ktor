@@ -4,12 +4,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.kotlin.learn.catalog.core.data.repository.MovieRepository
-import com.kotlin.learn.catalog.core.model.Movie
+import com.kotlin.learn.catalog.core.domain.paging.MoviePagingSource
+import com.kotlin.learn.catalog.core.model.NetworkMovieData
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import com.kotlin.learn.catalog.core.common.Result
-import com.kotlin.learn.catalog.core.data.paging.MoviePagingSource
-import com.kotlin.learn.catalog.core.model.NetworkMovieData
 
 class MovieUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
