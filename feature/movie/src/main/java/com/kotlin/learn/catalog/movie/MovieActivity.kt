@@ -1,32 +1,30 @@
 package com.kotlin.learn.catalog.movie
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import com.kotlin.learn.catalog.core.model.NetworkMovieData
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.kotlin.learn.catalog.core.model.MovieDataModel
+import com.kotlin.learn.catalog.core.utilities.MovieCategories
+import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.databinding.ActivityMovieBinding
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieItemLayoutBinding
 import com.kotlin.learn.catalog.movie.adapter.CommonLoadStateAdapter
 import com.kotlin.learn.catalog.movie.adapter.MovieAdapter
 import com.kotlin.learn.catalog.movie.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieBinding
 
-    private val adapterPopular = MovieAdapter(this::onMovieClicked)
-    private val adapterTopRated = MovieAdapter(this::onMovieClicked)
-    private val adapterMustWatched = MovieAdapter(this::onMovieClicked)
+    private val adapterPopular = MovieAdapter(this::onMovieClicked, MovieCategories.POPULAR)
+    private val adapterTopRated = MovieAdapter(this::onMovieClicked, MovieCategories.TOP_RATED)
+    private val adapterUpComing = MovieAdapter(this::onMovieClicked, MovieCategories.UP_COMING)
 
     private val viewModel: MovieViewModel by viewModels()
 
@@ -35,127 +33,63 @@ class MovieActivity : AppCompatActivity() {
         binding = ActivityMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
         subscribeMovie()
-        setupAdapter()
+        setupView()
     }
 
     private fun subscribeMovie() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.popularMovies.collectLatest {
-                    adapterPopular.submitData(it)
-                }
-                viewModel.topRatedMovies.collectLatest {
-                    adapterTopRated.submitData(it)
-                }
-                viewModel.mustWatchedMovies.collectLatest {
-                    adapterMustWatched.submitData(it)
-                }
+//        viewModel.popularMovies.launch(lifecycleOwner = this) { adapterPopular.submitData(it) }
+//        viewModel.topRatedMovies.launch(lifecycleOwner = this) { adapterTopRated.submitData(it) }
+//        viewModel.upComingMovies.launch(lifecycleOwner = this) { adapterUpComing.submitData(it) }
+    }
+
+    private fun setupAdapterMovie(layoutPopular: MovieItemLayoutBinding, movieAdapter: MovieAdapter) =
+        with(layoutPopular) {
+            recyclerview.apply {
+                layoutManager = LinearLayoutManager(this@MovieActivity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = movieAdapter.withLoadStateHeaderAndFooter(
+                    CommonLoadStateAdapter { movieAdapter.retry() },
+                    CommonLoadStateAdapter { movieAdapter.retry() }
+                )
             }
-        }
-    }
 
-    private fun setupAdapter() = with(binding) {
-        setupPopularMovie(layoutPopular)
-        setupTopRatedMovie(layoutTopRated)
-        setupMustWatchedMovie(layoutMustWatch)
-    }
-
-    private fun setupPopularMovie(layoutPopular: MovieItemLayoutBinding) = with(layoutPopular) {
-        recyclerview.adapter = adapterPopular.withLoadStateHeaderAndFooter(
-            CommonLoadStateAdapter { adapterPopular.retry() },
-            CommonLoadStateAdapter { adapterPopular.retry() }
-        )
-
-        adapterPopular.addLoadStateListener { loadState ->
-            when (loadState.source.refresh) {
-                is LoadState.Loading -> {
-                    viewAnimator.displayedChild = 0
-                }
-
-                is LoadState.NotLoading -> {
-                    if (adapterPopular.itemCount == 0) {
-                        setViewBasedOnState(loadState, "Kosong")
-                        viewAnimator.displayedChild = 2
-                    } else {
-                        viewAnimator.displayedChild = 1
-                    }
-                }
-
-                is LoadState.Error -> {
-                    val errorMessage = (loadState.source.refresh as LoadState.Error).error.message
-                    setViewBasedOnState(loadState, errorMessage.toString())
-                }
-            }
-        }
-    }
-
-    private fun setupTopRatedMovie(layoutTopRated: MovieItemLayoutBinding) = with(layoutTopRated) {
-        recyclerview.adapter = adapterTopRated.withLoadStateHeaderAndFooter(
-            CommonLoadStateAdapter { adapterTopRated.retry() },
-            CommonLoadStateAdapter { adapterTopRated.retry() }
-        )
-
-        adapterTopRated.addLoadStateListener { loadState ->
-            when (loadState.source.refresh) {
-                is LoadState.Loading -> {
-                    viewAnimator.displayedChild = 0
-                }
-
-                is LoadState.NotLoading -> {
-                    if (adapterTopRated.itemCount == 0) {
-                        setViewBasedOnState(loadState, "Kosong")
-                        viewAnimator.displayedChild = 2
-                    } else {
-                        viewAnimator.displayedChild = 1
-                    }
-                }
-
-                is LoadState.Error -> {
-                    val errorMessage = (loadState.source.refresh as LoadState.Error).error.message
-                    setViewBasedOnState(loadState, errorMessage.toString())
-                }
-            }
-        }
-    }
-
-    private fun setupMustWatchedMovie(layoutMustWatch: MovieItemLayoutBinding) =
-        with(layoutMustWatch) {
-            recyclerview.adapter = adapterMustWatched.withLoadStateHeaderAndFooter(
-                CommonLoadStateAdapter { adapterMustWatched.retry() },
-                CommonLoadStateAdapter { adapterMustWatched.retry() }
-            )
-
-            adapterMustWatched.addLoadStateListener { loadState ->
+            movieAdapter.addLoadStateListener { loadState ->
                 when (loadState.source.refresh) {
                     is LoadState.Loading -> {
                         viewAnimator.displayedChild = 0
                     }
 
                     is LoadState.NotLoading -> {
-                        if (adapterMustWatched.itemCount == 0) {
-                            setViewBasedOnState(loadState, "Kosong")
+                        if (movieAdapter.itemCount == 0) {
+                            setViewBasedOnState(layoutPopular, loadState, "Kosong")
                             viewAnimator.displayedChild = 2
-                        } else {
-                            viewAnimator.displayedChild = 1
-                        }
+                        } else viewAnimator.displayedChild = 1
                     }
 
                     is LoadState.Error -> {
                         val errorMessage = (loadState.source.refresh as LoadState.Error).error.message
-                        setViewBasedOnState(
-                            binding.layoutPopular.viewCommonError
-                            loadState, errorMessage.toString())
+                        setViewBasedOnState(layoutPopular, loadState, errorMessage.toString())
                     }
                 }
             }
         }
 
+    private fun setupView() = with(binding) {
+        layoutPopular.tvMoviePopularTitle.text = "Popular"
+        setupAdapterMovie(layoutPopular, adapterPopular)
+
+        layoutTopRated.tvMoviePopularTitle.text = "Top Rated"
+        setupAdapterMovie(layoutTopRated, adapterTopRated)
+
+        layoutMustWatch.tvMoviePopularTitle.text = "Up Coming"
+        setupAdapterMovie(layoutMustWatch, adapterUpComing)
+    }
+
     private fun setViewBasedOnState(
+        binding: MovieItemLayoutBinding,
         loadState: CombinedLoadStates,
-        errorView : Binding,
         message: String
     ) {
-       errorView.apply {
+        with(binding) {
             viewCommonError.apply {
                 errorMessage.text = message
                 buttonRetry.apply {
@@ -167,7 +101,7 @@ class MovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun onMovieClicked(item: NetworkMovieData) {
+    private fun onMovieClicked(item: MovieDataModel, categories: MovieCategories) {
 
     }
 

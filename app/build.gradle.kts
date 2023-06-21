@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.hilt.android)
     implementation(libs.timber)
+    implementation(libs.androidx.navigation.fragment)
 
     kapt(libs.hilt.compiler)
 

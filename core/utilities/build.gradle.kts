@@ -14,4 +14,7 @@ android {
 
 dependencies{
     implementation(libs.androidx.annotation.jvm)
+    implementation(libs.androidx.lifecycle.common)
+    implementation(libs.androidx.activity.activity.ktx)
+    implementation(libs.androidx.activity.fragment.ktx)
 }

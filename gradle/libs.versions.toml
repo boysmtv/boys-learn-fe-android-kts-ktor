@@ -42,6 +42,12 @@ pagingCommonKtx = "3.1.1"
 shimmer = "0.5.0"
 annotationJvm = "1.6.0"
 swiperefreshlayout = "1.1.0"
+lifecycleCommon = "2.6.1"
+navigationFragment = "2.6.0"
+bannerViewPager = "3.5.11"
+blurry = "4.0.1"
+glide = "4.15.1"
+glideTransformations = "4.0.0"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -108,7 +114,7 @@ lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = 
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 paging-runtime = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntime" }
-timber = { group = "com.jakewharton.timber", name  = "timber", version.ref = "timber" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 facebook-shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 
 # Dependencies of the included build-logic
@@ -132,6 +138,12 @@ androidx-activity-activity-ktx = { group = "androidx.activity", name = "activity
 androidx-activity-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
 androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common", version.ref = "lifecycleCommon" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+com-github-zhpanvip-bannerviewpager = { group = "com.github.zhpanvip", name = "bannerviewpager", version.ref = "bannerViewPager" }
+jp-wasabeef-blurry = { group = "jp.wasabeef", name = "blurry", version.ref = "blurry" }
+jp-wasabeef-glide-transformations = { group = "jp.wasabeef", name = "glide-transformations", version.ref = "glideTransformations" }
+com-github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -141,11 +153,12 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.8.10" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationFragment" }
 
 [bundles]
 ktor = ["ktor-content-negotiation", "ktor-core", "ktor-logging", "ktor-okhttp", "ktor-resources", "ktor-serialization-json", "ktor-serialization-auth"]
 hilt = ["ktor-content-negotiation", "ktor-core", "ktor-logging", "ktor-okhttp", "ktor-resources", "ktor-serialization-json"]
-viewmodel = ["androidx-lifecycle-lifecycle-livedata-ktx","androidx-lifecycle-lifecycle-runtime-ktx","androidx-lifecycle-lifecycle-viewmodel-savedstate","androidx-lifecycle-lifecycle-compiler","androidx-lifecycle-lifecycle-common-java8","androidx-lifecycle-lifecycle-service","androidx-lifecycle-lifecycle-process","androidx-lifecycle-lifecycle-reactivestreams-ktx","androidx-lifecycle-lifecycle-runtime-testing"]
+viewmodel = ["androidx-lifecycle-lifecycle-livedata-ktx", "androidx-lifecycle-lifecycle-runtime-ktx", "androidx-lifecycle-lifecycle-viewmodel-savedstate", "androidx-lifecycle-lifecycle-compiler", "androidx-lifecycle-lifecycle-common-java8", "androidx-lifecycle-lifecycle-service", "androidx-lifecycle-lifecycle-process", "androidx-lifecycle-lifecycle-reactivestreams-ktx", "androidx-lifecycle-lifecycle-runtime-testing"]
 
 
 

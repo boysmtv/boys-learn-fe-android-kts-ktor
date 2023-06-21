@@ -8,17 +8,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
-import com.kotlin.learn.catalog.core.model.NetworkMovieData
+import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.utilities.Constant.BASE_URL_IMAGE
+import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieItemBinding
 
-typealias OnClickPopularMovie = (NetworkMovieData) -> Unit
+typealias OnClickPopularMovie = (MovieDataModel, MovieCategories) -> Unit
 
 class MovieAdapter(
-    private val onClickPopularMovie: OnClickPopularMovie
+    private val onClickPopularMovie: OnClickPopularMovie,
+    private val categories: MovieCategories
 ) :
-    PagingDataAdapter<NetworkMovieData, MovieAdapter.ViewHolder>(MovieCallback()) {
+    PagingDataAdapter<MovieDataModel, MovieAdapter.ViewHolder>(MovieCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -38,7 +40,7 @@ class MovieAdapter(
         private val onClickPopularMovie: OnClickPopularMovie
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: NetworkMovieData) {
+        fun bind(item: MovieDataModel) {
             binding.apply {
                 thumbnail.load("$BASE_URL_IMAGE${item.posterPath}")
                 {
@@ -53,20 +55,19 @@ class MovieAdapter(
                     error(R.drawable.ic_baseline_broken_image_24)
                 }
                 root.setOnClickListener {
-                    onClickPopularMovie(item)
+                    onClickPopularMovie(item, categories)
                 }
             }
         }
     }
-
 }
 
-private class MovieCallback : DiffUtil.ItemCallback<NetworkMovieData>() {
-    override fun areItemsTheSame(oldItem: NetworkMovieData, newItem: NetworkMovieData): Boolean {
+private class MovieCallback : DiffUtil.ItemCallback<MovieDataModel>() {
+    override fun areItemsTheSame(oldItem: MovieDataModel, newItem: MovieDataModel): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: NetworkMovieData, newItem: NetworkMovieData): Boolean {
+    override fun areContentsTheSame(oldItem: MovieDataModel, newItem: MovieDataModel): Boolean {
         return oldItem == newItem
     }
 }

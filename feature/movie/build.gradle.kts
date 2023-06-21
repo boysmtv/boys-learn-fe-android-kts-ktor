@@ -22,6 +22,7 @@ dependencies {
     implementation(project(":core:utilities"))
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
+    implementation(project(":core:nav"))
 
     implementation(libs.androidx.activity.activity.ktx)
     implementation(libs.androidx.activity.fragment.ktx)
@@ -43,6 +44,11 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)
     implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.com.github.zhpanvip.bannerviewpager)
+    implementation(libs.com.github.bumptech.glide)
+    implementation(libs.jp.wasabeef.glide.transformations)
+    implementation("androidx.databinding:databinding-runtime:8.0.2")
 
     kapt(libs.hilt.compiler)
 

@@ -3,25 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!--        <include-->
-    <!--            layout="@layout/shimmer_home"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent" />-->
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp">
 
     <ViewAnimator
         android:id="@+id/view_animator"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            layout="@layout/shimmer_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/view_animator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view_animator" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_movie_popular"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -52,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movie_popular_title"
                 app:spanCount="2"
@@ -60,12 +63,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ViewAnimator>
+        <include
+            android:id="@+id/view_common_error"
+            layout="@layout/view_common_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <include
-        android:id="@+id/view_common_error"
-        layout="@layout/view_common_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    </ViewAnimator>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

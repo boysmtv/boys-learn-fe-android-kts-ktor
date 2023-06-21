@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
+    implementation(libs.material)
 }

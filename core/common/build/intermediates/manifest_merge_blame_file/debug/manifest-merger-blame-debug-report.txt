@@ -3,6 +3,6 @@
 3    package="com.kotlin.learn.catalog.core.common" >
 4
 5    <uses-sdk android:minSdkVersion="24" />
-5-->/Users/boys/Downloads/Boys/Pribadi/Learn/AndroidProject/LearnKtorHiltCatalogPagging/core/common/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest17319179589344208172.xml
+5-->D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\common\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6417455567398972279.xml
 6
 7</manifest>
