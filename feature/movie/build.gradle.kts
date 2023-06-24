@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.com.github.zhpanvip.bannerviewpager)
     implementation(libs.com.github.bumptech.glide)
     implementation(libs.jp.wasabeef.glide.transformations)
+    implementation(libs.jp.wasabeef.blurry)
     implementation("androidx.databinding:databinding-runtime:8.0.2")
 
     kapt(libs.hilt.compiler)

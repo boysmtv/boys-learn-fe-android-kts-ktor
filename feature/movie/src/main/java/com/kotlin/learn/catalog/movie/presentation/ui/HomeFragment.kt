@@ -1,12 +1,7 @@
 package com.kotlin.learn.catalog.movie.presentation.ui
 
-import android.content.Context
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.renderscript.Allocation
-import android.renderscript.RenderScript
-import android.renderscript.ScriptIntrinsicBlur
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,15 +18,15 @@ import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentHomeBinding
-import com.kotlin.learn.catalog.feature.movie.databinding.MovieItemLayoutBinding
+import com.kotlin.learn.catalog.feature.movie.databinding.MovieHomeBinding
 import com.kotlin.learn.catalog.movie.adapter.CommonLoadStateAdapter
 import com.kotlin.learn.catalog.movie.adapter.MovieAdapter
 import com.kotlin.learn.catalog.movie.adapter.MovieBannerAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.HomeViewModel
 import com.zhpan.bannerview.constants.PageStyle
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -63,7 +58,6 @@ class HomeFragment : Fragment() {
         subscribeBanner()
     }
 
-
     private fun subscribeMovie() = with(viewModel) {
         with(this@HomeFragment) {
             popularMovies.launch(this) { adapterPopular.submitData(it) }
@@ -72,22 +66,44 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun subscribeBanner() = with(viewModel) {
-        nowPlayingMovies.launch(this@HomeFragment) {
-            Log.e("BOYISHERE", "Val-Result: $it")
+    private fun subscribeBanner() = with(binding.layoutBanner) {
+
+        viewModel.nowPlayingMovies.launch(this@HomeFragment) {
             when (it) {
-                Result.Loading -> {}
-                is Result.Success -> {
-                    binding.bannerVpHome.refreshData(it.data.results)
-                    Log.e("BOYISHERE", "Val-Result: ${it.data.results}")
+                Result.Loading -> {
+                    viewAnimator.displayedChild = 0
                 }
 
-                is Result.Error -> {}
+                is Result.Success -> {
+                    viewAnimator.displayedChild = 1
+                    bannerVpHome.refreshData(it.data.results)
+                }
+
+                is Result.Error -> {
+                    viewAnimator.displayedChild = 2
+                }
             }
         }
     }
 
-    private fun setupAdapterMovie(layoutPopular: MovieItemLayoutBinding, movieAdapter: MovieAdapter) =
+    private fun setupView() = with(binding) {
+        layoutPopular.tvMoviePopularTitle.text = getString(R.string.popular_title)
+        setupAdapterMovie(layoutPopular, adapterPopular)
+
+        layoutTopRated.tvMoviePopularTitle.text = getString(R.string.top_rated_title)
+        setupAdapterMovie(layoutTopRated, adapterTopRated)
+
+        layoutMustWatch.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
+        setupAdapterMovie(layoutMustWatch, adapterUpComing)
+
+        Blurry.with(context)
+            .radius(10)
+            .sampling(16)
+            .from(BitmapFactory.decodeResource(resources, R.drawable.background_app_3))
+            .into(binding.layoutBackground.ivMovieBackground)
+    }
+
+    private fun setupAdapterMovie(layoutPopular: MovieHomeBinding, movieAdapter: MovieAdapter) =
         with(layoutPopular) {
             recyclerview.apply {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -118,19 +134,8 @@ class HomeFragment : Fragment() {
             }
         }
 
-    private fun setupView() = with(binding) {
-        layoutPopular.tvMoviePopularTitle.text = getString(R.string.popular_title)
-        setupAdapterMovie(layoutPopular, adapterPopular)
-
-        layoutTopRated.tvMoviePopularTitle.text = getString(R.string.top_rated_title)
-        setupAdapterMovie(layoutTopRated, adapterTopRated)
-
-        layoutMustWatch.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
-        setupAdapterMovie(layoutMustWatch, adapterUpComing)
-    }
-
     private fun setViewBasedOnState(
-        binding: MovieItemLayoutBinding,
+        binding: MovieHomeBinding,
         loadState: CombinedLoadStates,
         message: String
     ) {
@@ -150,31 +155,29 @@ class HomeFragment : Fragment() {
         movieNavigator.navigateToDetailMovie(this)
     }
 
-    private fun setupViewPager() {
-        binding.bannerVpHome
-            .setPageStyle(PageStyle.MULTI_PAGE_SCALE, 0.9f)
-            .setRevealWidth(
-                resources.getDimensionPixelOffset(R.dimen.dp_16),
-                resources.getDimensionPixelOffset(R.dimen.dp_16)
-            )
-            .setPageMargin(resources.getDimensionPixelOffset(R.dimen.dp_16))
-            .registerLifecycleObserver(lifecycle)
-            .setAdapter(MovieBannerAdapter())
-            .create()
-    }
+    private fun setupViewPager() = binding.layoutBanner.bannerVpHome
+        .setPageStyle(PageStyle.MULTI_PAGE_SCALE, 0.9f)
+        .setRevealWidth(
+            resources.getDimensionPixelOffset(R.dimen.dp_16),
+            resources.getDimensionPixelOffset(R.dimen.dp_16)
+        )
+        .setPageMargin(resources.getDimensionPixelOffset(R.dimen.dp_12))
+        .registerLifecycleObserver(lifecycle)
+        .setAdapter(MovieBannerAdapter())
+        .create()
 
-    override fun onPause() = with(binding) {
-        bannerVpHome.stopLoop()
+    override fun onPause() {
+        binding.layoutBanner.bannerVpHome.stopLoop()
         super.onPause()
     }
 
-    override fun onResume() = with(binding) {
+    override fun onResume() {
         super.onResume()
-        bannerVpHome.startLoop()
+        binding.layoutBanner.bannerVpHome.stopLoop()
     }
 
-    override fun onDestroy() = with(binding) {
+    override fun onDestroy() {
         super.onDestroy()
-        bannerVpHome.stopLoop()
+        binding.layoutBanner.bannerVpHome.stopLoop()
     }
 }

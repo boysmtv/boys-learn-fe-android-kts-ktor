@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            layout="@layout/shimmer_home"
+            layout="@layout/shimmer_home_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/view_animator"
@@ -35,17 +35,18 @@
                 android:layout_height="wrap_content"
                 android:text="Popular"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 app:layout_constraintEnd_toStartOf="@+id/tv_movie_popular_more"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_movie_popular_more"
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="More"
-                android:textColor="#FF5722"
+                android:text="See all"
+                android:textColor="@android:color/holo_blue_dark"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +60,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movie_popular_title"
                 app:spanCount="2"
-                tools:listitem="@layout/movie_item" />
+                tools:listitem="@layout/movie_home_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

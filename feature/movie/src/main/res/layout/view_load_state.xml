@@ -10,7 +10,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            layout="@layout/shimmer_item_movie"
+            layout="@layout/shimmer_home_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

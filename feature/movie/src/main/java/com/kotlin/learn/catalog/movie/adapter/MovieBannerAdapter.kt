@@ -2,23 +2,18 @@ package com.kotlin.learn.catalog.movie.adapter
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.RenderEffect
-import android.graphics.Shader
-import android.os.Build
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.utilities.Constant
 import com.kotlin.learn.catalog.feature.movie.R
-import com.kotlin.learn.catalog.feature.movie.databinding.BannerItemHomeBinding
+import com.kotlin.learn.catalog.feature.movie.databinding.BannerHomeItemBinding
 import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -27,7 +22,6 @@ import kotlin.math.roundToInt
 
 class MovieBannerAdapter : BaseBannerAdapter<MovieDataModel>() {
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun bindData(
         holder: BaseViewHolder<MovieDataModel>,
         data: MovieDataModel?,
@@ -44,18 +38,11 @@ class MovieBannerAdapter : BaseBannerAdapter<MovieDataModel>() {
                     .apply(bitmapTransform(BlurTransformation(75, 3)))
                     .into(holder.viewBinding.ivItemHomeBlur)
             }
-//
-//            // just for android S fakyou
-//            holder.viewBinding.ivItemHomeBlur.setRenderEffect(
-//                RenderEffect.createBlurEffect(
-//                    60.0f, 60.0f, Shader.TileMode.CLAMP
-//                )
-//            )
         }
     }
 
     override fun getLayoutId(viewType: Int): Int {
-        return R.layout.banner_item_home
+        return R.layout.banner_home_item
     }
 
     override fun createViewHolder(
@@ -63,10 +50,10 @@ class MovieBannerAdapter : BaseBannerAdapter<MovieDataModel>() {
         itemView: View,
         viewType: Int
     ): BaseViewHolder<MovieDataModel> {
-        return ViewBindingViewHolder(BannerItemHomeBinding.bind(itemView))
+        return ViewBindingViewHolder(BannerHomeItemBinding.bind(itemView))
     }
 
-    inner class ViewBindingViewHolder(var viewBinding: BannerItemHomeBinding) :
+    inner class ViewBindingViewHolder(var viewBinding: BannerHomeItemBinding) :
         BaseViewHolder<MovieDataModel>(viewBinding.root)
 
     object BlurBuilder {

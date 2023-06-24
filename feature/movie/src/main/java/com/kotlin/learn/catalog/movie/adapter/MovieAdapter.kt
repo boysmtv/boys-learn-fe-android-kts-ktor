@@ -12,7 +12,7 @@ import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.utilities.Constant.BASE_URL_IMAGE
 import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import com.kotlin.learn.catalog.feature.movie.R
-import com.kotlin.learn.catalog.feature.movie.databinding.MovieItemBinding
+import com.kotlin.learn.catalog.feature.movie.databinding.MovieHomeItemBinding
 
 typealias OnClickPopularMovie = (MovieDataModel, MovieCategories) -> Unit
 
@@ -24,7 +24,7 @@ class MovieAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            MovieItemBinding.inflate(
+            MovieHomeItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ), onClickPopularMovie
         )
@@ -36,7 +36,7 @@ class MovieAdapter(
     }
 
     inner class ViewHolder(
-        private val binding: MovieItemBinding,
+        private val binding: MovieHomeItemBinding,
         private val onClickPopularMovie: OnClickPopularMovie
     ) : RecyclerView.ViewHolder(binding.root) {
 
