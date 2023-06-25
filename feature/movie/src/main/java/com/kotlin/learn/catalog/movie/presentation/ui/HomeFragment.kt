@@ -96,11 +96,11 @@ class HomeFragment : Fragment() {
         layoutMustWatch.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
         setupAdapterMovie(layoutMustWatch, adapterUpComing)
 
-        Blurry.with(context)
-            .radius(10)
-            .sampling(16)
-            .from(BitmapFactory.decodeResource(resources, R.drawable.background_app_3))
-            .into(binding.layoutBackground.ivMovieBackground)
+//        Blurry.with(context)
+//            .radius(10)
+//            .sampling(16)
+//            .from(BitmapFactory.decodeResource(resources, R.drawable.background_app_3))
+//            .into(binding.layoutBackground.ivMovieBackground)
     }
 
     private fun setupAdapterMovie(layoutPopular: MovieHomeBinding, movieAdapter: MovieAdapter) =

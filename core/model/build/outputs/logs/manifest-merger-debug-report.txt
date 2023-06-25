@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml:2:13-83
-INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml:2:13-83
-INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml:2:13-83
+ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml:2:13-83
+INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml:2:13-83
+INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml:2:13-83
 	package
-		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml:2:13-83
-		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
+		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml:2:13-83
+		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
 	xmlns:android
-		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml:2:23-81
+		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml:2:23-81
 uses-sdk
-INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml reason: use-sdk injection requested
-INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
+INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml reason: use-sdk injection requested
+INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
 	android:targetSdkVersion
-		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
+		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
 	android:minSdkVersion
-		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
-		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14424673400165440429.xml
+		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+		ADDED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml
+		INJECTED from D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\model\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest16953471096355167760.xml

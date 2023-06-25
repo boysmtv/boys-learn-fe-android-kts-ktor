@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="Popular"
                 android:textStyle="bold"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 app:layout_constraintEnd_toStartOf="@+id/tv_movie_popular_more"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
