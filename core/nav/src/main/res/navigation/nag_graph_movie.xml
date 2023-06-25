@@ -17,6 +17,11 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.kotlin.learn.catalog.movie.presentation.ui.DetailFragment"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

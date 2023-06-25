@@ -7,6 +7,7 @@ import com.kotlin.learn.catalog.core.common.Result
 import com.kotlin.learn.catalog.core.data.repository.MovieRepository
 import com.kotlin.learn.catalog.core.domain.paging.MoviePagingSource
 import com.kotlin.learn.catalog.core.model.MovieDataModel
+import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.model.MovieModel
 import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +28,10 @@ class MovieUseCaseImpl @Inject constructor(
 
     override fun getBanner(page: Int): Flow<Result<MovieModel>> {
         return movieRepository.getNowPlaying(page = 1)
+    }
+
+    override fun getDetailMovie(movieId: String, language: String): Flow<Result<MovieDetailModel>> {
+        return movieRepository.getDetailMovie(movieId = movieId, language = language)
     }
 
 }

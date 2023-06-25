@@ -1,6 +1,5 @@
 package com.kotlin.learn.catalog.movie.presentation.ui
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,6 @@ import com.kotlin.learn.catalog.movie.adapter.MovieBannerAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.HomeViewModel
 import com.zhpan.bannerview.constants.PageStyle
 import dagger.hilt.android.AndroidEntryPoint
-import jp.wasabeef.blurry.Blurry
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -67,7 +65,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun subscribeBanner() = with(binding.layoutBanner) {
-
         viewModel.nowPlayingMovies.launch(this@HomeFragment) {
             when (it) {
                 Result.Loading -> {
@@ -152,7 +149,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun onMovieClicked(item: MovieDataModel, categories: MovieCategories) {
-        movieNavigator.navigateToDetailMovie(this)
+        movieNavigator.navigateToDetailMovie(this, item, categories)
     }
 
     private fun setupViewPager() = binding.layoutBanner.bannerVpHome

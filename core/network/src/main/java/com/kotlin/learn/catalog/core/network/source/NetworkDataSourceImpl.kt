@@ -1,7 +1,9 @@
 package com.kotlin.learn.catalog.core.network.source
 
+import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.network.KtorClient
 import com.kotlin.learn.catalog.core.model.MovieModel
+import com.kotlin.learn.catalog.core.network.DetailMovie
 import com.kotlin.learn.catalog.core.network.NowPlayingMovie
 import com.kotlin.learn.catalog.core.network.PopularMovie
 import com.kotlin.learn.catalog.core.network.TopRatedMovie
@@ -56,6 +58,18 @@ class NetworkDataSourceImpl @Inject constructor(
                 query = mapOf(
                     "page" to "$page"
                 )
+            )
+        }
+    }
+
+    override suspend fun getDetailMovie(movieId: String, language: String): MovieDetailModel {
+        return withContext(Dispatchers.IO){
+            ktorClient.sendRequestApiWithQuery(
+                resources = DetailMovie(),
+                query = mapOf(
+                    "language" to language
+                ),
+                path = movieId
             )
         }
     }

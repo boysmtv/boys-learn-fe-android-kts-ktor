@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.kotlin.learn.catalog.core.common.Result
 import com.kotlin.learn.catalog.core.domain.MovieUseCase
-import com.kotlin.learn.catalog.core.domain.MovieUseCaseImpl
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.model.MovieModel
 import com.kotlin.learn.catalog.core.utilities.MovieCategories

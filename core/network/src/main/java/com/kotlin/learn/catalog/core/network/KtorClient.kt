@@ -17,6 +17,8 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.plugins.resources.get
 import io.ktor.http.URLProtocol
+import io.ktor.http.appendPathSegments
+import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -34,13 +36,17 @@ class KtorClient(
 
     internal suspend inline fun <reified Z : Any, reified T> sendRequestApiWithQuery(
         resources: Z,
-        query: Map<String, String>
+        query: Map<String, String>,
+        path: String? = null
     ): T {
         return client
             .get(resources) {
                 url {
                     query.forEach { item ->
                         parameters.append(item.key, item.value)
+                    }
+                    path?.let {
+                        appendPathSegments(it)
                     }
                 }
             }

@@ -6,6 +6,8 @@ object Constant {
     const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p/original"
     const val TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZmIzYTg2OWRkYTIyNjRjNDQ4MjYxY2Q4YWRlMjExMCIsInN1YiI6IjYyZjI0NzExMTUxMWFhMDA3YTdjZjNlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XD4B4kbOGL-p_XqYStuxFeeki8FC3NBYm_RX7zpNEmE"
 
+    const val MOVIE_LANGUAGE = "en-US"
+
     const val MINUS_ONE = -1
     const val ZERO = 0
     const val ONE = 1
