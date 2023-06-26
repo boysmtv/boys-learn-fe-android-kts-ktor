@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.kotlin.learn.catalog.core.common.Result
+import com.kotlin.learn.catalog.core.model.Genres
+import com.kotlin.learn.catalog.core.model.MovieDetailModel
+import com.kotlin.learn.catalog.core.utilities.Constant
 import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentDetailBinding
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -35,7 +38,6 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         subscribeDetail()
         loadArguments()
-
     }
 
     private fun subscribeDetail() = with(viewModel) {
@@ -49,13 +51,19 @@ class DetailFragment : Fragment() {
 
                 is Result.Success -> {
                     with(binding) {
-                        tvDetailHeaderTitle.text = "Success"
+                        tvDetailHeaderTitle.text = it.data.title
+                        tvDetailHeaderRuleGenres.text = convertGenres(it.data.genres)
+                        tvDetailHeaderRuleTime.text = calculateRuntime(it.data.runtime)
+                        tvDetailHeaderRuleYear.text = it.data.releaseDate
+                        tvDetailHeaderDesc.text = it.data.overview
+
+                        setupThumbnail(it.data)
                     }
                 }
 
                 is Result.Error -> {
                     with(binding) {
-                        tvDetailHeaderTitle.text = "Error"
+                        tvDetailHeaderTitle.text = it.throwable.message
                     }
                 }
             }
@@ -70,10 +78,34 @@ class DetailFragment : Fragment() {
         viewModel.getDetailMovies(movieId = movieId)
     }
 
-    private fun changeDateFormat(strDate : String): String {
-        val defaultFormat = SimpleDateFormat("yyyy-MM-dd")
-        val newFormat = SimpleDateFormat("dd-MM-yyyy")
-        return newFormat.format(defaultFormat.parse(strDate)!!)
+    private fun calculateRuntime(timeRuntime: Int?): String {
+        timeRuntime?.let {
+            var startTime = timeRuntime
+            var startHour = Constant.ZERO
+            for (i in 0..startTime) {
+                if (startTime < 60) {
+                    break
+                } else {
+                    startTime -= 60
+                    startHour++
+                    continue
+                }
+            }
+            return "${startHour}h ${timeRuntime % 60}m"
+        }
+        return Constant.EMPTY_STRING
+    }
+
+    private fun convertGenres(genres: ArrayList<Genres>): String {
+        return genres[0].name.toString()
+    }
+
+    private fun setupThumbnail(movie: MovieDetailModel) = with(binding) {
+        movie.belongsToCollection?.backdropPath?.let {
+            Glide.with(this@DetailFragment)
+                .load("${Constant.BASE_URL_IMAGE}${it}")
+                .into(ivDetailPlay)
+        }
     }
 
 }

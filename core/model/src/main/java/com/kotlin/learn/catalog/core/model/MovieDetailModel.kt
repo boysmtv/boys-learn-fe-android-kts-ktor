@@ -1,7 +1,9 @@
 package com.kotlin.learn.catalog.core.model
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MovieDetailModel(
     @SerialName("adult") var adult: Boolean? = null,
     @SerialName("backdrop_path") var backdropPath: String? = null,
@@ -30,6 +32,7 @@ data class MovieDetailModel(
     @SerialName("vote_count") var voteCount: Int? = null
 )
 
+@Serializable
 data class BelongsToCollection(
     @SerialName("id") var id: Int? = null,
     @SerialName("name") var name: String? = null,
@@ -38,11 +41,13 @@ data class BelongsToCollection(
 
 )
 
+@Serializable
 data class Genres(
     @SerialName("id") var id: Int? = null,
     @SerialName("name") var name: String? = null
 )
 
+@Serializable
 data class ProductionCompanies(
     @SerialName("id") var id: Int? = null,
     @SerialName("logo_path") var logoPath: String? = null,
@@ -50,11 +55,13 @@ data class ProductionCompanies(
     @SerialName("origin_country") var originCountry: String? = null
 )
 
+@Serializable
 data class ProductionCountries(
     @SerialName("iso_3166_1") var iso31661: String? = null,
     @SerialName("name") var name: String? = null
 )
 
+@Serializable
 data class SpokenLanguages(
     @SerialName("english_name") var englishName: String? = null,
     @SerialName("iso_639_1") var iso6391: String? = null,
