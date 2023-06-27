@@ -10,6 +10,7 @@ plugins {
 apply {
     from("$rootDir/buildConfig/common-config.gradle")
 }
+apply(plugin = "org.jetbrains.kotlin.android")
 
 android {
     namespace = "com.kotlin.learn.catalog.feature.movie"

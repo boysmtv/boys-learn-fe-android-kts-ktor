@@ -8,14 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.kotlin.learn.catalog.core.common.Result
 import com.kotlin.learn.catalog.core.model.Genres
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.utilities.Constant
 import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentDetailBinding
+import com.kotlin.learn.catalog.movie.adapter.DetailCastAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -38,36 +42,60 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         subscribeDetail()
         loadArguments()
+        initialAdapter()
     }
 
-    private fun subscribeDetail() = with(viewModel) {
-        detailMovies.launch(this@DetailFragment) {
+    private fun subscribeDetail() = with(binding) {
+        viewModel.detailMovies.launch(this@DetailFragment) {
             when (it) {
                 Result.Loading -> {
-                    with(binding) {
-                        tvDetailHeaderTitle.text = "Loading"
-                    }
+                    viewAnimator.displayedChild = 0
                 }
 
                 is Result.Success -> {
-                    with(binding) {
-                        tvDetailHeaderTitle.text = it.data.title
-                        tvDetailHeaderRuleGenres.text = convertGenres(it.data.genres)
-                        tvDetailHeaderRuleTime.text = calculateRuntime(it.data.runtime)
-                        tvDetailHeaderRuleYear.text = it.data.releaseDate
-                        tvDetailHeaderDesc.text = it.data.overview
-
-                        setupThumbnail(it.data)
-                    }
+                    viewAnimator.displayedChild = 1
+                    loadContent(it.data)
                 }
 
                 is Result.Error -> {
-                    with(binding) {
-                        tvDetailHeaderTitle.text = it.throwable.message
-                    }
+                    viewAnimator.displayedChild = 2
                 }
             }
         }
+    }
+
+    private fun loadContent(it: MovieDetailModel) = with(binding) {
+        tvDetailHeaderTitle.text = it.title
+        tvDetailHeaderRuleGenres.text = convertGenres(it.genres)
+        tvDetailHeaderRuleTime.text = calculateRuntime(it.runtime)
+        tvDetailHeaderRuleYear.text = convertDatetimeToDate(it.releaseDate)
+        tvDetailHeaderDesc.text = it.overview
+        setupThumbnail(it)
+    }
+
+    private fun initialAdapter() = with(binding) {
+        val castAdapter = DetailCastAdapter(activity)
+        castAdapter.addFragment(DetailCrewFragment(), "Cast")
+        castAdapter.addFragment(DetailCrewFragment(), "Director & Crew")
+
+        tlDetailCast.apply {
+            tabGravity = TabLayout.GRAVITY_FILL
+        }
+        vpDetailCast.apply {
+            adapter = castAdapter
+            currentItem = 0
+        }
+        TabLayoutMediator(tlDetailCast, vpDetailCast) { tab, position ->
+            tab.text = castAdapter.getTabTitle(position)
+        }.attach()
+    }
+
+    private fun convertDatetimeToDate(releaseDate: String?): String {
+        releaseDate?.let {
+            val currFormatter = SimpleDateFormat("yyyy")
+            return currFormatter.format(currFormatter.parse(releaseDate)!!)
+        }
+        return Constant.EMPTY_STRING
     }
 
     private fun loadArguments() {
