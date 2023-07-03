@@ -4,22 +4,18 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.utilities.Constant.BASE_URL_IMAGE
-import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieHomeItemBinding
 
-typealias OnClickPopularMovie = (MovieDataModel, MovieCategories) -> Unit
+typealias OnClickPopularMovie = (MovieDataModel) -> Unit
 
-class MovieAdapter(
-    private val onClickPopularMovie: OnClickPopularMovie,
-    private val categories: MovieCategories
-) :
+class MovieAdapter(private val onClickPopularMovie: OnClickPopularMovie) :
+
     PagingDataAdapter<MovieDataModel, MovieAdapter.ViewHolder>(MovieCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -55,19 +51,9 @@ class MovieAdapter(
                     error(R.drawable.ic_baseline_broken_image_24)
                 }
                 root.setOnClickListener {
-                    onClickPopularMovie(item, categories)
+                    onClickPopularMovie(item)
                 }
             }
         }
-    }
-}
-
-private class MovieCallback : DiffUtil.ItemCallback<MovieDataModel>() {
-    override fun areItemsTheSame(oldItem: MovieDataModel, newItem: MovieDataModel): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: MovieDataModel, newItem: MovieDataModel): Boolean {
-        return oldItem == newItem
     }
 }

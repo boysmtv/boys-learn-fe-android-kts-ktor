@@ -8,9 +8,15 @@ import com.kotlin.learn.catalog.movie.presentation.ui.HomeFragmentDirections
 
 class MovieNavigator {
 
-    fun navigateToDetailMovie(fragment: Fragment, item: MovieDataModel, categories: MovieCategories) {
+    fun navigateToDetailMovie(fragment: Fragment, item: MovieDataModel) {
         findNavController(fragment).navigate(
-            HomeFragmentDirections.actionHomeFragmentToViewerFragment(item.id.toString()    )
+            HomeFragmentDirections.actionHomeFragmentToDetailFragment(item.id.toString())
+        )
+    }
+
+    fun navigateToSeeAllMovie(fragment: Fragment, categories: MovieCategories) {
+        findNavController(fragment).navigate(
+            HomeFragmentDirections.actionHomeFragmentToSeeAllFragment(categories.name)
         )
     }
 

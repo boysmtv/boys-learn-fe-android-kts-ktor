@@ -5,12 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <include-->
-<!--        android:id="@+id/layout_background"-->
-<!--        layout="@layout/layout_background_image"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
-
     <TextView
         android:id="@+id/tv_movie_title"
         style="@style/TextAppearance.AppCompat.Large"
@@ -69,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/layout_popular" />
 
             <include
-                android:id="@+id/layout_must_watch"
+                android:id="@+id/layout_up_coming"
                 layout="@layout/movie_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

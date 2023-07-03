@@ -10,8 +10,11 @@
         android:name="com.kotlin.learn.catalog.movie.presentation.ui.HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_viewerFragment"
+            android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
     </fragment>
 
     <fragment
@@ -21,6 +24,16 @@
 
         <argument
             android:name="movieId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/seeAllFragment"
+        android:name="com.kotlin.learn.catalog.movie.presentation.ui.SeeAllFragment"
+        tools:layout="@layout/fragment_see_all" >
+
+        <argument
+            android:name="categories"
             app:argType="string" />
     </fragment>
 

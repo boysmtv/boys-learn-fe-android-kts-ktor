@@ -29,9 +29,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val adapterPopular = MovieAdapter(this::onMovieClicked, MovieCategories.POPULAR)
-    private val adapterTopRated = MovieAdapter(this::onMovieClicked, MovieCategories.TOP_RATED)
-    private val adapterUpComing = MovieAdapter(this::onMovieClicked, MovieCategories.UP_COMING)
+    private val adapterPopular = MovieAdapter(this::onMovieClicked)
+    private val adapterTopRated = MovieAdapter(this::onMovieClicked)
+    private val adapterUpComing = MovieAdapter(this::onMovieClicked)
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -85,25 +85,25 @@ class HomeFragment : Fragment() {
 
     private fun setupView() = with(binding) {
         layoutPopular.tvMoviePopularTitle.text = getString(R.string.popular_title)
-        setupAdapterMovie(layoutPopular, adapterPopular)
+        setupAdapterMovie(layoutPopular, adapterPopular, MovieCategories.POPULAR)
 
         layoutTopRated.tvMoviePopularTitle.text = getString(R.string.top_rated_title)
-        setupAdapterMovie(layoutTopRated, adapterTopRated)
+        setupAdapterMovie(layoutTopRated, adapterTopRated, MovieCategories.TOP_RATED)
 
-        layoutMustWatch.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
-        setupAdapterMovie(layoutMustWatch, adapterUpComing)
-
-//        Blurry.with(context)
-//            .radius(10)
-//            .sampling(16)
-//            .from(BitmapFactory.decodeResource(resources, R.drawable.background_app_3))
-//            .into(binding.layoutBackground.ivMovieBackground)
+        layoutUpComing.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
+        setupAdapterMovie(layoutUpComing, adapterUpComing, MovieCategories.UP_COMING)
     }
 
-    private fun setupAdapterMovie(layoutPopular: MovieHomeBinding, movieAdapter: MovieAdapter) =
-        with(layoutPopular) {
+    private fun setupAdapterMovie(
+        layoutBinding: MovieHomeBinding,
+        movieAdapter: MovieAdapter,
+        categories: MovieCategories
+    ) =
+        with(layoutBinding) {
             recyclerview.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                layoutManager = LinearLayoutManager(
+                    requireContext(), LinearLayoutManager.HORIZONTAL, false
+                )
                 adapter = movieAdapter.withLoadStateHeaderAndFooter(
                     CommonLoadStateAdapter { movieAdapter.retry() },
                     CommonLoadStateAdapter { movieAdapter.retry() }
@@ -118,14 +118,17 @@ class HomeFragment : Fragment() {
 
                     is LoadState.NotLoading -> {
                         if (movieAdapter.itemCount == 0) {
-                            setViewBasedOnState(layoutPopular, loadState, getString(R.string.empty_data_title))
+                            setViewBasedOnState(layoutBinding, loadState, getString(R.string.empty_data_title))
                             viewAnimator.displayedChild = 2
-                        } else viewAnimator.displayedChild = 1
+                        } else {
+                            viewAnimator.displayedChild = 1
+                            setOnClickMore(layoutBinding, categories)
+                        }
                     }
 
                     is LoadState.Error -> {
                         val errorMessage = (loadState.source.refresh as LoadState.Error).error.message
-                        setViewBasedOnState(layoutPopular, loadState, errorMessage.toString())
+                        setViewBasedOnState(layoutBinding, loadState, errorMessage.toString())
                     }
                 }
             }
@@ -148,10 +151,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onMovieClicked(item: MovieDataModel, categories: MovieCategories) {
-        movieNavigator.navigateToDetailMovie(this, item, categories)
-    }
-
     private fun setupViewPager() = binding.layoutBanner.bannerVpHome
         .setPageStyle(PageStyle.MULTI_PAGE_SCALE, 0.9f)
         .setRevealWidth(
@@ -162,6 +161,17 @@ class HomeFragment : Fragment() {
         .registerLifecycleObserver(lifecycle)
         .setAdapter(MovieBannerAdapter())
         .create()
+
+    private fun onMovieClicked(item: MovieDataModel) {
+        movieNavigator.navigateToDetailMovie(this, item)
+    }
+
+    private fun setOnClickMore(layoutBinding: MovieHomeBinding, categories: MovieCategories) =
+        with(layoutBinding) {
+            tvMoviePopularMore.setOnClickListener {
+                movieNavigator.navigateToSeeAllMovie(this@HomeFragment, categories)
+            }
+        }
 
     override fun onPause() {
         binding.layoutBanner.bannerVpHome.stopLoop()
@@ -177,4 +187,5 @@ class HomeFragment : Fragment() {
         super.onDestroy()
         binding.layoutBanner.bannerVpHome.stopLoop()
     }
+
 }

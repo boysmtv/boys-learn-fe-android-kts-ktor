@@ -16,18 +16,18 @@
             android:layout_width="100dp"
             android:layout_height="24dp"
             android:background="#696B6D"
-            app:shapeAppearance="@style/ShapeAppearance.Image.Movie"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearance.Image.Movie" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shimmer_movie_popular_more"
             android:layout_width="100dp"
             android:layout_height="24dp"
             android:background="#696B6D"
-            app:shapeAppearance="@style/ShapeAppearance.Image.Movie"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearance.Image.Movie" />
 
         <LinearLayout
             android:layout_width="match_parent"
