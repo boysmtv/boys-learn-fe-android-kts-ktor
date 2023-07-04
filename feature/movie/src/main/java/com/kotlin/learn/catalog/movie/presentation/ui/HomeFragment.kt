@@ -159,7 +159,7 @@ class HomeFragment : Fragment() {
         )
         .setPageMargin(resources.getDimensionPixelOffset(R.dimen.dp_12))
         .registerLifecycleObserver(lifecycle)
-        .setAdapter(MovieBannerAdapter())
+        .setAdapter(MovieBannerAdapter(this::onMovieClicked))
         .create()
 
     private fun onMovieClicked(item: MovieDataModel) {

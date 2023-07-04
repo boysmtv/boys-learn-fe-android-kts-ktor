@@ -12,9 +12,9 @@ import com.kotlin.learn.catalog.core.utilities.Constant.BASE_URL_IMAGE
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieHomeItemBinding
 
-typealias OnClickPopularMovie = (MovieDataModel) -> Unit
+typealias onClickMovie = (MovieDataModel) -> Unit
 
-class MovieAdapter(private val onClickPopularMovie: OnClickPopularMovie) :
+class MovieAdapter(private val onClickMovie: onClickMovie) :
 
     PagingDataAdapter<MovieDataModel, MovieAdapter.ViewHolder>(MovieCallback()) {
 
@@ -22,7 +22,7 @@ class MovieAdapter(private val onClickPopularMovie: OnClickPopularMovie) :
         return ViewHolder(
             MovieHomeItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            ), onClickPopularMovie
+            ), onClickMovie
         )
     }
 
@@ -33,7 +33,7 @@ class MovieAdapter(private val onClickPopularMovie: OnClickPopularMovie) :
 
     inner class ViewHolder(
         private val binding: MovieHomeItemBinding,
-        private val onClickPopularMovie: OnClickPopularMovie
+        private val onClickMovie: onClickMovie
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MovieDataModel) {
@@ -51,7 +51,7 @@ class MovieAdapter(private val onClickPopularMovie: OnClickPopularMovie) :
                     error(R.drawable.ic_baseline_broken_image_24)
                 }
                 root.setOnClickListener {
-                    onClickPopularMovie(item)
+                    onClickMovie(item)
                 }
             }
         }

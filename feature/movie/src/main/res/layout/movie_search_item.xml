@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/dp_16"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_search"
+        android:layout_width="@dimen/dp_140"
+        android:layout_height="@dimen/dp_80"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:maxLines="3"
+        android:paddingEnd="@dimen/dp_8"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_search"
+        app:layout_constraintEnd_toStartOf="@+id/iv_search_icon"
+        app:layout_constraintStart_toEndOf="@+id/iv_search"
+        app:layout_constraintTop_toTopOf="@+id/iv_search"
+        tools:text="Fast and Furious 5" />
+
+    <ImageView
+        android:id="@+id/iv_search_icon"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_action_play"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_search" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

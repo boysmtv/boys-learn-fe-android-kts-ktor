@@ -260,8 +260,6 @@
     <color name="colorRedStatusBgCardTransaction">#FCE4E3</color>
     <color name="colorWhiteStatusBgCardTransaction">#FFFFFF</color>
     <color name="colorYellowStatusBgCardTransaction">#FEF7E5</color>
-    <color name="colorYellowDebitCardTypeBgCardTransaction">#FFE295</color>
-    <color name="colorBlueDebitCardTypeBgCardTransaction">#134BBA</color>
     <!-- End Region -->
 
     <!-- Region Round imageView -->
@@ -397,8 +395,6 @@
     <!--region financial keyboard-->
     <color name="backgroundKeyboard">#FAFAFA</color>
     <!--endregion-->
-    <color name="debitCardDobDescription">#585858</color>
-
     <color name="colorPeekBalanceTitle">#615A5A</color>
     <color name="colorLoginButtonBackground">#003e79</color>
 
@@ -513,20 +509,6 @@
 
     <!--region Send Receipt Transaction-->
     <color name="colorGreyPhoneNumberField">#B8303B4A</color>
-    <!--endregion-->
-
-    <!--region Item Debit Card Authentication-->
-    <color name="colorGrayDebitCardNumber">#ADA6AE</color>
-    <color name="colorGreenDebitCardStatusBackground">#8FD0B9</color>
-    <color name="colorGreenDebitCardStatusText">#20A273</color>
-    <color name="colorRedDebitCardStatusBackground">#1FE31E18</color>
-    <color name="colorRedDebitCardStatusText">#E70000</color>
-    <color name="colorYellowDebitCardStatusBackground">#FFF8E5</color>
-    <color name="colorYellowDebitCardStatusText">#FFC329</color>
-    <color name="colorGrayDebitCardStatusBackground">#DDE2E8</color>
-    <color name="colorGrayDebitCardStatusText">#303B4AB8</color>
-    <color name="colorGrayTransparentDebitCardDisable">#B3F7F8F9</color>
-    <!--endregion-->
 
     <!--region text view transaction-->
     <color name="title_text_color_gray">#B8303B4A</color>

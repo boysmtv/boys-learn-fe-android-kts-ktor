@@ -35,6 +35,10 @@
         <argument
             android:name="categories"
             app:argType="string" />
+
+        <action
+            android:id="@+id/action_seeAllFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 
 </navigation>

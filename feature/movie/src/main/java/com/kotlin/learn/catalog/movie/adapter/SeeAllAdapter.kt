@@ -22,15 +22,17 @@ class SeeAllAdapter(private val onClickMovie: OnClickMovie) :
 
     PagingDataAdapter<MovieDataModel, SeeAllAdapter.ViewHolder>(MovieCallback()) {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeeAllAdapter.ViewHolder {
+        return ViewHolder(
+            MovieSeeAllItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ), onClickMovie
+        )
+    }
+
     override fun onBindViewHolder(holder: SeeAllAdapter.ViewHolder, position: Int) {
         val item = getItem(position)
         item?.let { holder.bind(it) }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeeAllAdapter.ViewHolder {
-        return ViewHolder(
-            MovieSeeAllItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), onClickMovie
-        )
     }
 
     inner class ViewHolder(

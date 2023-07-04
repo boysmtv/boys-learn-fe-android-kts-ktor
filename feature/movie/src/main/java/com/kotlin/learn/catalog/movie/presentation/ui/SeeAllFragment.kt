@@ -12,6 +12,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.catalog.core.model.MovieDataModel
+import com.kotlin.learn.catalog.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.catalog.core.utilities.Constant
 import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import com.kotlin.learn.catalog.core.utilities.extension.capitalize
@@ -22,6 +23,7 @@ import com.kotlin.learn.catalog.movie.adapter.CommonLoadStateAdapter
 import com.kotlin.learn.catalog.movie.adapter.SeeAllAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SeeAllFragment : Fragment() {
@@ -33,6 +35,9 @@ class SeeAllFragment : Fragment() {
     private val args: SeeAllFragmentArgs by navArgs()
 
     private var categories = Constant.EMPTY_STRING
+
+    @Inject
+    lateinit var movieNavigator: MovieNavigator
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -125,7 +130,7 @@ class SeeAllFragment : Fragment() {
     }
 
     private fun onMovieClicked(item: MovieDataModel) {
-        //movieNavigator.navigateToDetailMovie(this, item, categories)
+        movieNavigator.fromSeeAllToDetailMovie(this, item)
     }
 
 }
