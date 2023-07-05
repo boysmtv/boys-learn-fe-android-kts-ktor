@@ -15,6 +15,12 @@ class MovieNavigator {
         )
     }
 
+    fun fromHomeToSearch(fragment: Fragment) {
+        findNavController(fragment).navigate(
+            HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+        )
+    }
+
     fun navigateToSeeAllMovie(fragment: Fragment, categories: MovieCategories) {
         findNavController(fragment).navigate(
             HomeFragmentDirections.actionHomeFragmentToSeeAllFragment(categories.name)

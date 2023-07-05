@@ -14,6 +14,7 @@ android {
 
 dependencies {
     implementation(project(":core:utilities"))
+    implementation(project(":core:model"))
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)

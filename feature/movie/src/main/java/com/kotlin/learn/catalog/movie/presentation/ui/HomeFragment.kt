@@ -92,6 +92,10 @@ class HomeFragment : Fragment() {
 
         layoutUpComing.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
         setupAdapterMovie(layoutUpComing, adapterUpComing, MovieCategories.UP_COMING)
+
+        ivSearch.setOnClickListener {
+            movieNavigator.fromHomeToSearch(this@HomeFragment)
+        }
     }
 
     private fun setupAdapterMovie(

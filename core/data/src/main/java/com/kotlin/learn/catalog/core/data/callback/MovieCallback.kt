@@ -1,4 +1,4 @@
-package com.kotlin.learn.catalog.movie.adapter
+package com.kotlin.learn.catalog.core.data.callback
 
 import androidx.recyclerview.widget.DiffUtil
 import com.kotlin.learn.catalog.core.model.MovieDataModel

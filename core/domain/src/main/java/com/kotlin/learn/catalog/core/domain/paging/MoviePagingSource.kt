@@ -12,7 +12,7 @@ import com.kotlin.learn.catalog.core.utilities.extension.replaceIfNull
 
 class MoviePagingSource(
     private val repository: MovieRepository,
-    private val categories: MovieCategories
+    private val categories: MovieCategories,
 ) : PagingSource<Int, MovieDataModel>() {
 
     override fun getRefreshKey(state: PagingState<Int, MovieDataModel>): Int? {

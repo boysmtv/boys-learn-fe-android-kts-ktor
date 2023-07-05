@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_seeAllFragment"
             app:destination="@id/seeAllFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +42,12 @@
         <action
             android:id="@+id/action_seeAllFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.kotlin.learn.catalog.movie.presentation.ui.SearchFragment"
+        tools:layout="@layout/fragment_search" >
     </fragment>
 
 </navigation>

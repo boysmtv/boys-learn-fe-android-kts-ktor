@@ -7,14 +7,14 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
+import com.kotlin.learn.catalog.core.common.util.OnClickMovie
+import com.kotlin.learn.catalog.core.data.callback.MovieCallback
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.utilities.Constant.BASE_URL_IMAGE
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieHomeItemBinding
 
-typealias onClickMovie = (MovieDataModel) -> Unit
-
-class MovieAdapter(private val onClickMovie: onClickMovie) :
+class MovieAdapter(private val onClickMovie: OnClickMovie) :
 
     PagingDataAdapter<MovieDataModel, MovieAdapter.ViewHolder>(MovieCallback()) {
 
@@ -33,7 +33,7 @@ class MovieAdapter(private val onClickMovie: onClickMovie) :
 
     inner class ViewHolder(
         private val binding: MovieHomeItemBinding,
-        private val onClickMovie: onClickMovie
+        private val onClickMovie: OnClickMovie
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MovieDataModel) {

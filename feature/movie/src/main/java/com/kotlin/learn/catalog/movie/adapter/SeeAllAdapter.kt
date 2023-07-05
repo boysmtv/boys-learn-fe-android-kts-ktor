@@ -8,6 +8,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
+import com.kotlin.learn.catalog.core.common.util.OnClickMovie
+import com.kotlin.learn.catalog.core.data.callback.MovieCallback
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.utilities.Constant
 import com.kotlin.learn.catalog.core.utilities.extension.convertDateFormat
@@ -15,8 +17,6 @@ import com.kotlin.learn.catalog.core.utilities.extension.getMonthName
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieSeeAllItemBinding
 import java.text.SimpleDateFormat
-
-typealias OnClickMovie = (MovieDataModel) -> Unit
 
 class SeeAllAdapter(private val onClickMovie: OnClickMovie) :
 

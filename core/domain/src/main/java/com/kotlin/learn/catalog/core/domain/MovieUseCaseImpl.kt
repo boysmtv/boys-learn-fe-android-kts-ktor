@@ -6,9 +6,11 @@ import androidx.paging.PagingData
 import com.kotlin.learn.catalog.core.common.Result
 import com.kotlin.learn.catalog.core.data.repository.MovieRepository
 import com.kotlin.learn.catalog.core.domain.paging.MoviePagingSource
+import com.kotlin.learn.catalog.core.domain.paging.SearchPagingSource
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.model.MovieModel
+import com.kotlin.learn.catalog.core.model.MovieSearchModel
 import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -32,6 +34,15 @@ class MovieUseCaseImpl @Inject constructor(
 
     override fun getDetailMovie(movieId: String, language: String): Flow<Result<MovieDetailModel>> {
         return movieRepository.getDetailMovie(movieId = movieId, language = language)
+    }
+
+    override fun searchMovie(searchModel: MovieSearchModel): Flow<PagingData<MovieDataModel>> {
+        return Pager(PagingConfig(pageSize = 10)) {
+            SearchPagingSource(
+                repository = movieRepository,
+                searchModel = searchModel
+            )
+        }.flow
     }
 
 }

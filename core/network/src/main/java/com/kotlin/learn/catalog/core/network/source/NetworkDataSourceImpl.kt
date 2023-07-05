@@ -3,9 +3,11 @@ package com.kotlin.learn.catalog.core.network.source
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.network.KtorClient
 import com.kotlin.learn.catalog.core.model.MovieModel
+import com.kotlin.learn.catalog.core.model.MovieSearchModel
 import com.kotlin.learn.catalog.core.network.DetailMovie
 import com.kotlin.learn.catalog.core.network.NowPlayingMovie
 import com.kotlin.learn.catalog.core.network.PopularMovie
+import com.kotlin.learn.catalog.core.network.SearchMovie
 import com.kotlin.learn.catalog.core.network.TopRatedMovie
 import com.kotlin.learn.catalog.core.network.UpComingMovie
 import kotlinx.coroutines.Dispatchers
@@ -70,6 +72,18 @@ class NetworkDataSourceImpl @Inject constructor(
                     "language" to language
                 ),
                 path = movieId
+            )
+        }
+    }
+
+    override suspend fun searchMovie(page: Int, searchModel: MovieSearchModel): MovieModel {
+        return withContext(Dispatchers.IO){
+            ktorClient.sendRequestApiWithQuery(
+                resources = SearchMovie(),
+                query = mapOf(
+                    "page" to "$page",
+                    "query" to searchModel.title,
+                )
             )
         }
     }

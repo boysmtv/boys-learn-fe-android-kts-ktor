@@ -2,6 +2,7 @@ package com.kotlin.learn.catalog.core.network.source
 
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.model.MovieModel
+import com.kotlin.learn.catalog.core.model.MovieSearchModel
 
 
 interface NetworkDataSource {
@@ -15,5 +16,7 @@ interface NetworkDataSource {
     suspend fun getNowPlaying(page: Int): MovieModel
 
     suspend fun getDetailMovie(movieId: String, language: String): MovieDetailModel
+
+    suspend fun searchMovie(page: Int, searchModel: MovieSearchModel): MovieModel
 
 }

@@ -16,3 +16,6 @@ class NowPlayingMovie
 
 @Resource("movie")
 class DetailMovie
+
+@Resource("search/movie")
+class SearchMovie

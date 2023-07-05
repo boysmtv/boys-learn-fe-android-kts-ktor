@@ -8,15 +8,25 @@
     <TextView
         android:id="@+id/tv_movie_title"
         style="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Movies"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_search"
+        app:layout_constraintTop_toTopOf="@+id/tv_movie_title"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_movie_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/dp_16"
+        android:src="@drawable/ic_action_search"/>
 
     <include
         android:id="@+id/layout_banner"

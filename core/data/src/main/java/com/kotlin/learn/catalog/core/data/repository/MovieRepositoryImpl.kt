@@ -3,6 +3,8 @@ package com.kotlin.learn.catalog.core.data.repository
 import com.kotlin.learn.catalog.core.common.Result
 import com.kotlin.learn.catalog.core.common.executeWithResponse
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
+import com.kotlin.learn.catalog.core.model.MovieModel
+import com.kotlin.learn.catalog.core.model.MovieSearchModel
 import com.kotlin.learn.catalog.core.network.source.NetworkDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -50,5 +52,12 @@ class MovieRepositoryImpl @Inject constructor(
             network.getDetailMovie(movieId = movieId, language = language)
         })
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun searchMovie(page: Int, searchModel: MovieSearchModel) = withContext(Dispatchers.IO) {
+        delay(1000L)
+        executeWithResponse {
+            network.searchMovie(page, searchModel)
+        }
+    }
 
 }
