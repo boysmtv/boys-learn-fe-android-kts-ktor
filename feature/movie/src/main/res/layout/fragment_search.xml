@@ -10,34 +10,35 @@
         android:id="@+id/til_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/btn_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_search"
         app:shapeAppearance="@style/ShapeAppearance.Image.Rounded">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:drawableStart="@drawable/ic_action_search"
             android:drawablePadding="8dp"
             android:fontFamily="@font/tt_interphases_regular"
             android:gravity="center_vertical"
-            android:hint="Search" />
+            android:hint="Search"
+            android:padding="@dimen/dp_0" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/til_search"
-        app:layout_constraintStart_toEndOf="@+id/til_search"
-        app:layout_constraintBottom_toBottomOf="@+id/til_search"
-        android:layout_marginStart="@dimen/dp_8"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"/>
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/dp_8"
+        android:text="Search"
+        app:layout_constraintBottom_toBottomOf="@+id/til_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/til_search"
+        app:layout_constraintTop_toTopOf="@+id/til_search" />
 
     <TextView
         android:id="@+id/tv_search_title"

@@ -48,6 +48,7 @@ class SearchFragment : Fragment() {
 
     private fun subscribeSearch() = with(viewModel) {
         searchMovie.launch(this@SearchFragment) {
+            binding.viewAnimator.visibility = View.VISIBLE
             searchAdapter.submitData(it)
         }
     }
@@ -55,22 +56,19 @@ class SearchFragment : Fragment() {
     private fun setupView() = with(binding) {
         setupAdapter()
         setupEditTextChanged()
+        viewAnimator.visibility = View.INVISIBLE
     }
 
     private fun setupEditTextChanged() = with(binding) {
         btnSearch.setOnClickListener {
-            viewModel.getSearch(
-                MovieSearchModel(
-                    title = etSearch.text.toString()
-                )
-            )
+            viewModel.searchMovie(etSearch.text.toString())
         }
     }
 
     private fun setupAdapter() = with(binding) {
         rvSearch.apply {
             layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false
+                requireContext(), LinearLayoutManager.VERTICAL, false
             )
             adapter = searchAdapter.withLoadStateHeaderAndFooter(
                 CommonLoadStateAdapter { searchAdapter.retry() },
