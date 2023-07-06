@@ -107,3 +107,17 @@ mapping.txt
 .idea/codeStyles/codeStyleConfig.xml
 
 .idea/codeStyles/Project.xml
+
+Thumbs.db
+
+# OSX files
+
+# Android Studio
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+.gradle
+.navigation
+output.json
+
+#NDK
+obj/
