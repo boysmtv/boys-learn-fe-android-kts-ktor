@@ -25,6 +25,7 @@
             android:fontFamily="@font/tt_interphases_regular"
             android:gravity="center_vertical"
             android:hint="Search"
+            android:maxLines="1"
             android:padding="@dimen/dp_0" />
 
     </com.google.android.material.textfield.TextInputLayout>

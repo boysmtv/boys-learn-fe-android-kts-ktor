@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.catalog.core.model.MovieDataModel
-import com.kotlin.learn.catalog.core.model.MovieSearchModel
 import com.kotlin.learn.catalog.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.catalog.core.utilities.extension.launch
+import com.kotlin.learn.catalog.core.utilities.invisible
+import com.kotlin.learn.catalog.core.utilities.show
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentSearchBinding
 import com.kotlin.learn.catalog.movie.adapter.CommonLoadStateAdapter
@@ -48,7 +50,6 @@ class SearchFragment : Fragment() {
 
     private fun subscribeSearch() = with(viewModel) {
         searchMovie.launch(this@SearchFragment) {
-            binding.viewAnimator.visibility = View.VISIBLE
             searchAdapter.submitData(it)
         }
     }
@@ -56,11 +57,12 @@ class SearchFragment : Fragment() {
     private fun setupView() = with(binding) {
         setupAdapter()
         setupEditTextChanged()
-        viewAnimator.visibility = View.INVISIBLE
     }
 
     private fun setupEditTextChanged() = with(binding) {
+        viewAnimator.invisible()
         btnSearch.setOnClickListener {
+            viewAnimator.show()
             viewModel.searchMovie(etSearch.text.toString())
         }
     }
@@ -105,7 +107,7 @@ class SearchFragment : Fragment() {
             viewCommonError.apply {
                 errorMessage.text = message
                 buttonRetry.apply {
-                    //isVisible = loadState.source.refresh is LoadState.Error
+                    isVisible = loadState.source.refresh is LoadState.Error
                     setOnClickListener { searchAdapter.retry() }
                 }
             }
@@ -114,6 +116,6 @@ class SearchFragment : Fragment() {
     }
 
     private fun onMovieClicked(item: MovieDataModel) {
-        movieNavigator.navigateToDetailMovie(this, item)
+        movieNavigator.fromSearchToDetail(this, item)
     }
 }

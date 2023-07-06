@@ -34,4 +34,5 @@ class SearchViewModel @Inject constructor(
     fun searchMovie(query: String) {
         _movieSearchModel.value = MovieSearchModel(title = query)
     }
+
 }
