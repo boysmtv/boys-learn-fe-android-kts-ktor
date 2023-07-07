@@ -1,5 +1,6 @@
 package com.kotlin.learn.catalog.movie.presentation.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.utilities.Constant
 import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentDetailBinding
-import com.kotlin.learn.catalog.movie.adapter.DetailCastAdapter
+import com.kotlin.learn.catalog.movie.adapter.DetailCreditsAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -42,23 +43,23 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         subscribeDetail()
         loadArguments()
-        initialAdapter()
+        setupVpCredits()
     }
 
     private fun subscribeDetail() = with(binding) {
         viewModel.detailMovies.launch(this@DetailFragment) {
             when (it) {
                 Result.Loading -> {
-                    viewAnimator.displayedChild = 0
+                    viewAnimator.displayedChild = Constant.ZERO
                 }
 
                 is Result.Success -> {
-                    viewAnimator.displayedChild = 1
+                    viewAnimator.displayedChild = Constant.ONE
                     loadContent(it.data)
                 }
 
                 is Result.Error -> {
-                    viewAnimator.displayedChild = 2
+                    viewAnimator.displayedChild = Constant.TWO
                 }
             }
         }
@@ -73,23 +74,37 @@ class DetailFragment : Fragment() {
         setupThumbnail(it)
     }
 
-    private fun initialAdapter() = with(binding) {
-        val castAdapter = DetailCastAdapter(activity)
-        castAdapter.addFragment(CrewFragment(), "Cast")
-        castAdapter.addFragment(CrewFragment(), "Director & Crew")
+    private fun setupVpCredits() = with(binding) {
+        val creditsAdapter = DetailCreditsAdapter(activity)
+        creditsAdapter.addFragment(
+            fragment = CreditsFragment(
+                isCrew = Constant.FALSE,
+                movieId = args.movieId
+            ),
+            title = "Cast"
+        )
+        creditsAdapter.addFragment(
+            fragment = CreditsFragment(
+                isCrew = Constant.TRUE,
+                movieId = args.movieId
+            ),
+            title = "Director & Crew"
+        )
 
-        tlDetailCast.apply {
+        tlDetailCredits.apply {
             tabGravity = TabLayout.GRAVITY_FILL
         }
-        vpDetailCast.apply {
-            adapter = castAdapter
-            currentItem = 0
+        vpDetailCredits.apply {
+            adapter = creditsAdapter
+            currentItem = Constant.ZERO
+            isUserInputEnabled = Constant.FALSE
         }
-        TabLayoutMediator(tlDetailCast, vpDetailCast) { tab, position ->
-            tab.text = castAdapter.getTabTitle(position)
+        TabLayoutMediator(tlDetailCredits, vpDetailCredits) { tab, position ->
+            tab.text = creditsAdapter.getTabTitle(position)
         }.attach()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun convertDatetimeToDate(releaseDate: String?): String {
         releaseDate?.let {
             val currFormatter = SimpleDateFormat("yyyy")

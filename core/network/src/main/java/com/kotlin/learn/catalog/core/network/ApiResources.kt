@@ -19,3 +19,6 @@ class DetailMovie
 
 @Resource("search/movie")
 class SearchMovie
+
+@Resource("movie")
+class CreditsMovie

@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.learn.catalog.core.utilities.hide
 import com.kotlin.learn.catalog.feature.movie.databinding.ViewLoadStateBinding
 
-class LoadStateAdapter(
+class MovieLoadStateAdapter(
     private val retry: () -> Unit
-) : LoadStateAdapter<com.kotlin.learn.catalog.movie.util.common.MovieLoadStateAdapter.LoadStateAdapter.ViewHolder>() {
+) : LoadStateAdapter<MovieLoadStateAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
         holder.bind(loadState)

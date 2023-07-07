@@ -7,6 +7,7 @@ import com.kotlin.learn.catalog.core.common.Result
 import com.kotlin.learn.catalog.core.data.repository.MovieRepository
 import com.kotlin.learn.catalog.core.domain.paging.MoviePagingSource
 import com.kotlin.learn.catalog.core.domain.paging.SearchPagingSource
+import com.kotlin.learn.catalog.core.model.CreditsModel
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.model.MovieModel
@@ -43,6 +44,10 @@ class MovieUseCaseImpl @Inject constructor(
                 searchModel = searchModel
             )
         }.flow
+    }
+
+    override fun getCredits(movieId: String): Flow<Result<CreditsModel>> {
+        return movieRepository.getCredits(movieId = movieId)
     }
 
 }

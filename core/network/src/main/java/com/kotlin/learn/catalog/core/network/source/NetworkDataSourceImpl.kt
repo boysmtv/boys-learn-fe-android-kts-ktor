@@ -1,9 +1,11 @@
 package com.kotlin.learn.catalog.core.network.source
 
+import com.kotlin.learn.catalog.core.model.CreditsModel
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.network.KtorClient
 import com.kotlin.learn.catalog.core.model.MovieModel
 import com.kotlin.learn.catalog.core.model.MovieSearchModel
+import com.kotlin.learn.catalog.core.network.CreditsMovie
 import com.kotlin.learn.catalog.core.network.DetailMovie
 import com.kotlin.learn.catalog.core.network.NowPlayingMovie
 import com.kotlin.learn.catalog.core.network.PopularMovie
@@ -84,6 +86,16 @@ class NetworkDataSourceImpl @Inject constructor(
                     "page" to "$page",
                     "query" to searchModel.title,
                 )
+            )
+        }
+    }
+
+    override suspend fun getCredits(movieId: String): CreditsModel {
+        return withContext(Dispatchers.IO){
+            ktorClient.sendRequestApiWithQuery(
+                resources = CreditsMovie(),
+                query = emptyMap(),
+                path = "$movieId/credits"
             )
         }
     }

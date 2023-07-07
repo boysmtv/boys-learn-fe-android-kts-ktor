@@ -18,7 +18,7 @@ import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentHomeBinding
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieHomeBinding
-import com.kotlin.learn.catalog.movie.util.common.LoadStateAdapter
+import com.kotlin.learn.catalog.movie.util.common.MovieLoadStateAdapter
 import com.kotlin.learn.catalog.movie.adapter.MovieAdapter
 import com.kotlin.learn.catalog.movie.adapter.MovieBannerAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.HomeViewModel
@@ -109,8 +109,8 @@ class HomeFragment : Fragment() {
                     requireContext(), LinearLayoutManager.HORIZONTAL, false
                 )
                 adapter = movieAdapter.withLoadStateHeaderAndFooter(
-                    LoadStateAdapter { movieAdapter.retry() },
-                    LoadStateAdapter { movieAdapter.retry() }
+                    MovieLoadStateAdapter { movieAdapter.retry() },
+                    MovieLoadStateAdapter { movieAdapter.retry() }
                 )
             }
 

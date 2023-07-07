@@ -2,6 +2,7 @@ package com.kotlin.learn.catalog.core.domain
 
 import androidx.paging.PagingData
 import com.kotlin.learn.catalog.core.common.Result
+import com.kotlin.learn.catalog.core.model.CreditsModel
 import com.kotlin.learn.catalog.core.model.MovieDataModel
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.model.MovieModel
@@ -19,5 +20,7 @@ interface MovieUseCase {
     fun getDetailMovie(movieId: String, language: String = Constant.MOVIE_LANGUAGE): Flow<Result<MovieDetailModel>>
 
     fun searchMovie(searchModel: MovieSearchModel): Flow<PagingData<MovieDataModel>>
+
+    fun getCredits(movieId: String): Flow<Result<CreditsModel>>
 
 }

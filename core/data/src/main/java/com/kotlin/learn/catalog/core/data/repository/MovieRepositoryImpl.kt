@@ -2,8 +2,8 @@ package com.kotlin.learn.catalog.core.data.repository
 
 import com.kotlin.learn.catalog.core.common.Result
 import com.kotlin.learn.catalog.core.common.executeWithResponse
+import com.kotlin.learn.catalog.core.model.CreditsModel
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
-import com.kotlin.learn.catalog.core.model.MovieModel
 import com.kotlin.learn.catalog.core.model.MovieSearchModel
 import com.kotlin.learn.catalog.core.network.source.NetworkDataSource
 import kotlinx.coroutines.Dispatchers
@@ -59,5 +59,12 @@ class MovieRepositoryImpl @Inject constructor(
             network.searchMovie(page, searchModel)
         }
     }
+
+    override fun getCredits(movieId: String) : Flow<Result<CreditsModel>> = flow {
+        delay(1000L)
+        emit(executeWithResponse {
+            network.getCredits(movieId = movieId)
+        })
+    }.flowOn(Dispatchers.IO)
 
 }

@@ -34,4 +34,7 @@ object Constant {
     const val FORWARD_SLASH = "/"
 
     const val STRING_FORMAT_REDDIT = "r/%s"
+
+    const val FALSE = false
+    const val TRUE = true
 }

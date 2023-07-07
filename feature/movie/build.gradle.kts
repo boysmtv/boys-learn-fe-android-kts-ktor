@@ -51,7 +51,8 @@ dependencies {
     implementation(libs.com.github.bumptech.glide)
     implementation(libs.jp.wasabeef.glide.transformations)
     implementation(libs.jp.wasabeef.blurry)
-    implementation("androidx.databinding:databinding-runtime:8.0.2")
+    implementation(libs.gson)
+    implementation(libs.androidx.databinding.runtime)
 
     kapt(libs.hilt.compiler)
 
