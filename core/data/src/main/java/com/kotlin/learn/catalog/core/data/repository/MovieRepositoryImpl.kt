@@ -19,49 +19,42 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     override suspend fun getPopular(page: Int) = withContext(Dispatchers.IO) {
-        delay(1000L)
         executeWithResponse {
             network.getPopular(page)
         }
     }
 
     override suspend fun getTopRated(page: Int) = withContext(Dispatchers.IO) {
-        delay(1000L)
         executeWithResponse {
             network.getTopRated(page)
         }
     }
 
     override suspend fun getUpComing(page: Int) = withContext(Dispatchers.IO) {
-        delay(1000L)
         executeWithResponse {
             network.getUpComing(page)
         }
     }
 
     override fun getNowPlaying(page: Int) = flow {
-        delay(1000L)
         emit(executeWithResponse {
             network.getNowPlaying(page)
         })
     }.flowOn(Dispatchers.IO)
 
     override fun getDetailMovie(movieId: String, language: String): Flow<Result<MovieDetailModel>> = flow {
-        delay(1000L)
         emit(executeWithResponse {
             network.getDetailMovie(movieId = movieId, language = language)
         })
     }.flowOn(Dispatchers.IO)
 
     override suspend fun searchMovie(page: Int, searchModel: MovieSearchModel) = withContext(Dispatchers.IO) {
-        delay(1000L)
         executeWithResponse {
             network.searchMovie(page, searchModel)
         }
     }
 
     override fun getCredits(movieId: String) : Flow<Result<CreditsModel>> = flow {
-        delay(1000L)
         emit(executeWithResponse {
             network.getCredits(movieId = movieId)
         })

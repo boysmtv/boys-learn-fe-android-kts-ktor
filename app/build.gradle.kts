@@ -30,6 +30,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:ui"))
     implementation(project(":feature:movie"))
 
     implementation(libs.androidx.core.ktx)

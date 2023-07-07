@@ -1,6 +1,8 @@
 package com.kotlin.learn.catalog.movie.presentation.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ import com.kotlin.learn.catalog.movie.presentation.viewmodel.SearchViewModel
 import com.kotlin.learn.catalog.movie.util.common.SearchLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -61,10 +64,26 @@ class SearchFragment : Fragment() {
 
     private fun setupEditTextChanged() = with(binding) {
         viewAnimator.invisible()
-        btnSearch.setOnClickListener {
-            viewAnimator.show()
-            viewModel.searchMovie(etSearch.text.toString())
-        }
+
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) {
+                    viewAnimator.show()
+                    viewModel.searchMovie(s.toString())
+                }
+            }
+        })
     }
 
     private fun setupAdapter() = with(binding) {
