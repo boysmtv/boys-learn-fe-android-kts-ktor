@@ -1,15 +1,16 @@
-package com.kotlin.learn.catalog.movie.adapter
+package com.kotlin.learn.catalog.movie.util.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.kotlin.learn.catalog.core.utilities.hide
 import com.kotlin.learn.catalog.feature.movie.databinding.ViewLoadStateBinding
 
-class CommonLoadStateAdapter(
+class LoadStateAdapter(
     private val retry: () -> Unit
-) : LoadStateAdapter<CommonLoadStateAdapter.ViewHolder>() {
+) : LoadStateAdapter<com.kotlin.learn.catalog.movie.util.common.MovieLoadStateAdapter.LoadStateAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
         holder.bind(loadState)
@@ -28,8 +29,11 @@ class CommonLoadStateAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.viewCommonError.apply {
-                buttonRetry.setOnClickListener { retry.invoke() }
+            with(binding) {
+                lyShimmer.root.hide()
+                viewCommonError.apply {
+                    buttonRetry.setOnClickListener { retry.invoke() }
+                }
             }
         }
 
@@ -40,7 +44,7 @@ class CommonLoadStateAdapter(
                 }
 
                 when (loadState) {
-                    is LoadState.NotLoading -> { }
+                    is LoadState.NotLoading -> {}
                     LoadState.Loading -> root.displayedChild = 0
                     is LoadState.Error -> root.displayedChild = 1
                 }

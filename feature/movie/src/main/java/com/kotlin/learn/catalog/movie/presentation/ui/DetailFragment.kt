@@ -75,8 +75,8 @@ class DetailFragment : Fragment() {
 
     private fun initialAdapter() = with(binding) {
         val castAdapter = DetailCastAdapter(activity)
-        castAdapter.addFragment(DetailCrewFragment(), "Cast")
-        castAdapter.addFragment(DetailCrewFragment(), "Director & Crew")
+        castAdapter.addFragment(CrewFragment(), "Cast")
+        castAdapter.addFragment(CrewFragment(), "Director & Crew")
 
         tlDetailCast.apply {
             tabGravity = TabLayout.GRAVITY_FILL

@@ -19,7 +19,7 @@ import com.kotlin.learn.catalog.core.utilities.extension.capitalize
 import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentSeeAllBinding
-import com.kotlin.learn.catalog.movie.adapter.CommonLoadStateAdapter
+import com.kotlin.learn.catalog.movie.util.common.LoadStateAdapter
 import com.kotlin.learn.catalog.movie.adapter.SeeAllAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,8 +87,8 @@ class SeeAllFragment : Fragment() {
                     requireContext(), LinearLayoutManager.VERTICAL, false
                 )
                 adapter = seeAllAdapter.withLoadStateHeaderAndFooter(
-                    CommonLoadStateAdapter { seeAllAdapter.retry() },
-                    CommonLoadStateAdapter { seeAllAdapter.retry() }
+                    LoadStateAdapter { seeAllAdapter.retry() },
+                    LoadStateAdapter { seeAllAdapter.retry() }
                 )
             }
 

@@ -10,82 +10,62 @@ import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kotlin.learn.catalog.core.model.MovieDataModel
-import com.kotlin.learn.catalog.core.nav.navigator.MovieNavigator
-import com.kotlin.learn.catalog.core.utilities.extension.launch
-import com.kotlin.learn.catalog.core.utilities.invisible
-import com.kotlin.learn.catalog.core.utilities.show
 import com.kotlin.learn.catalog.feature.movie.R
-import com.kotlin.learn.catalog.feature.movie.databinding.FragmentSearchBinding
-import com.kotlin.learn.catalog.movie.adapter.SearchAdapter
-import com.kotlin.learn.catalog.movie.presentation.viewmodel.SearchViewModel
+import com.kotlin.learn.catalog.feature.movie.databinding.FragmentCrewBinding
+import com.kotlin.learn.catalog.movie.adapter.CrewAdapter
+import com.kotlin.learn.catalog.movie.presentation.viewmodel.CrewViewModel
 import com.kotlin.learn.catalog.movie.util.common.SearchLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class CrewFragment : Fragment() {
 
-    private val searchAdapter = SearchAdapter(this::onMovieClicked)
+    private val crewAdapter = CrewAdapter()
 
-    private lateinit var binding: FragmentSearchBinding
+    private lateinit var binding: FragmentCrewBinding
 
-    private val viewModel: SearchViewModel by viewModels()
-
-    @Inject
-    lateinit var movieNavigator: MovieNavigator
+    private val viewModel : CrewViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
+        binding = FragmentCrewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        subscribeSearch()
+        subscribeCrew()
         setupView()
     }
 
-    private fun subscribeSearch() = with(viewModel) {
-        searchMovie.launch(this@SearchFragment) {
-            searchAdapter.submitData(it)
-        }
+    private fun subscribeCrew() = with(viewModel){
+
     }
 
-    private fun setupView() = with(binding) {
+    private fun setupView(){
         setupAdapter()
-        setupEditTextChanged()
-    }
-
-    private fun setupEditTextChanged() = with(binding) {
-        viewAnimator.invisible()
-        btnSearch.setOnClickListener {
-            viewAnimator.show()
-            viewModel.searchMovie(etSearch.text.toString())
-        }
     }
 
     private fun setupAdapter() = with(binding) {
-        rvSearch.apply {
+        rvCrew.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(), LinearLayoutManager.VERTICAL, false
             )
-            adapter = searchAdapter.withLoadStateHeaderAndFooter(
-                SearchLoadStateAdapter { searchAdapter.retry() },
-                SearchLoadStateAdapter { searchAdapter.retry() }
+            adapter = crewAdapter.withLoadStateHeaderAndFooter(
+                SearchLoadStateAdapter { crewAdapter.retry() },
+                SearchLoadStateAdapter { crewAdapter.retry() }
             )
         }
 
-        searchAdapter.addLoadStateListener { loadState ->
+        crewAdapter.addLoadStateListener { loadState ->
             when (loadState.source.refresh) {
                 is LoadState.Loading -> {
                     viewAnimator.displayedChild = 0
                 }
 
                 is LoadState.NotLoading -> {
-                    if (searchAdapter.itemCount == 0) {
+                    if (crewAdapter.itemCount == 0) {
                         setViewBasedOnState(loadState, getString(R.string.empty_data_title))
                         viewAnimator.displayedChild = 2
                     } else viewAnimator.displayedChild = 1
@@ -108,14 +88,10 @@ class SearchFragment : Fragment() {
                 errorMessage.text = message
                 buttonRetry.apply {
                     isVisible = loadState.source.refresh is LoadState.Error
-                    setOnClickListener { searchAdapter.retry() }
+                    setOnClickListener { crewAdapter.retry() }
                 }
             }
             viewAnimator.displayedChild = 2
         }
-    }
-
-    private fun onMovieClicked(item: MovieDataModel) {
-        movieNavigator.fromSearchToDetail(this, item)
     }
 }
