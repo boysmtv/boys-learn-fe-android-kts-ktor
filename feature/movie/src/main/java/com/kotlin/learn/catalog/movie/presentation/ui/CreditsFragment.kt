@@ -59,7 +59,7 @@ class CreditsFragment(
                     viewAnimator.displayedChild = 2
                     showErrorView(
                         it.throwable.message
-                            ?: "Error occured when fetching data from server. Please try again"
+                            ?: "Error occurred when fetching data from server. Please try again"
                     )
                 }
             }

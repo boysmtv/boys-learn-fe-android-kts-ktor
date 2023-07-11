@@ -18,10 +18,10 @@ import com.kotlin.learn.catalog.core.utilities.extension.launch
 import com.kotlin.learn.catalog.feature.movie.R
 import com.kotlin.learn.catalog.feature.movie.databinding.FragmentHomeBinding
 import com.kotlin.learn.catalog.feature.movie.databinding.MovieHomeBinding
-import com.kotlin.learn.catalog.movie.util.common.MovieLoadStateAdapter
 import com.kotlin.learn.catalog.movie.adapter.MovieAdapter
 import com.kotlin.learn.catalog.movie.adapter.MovieBannerAdapter
 import com.kotlin.learn.catalog.movie.presentation.viewmodel.HomeViewModel
+import com.kotlin.learn.catalog.movie.util.common.MovieLoadStateAdapter
 import com.zhpan.bannerview.constants.PageStyle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -122,7 +122,12 @@ class HomeFragment : Fragment() {
 
                     is LoadState.NotLoading -> {
                         if (movieAdapter.itemCount == 0) {
-                            setViewBasedOnState(layoutBinding, loadState, getString(R.string.empty_data_title))
+                            setViewBasedOnState(
+                                layoutBinding,
+                                movieAdapter,
+                                loadState,
+                                getString(R.string.empty_data_title)
+                            )
                             viewAnimator.displayedChild = 2
                         } else {
                             viewAnimator.displayedChild = 1
@@ -132,7 +137,7 @@ class HomeFragment : Fragment() {
 
                     is LoadState.Error -> {
                         val errorMessage = (loadState.source.refresh as LoadState.Error).error.message
-                        setViewBasedOnState(layoutBinding, loadState, errorMessage.toString())
+                        setViewBasedOnState(layoutBinding, movieAdapter, loadState, errorMessage.toString())
                     }
                 }
             }
@@ -140,6 +145,7 @@ class HomeFragment : Fragment() {
 
     private fun setViewBasedOnState(
         binding: MovieHomeBinding,
+        movieAdapter: MovieAdapter,
         loadState: CombinedLoadStates,
         message: String
     ) {
@@ -148,7 +154,7 @@ class HomeFragment : Fragment() {
                 errorMessage.text = message
                 buttonRetry.apply {
                     isVisible = loadState.source.refresh is LoadState.Error
-                    setOnClickListener { adapterPopular.retry() }
+                    setOnClickListener { movieAdapter.retry() }
                 }
             }
             viewAnimator.displayedChild = 2
