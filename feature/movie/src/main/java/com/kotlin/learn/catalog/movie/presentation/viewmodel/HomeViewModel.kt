@@ -38,10 +38,10 @@ class HomeViewModel @Inject constructor(
         nowPlayingMovies()
     }
 
-    private fun nowPlayingMovies() {
-        movieUseCase.getBanner(1).onEach {
-            _nowPlayingMovies.value = it
-        }.launchIn(viewModelScope)
+    fun nowPlayingMovies() {
+        movieUseCase.getBanner(1)
+            .onEach { _nowPlayingMovies.value = it }
+            .launchIn(viewModelScope)
     }
 
 }
