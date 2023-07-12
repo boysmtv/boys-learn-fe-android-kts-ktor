@@ -1,8 +1,0 @@
-1<?xml version="1.0" encoding="utf-8"?>
-2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.kotlin.learn.catalog.core.utilities" >
-4
-5    <uses-sdk android:minSdkVersion="24" />
-5-->D:\Work\Pribadi\AndroidProject\boys-learn-fe-android-kts-ktor\core\utilities\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest14816155945989949118.xml
-6
-7</manifest>

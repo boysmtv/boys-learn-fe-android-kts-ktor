@@ -11,9 +11,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.catalog.core.common.Result
-import com.kotlin.learn.catalog.core.common.isError
 import com.kotlin.learn.catalog.core.model.MovieDataModel
-import com.kotlin.learn.catalog.core.model.MovieModel
 import com.kotlin.learn.catalog.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.catalog.core.utilities.MovieCategories
 import com.kotlin.learn.catalog.core.utilities.extension.launch
@@ -59,12 +57,16 @@ class HomeFragment : Fragment() {
         subscribeBanner()
     }
 
-    private fun setupSwipeRefresh() {
-        binding.swipeRefresh.setOnRefreshListener {
-            viewModel.nowPlayingMovies()
-            binding.swipeRefresh.isRefreshing = false
+    private fun setupSwipeRefresh() = with(binding) {
+        swipeRefresh.apply {
+            setOnRefreshListener {
+                viewModel.nowPlayingMovies()
+                isRefreshing = false
+            }
         }
-
+        adapterPopular.retry()
+        adapterTopRated.retry()
+        adapterUpComing.retry()
     }
 
     private fun subscribeMovie() = with(viewModel) {

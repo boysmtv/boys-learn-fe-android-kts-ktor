@@ -1,7 +1,9 @@
 package com.kotlin.learn.catalog.core.network.di
 
-import com.kotlin.learn.catalog.core.network.source.NetworkDataSource
-import com.kotlin.learn.catalog.core.network.source.NetworkDataSourceImpl
+import com.kotlin.learn.catalog.core.network.source.AuthDataSource
+import com.kotlin.learn.catalog.core.network.source.AuthDataSourceImpl
+import com.kotlin.learn.catalog.core.network.source.MovieDataSource
+import com.kotlin.learn.catalog.core.network.source.MovieDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,6 +12,11 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataSourceModule {
+
     @Binds
-    fun NetworkDataSourceImpl.binds(): NetworkDataSource
+    fun MovieDataSourceImpl.binds(): MovieDataSource
+
+    @Binds
+    fun AuthDataSourceImpl.binds(): AuthDataSource
+
 }

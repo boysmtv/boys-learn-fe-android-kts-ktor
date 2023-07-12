@@ -18,7 +18,6 @@ import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.plugins.resources.get
 import io.ktor.http.URLProtocol
 import io.ktor.http.appendPathSegments
-import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 

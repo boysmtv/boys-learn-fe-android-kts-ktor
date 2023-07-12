@@ -30,7 +30,7 @@ class MovieUseCaseImpl @Inject constructor(
     }
 
     override fun getBanner(page: Int): Flow<Result<MovieModel>> {
-        return movieRepository.getNowPlaying(page = 1)
+        return movieRepository.getBanner(page = 1)
     }
 
     override fun getDetailMovie(movieId: String, language: String): Flow<Result<MovieDetailModel>> {

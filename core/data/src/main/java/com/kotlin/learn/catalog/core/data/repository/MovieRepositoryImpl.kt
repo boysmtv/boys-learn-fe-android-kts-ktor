@@ -5,9 +5,8 @@ import com.kotlin.learn.catalog.core.common.executeWithResponse
 import com.kotlin.learn.catalog.core.model.CreditsModel
 import com.kotlin.learn.catalog.core.model.MovieDetailModel
 import com.kotlin.learn.catalog.core.model.MovieSearchModel
-import com.kotlin.learn.catalog.core.network.source.NetworkDataSource
+import com.kotlin.learn.catalog.core.network.source.MovieDataSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -15,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val network: NetworkDataSource
+    private val network: MovieDataSource
 ) : MovieRepository {
 
     override suspend fun getPopular(page: Int) = withContext(Dispatchers.IO) {
@@ -36,7 +35,7 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getNowPlaying(page: Int) = flow {
+    override fun getBanner(page: Int) = flow {
         emit(executeWithResponse {
             network.getNowPlaying(page)
         })

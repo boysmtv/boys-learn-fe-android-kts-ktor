@@ -15,7 +15,7 @@ interface MovieRepository {
 
     suspend fun getUpComing(page: Int): Result<MovieModel>
 
-    fun getNowPlaying(page: Int): Flow<Result<MovieModel>>
+    fun getBanner(page: Int): Flow<Result<MovieModel>>
 
     fun getDetailMovie(movieId: String, language: String): Flow<Result<MovieDetailModel>>
 
