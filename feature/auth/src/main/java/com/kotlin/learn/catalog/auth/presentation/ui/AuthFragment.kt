@@ -15,9 +15,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
 
-    private val viewModel: AuthViewModel by viewModels()
-
     private lateinit var binding: FragmentAuthBinding
+
+    private val viewModel: AuthViewModel by viewModels()
 
     @Inject
     lateinit var authNavigator: AuthNavigator

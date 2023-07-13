@@ -31,6 +31,7 @@
     <color name="color_grey_background_dialog_details">#ECEEF2</color>
     <color name="color_green_text_dialog_details">#20A273</color>
     <color name="color_grey_text_dialog_details">#B8303B4A</color>
+    <color name="colorOnButton">#203F50</color>
     <!--  endregion  -->
 
     <color name="colorBlack">#FF000000</color>

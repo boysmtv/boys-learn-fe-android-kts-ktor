@@ -6,27 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.kotlin.learn.catalog.auth.presentation.viewmodel.RegisterViewModel
-import com.kotlin.learn.catalog.core.nav.navigator.AuthNavigator
-import com.kotlin.learn.catalog.feature.auth.databinding.FragmentRegisterBinding
+import com.kotlin.learn.catalog.auth.presentation.viewmodel.GreetingsViewModel
+import com.kotlin.learn.catalog.feature.auth.databinding.FragmentGreetingsBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment() {
+class GreetingsFragment : Fragment() {
 
-    private lateinit var binding: FragmentRegisterBinding
+    private lateinit var binding: FragmentGreetingsBinding
 
-    private val viewModel: RegisterViewModel by viewModels()
-
-    @Inject
-    lateinit var authNavigator: AuthNavigator
+    private val viewModel: GreetingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        binding = FragmentGreetingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,4 +37,5 @@ class RegisterFragment : Fragment() {
     private fun setupListener() {
 
     }
+
 }
