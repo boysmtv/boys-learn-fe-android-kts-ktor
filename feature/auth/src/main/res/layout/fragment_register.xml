@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_wallpaper_potrait_blue_gradient"
     tools:context="com.kotlin.learn.catalog.auth.presentation.ui.RegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +18,7 @@
             android:id="@+id/iv_back"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
-            android:src="@drawable/ic_action_back"
+            android:src="@drawable/ic_action_back_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +30,9 @@
             android:layout_marginTop="@dimen/dp_32"
             android:fontFamily="@font/tt_interphases_bold"
             android:text="@string/register_label"
-            app:layout_constraintTop_toBottomOf="@+id/iv_back"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textColor="@android:color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_back" />
 
         <TextView
             android:id="@+id/tv_title_create"
@@ -40,6 +42,7 @@
             android:layout_marginTop="@dimen/dp_8"
             android:fontFamily="@font/tt_interphases_regular"
             android:text="@string/create_an_new_account_label"
+            android:textColor="@android:color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -49,9 +52,9 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="-40dp"
         app:cardCornerRadius="@dimen/dp_40"
         app:cardElevation="@dimen/dp_16"
-        android:layout_marginBottom="-40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +88,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_16"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:drawableRight="@drawable/ic_action_checklist_blue"
                     android:fontFamily="@font/tt_interphases_bold"
                     android:hint="@string/first_name_hint"
                     android:importantForAutofill="no"
@@ -111,6 +116,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_16"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:drawableRight="@drawable/ic_action_checklist_blue"
                     android:fontFamily="@font/tt_interphases_bold"
                     android:hint="@string/last_name_hint"
                     android:importantForAutofill="no"
@@ -146,6 +153,8 @@
                     android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:drawableRight="@drawable/ic_action_checklist_blue"
                     android:fontFamily="@font/tt_interphases_bold"
                     android:hint="@string/phone_hint"
                     android:importantForAutofill="no"
@@ -180,6 +189,8 @@
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:drawableRight="@drawable/ic_action_checklist_blue"
                     android:fontFamily="@font/tt_interphases_bold"
                     android:hint="@string/email_hint"
                     android:importantForAutofill="no"
@@ -214,6 +225,8 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:drawableRight="@drawable/ic_action_checklist_blue"
                     android:fontFamily="@font/tt_interphases_bold"
                     android:hint="@string/password_hint"
                     android:importantForAutofill="no"
@@ -231,7 +244,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
+                android:background="@drawable/button_rounded_color"
                 android:text="@string/register_label"
+                android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_password" />
 
@@ -259,7 +274,7 @@
                 android:fontFamily="@font/tt_interphases_bold"
                 android:gravity="center"
                 android:text="@string/tnc_link_label"
-                android:textColor="@color/colorSecondaryVariant"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tnc_title" />
@@ -288,13 +303,13 @@
                 <TextView
                     android:id="@+id/tv_login_link"
                     style="@style/TextAppearance.AppCompat.Medium"
-                    android:fontFamily="@font/tt_interphases_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_8"
+                    android:fontFamily="@font/tt_interphases_bold"
                     android:gravity="center"
                     android:text="@string/register_login_link_label"
-                    android:textColor="@color/colorSecondaryVariant"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_login_title"
                     app:layout_constraintStart_toEndOf="@+id/tv_login_title"

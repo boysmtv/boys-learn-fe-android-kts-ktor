@@ -2,8 +2,8 @@
 <resources>
 
     <!--region  Theme Color  -->
-    <color name="colorPrimary">#007DFE</color>
-    <color name="colorSecondary">#007DFE</color>
+    <color name="colorPrimary">#0cbcd4</color>
+    <color name="colorSecondary">#25c4db</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorError">#ED1C24</color>
     <color name="colorRed">#E70000</color>

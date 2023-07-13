@@ -20,4 +20,7 @@
     <string name="tnc_link_label"><![CDATA[Terms & Conditions]]></string>
     <string name="register_login_title_label">Already have an account?</string>
     <string name="register_login_link_label">Log In</string>
+    <string name="login_label">Log In</string>
+    <string name="login_instruction">Input your email and password</string>
+    <string name="register_instruction">Create an new account ?</string>
 </resources>
