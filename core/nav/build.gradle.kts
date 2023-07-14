@@ -12,7 +12,7 @@ apply {
 }
 
 android {
-    namespace = "com.kotlin.learn.catalog.core.nav"
+    namespace = "com.kotlin.learn.core.nav"
     viewBinding.isEnabled = true
 }
 

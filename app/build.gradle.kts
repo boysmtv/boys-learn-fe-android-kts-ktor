@@ -11,11 +11,11 @@ apply {
 }
 
 android {
-    namespace = "com.kotlin.learn.catalog"
+    namespace = "com.kotlin.learn"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.kotlin.learn.catalog"
+        applicationId = "com.kotlin.learn"
     }
 
     buildTypes {

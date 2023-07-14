@@ -11,7 +11,7 @@ apply {
 }
 
 android {
-    namespace = "com.kotlin.learn.catalog.core.model"
+    namespace = "com.kotlin.learn.core.model"
 }
 
 dependencies {

@@ -13,7 +13,7 @@ apply {
 apply(plugin = "org.jetbrains.kotlin.android")
 
 android {
-    namespace = "com.kotlin.learn.catalog.feature.movie"
+    namespace = "com.kotlin.learn.feature.movie"
     viewBinding.isEnabled = true
 }
 

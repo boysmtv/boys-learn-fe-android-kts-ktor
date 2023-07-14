@@ -10,11 +10,12 @@ apply {
 }
 
 android {
-    namespace = "com.kotlin.learn.catalog.core.ui"
+    namespace = "com.kotlin.learn.core.ui"
     viewBinding.isEnabled = true
 }
 
 dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.material)
 }

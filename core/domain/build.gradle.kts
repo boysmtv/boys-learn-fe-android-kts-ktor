@@ -10,7 +10,7 @@ apply {
 }
 
 android {
-    namespace = "com.kotlin.learn.catalog.core.domain"
+    namespace = "com.kotlin.learn.core.domain"
 }
 
 dependencies {

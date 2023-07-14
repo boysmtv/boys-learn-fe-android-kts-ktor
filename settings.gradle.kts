@@ -15,7 +15,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "LearnKtorHiltCatalogPagging"
+rootProject.name = "movie-based"
 include(":app")
 include(":core:common")
 include(":core:data")
@@ -25,6 +25,6 @@ include(":core:network")
 include(":core:utilities")
 include(":core:nav")
 include(":core:ui")
-include(":feature:movie")
 include(":feature:splashscreen")
+include(":feature:movie")
 include(":feature:auth")

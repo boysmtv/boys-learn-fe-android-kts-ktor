@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_wallpaper_portrait_blue_gradient"
-    tools:context="com.kotlin.learn.catalog.auth.presentation.ui.AuthFragment">
-
+    tools:context=".presentation.ui.AuthFragment">
 
     <ImageView
         android:id="@+id/iv_back"

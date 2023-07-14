@@ -1,4 +1,4 @@
-package com.kotlin.learn.catalog.core.ui
+package com.kotlin.learn.core.ui
 
 import org.junit.Test
 

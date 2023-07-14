@@ -1,4 +1,4 @@
-package com.kotlin.learn.catalog.movie
+package com.kotlin.learn.movie
 
 import org.junit.Test
 

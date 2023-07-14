@@ -13,7 +13,7 @@ apply {
 apply(plugin = "org.jetbrains.kotlin.android")
 
 android {
-    namespace = "com.kotlin.learn.catalog.feature.auth"
+    namespace = "com.kotlin.learn.feature.auth"
     viewBinding.isEnabled = true
 }
 

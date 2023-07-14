@@ -5,19 +5,18 @@
     android:id="@+id/nav_graph_movie"
     app:startDestination="@id/homeFragment">
 
-
     <fragment
-        android:id="@+id/splashScreen"
-        android:name="com.kotlin.learn.splashscreen.SplashActivity"
-        tools:layout="@layout/activity_splash">
+        android:id="@+id/splashFragment"
+        android:name="com.kotlin.learn.feature.splashscreen.SplashFragment"
+        tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashScreen_to_homeFragment"
+            android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.kotlin.learn.catalog.movie.presentation.ui.HomeFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
@@ -32,7 +31,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.kotlin.learn.catalog.movie.presentation.ui.DetailFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.DetailFragment"
         tools:layout="@layout/fragment_detail">
 
         <argument
@@ -42,7 +41,7 @@
 
     <fragment
         android:id="@+id/seeAllFragment"
-        android:name="com.kotlin.learn.catalog.movie.presentation.ui.SeeAllFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SeeAllFragment"
         tools:layout="@layout/fragment_see_all">
 
         <argument
@@ -56,7 +55,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.kotlin.learn.catalog.movie.presentation.ui.SearchFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SearchFragment"
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_detailFragment"

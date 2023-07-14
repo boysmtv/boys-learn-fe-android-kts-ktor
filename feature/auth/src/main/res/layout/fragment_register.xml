@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_wallpaper_potrait_blue_gradient"
-    tools:context="com.kotlin.learn.catalog.auth.presentation.ui.RegisterFragment">
+    tools:context=".presentation.ui.RegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_header"

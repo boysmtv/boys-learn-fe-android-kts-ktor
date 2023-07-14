@@ -1,4 +1,4 @@
-package com.kotlin.learn.catalog.movie
+package com.kotlin.learn.movie
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.kotlin.learn.catalog.movie.test", appContext.packageName)
+        assertEquals("com.kotlin.learn.feature.movie.test", appContext.packageName)
     }
 }

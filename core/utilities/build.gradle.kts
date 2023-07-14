@@ -9,7 +9,7 @@ apply {
 }
 
 android {
-    namespace = "com.kotlin.learn.catalog.core.utilities"
+    namespace = "com.kotlin.learn.core.utilities"
 }
 
 dependencies{
