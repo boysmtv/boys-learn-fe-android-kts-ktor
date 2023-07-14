@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.kotlin.learn.feature.auth.presentation.viewmodel.GreetingsViewModel
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
+import com.kotlin.learn.feature.auth.presentation.viewmodel.GreetingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,8 +34,10 @@ class GreetingsFragment : Fragment() {
 
     }
 
-    private fun setupListener() {
+    private fun setupListener() = with(binding) {
+        btnEmail.setOnClickListener {
 
+        }
     }
 
 }
