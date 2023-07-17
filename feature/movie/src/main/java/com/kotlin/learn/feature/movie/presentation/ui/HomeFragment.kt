@@ -1,25 +1,23 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
-import com.kotlin.learn.feature.movie.databinding.FragmentHomeBinding
-import com.kotlin.learn.feature.movie.databinding.MovieHomeBinding
 import com.kotlin.learn.feature.movie.adapter.MovieAdapter
 import com.kotlin.learn.feature.movie.adapter.MovieBannerAdapter
+import com.kotlin.learn.feature.movie.databinding.FragmentHomeBinding
+import com.kotlin.learn.feature.movie.databinding.MovieHomeBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.HomeViewModel
 import com.kotlin.learn.feature.movie.util.common.MovieLoadStateAdapter
 import com.zhpan.bannerview.constants.PageStyle
@@ -27,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val adapterPopular = MovieAdapter(this::onMovieClicked)
     private val adapterTopRated = MovieAdapter(this::onMovieClicked)
@@ -35,24 +33,13 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var binding: FragmentHomeBinding
-
     @Inject
     lateinit var movieNavigator: MovieNavigator
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupSwipeRefresh()
         subscribeMovie()
-        setupView()
+        setupAdapter()
         setupViewPager()
         subscribeBanner()
     }
@@ -96,14 +83,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupView() = with(binding) {
+    override fun setupView() = with(binding) {
         layoutPopular.tvMoviePopularTitle.text = getString(R.string.popular_title)
+        layoutTopRated.tvMoviePopularTitle.text = getString(R.string.top_rated_title)
+        layoutUpComing.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
+    }
+
+    private fun setupAdapter() = with(binding) {
         setupAdapterMovie(layoutPopular, adapterPopular, MovieCategories.POPULAR)
 
-        layoutTopRated.tvMoviePopularTitle.text = getString(R.string.top_rated_title)
         setupAdapterMovie(layoutTopRated, adapterTopRated, MovieCategories.TOP_RATED)
 
-        layoutUpComing.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
         setupAdapterMovie(layoutUpComing, adapterUpComing, MovieCategories.UP_COMING)
 
         ivSearch.setOnClickListener {

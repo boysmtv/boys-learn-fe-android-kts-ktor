@@ -1,18 +1,16 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.CreditsModel
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
-import com.kotlin.learn.feature.movie.databinding.FragmentCreditsBinding
 import com.kotlin.learn.feature.movie.adapter.CreditsAdapter
+import com.kotlin.learn.feature.movie.databinding.FragmentCreditsBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.CreditsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,27 +18,21 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreditsFragment(
     private val isCrew: Boolean = Constant.FALSE,
     private val movieId: String
-) : Fragment() {
+) : BaseFragment<FragmentCreditsBinding>(FragmentCreditsBinding::inflate) {
 
     private val castAdapter = CreditsAdapter.Cast()
     private val crewAdapter = CreditsAdapter.Crew()
 
-    private lateinit var binding: FragmentCreditsBinding
-
     private val viewModel: CreditsViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCreditsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         subscribeCredits()
-        setupView()
+        setupAdapter()
         setupInit()
+    }
+
+    override fun setupView() {
+
     }
 
     private fun subscribeCredits() = with(binding) {
@@ -69,10 +61,6 @@ class CreditsFragment(
     private fun loadContent(it: CreditsModel) {
         if (isCrew) crewAdapter.submitList(it.crew)
         else castAdapter.submitList(it.cast)
-    }
-
-    private fun setupView() {
-        setupAdapter()
     }
 
     private fun setupInit() {

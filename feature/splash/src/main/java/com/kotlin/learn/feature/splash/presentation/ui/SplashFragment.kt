@@ -20,8 +20,4 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         }, 3000)
     }
 
-    override fun setupListener() {
-
-    }
-
 }

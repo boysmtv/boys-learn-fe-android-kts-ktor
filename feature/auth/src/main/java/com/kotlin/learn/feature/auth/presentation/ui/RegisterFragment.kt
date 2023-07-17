@@ -1,44 +1,34 @@
 package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.kotlin.learn.feature.auth.presentation.viewmodel.RegisterViewModel
+import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
+import com.kotlin.learn.feature.auth.presentation.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment() {
-
-    private lateinit var binding: FragmentRegisterBinding
+class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
 
     private val viewModel: RegisterViewModel by viewModels()
 
     @Inject
     lateinit var authNavigator: AuthNavigator
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupView()
+        super.onViewCreated(view, savedInstanceState)
         setupListener()
     }
 
-    private fun setupView() = with(binding) {
+    override fun setupView() = with(binding) {
         cvRegister.setBackgroundResource(R.drawable.card_rounded_top)
+    }
 
+    private fun setupListener() = with(binding) {
         tvLogin.setOnClickListener {
             authNavigator.fromRegisterToAuth(this@RegisterFragment)
         }
@@ -46,10 +36,6 @@ class RegisterFragment : Fragment() {
         ivBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-    }
-
-    private fun setupListener() {
-
     }
 
 }

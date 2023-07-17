@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.extension.launch
@@ -20,6 +21,7 @@ import com.kotlin.learn.core.utilities.show
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.FragmentSearchBinding
 import com.kotlin.learn.feature.movie.adapter.SearchAdapter
+import com.kotlin.learn.feature.movie.databinding.FragmentHomeBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SearchViewModel
 import com.kotlin.learn.feature.movie.util.common.SearchLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,28 +29,19 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+    class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val searchAdapter = SearchAdapter(this::onMovieClicked)
-
-    private lateinit var binding: FragmentSearchBinding
 
     private val viewModel: SearchViewModel by viewModels()
 
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         subscribeSearch()
-        setupView()
+        setupEditTextChanged()
+        setupAdapter()
     }
 
     private fun subscribeSearch() = with(viewModel) {
@@ -57,9 +50,8 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun setupView() = with(binding) {
-        setupAdapter()
-        setupEditTextChanged()
+    override fun setupView() {
+
     }
 
     private fun setupEditTextChanged() = with(binding) {
