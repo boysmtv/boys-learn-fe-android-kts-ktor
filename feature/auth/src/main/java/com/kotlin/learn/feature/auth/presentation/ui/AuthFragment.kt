@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.kotlin.learn.feature.auth.presentation.viewmodel.AuthViewModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.feature.auth.databinding.FragmentAuthBinding
+import com.kotlin.learn.feature.auth.presentation.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,8 +39,17 @@ class AuthFragment : Fragment() {
 
     }
 
-    private fun setupListener() {
+    private fun setupListener() = with(binding) {
+        btnLogin.setOnClickListener {
 
+        }
+
+        tvRegister.setOnClickListener {
+            authNavigator.fromAuthToRegister(this@AuthFragment)
+        }
+        ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
 }

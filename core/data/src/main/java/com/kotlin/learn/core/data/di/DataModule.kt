@@ -1,5 +1,7 @@
 package com.kotlin.learn.core.data.di
 
+import com.kotlin.learn.core.data.repository.AuthRepository
+import com.kotlin.learn.core.data.repository.AuthRepositoryImpl
 import com.kotlin.learn.core.data.repository.MovieRepository
 import com.kotlin.learn.core.data.repository.MovieRepositoryImpl
 import dagger.Binds
@@ -13,7 +15,12 @@ interface DataModule {
 
     @Binds
     fun bindMovieRepository(
-        latestSmartphoneRepositoryImpl: MovieRepositoryImpl,
+        movieRepositoryImpl: MovieRepositoryImpl,
     ): MovieRepository
+
+    @Binds
+    fun bindAuthRepository(
+        authRepositoryImpl: AuthRepositoryImpl,
+    ): AuthRepository
 
 }

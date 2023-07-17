@@ -10,6 +10,7 @@ apply {
 
 android {
     namespace = "com.kotlin.learn.core.common"
+    viewBinding.isEnabled = true
 }
 
 dependencies {

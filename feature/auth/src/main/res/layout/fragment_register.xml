@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_wallpaper_potrait_blue_gradient"
+    android:background="@drawable/bg_wallpaper_portrait_blue_gradient"
     tools:context=".presentation.ui.RegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginTop="@dimen/dp_24"
             android:fontFamily="@font/tt_interphases_bold"
             android:text="@string/register_label"
             android:textColor="@android:color/white"
@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/tv_title_create"
-            style="@style/TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
@@ -49,11 +49,9 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cv_register"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="-40dp"
-        app:cardCornerRadius="@dimen/dp_40"
         app:cardElevation="@dimen/dp_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +61,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_32"
             android:padding="@dimen/dp_32">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,6 +94,7 @@
                     android:paddingTop="@dimen/dp_16"
                     android:paddingBottom="@dimen/dp_20"
                     android:textColor="@color/colorOnButton"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintEnd_toStartOf="@+id/et_lastName"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_firstName" />
@@ -125,6 +123,7 @@
                     android:paddingTop="@dimen/dp_16"
                     android:paddingBottom="@dimen/dp_20"
                     android:textColor="@color/colorOnButton"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/et_firstName"
                     app:layout_constraintTop_toBottomOf="@+id/tv_lastName" />
@@ -135,7 +134,7 @@
                 android:id="@+id/cl_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_32"
+                android:layout_marginTop="@dimen/dp_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_name">
 
@@ -162,6 +161,7 @@
                     android:paddingTop="@dimen/dp_16"
                     android:paddingBottom="@dimen/dp_20"
                     android:textColor="@color/colorOnButton"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
 
@@ -171,7 +171,7 @@
                 android:id="@+id/cl_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_32"
+                android:layout_marginTop="@dimen/dp_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_phone">
 
@@ -198,6 +198,7 @@
                     android:paddingTop="@dimen/dp_16"
                     android:paddingBottom="@dimen/dp_20"
                     android:textColor="@color/colorOnButton"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_email" />
 
@@ -207,7 +208,7 @@
                 android:id="@+id/cl_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_32"
+                android:layout_marginTop="@dimen/dp_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_email">
 
@@ -234,6 +235,7 @@
                     android:paddingTop="@dimen/dp_16"
                     android:paddingBottom="@dimen/dp_20"
                     android:textColor="@color/colorOnButton"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_password" />
 
@@ -247,6 +249,7 @@
                 android:background="@drawable/button_rounded_color"
                 android:text="@string/register_label"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_password" />
 
@@ -261,6 +264,7 @@
                 android:gravity="center"
                 android:text="@string/tnc_title_label"
                 android:textColor="@color/colorLayoutSeparator"
+                android:textSize="@dimen/sp_14"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_register" />
@@ -275,6 +279,7 @@
                 android:gravity="center"
                 android:text="@string/tnc_link_label"
                 android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_14"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tnc_title" />
@@ -282,7 +287,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_32"
+                android:layout_marginTop="@dimen/dp_16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tnc_link">
@@ -295,13 +300,14 @@
                     android:fontFamily="@font/tt_interphases_regular"
                     android:gravity="center"
                     android:text="@string/register_login_title_label"
+                    android:textSize="@dimen/sp_14"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_login_link"
+                    android:id="@+id/tv_login"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -310,6 +316,7 @@
                     android:gravity="center"
                     android:text="@string/register_login_link_label"
                     android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/sp_14"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_login_title"
                     app:layout_constraintStart_toEndOf="@+id/tv_login_title"

@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,9 @@
             android:id="@+id/iv_greetings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_32"
+            android:importantForAccessibility="no"
             android:src="@drawable/icon_greetings"
+            app:layout_constraintBottom_toTopOf="@+id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,11 +30,12 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_16"
             android:fontFamily="@font/tt_interphases_bold"
             android:text="@string/greetings_title"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/sp_28"
+            app:layout_constraintBottom_toTopOf="@id/tv_desc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_greetings" />
@@ -42,14 +44,15 @@
             android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginTop="@dimen/dp_16"
             android:fontFamily="@font/tt_interphases_regular"
             android:gravity="center"
             android:lineHeight="@dimen/dp_32"
             android:paddingStart="@dimen/dp_16"
             android:paddingEnd="@dimen/dp_16"
             android:text="@string/greetings_desc"
-            android:textSize="@dimen/sp_20"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintBottom_toTopOf="@+id/iv_dot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
@@ -59,8 +62,10 @@
             android:id="@+id/iv_dot"
             android:layout_width="5dp"
             android:layout_height="5dp"
-            android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
             android:src="@drawable/ic_dot"
+            app:layout_constraintBottom_toTopOf="@+id/btn_facebook"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
@@ -70,13 +75,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_16"
-            android:layout_marginTop="@dimen/dp_32"
             android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
             app:cardCornerRadius="@dimen/dp_16"
             app:cardElevation="@dimen/dp_16"
+            app:layout_constraintBottom_toTopOf="@+id/btn_google"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_dot">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -103,7 +108,7 @@
                     android:fontFamily="@font/tt_interphases_bold"
                     android:text="@string/continue_with_facebook"
                     android:textColor="@color/colorOnButton"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_facebook"
@@ -121,9 +126,9 @@
             android:layout_margin="@dimen/dp_16"
             app:cardCornerRadius="@dimen/dp_16"
             app:cardElevation="@dimen/dp_16"
+            app:layout_constraintBottom_toTopOf="@+id/btn_email"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_facebook">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -150,7 +155,7 @@
                     android:fontFamily="@font/tt_interphases_bold"
                     android:text="@string/continue_with_google"
                     android:textColor="@color/colorOnButton"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_google"
@@ -173,8 +178,7 @@
             app:cardElevation="@dimen/dp_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_google">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -201,7 +205,7 @@
                     android:fontFamily="@font/tt_interphases_bold"
                     android:text="@string/continue_with_email"
                     android:textColor="@color/colorOnButton"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_email"

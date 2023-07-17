@@ -1,5 +1,6 @@
 package com.kotlin.learn.core.nav.di
 
+import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import dagger.Module
 import dagger.Provides
@@ -13,6 +14,10 @@ class NavigatorModule {
 
     @Singleton
     @Provides
-    fun provideNavigator(): MovieNavigator = MovieNavigator()
+    fun provideMovieNavigator(): MovieNavigator = MovieNavigator()
+
+    @Singleton
+    @Provides
+    fun provideAuthNavigator(): AuthNavigator = AuthNavigator()
 
 }

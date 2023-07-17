@@ -5,7 +5,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.kotlin.learn.feature.auth.presentation.ui.AuthFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.GreetingsFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.RegisterFragmentDirections
-import com.kotlin.learn.feature.splashscreen.SplashFragmentDirections
+import com.kotlin.learn.feature.splash.presentation.ui.SplashFragmentDirections
 
 class AuthNavigator {
 
@@ -53,7 +53,7 @@ class AuthNavigator {
 
     fun fromAuthToRegister(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
-            AuthFragmentDirections.actionAuthFragmentToRegisterFragment2()
+            AuthFragmentDirections.actionAuthFragmentToRegisterFragment()
         )
     }
 

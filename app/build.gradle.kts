@@ -31,7 +31,9 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":feature:auth"))
     implementation(project(":feature:movie"))
+    implementation(project(":feature:splash"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -42,6 +44,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.timber)
     implementation(libs.androidx.navigation.fragment)
+    implementation(libs.com.android.support.multidex)
 
     kapt(libs.hilt.compiler)
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.feature.auth.presentation.viewmodel.RegisterViewModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -35,11 +36,20 @@ class RegisterFragment : Fragment() {
         setupListener()
     }
 
-    private fun setupView() {
+    private fun setupView() = with(binding) {
+        cvRegister.setBackgroundResource(R.drawable.card_rounded_top)
 
+        tvLogin.setOnClickListener {
+            authNavigator.fromRegisterToAuth(this@RegisterFragment)
+        }
+
+        ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun setupListener() {
 
     }
+
 }

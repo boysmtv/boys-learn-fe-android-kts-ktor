@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.kotlin.learn.feature.splashscreen.SplashFragment"
+        android:name="com.kotlin.learn.feature.splash.presentation.ui.SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_greetingsFragment"
@@ -83,7 +83,7 @@
             android:id="@+id/action_authFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_authFragment_to_registerFragment2"
+            android:id="@+id/action_authFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_authFragment_to_greetingsFragment"
