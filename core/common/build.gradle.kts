@@ -20,4 +20,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
     implementation(libs.material)
+    implementation(libs.androidx.security.security.crypto)
+    implementation(libs.com.squareup.moshi.moshi.kotlin)
 }

@@ -51,6 +51,10 @@ glideTransformations = "4.0.0"
 gson = "2.8.7"
 databinding = "8.0.2"
 multidex = "1.0.3"
+playServicesAuth = "19.0.0"
+moshi = "1.14.0"
+securityCrypto = "1.0.0"
+firebaseAuth = "22.1.0"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -145,11 +149,25 @@ androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jv
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common", version.ref = "lifecycleCommon" }
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+
+# External
 com-github-zhpanvip-bannerviewpager = { group = "com.github.zhpanvip", name = "bannerviewpager", version.ref = "bannerViewPager" }
 jp-wasabeef-blurry = { group = "jp.wasabeef", name = "blurry", version.ref = "blurry" }
 jp-wasabeef-glide-transformations = { group = "jp.wasabeef", name = "glide-transformations", version.ref = "glideTransformations" }
 com-github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 com-android-support-multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
+
+# Firebase Auth
+com-google-android-gms-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
+com-google-firebase-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+
+# Moshi
+com-squareup-moshi-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+com-squareup-moshi-moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+
+# Security
+androidx-security-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

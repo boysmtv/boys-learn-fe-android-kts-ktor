@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "533998167231",
+    "project_id": "movie-based",
+    "storage_bucket": "movie-based.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533998167231:android:634e6fadbc410df851920a",
+        "android_client_info": {
+          "package_name": "com.kotlin.learn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533998167231-4eg809nm55hj1b3b8436l91me281a7pg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP42fW6wlu_u-lZ64G6XIQpDj-54y5gEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533998167231-4eg809nm55hj1b3b8436l91me281a7pg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

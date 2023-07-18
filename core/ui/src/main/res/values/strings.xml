@@ -13,4 +13,6 @@
     <string name="old">18+</string>
     <string name="search">Search</string>
     <string name="greetings_title">Organize your movies</string>
+
+    <string name="default_web_client_id">533998167231-jp13mjcoruf0urrlrqe31tv4mn2d5292.apps.googleusercontent.com</string>
 </resources>

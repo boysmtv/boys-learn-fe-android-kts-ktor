@@ -11,6 +11,7 @@ apply {
     from("$rootDir/buildConfig/common-config.gradle")
 }
 apply(plugin = "org.jetbrains.kotlin.android")
+apply(plugin = "com.google.gms.google-services")
 
 android {
     namespace = "com.kotlin.learn.feature.auth"
@@ -46,6 +47,9 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)
     implementation(libs.androidx.navigation.fragment)
+    implementation(libs.com.google.android.gms.play.services.auth)
+    implementation(libs.com.google.firebase.firebase.auth)
+    implementation(libs.com.squareup.moshi.moshi.kotlin)
 
     kapt(libs.hilt.compiler)
 
