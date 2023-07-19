@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.com.google.android.gms.play.services.auth)
     implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.androidx.datastore.datastore.preferences)
 
     kapt(libs.hilt.compiler)
 

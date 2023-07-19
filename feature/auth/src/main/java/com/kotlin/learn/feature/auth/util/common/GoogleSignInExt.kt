@@ -12,39 +12,27 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.kotlin.learn.core.common.util.security.SecurePrefManager
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
-import com.kotlin.learn.core.utilities.PreferenceConstants
 import com.kotlin.learn.feature.auth.R
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import javax.inject.Inject
 
-class GoogleSignInExt(private val context: Context) {
+class GoogleSignInExt(
+    private val resultDataAuth: (AuthGoogleSignInModel) -> Unit
+) {
+    lateinit var context: Context
 
-    @Inject
-    lateinit var securePrefManager: SecurePrefManager
+    lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var firebaseAuth: FirebaseAuth
 
-    @Inject
-    lateinit var moshi: Moshi
-
-    var googleSignInClient: GoogleSignInClient
-    val signInReqCore: Int = 123
-    private var firebaseAuth: FirebaseAuth
-
-    private val signInAdapter: JsonAdapter<AuthGoogleSignInModel> by lazy {
-        moshi.adapter(AuthGoogleSignInModel::class.java)
-    }
-
-    init {
+    fun initGoogle(context: Context) {
+        this.context = context
         FirebaseApp.initializeApp(context)
 
-        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(context.getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(context, signInOptions)
+        googleSignInClient = GoogleSignIn.getClient(
+            context, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+        )
         firebaseAuth = FirebaseAuth.getInstance()
     }
 
@@ -52,18 +40,21 @@ class GoogleSignInExt(private val context: Context) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                updateUI(account)
+                handleDataAuth(account)
             }
         } catch (e: ApiException) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun updateUI(account: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+    private fun handleDataAuth(account: GoogleSignInAccount) =
+        firebaseAuth.signInWithCredential(
+            GoogleAuthProvider.getCredential(
+                account.idToken, null
+            )
+        ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val authGoogleSignInModel = AuthGoogleSignInModel(
+                val accountModel = AuthGoogleSignInModel(
                     account = account.account.toString(),
                     id = account.id.toString(),
                     idToken = account.idToken.toString(),
@@ -75,37 +66,22 @@ class GoogleSignInExt(private val context: Context) {
                     photoUrl = account.photoUrl.toString(),
                     grantedScopes = account.grantedScopes.toString()
                 )
-                securePrefManager.setString(
-                    PreferenceConstants.Auth.PREF_GOOGLE_AUTH, signInAdapter.toJson(
-                        authGoogleSignInModel
-                    )
-                )
-
-                Log.e("TAG", "BOYS-Model : $authGoogleSignInModel")
+                resultDataAuth.invoke(accountModel)
+            } else {
+                Log.e("TAG", "BOYS-handleDataAuth : Error")
+                resultDataAuth.invoke(AuthGoogleSignInModel())
             }
         }
-    }
 
-    private fun getGoogleSingInClient(): GoogleSignInClient {
-        /**
-         * Configure sign-in to request the user's ID, email address, and basic
-         * profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-         */
-        val gso = GoogleSignInOptions
+    private fun getGoogleSingInClient() = GoogleSignIn.getClient(
+        context, GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestProfile()
             .build()
-        /**
-         * Build a GoogleSignInClient with the options specified by gso.
-         */
-        return GoogleSignIn.getClient(context, gso);
-    }
+    )
 
-    private fun isUserSignedIn(): Boolean {
-        val account = GoogleSignIn.getLastSignedInAccount(context)
-        return account != null
-    }
+    private fun isUserSignedIn() = GoogleSignIn.getLastSignedInAccount(context) != null
 
     private fun signOut() {
         if (isUserSignedIn()) {

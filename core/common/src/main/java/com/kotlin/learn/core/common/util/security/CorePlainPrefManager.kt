@@ -3,7 +3,7 @@ package com.kotlin.learn.core.common.util.security
 import android.app.Application
 import android.content.Context
 
-class CorePlainPrefManager(app: Application) {
+class CorePlainPrefManager(app: Context) {
 
     private val secretPreferences = "based-preference"
 

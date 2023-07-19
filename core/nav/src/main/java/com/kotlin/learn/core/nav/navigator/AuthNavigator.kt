@@ -33,6 +33,12 @@ class AuthNavigator {
         )
     }
 
+    fun fromGreetingsToHome(fragment: Fragment) {
+        NavHostFragment.findNavController(fragment).navigate(
+            GreetingsFragmentDirections.actionGreetingsFragmentToHomeFragment()
+        )
+    }
+
     fun fromRegisterToGreetings(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
             RegisterFragmentDirections.actionRegisterFragmentToGreetingsFragment()

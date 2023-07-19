@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.org.jetbrains.kotlin.kapt)
 }
 
 apply {
@@ -19,7 +20,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
+
     implementation(libs.material)
     implementation(libs.androidx.security.security.crypto)
     implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.androidx.datastore.datastore.preferences)
+
+    kapt(libs.hilt.compiler)
 }

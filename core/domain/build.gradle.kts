@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.bundles.ktor)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
+    implementation(libs.androidx.datastore.datastore.preferences)
 
     kapt(libs.hilt.compiler)
 

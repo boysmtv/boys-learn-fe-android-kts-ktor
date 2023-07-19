@@ -19,5 +19,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.com.squareup.moshi.moshi.kotlin)
     kapt(libs.hilt.compiler)
 }
