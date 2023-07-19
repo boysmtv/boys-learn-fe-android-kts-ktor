@@ -2,7 +2,7 @@ package com.kotlin.learn.core.utilities
 
 class PreferenceConstants {
 
-    object Auth {
+    object Authorization {
         const val PREF_GOOGLE_AUTH = "prefGoogleAuth"
     }
 

@@ -44,7 +44,6 @@
                 android:id="@+id/cv_detail_content"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="-16dp"
                 app:cardElevation="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -241,6 +240,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_8"
+                            android:paddingBottom="@dimen/dp_40"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_detail_header_desc">
@@ -252,7 +252,7 @@
                                 android:layout_marginRight="@dimen/dp_16"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:tabBackground="@android:color/white"
+                                app:tabBackground="@color/backgroundKeyboard"
                                 app:tabGravity="fill"
                                 app:tabIndicatorColor="@color/colorAccent"
                                 app:tabIndicatorFullWidth="true"
@@ -275,7 +275,7 @@
                             <androidx.viewpager2.widget.ViewPager2
                                 android:id="@+id/vp_detail_credits"
                                 android:layout_width="match_parent"
-                                android:layout_height="150dp"
+                                android:layout_height="wrap_content"
                                 app:layout_constraintBaseline_toBottomOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"

@@ -8,6 +8,7 @@ import com.kotlin.learn.core.data.repository.PreferencesRepository
 import com.kotlin.learn.core.domain.AuthUseCase
 import com.kotlin.learn.core.model.AuthReqModel
 import com.kotlin.learn.core.model.AuthRespModel
+import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,14 +36,15 @@ class GreetingsViewModel @Inject constructor(
         flow {
             emit(
                 DataStoreCacheEvent.FetchSuccess(
-                    preferencesRepository.getAuthorization().getOrNull().orEmpty()
+                    preferencesRepository.getString(PreferenceConstants.Authorization.PREF_GOOGLE_AUTH).getOrNull()
+                        .orEmpty()
                 )
             )
         }
 
     fun storeDataAuth(auth: String) =
         flow {
-            preferencesRepository.setAuthorization(auth)
+            preferencesRepository.setString(PreferenceConstants.Authorization.PREF_GOOGLE_AUTH, auth)
             emit(DataStoreCacheEvent.StoreSuccess)
         }
 

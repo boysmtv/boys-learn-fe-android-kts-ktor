@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.jp.wasabeef.blurry)
     implementation(libs.gson)
     implementation(libs.androidx.databinding.runtime)
+    implementation(libs.com.squareup.moshi.moshi.kotlin)
 
     kapt(libs.hilt.compiler)
 

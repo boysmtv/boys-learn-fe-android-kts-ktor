@@ -66,6 +66,7 @@ class GoogleSignInExt(
                     photoUrl = account.photoUrl.toString(),
                     grantedScopes = account.grantedScopes.toString()
                 )
+                Log.e("TAG", "BOYS-handleDataAuth : $accountModel")
                 resultDataAuth.invoke(accountModel)
             } else {
                 Log.e("TAG", "BOYS-handleDataAuth : Error")

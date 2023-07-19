@@ -25,14 +25,10 @@ class CreditsFragment(
 
     private val viewModel: CreditsViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun setupView() {
         subscribeCredits()
         setupAdapter()
         setupInit()
-    }
-
-    override fun setupView() {
-
     }
 
     private fun subscribeCredits() = with(binding) {
