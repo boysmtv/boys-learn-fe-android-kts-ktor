@@ -21,10 +21,4 @@ class RegisterViewModel @Inject constructor(
     private val _register: MutableStateFlow<Result<RegisterRespModel>> = MutableStateFlow(Result.Loading)
     val register = _register.asStateFlow()
 
-    fun postRegister(registerReqModel: RegisterReqModel) {
-        useCase.postRegister(registerReqModel)
-            .onEach { _register.value = it }
-            .launchIn(viewModelScope)
-    }
-
 }

@@ -1,12 +1,18 @@
 package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.DataStoreCacheEvent
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
@@ -24,6 +30,11 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetingsBinding::inflate) {
+
+    private lateinit var dbReference: DatabaseReference
+    private lateinit var firebaseDatabase: FirebaseDatabase
+    private var userId: String = "-N_lrbzAApAGJY7x_puw"
+    private var tableName: String = "authorization"
 
     private val viewModel: GreetingsViewModel by viewModels()
 
@@ -46,13 +57,14 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
     private fun setupInit() {
         googleSignInExt.initGoogle(requireContext())
+
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        dbReference = firebaseDatabase.getReference(tableName)
     }
 
     private fun setupListener() = with(binding) {
         btnFacebook.setOnClickListener {
-            viewModel.fetchDataAuth().launch(this@GreetingsFragment) {
-                updateDataStoreEvent(it)
-            }
+            testGetData()
         }
         btnGoogle.setOnClickListener {
             signInGoogle()
@@ -79,7 +91,9 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     }
 
     private fun invokeResultDataAuth(authGoogleSignInModel: AuthGoogleSignInModel) = with(viewModel) {
-        storeDataAuth(jsonAdapter.toJson(authGoogleSignInModel)).launch(this@GreetingsFragment) {
+        val stringAuthorization = jsonAdapter.toJson(authGoogleSignInModel)
+        storeDataFirebase(authGoogleSignInModel)
+        storeDataAuth(stringAuthorization).launch(this@GreetingsFragment) {
             updateDataStoreEvent(it)
         }
     }
@@ -90,6 +104,19 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
                 authNavigator.fromGreetingsToHome(this@GreetingsFragment)
             }, {}
         )
+    }
+
+    private fun testGetData(){
+        dbReference.child(userId).child(tableName).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user = dataSnapshot.getValue(AuthGoogleSignInModel::class.java) ?: return
+                Log.e("BOYS-Home", "Value Success auth: $user")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+            }
+        })
     }
 
 }

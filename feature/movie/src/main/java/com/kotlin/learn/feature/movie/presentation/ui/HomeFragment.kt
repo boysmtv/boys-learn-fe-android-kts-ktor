@@ -1,6 +1,7 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -9,6 +10,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.MovieCategories
@@ -42,6 +44,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupAdapter()
         setupViewPager()
         subscribeBanner()
+        subscribeAuthorization()
+        callAuthorization()
     }
 
     private fun setupSwipeRefresh() = with(binding) {
@@ -185,6 +189,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 movieNavigator.navigateToSeeAllMovie(this@HomeFragment, categories)
             }
         }
+
+
+    private fun subscribeAuthorization() = with(viewModel) {
+        fetchAuthorization.launch(this@HomeFragment) {
+            when (it) {
+                Result.Loading -> {
+                    Log.e("BOYS-Home", "Value Loading auth: ${it}")
+                }
+
+                is Result.Success -> {
+                    Log.e("BOYS-Home", "Value Success auth: $it")
+                }
+
+                is Result.Error -> {
+                    Log.e("BOYS-Home", "Value Error auth: $it")
+                }
+            }
+
+        }
+
+    }
+
+    private fun callAuthorization() = with(viewModel) {
+        fetchDataFirebase("-N_lrbzAApAGJY7x_puw", AuthGoogleSignInModel())
+
+    }
 
     override fun onPause() {
         binding.layoutBanner.bannerVpHome.stopLoop()

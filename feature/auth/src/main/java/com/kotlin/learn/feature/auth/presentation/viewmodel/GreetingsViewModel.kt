@@ -6,8 +6,7 @@ import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.util.DataStoreCacheEvent
 import com.kotlin.learn.core.data.repository.PreferencesRepository
 import com.kotlin.learn.core.domain.AuthUseCase
-import com.kotlin.learn.core.model.AuthReqModel
-import com.kotlin.learn.core.model.AuthRespModel
+import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,15 +22,12 @@ class GreetingsViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {
 
-    private val _postAuth: MutableStateFlow<Result<AuthRespModel>> = MutableStateFlow(Result.Loading)
-    val postAuth = _postAuth.asStateFlow()
+    private val _storeFirebase: MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Loading)
+    val storeFirebase = _storeFirebase.asStateFlow()
 
-    fun postAuth(authReqModel: AuthReqModel) {
-        useCase.postAuth(authReqModel)
-            .onEach { _postAuth.value = it }
-            .launchIn(viewModelScope)
-    }
-
+    /*
+        Notes: From Local Datastore
+    */
     fun fetchDataAuth() =
         flow {
             emit(
@@ -46,6 +42,20 @@ class GreetingsViewModel @Inject constructor(
         flow {
             preferencesRepository.setString(PreferenceConstants.Authorization.PREF_GOOGLE_AUTH, auth)
             emit(DataStoreCacheEvent.StoreSuccess)
+        }
+
+    /*
+        Notes: From Firebase
+    */
+    fun storeDataFirebase(model: AuthGoogleSignInModel) {
+        useCase.postAuthorization(model)
+            .onEach { _storeFirebase.value = it }
+            .launchIn(viewModelScope)
+    }
+
+    fun fetchDataFirebase(id: String, resources: Any) =
+        flow {
+            emit(useCase.getAuthorization(id, resources))
         }
 
 }

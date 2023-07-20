@@ -4,6 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kotlin.learn.core.network.KtorClient
+import com.kotlin.learn.core.network.firebase.FirebaseClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +33,12 @@ class KtorModule {
         chuckerInterceptor: ChuckerInterceptor,
     ): KtorClient {
         return KtorClient(chuckerInterceptor)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseClient(
+    ): FirebaseClient {
+        return FirebaseClient()
     }
 }

@@ -1,14 +1,16 @@
 package com.kotlin.learn.core.network.source
 
-import com.kotlin.learn.core.model.AuthReqModel
-import com.kotlin.learn.core.model.AuthRespModel
-import com.kotlin.learn.core.model.RegisterReqModel
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.AuthGoogleSignInModel
 
 interface AuthDataSource {
 
-    suspend fun postAuth(authReqModel: AuthReqModel) : AuthRespModel
+    suspend fun postAuthorization(model: AuthGoogleSignInModel)
 
-    suspend fun postRegister(registerReqModel: RegisterReqModel): RegisterRespModel
+    suspend fun <Z> getAuthorization(
+        id: String,
+        resources: Any,
+        onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    )
 
 }

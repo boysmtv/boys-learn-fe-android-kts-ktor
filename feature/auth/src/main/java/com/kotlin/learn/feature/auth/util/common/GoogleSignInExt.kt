@@ -55,7 +55,6 @@ class GoogleSignInExt(
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val accountModel = AuthGoogleSignInModel(
-                    account = account.account.toString(),
                     id = account.id.toString(),
                     idToken = account.idToken.toString(),
                     email = account.email.toString(),

@@ -24,6 +24,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
     implementation(libs.bundles.ktor)
+
+    implementation(libs.androidx.datastore.datastore.preferences)
+    implementation(libs.com.google.firebase.firebase.common.ktx)
+    implementation(libs.com.google.firebase.firebase.database.ktx)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 

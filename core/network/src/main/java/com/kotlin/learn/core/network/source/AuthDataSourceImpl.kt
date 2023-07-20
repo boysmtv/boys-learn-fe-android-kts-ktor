@@ -1,36 +1,29 @@
 package com.kotlin.learn.core.network.source
 
-import com.kotlin.learn.core.model.AuthReqModel
-import com.kotlin.learn.core.model.AuthRespModel
-import com.kotlin.learn.core.model.RegisterReqModel
-import com.kotlin.learn.core.model.RegisterRespModel
-import com.kotlin.learn.core.network.Authentication
-import com.kotlin.learn.core.network.KtorClient
-import com.kotlin.learn.core.network.Register
+import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.network.firebase.FirebaseClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AuthDataSourceImpl @Inject constructor(
-    private val ktorClient: KtorClient
+    private val firebaseClient: FirebaseClient
 ) : AuthDataSource {
 
-    override suspend fun postAuth(authReqModel: AuthReqModel): AuthRespModel {
+    override suspend fun postAuthorization(model: AuthGoogleSignInModel) {
         return withContext(Dispatchers.IO) {
-            ktorClient.sendRequestApiWithQuery(
-                resources = Authentication(),
-                query = emptyMap()
-            )
+            firebaseClient.postFirebaseRequest(model)
         }
     }
 
-    override suspend fun postRegister(registerReqModel: RegisterReqModel): RegisterRespModel {
-        return withContext(Dispatchers.IO) {
-            ktorClient.sendRequestApiWithQuery(
-                resources = Register(),
-                query = emptyMap()
-            )
-        }
+    override suspend fun <Z> getAuthorization(
+        id: String,
+        resources: Any,
+        onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    ) {
+        return firebaseClient.getFirebaseRequest(id, resources, onSuccess, onError)
     }
+
 
 }

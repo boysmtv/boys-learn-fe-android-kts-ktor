@@ -56,6 +56,8 @@ moshi = "1.14.0"
 securityCrypto = "1.0.0"
 firebaseAuth = "22.1.0"
 datastorePreferences = "1.0.0"
+firebaseCommonKtx = "20.3.3"
+firebaseDatabaseKtx = "20.2.2"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -161,6 +163,8 @@ com-android-support-multidex = { group = "com.android.support", name = "multidex
 # Firebase Auth
 com-google-android-gms-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 com-google-firebase-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+com-google-firebase-firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
+com-google-firebase-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 
 # Moshi
 com-squareup-moshi-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }

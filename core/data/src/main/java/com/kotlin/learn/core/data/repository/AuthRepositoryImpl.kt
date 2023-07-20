@@ -1,14 +1,10 @@
 package com.kotlin.learn.core.data.repository
 
-import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.executeWithResponse
-import com.kotlin.learn.core.model.AuthReqModel
-import com.kotlin.learn.core.model.AuthRespModel
+import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.model.RegisterReqModel
-import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.network.source.AuthDataSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -17,18 +13,18 @@ class AuthRepositoryImpl @Inject constructor(
     private val network: AuthDataSource
 ) : AuthRepository {
 
-    override fun postAuth(authReqModel: AuthReqModel): Flow<Result<AuthRespModel>> = flow {
+    override fun postAuthorization(model: AuthGoogleSignInModel) = flow {
         emit(
             executeWithResponse {
-                network.postAuth(authReqModel)
+                network.postAuthorization(model)
             }
         )
     }.flowOn(Dispatchers.IO)
 
-    override fun postRegister(registerReqModel: RegisterReqModel): Flow<Result<RegisterRespModel>> = flow {
+    override fun getAuthorization(id: String, resources: Any) = flow {
         emit(
             executeWithResponse {
-                network.postRegister(registerReqModel)
+                network.getAuthorization(id, resources)
             }
         )
     }.flowOn(Dispatchers.IO)

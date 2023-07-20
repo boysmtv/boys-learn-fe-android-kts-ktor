@@ -7,8 +7,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthReqModel(
-    val username: String? = Constant.EMPTY_STRING,
-    val password: String? = Constant.EMPTY_STRING
+    val id: String = Constant.EMPTY_STRING,
+    val table: String = Constant.EMPTY_STRING,
+    val data: String = Constant.EMPTY_STRING
 )
 
 @Serializable
@@ -20,7 +21,6 @@ data class AuthRespModel(
 
 @JsonClass(generateAdapter = true)
 data class AuthGoogleSignInModel(
-    @Json(name = "account") val account: String = Constant.EMPTY_STRING,
     @Json(name = "id") val id: String = Constant.EMPTY_STRING,
     @Json(name = "idToken") val idToken: String = Constant.EMPTY_STRING,
     @Json(name = "email") val email: String = Constant.EMPTY_STRING,

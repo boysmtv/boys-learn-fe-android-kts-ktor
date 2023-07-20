@@ -21,10 +21,4 @@ class AuthViewModel @Inject constructor(
     private val _postAuth: MutableStateFlow<Result<AuthRespModel>> = MutableStateFlow(Result.Loading)
     val postAuth = _postAuth.asStateFlow()
 
-    fun postAuth(authReqModel: AuthReqModel) {
-        useCase.postAuth(authReqModel)
-            .onEach { _postAuth.value = it }
-            .launchIn(viewModelScope)
-    }
-
 }

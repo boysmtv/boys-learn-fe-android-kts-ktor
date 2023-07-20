@@ -38,4 +38,6 @@ object Constant {
 
     const val FALSE = false
     const val TRUE = true
+
+    const val DATA_NOT_FOUND = "DATA_NOT_FOUND"
 }
