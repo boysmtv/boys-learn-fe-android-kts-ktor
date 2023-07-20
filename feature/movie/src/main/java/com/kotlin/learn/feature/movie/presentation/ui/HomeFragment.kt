@@ -44,8 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupAdapter()
         setupViewPager()
         subscribeBanner()
-        subscribeAuthorization()
-        callAuthorization()
+        setupAuthorization()
     }
 
     private fun setupSwipeRefresh() = with(binding) {
@@ -190,30 +189,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
 
-
-    private fun subscribeAuthorization() = with(viewModel) {
-        fetchAuthorization.launch(this@HomeFragment) {
-            when (it) {
-                Result.Loading -> {
-                    Log.e("BOYS-Home", "Value Loading auth: ${it}")
-                }
-
-                is Result.Success -> {
-                    Log.e("BOYS-Home", "Value Success auth: $it")
-                }
-
-                is Result.Error -> {
-                    Log.e("BOYS-Home", "Value Error auth: $it")
-                }
+    private fun setupAuthorization() = with(viewModel) {
+        fetchDataFirebase(
+            id = "-N_lrbzAApAGJY7x_puw",
+            resources = AuthGoogleSignInModel(),
+            onSuccess = {
+                Log.e("BOYS-Home", "Value : $this")
+            },
+            onError = {
+                Log.e("BOYS-Home", "Value : $it")
             }
-
-        }
-
-    }
-
-    private fun callAuthorization() = with(viewModel) {
-        fetchDataFirebase("-N_lrbzAApAGJY7x_puw", AuthGoogleSignInModel())
-
+        )
     }
 
     override fun onPause() {

@@ -6,9 +6,9 @@ interface AuthDataSource {
 
     suspend fun postAuthorization(model: AuthGoogleSignInModel)
 
-    suspend fun <Z> getAuthorization(
+    suspend fun <Z : Any> getAuthorization(
         id: String,
-        resources: Any,
+        resources: Z,
         onSuccess: Z.() -> Unit,
         onError: (String) -> Unit
     )

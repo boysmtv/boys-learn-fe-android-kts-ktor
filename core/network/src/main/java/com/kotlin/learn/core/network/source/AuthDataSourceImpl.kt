@@ -2,8 +2,6 @@ package com.kotlin.learn.core.network.source
 
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.network.firebase.FirebaseClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AuthDataSourceImpl @Inject constructor(
@@ -11,19 +9,14 @@ class AuthDataSourceImpl @Inject constructor(
 ) : AuthDataSource {
 
     override suspend fun postAuthorization(model: AuthGoogleSignInModel) {
-        return withContext(Dispatchers.IO) {
-            firebaseClient.postFirebaseRequest(model)
-        }
+        firebaseClient.postFirebaseRequest(model)
     }
 
-    override suspend fun <Z> getAuthorization(
+    override suspend fun <Z : Any> getAuthorization(
         id: String,
-        resources: Any,
+        resources: Z,
         onSuccess: Z.() -> Unit,
         onError: (String) -> Unit
-    ) {
-        return firebaseClient.getFirebaseRequest(id, resources, onSuccess, onError)
-    }
-
+    ) = firebaseClient.getFirebaseRequest(id, resources, onSuccess, onError)
 
 }

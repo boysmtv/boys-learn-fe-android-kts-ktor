@@ -1,11 +1,3 @@
-/*
- *
- * Copyright © 2022 PT Bank Mandiri (Persero) Tbk.
- *
- * Unauthorized copying, publishing of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- */
-
 package com.kotlin.learn.core.utilities.extension
 
 import android.util.Log
@@ -18,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+
 fun <T> MutableStateFlow<T>.launch(
     lifecycleOwner: LifecycleOwner,
     state: Lifecycle.State,

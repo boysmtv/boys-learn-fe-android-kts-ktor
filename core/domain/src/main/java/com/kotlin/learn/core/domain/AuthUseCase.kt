@@ -8,6 +8,11 @@ interface AuthUseCase {
 
     fun postAuthorization(model: AuthGoogleSignInModel): Flow<Result<Unit>>
 
-    fun getAuthorization(id: String, resources: Any): Flow<Result<Any?>>
+    fun <Z : Any> getAuthorization(
+        id: String,
+        resources: Z,
+        onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    ): Flow<Result<Any?>>
 
 }

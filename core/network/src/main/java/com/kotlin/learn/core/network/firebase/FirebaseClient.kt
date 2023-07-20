@@ -15,12 +15,12 @@ class FirebaseClient {
     private var firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.getReference(table)
 
-    internal inline fun <reified Z : Any> postFirebaseRequest(
-        data: Z
-    ) {
-        val id = databaseReference.push().key.toString()
-        databaseReference.child(id).child(table).setValue(data)
-    }
+    internal suspend fun <Z : Any> postFirebaseRequest(data: Z) =
+        withContext(Dispatchers.IO) {
+            databaseReference.child(
+                databaseReference.push().key.toString()
+            ).child(table).setValue(data)
+        }
 
     internal suspend fun <Z : Any> getFirebaseRequest(
         id: String,
@@ -41,6 +41,15 @@ class FirebaseClient {
                 }
             })
         }
+    }
+
+    internal suspend fun <Z : Any> getFirebaseRequests(
+        id: String,
+        resources: Z,
+        onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    ): Z? {
+        return null
     }
 
 //    val auth = dataSnapshot.getValue(AuthGoogleSignInModel::class.java) ?: return

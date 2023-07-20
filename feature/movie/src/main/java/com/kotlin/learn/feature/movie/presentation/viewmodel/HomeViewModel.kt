@@ -36,10 +36,6 @@ class HomeViewModel @Inject constructor(
     private val _nowPlayingMovies: MutableStateFlow<Result<MovieModel>> = MutableStateFlow(Result.Loading)
     val nowPlayingMovies = _nowPlayingMovies.asStateFlow()
 
-
-    private val _fetchAuthorization: MutableStateFlow<Result<Any?>> = MutableStateFlow(Result.Loading)
-    val fetchAuthorization = _fetchAuthorization.asStateFlow()
-
     init {
         nowPlayingMovies()
     }
@@ -50,9 +46,16 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun fetchDataFirebase(id: String, resources: Any) =
-        useCase.getAuthorization(id, resources).onEach {
-            _fetchAuthorization.value = it
-        }.launchIn(viewModelScope)
+    fun <Z : Any> fetchDataFirebase(
+        id: String,
+        resources: Z,
+        onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    ) = useCase.getAuthorization(
+            id,
+            resources,
+            onSuccess,
+            onError
+        ).launchIn(viewModelScope)
 
 }

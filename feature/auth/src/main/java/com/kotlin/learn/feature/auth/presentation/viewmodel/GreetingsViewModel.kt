@@ -53,9 +53,14 @@ class GreetingsViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun fetchDataFirebase(id: String, resources: Any) =
+    fun <Z : Any> fetchDataFirebase(
+        id: String,
+        resources: Z,
+        onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    ) =
         flow {
-            emit(useCase.getAuthorization(id, resources))
+            emit(useCase.getAuthorization(id, resources, onSuccess, onError))
         }
 
 }

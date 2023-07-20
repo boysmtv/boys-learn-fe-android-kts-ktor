@@ -2,7 +2,6 @@ package com.kotlin.learn.core.data.repository
 
 import com.kotlin.learn.core.common.executeWithResponse
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
-import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.network.source.AuthDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -21,10 +20,15 @@ class AuthRepositoryImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override fun getAuthorization(id: String, resources: Any) = flow {
+    override fun <Z : Any> getAuthorization(
+        id: String,
+        resources: Z,
+        onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    ) = flow {
         emit(
             executeWithResponse {
-                network.getAuthorization(id, resources)
+                network.getAuthorization(id, resources, onSuccess, onError)
             }
         )
     }.flowOn(Dispatchers.IO)
