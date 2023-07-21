@@ -1,6 +1,7 @@
 package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -26,7 +27,8 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     private val viewModel: GreetingsViewModel by viewModels()
 
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt(
-        resultDataAuth = this::invokeResultDataAuth
+        resultDataAuthSuccess = this::invokeResultDataAuthSuccess,
+        resultDataAuthError = this::invokeResultDataAuthError
     )
 
     @Inject
@@ -39,8 +41,15 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     private var jsonAdapter = moshi.adapter(AuthGoogleSignInModel::class.java)
 
     override fun setupView() {
+        subscribeStoreAuth()
         setupInit()
         setupListener()
+    }
+
+    private fun subscribeStoreAuth() = with(viewModel) {
+        storeFirebase.launch(this@GreetingsFragment) {
+
+        }
     }
 
     private fun setupInit() {
@@ -76,7 +85,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         }
     }
 
-    private fun invokeResultDataAuth(model: AuthGoogleSignInModel) = with(viewModel) {
+    private fun invokeResultDataAuthSuccess(model: AuthGoogleSignInModel) = with(viewModel) {
         val stringAuthorization = jsonAdapter.toJson(model)
         storeDataFirebase(model)
         storeDataAuth(stringAuthorization).launch(this@GreetingsFragment) {
@@ -87,6 +96,10 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
                 }
             )
         }
+    }
+
+    private fun invokeResultDataAuthError(message: String) {
+        Log.e("Greetings", "Error Invoke Data Auth - Msg : $message")
     }
     // end region google login
 

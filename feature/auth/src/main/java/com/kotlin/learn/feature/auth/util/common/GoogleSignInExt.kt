@@ -1,7 +1,6 @@
 package com.kotlin.learn.feature.auth.util.common
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -16,9 +15,10 @@ import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.feature.auth.R
 
 class GoogleSignInExt(
-    private val resultDataAuth: (AuthGoogleSignInModel) -> Unit
+    private val resultDataAuthSuccess: (AuthGoogleSignInModel) -> Unit,
+    private val resultDataAuthError: (String) -> Unit,
 ) {
-    lateinit var context: Context
+    private lateinit var context: Context
 
     lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
@@ -65,11 +65,9 @@ class GoogleSignInExt(
                     photoUrl = account.photoUrl.toString(),
                     grantedScopes = account.grantedScopes.toString()
                 )
-                Log.e("TAG", "BOYS-handleDataAuth : $accountModel")
-                resultDataAuth.invoke(accountModel)
+                resultDataAuthSuccess.invoke(accountModel)
             } else {
-                Log.e("TAG", "BOYS-handleDataAuth : Error")
-                resultDataAuth.invoke(AuthGoogleSignInModel())
+                resultDataAuthError.invoke(task.exception?.message ?: "Please check your connection")
             }
         }
 
