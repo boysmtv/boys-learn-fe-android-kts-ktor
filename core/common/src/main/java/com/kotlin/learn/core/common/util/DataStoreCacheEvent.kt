@@ -9,16 +9,16 @@ sealed class DataStoreCacheEvent {
 
 fun invokeDataStoreEvent(
     event: DataStoreCacheEvent,
-    isSuccessStore: () -> Unit,
-    isSuccessFetch: (auth: String) -> Unit,
+    isFetched: (String) -> Unit,
+    isStored: () -> Unit,
 ) {
     when (event) {
         is DataStoreCacheEvent.StoreSuccess -> {
-            isSuccessStore.invoke()
+            isStored.invoke()
         }
 
         is DataStoreCacheEvent.FetchSuccess -> {
-            isSuccessFetch.invoke(event.auth)
+            isFetched.invoke(event.auth)
         }
     }
 }

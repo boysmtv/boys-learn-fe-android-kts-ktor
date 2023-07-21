@@ -6,4 +6,7 @@ class PreferenceConstants {
         const val PREF_GOOGLE_AUTH = "prefGoogleAuth"
     }
 
+    object FirebaseTable {
+        const val AUTHORIZATION = "authorization"
+    }
 }

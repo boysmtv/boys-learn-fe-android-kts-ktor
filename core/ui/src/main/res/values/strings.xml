@@ -1,4 +1,5 @@
 <resources>
+    <string name="greetings_title">Organize your movies</string>
     <string name="popular_title">Popular</string>
     <string name="top_rated_title">Top Rated</string>
     <string name="up_coming_title">Up Coming</string>
@@ -12,7 +13,31 @@
     <string name="dot">.</string>
     <string name="old">18+</string>
     <string name="search">Search</string>
-    <string name="greetings_title">Organize your movies</string>
+    <string name="greetings_desc">Lets organize your movies with priority and do everything without stress</string>
+    <string name="continue_with_email">Continue with Email</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="last_name_label">LAST NAME</string>
+    <string name="first_name_label">FIRST NAME</string>
+    <string name="first_name_hint">first name</string>
+    <string name="last_name_hint">last name</string>
+    <string name="phone_label">PHONE</string>
+    <string name="phone_hint">0815 8844 424</string>
+    <string name="email_label">EMAIL</string>
+    <string name="email_hint">miracle@example.com</string>
+    <string name="password_label">PASSWORD</string>
+    <string name="password_hint">create password</string>
+    <string name="create_an_new_account_label">Create an new account</string>
+    <string name="setting_desc">Below is your information that we have</string>
+    <string name="register_label">Register</string>
+    <string name="setting_label">Setting</string>
+    <string name="tnc_title_label">By creating an account, you accept our</string>
+    <string name="tnc_link_label"><![CDATA[Terms & Conditions]]></string>
+    <string name="register_login_title_label">Already have an account?</string>
+    <string name="register_login_link_label">Log In</string>
+    <string name="login_label">Log In</string>
+    <string name="login_instruction">Input your email and password</string>
+    <string name="register_instruction">Create an new account ?</string>
 
     <string name="default_web_client_id">533998167231-jp13mjcoruf0urrlrqe31tv4mn2d5292.apps.googleusercontent.com</string>
 </resources>

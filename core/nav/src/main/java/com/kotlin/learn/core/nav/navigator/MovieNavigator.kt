@@ -22,6 +22,12 @@ class MovieNavigator {
         )
     }
 
+    fun fromHomeToSetting(fragment: Fragment) {
+        findNavController(fragment).navigate(
+            HomeFragmentDirections.actionHomeFragmentToSettingFragment()
+        )
+    }
+
     fun navigateToSeeAllMovie(fragment: Fragment, categories: MovieCategories) {
         findNavController(fragment).navigate(
             HomeFragmentDirections.actionHomeFragmentToSeeAllFragment(categories.name)

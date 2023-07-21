@@ -40,8 +40,7 @@ class SearchAdapter(private val onClickMovie: OnClickMovie) :
             binding.apply {
                 etSearchTitle.text = item.originalTitle
 
-                ivSearch.load("${Constant.BASE_URL_IMAGE_200}${item.backdropPath}")
-                {
+                ivSearch.load("${Constant.BASE_URL_IMAGE_200}${item.backdropPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
                         strokeWidth = 5f

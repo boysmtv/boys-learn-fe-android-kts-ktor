@@ -23,7 +23,7 @@ class AuthRepositoryImpl @Inject constructor(
     override fun <Z : Any> getAuthorization(
         id: String,
         resources: Z,
-        onSuccess: Z.() -> Unit,
+        onSuccess: (Z) -> Unit,
         onError: (String) -> Unit
     ) = flow {
         emit(

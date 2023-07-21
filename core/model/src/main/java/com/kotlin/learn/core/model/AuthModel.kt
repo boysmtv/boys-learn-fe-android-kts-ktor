@@ -20,7 +20,8 @@ data class AuthRespModel(
 )
 
 @JsonClass(generateAdapter = true)
-data class AuthGoogleSignInModel(
+data class
+AuthGoogleSignInModel(
     @Json(name = "id") val id: String = Constant.EMPTY_STRING,
     @Json(name = "idToken") val idToken: String = Constant.EMPTY_STRING,
     @Json(name = "email") val email: String = Constant.EMPTY_STRING,

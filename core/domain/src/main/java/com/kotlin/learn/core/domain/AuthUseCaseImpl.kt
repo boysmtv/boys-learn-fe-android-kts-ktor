@@ -17,7 +17,7 @@ class AuthUseCaseImpl @Inject constructor(
     override fun <Z : Any> getAuthorization(
         id: String,
         resources: Z,
-        onSuccess: Z.() -> Unit,
+        onSuccess: (Z) -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>> {
         return authRepository.getAuthorization(id, resources, onSuccess, onError)

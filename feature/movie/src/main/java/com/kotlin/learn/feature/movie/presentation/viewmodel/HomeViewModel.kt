@@ -49,13 +49,13 @@ class HomeViewModel @Inject constructor(
     fun <Z : Any> fetchDataFirebase(
         id: String,
         resources: Z,
-        onSuccess: Z.() -> Unit,
+        onSuccess: (Z) -> Unit,
         onError: (String) -> Unit
     ) = useCase.getAuthorization(
-            id,
-            resources,
-            onSuccess,
-            onError
-        ).launchIn(viewModelScope)
+        id,
+        resources,
+        onSuccess,
+        onError
+    ).launchIn(viewModelScope)
 
 }

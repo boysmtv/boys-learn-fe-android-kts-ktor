@@ -51,8 +51,12 @@ dependencies {
     implementation(libs.com.github.bumptech.glide)
     implementation(libs.jp.wasabeef.glide.transformations)
     implementation(libs.jp.wasabeef.blurry)
-    implementation(libs.gson)
     implementation(libs.androidx.databinding.runtime)
+    implementation(libs.com.google.firebase.firebase.auth)
+    implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.androidx.datastore.datastore.preferences)
+    implementation(libs.com.google.firebase.firebase.common.ktx)
+    implementation(libs.com.google.firebase.firebase.database.ktx)
 
     kapt(libs.hilt.compiler)
 

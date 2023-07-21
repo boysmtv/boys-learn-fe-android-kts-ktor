@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
 
     <fragment
@@ -104,5 +107,10 @@
             android:id="@+id/action_registerFragment_to_greetingsFragment"
             app:destination="@id/greetingsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SettingFragment"
+        tools:layout="@layout/fragment_setting"/>
 
 </navigation>

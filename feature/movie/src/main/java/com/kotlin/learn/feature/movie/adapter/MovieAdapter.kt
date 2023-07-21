@@ -38,8 +38,7 @@ class MovieAdapter(private val onClickMovie: OnClickMovie) :
 
         fun bind(item: MovieDataModel) {
             binding.apply {
-                thumbnail.load("$BASE_URL_IMAGE${item.posterPath}")
-                {
+                thumbnail.load("$BASE_URL_IMAGE${item.posterPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
                         strokeWidth = 5f

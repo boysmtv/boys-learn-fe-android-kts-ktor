@@ -34,14 +34,15 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         Handler(Looper.getMainLooper()).postDelayed({
             viewModel.fetchDataAuth().launch(this) {
                 invokeDataStoreEvent(it,
-                    isSuccessFetch = { data ->
+                    isFetched = { data ->
                         if (data.isNotEmpty()) {
                             val model = jsonAdapter.fromJson(data)
                             if (model!!.displayName != Constant.EMPTY_STRING)
                                 lunchToHome()
                             else lunchToGreetings()
                         } else lunchToGreetings()
-                    }, isSuccessStore = {})
+                    }, {}
+                )
             }
         }, 1500)
     }

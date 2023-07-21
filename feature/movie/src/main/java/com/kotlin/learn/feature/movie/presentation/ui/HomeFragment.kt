@@ -102,6 +102,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         ivSearch.setOnClickListener {
             movieNavigator.fromHomeToSearch(this@HomeFragment)
         }
+        ivSetting.setOnClickListener {
+            movieNavigator.fromHomeToSetting(this@HomeFragment)
+        }
     }
 
     private fun setupAdapterMovie(
@@ -194,7 +197,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             id = "-N_lrbzAApAGJY7x_puw",
             resources = AuthGoogleSignInModel(),
             onSuccess = {
-                Log.e("BOYS-Home", "Value : $this")
+                Log.e("BOYS-Home", "Value : $it")
             },
             onError = {
                 Log.e("BOYS-Home", "Value : $it")

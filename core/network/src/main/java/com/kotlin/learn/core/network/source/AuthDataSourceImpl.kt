@@ -15,7 +15,7 @@ class AuthDataSourceImpl @Inject constructor(
     override suspend fun <Z : Any> getAuthorization(
         id: String,
         resources: Z,
-        onSuccess: Z.() -> Unit,
+        onSuccess: (Z) -> Unit,
         onError: (String) -> Unit
     ) = firebaseClient.getFirebaseRequest(id, resources, onSuccess, onError)
 
