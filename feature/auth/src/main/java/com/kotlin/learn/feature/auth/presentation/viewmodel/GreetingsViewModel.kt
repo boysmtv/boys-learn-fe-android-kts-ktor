@@ -48,7 +48,7 @@ class GreetingsViewModel @Inject constructor(
         }
 
     //Notes: Store Firebase
-    fun storeDataFirebase(model: AuthGoogleSignInModel) {
+    fun postDataAuthFirebase(model: AuthGoogleSignInModel) {
         useCase.postAuthorization(model)
             .onEach { _storeFirebase.value = it }
             .launchIn(viewModelScope)

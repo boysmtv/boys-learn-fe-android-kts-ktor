@@ -87,7 +87,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
     private fun invokeResultDataAuthSuccess(model: AuthGoogleSignInModel) = with(viewModel) {
         val stringAuthorization = jsonAdapter.toJson(model)
-        storeDataFirebase(model)
+        postDataAuthFirebase(model)
         storeDataAuth(stringAuthorization).launch(this@GreetingsFragment) {
             invokeDataStoreEvent(it,
                 isFetched = {},
