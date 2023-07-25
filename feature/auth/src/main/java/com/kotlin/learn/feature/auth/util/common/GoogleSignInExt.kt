@@ -1,6 +1,7 @@
 package com.kotlin.learn.feature.auth.util.common
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -43,7 +44,12 @@ class GoogleSignInExt(
                 handleDataAuth(account)
             }
         } catch (e: ApiException) {
-            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+            Log.e("", "Error Auth: $e")
+            Log.e("", "Error Auth-message: ${e.message}")
+            Log.e("", "Error Auth-status: ${e.status}")
+            Log.e("", "Error Auth-statusCode: ${e.statusCode}")
+            Log.e("", "Error Auth-cause: ${e.cause}")
         }
     }
 

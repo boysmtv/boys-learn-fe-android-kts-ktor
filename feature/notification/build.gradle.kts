@@ -35,9 +35,12 @@ dependencies {
     implementation(libs.androidx.datastore.datastore.preferences)
     implementation(libs.com.google.firebase.firebase.common.ktx)
     implementation(libs.com.google.firebase.firebase.database.ktx)
-    implementation(libs.com.google.firebase.firebase.messaging)
+    implementation(libs.com.google.firebase.firebase.messaging.ktx)
 
     implementation(libs.hilt.android)
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.5.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     kapt(libs.hilt.compiler)
 
     debugImplementation(libs.chucker.debug)

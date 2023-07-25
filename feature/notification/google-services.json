@@ -70,6 +70,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465702451697:android:e9fcf429cfa34e4a956c50",
+        "android_client_info": {
+          "package_name": "com.kotlin.learn.feature.notification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465702451697-hc107g1h4jdruknre9vk8bc82c13mkq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlUFCvLcKa_jSOmkIwrNFIiIZqwOcSdCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465702451697-bipva1tqhabv79ksbsn2armk6i9njqlv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
