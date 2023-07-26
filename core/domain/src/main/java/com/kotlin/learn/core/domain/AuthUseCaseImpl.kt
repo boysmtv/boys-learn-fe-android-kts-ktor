@@ -10,8 +10,12 @@ class AuthUseCaseImpl @Inject constructor(
     private val authRepository: AuthRepository
 ) : AuthUseCase {
 
-    override fun postAuthorization(model: AuthGoogleSignInModel): Flow<Result<Unit>> {
-        return authRepository.postAuthorization(model)
+    override fun postAuthorization(
+        model: AuthGoogleSignInModel,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit
+    ): Flow<Result<Unit>> {
+        return authRepository.postAuthorization(model, onSuccess, onError)
     }
 
     override fun <Z : Any> getAuthorization(

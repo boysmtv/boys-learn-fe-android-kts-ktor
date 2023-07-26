@@ -5,15 +5,19 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.DataStoreCacheEvent
+import com.kotlin.learn.core.data.repository.PreferencesRepository
 import com.kotlin.learn.core.domain.AuthUseCase
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.MovieModel
 import com.kotlin.learn.core.utilities.MovieCategories
+import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -21,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val useCase: AuthUseCase,
-    private val movieUseCase: MovieUseCase
+    private val movieUseCase: MovieUseCase,
+    private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {
 
     val popularMovies: Flow<PagingData<MovieDataModel>> = movieUseCase.getMovie(MovieCategories.POPULAR)
@@ -46,7 +51,17 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun <Z : Any> fetchDataFirebase(
+    fun fetchAuthDataStore() = flow {
+        emit(
+            DataStoreCacheEvent.FetchSuccess(
+                preferencesRepository.getString(
+                    PreferenceConstants.Authorization.PREF_GOOGLE_AUTH
+                ).getOrNull().orEmpty()
+            )
+        )
+    }
+
+    fun <Z : Any> fetchAuthDataFirebase(
         id: String,
         resources: Z,
         onSuccess: (Z) -> Unit,

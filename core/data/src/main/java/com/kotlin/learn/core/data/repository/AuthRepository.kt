@@ -6,7 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
 
-    fun postAuthorization(model: AuthGoogleSignInModel): Flow<Result<Unit>>
+    fun postAuthorization(
+        model: AuthGoogleSignInModel,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit
+    ): Flow<Result<Unit>>
 
     fun <Z : Any> getAuthorization(
         id: String,

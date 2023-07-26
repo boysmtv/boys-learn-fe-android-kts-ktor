@@ -1,8 +1,6 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
-import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
@@ -10,6 +8,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
@@ -22,6 +21,8 @@ import com.kotlin.learn.feature.movie.databinding.FragmentHomeBinding
 import com.kotlin.learn.feature.movie.databinding.MovieHomeBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.HomeViewModel
 import com.kotlin.learn.feature.movie.util.common.MovieLoadStateAdapter
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import com.zhpan.bannerview.constants.PageStyle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,6 +39,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
+    @Inject
+    lateinit var moshi: Moshi
 
     override fun setupView() {
         setupSwipeRefresh()
@@ -46,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupUI()
         setupViewPager()
         subscribeBanner()
-        setupAuthorization()
+        getAuthorization()
     }
 
     private fun setupSwipeRefresh() = with(binding) {
@@ -194,17 +197,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
 
-    private fun setupAuthorization() = with(viewModel) {
-        fetchDataFirebase(
-            id = "-N_lrbzAApAGJY7x_puw",
-            resources = AuthGoogleSignInModel(),
-            onSuccess = {
-                Log.e("BOYS-Home", "Value : $it")
-            },
-            onError = {
-                Log.e("BOYS-Home", "Value : $it")
-            }
-        )
+    private fun getAuthorization() = with(viewModel) {
+        fetchAuthDataStore().launch(this@HomeFragment) { event ->
+            invokeDataStoreEvent(event,
+                isFetched = { model ->
+                    moshi.adapter(AuthGoogleSignInModel::class.java).fromJson(model)?.let { dataModel ->
+                        fetchAuthDataFirebase(
+                            id = dataModel.firebaseId,
+                            resources = AuthGoogleSignInModel(),
+                            onSuccess = {
+                                Log.e("BOYS-Home", "getAuthorization - onSuccess Value : $it")
+                            },
+                            onError = {
+                                Log.e("BOYS-Home", "getAuthorization - onError Value : $it")
+                            }
+                        )
+                    }
+                },
+                isStored = {}
+            )
+        }
     }
 
     override fun onPause() {

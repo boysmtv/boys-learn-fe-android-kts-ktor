@@ -8,8 +8,12 @@ class AuthDataSourceImpl @Inject constructor(
     private val firebaseClient: FirebaseClient
 ) : AuthDataSource {
 
-    override suspend fun postAuthorization(model: AuthGoogleSignInModel) {
-        firebaseClient.postFirebaseRequest(model)
+    override suspend fun postAuthorization(
+        model: AuthGoogleSignInModel,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit
+    ) {
+        firebaseClient.postFirebaseRequest(model, onSuccess, onError)
     }
 
     override suspend fun <Z : Any> getAuthorization(

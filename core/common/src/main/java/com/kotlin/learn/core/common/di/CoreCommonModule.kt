@@ -1,13 +1,9 @@
 package com.kotlin.learn.core.common.di
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.kotlin.learn.core.common.util.security.CorePlainPrefManager
-import com.kotlin.learn.core.common.util.security.CorePrefManager
-import com.kotlin.learn.core.common.util.security.SecurePrefManager
 import com.squareup.moshi.Moshi
-import dagger.Binds
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +29,9 @@ class CoreCommonModule {
 
     @Singleton
     @Provides
-    fun provideMoshi(): Moshi = Moshi.Builder().build()
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .addLast(KotlinJsonAdapterFactory())
+        .build()
 
     @Singleton
     @Provides

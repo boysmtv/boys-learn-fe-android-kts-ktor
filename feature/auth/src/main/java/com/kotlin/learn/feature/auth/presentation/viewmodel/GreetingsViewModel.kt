@@ -25,19 +25,7 @@ class GreetingsViewModel @Inject constructor(
     private val _storeFirebase: MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Loading)
     val storeFirebase = _storeFirebase.asStateFlow()
 
-    //Notes: Fetch Local Datastore
-    fun fetchDataAuth() =
-        flow {
-            emit(
-                DataStoreCacheEvent.FetchSuccess(
-                    preferencesRepository.getString(
-                        PreferenceConstants.Authorization.PREF_GOOGLE_AUTH
-                    ).getOrNull().orEmpty()
-                )
-            )
-        }
-
-    //Notes: Store Local Datastore
+    //Notes: Store Datastore
     fun storeDataAuth(auth: String) =
         flow {
             preferencesRepository.setString(
@@ -48,8 +36,12 @@ class GreetingsViewModel @Inject constructor(
         }
 
     //Notes: Store Firebase
-    fun postDataAuthFirebase(model: AuthGoogleSignInModel) {
-        useCase.postAuthorization(model)
+    fun postDataAuthFirebase(
+        model: AuthGoogleSignInModel,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit
+    ) {
+        useCase.postAuthorization(model, onSuccess, onError)
             .onEach { _storeFirebase.value = it }
             .launchIn(viewModelScope)
     }

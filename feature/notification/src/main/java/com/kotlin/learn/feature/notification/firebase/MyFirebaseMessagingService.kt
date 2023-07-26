@@ -65,6 +65,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String) {
-        Log.e("FCM TOKEN", token);
+        Log.e("FCM TOKEN", "This Token FCM : $token");
     }
 }

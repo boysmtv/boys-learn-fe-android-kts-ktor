@@ -4,7 +4,11 @@ import com.kotlin.learn.core.model.AuthGoogleSignInModel
 
 interface AuthDataSource {
 
-    suspend fun postAuthorization(model: AuthGoogleSignInModel)
+    suspend fun postAuthorization(
+        model: AuthGoogleSignInModel,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit
+    )
 
     suspend fun <Z : Any> getAuthorization(
         id: String,

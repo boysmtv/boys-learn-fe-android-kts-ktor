@@ -4,23 +4,31 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.utilities.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class FirebaseClient {
 
-    private val table = "authorization"
+    private val authTable = "authorization"
 
     private var firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val databaseReference = firebaseDatabase.getReference(table)
+    private val databaseReference = firebaseDatabase.getReference(authTable)
 
-    internal suspend fun <Z : Any> postFirebaseRequest(data: Z) =
+    internal suspend fun <Z : Any> postFirebaseRequest(
+        data: Z,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit,
+    ) =
         withContext(Dispatchers.IO) {
-            databaseReference.child(
-                databaseReference.push().key.toString()
-            ).child(table).setValue(data)
+            val uId = databaseReference.push().key.toString()
+            databaseReference.child(uId).setValue(data)
+                .addOnSuccessListener {
+                    onSuccess.invoke(uId)
+                }
+                .addOnFailureListener {
+                    onError.invoke()
+                }
         }
 
     internal suspend fun <Z : Any> getFirebaseRequest(
@@ -30,17 +38,18 @@ class FirebaseClient {
         onError: (String) -> Unit
     ) {
         withContext(Dispatchers.IO) {
-            databaseReference.child(id).child(table).addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val data = dataSnapshot.getValue(resources::class.java)
-                    if (data != null) onSuccess.invoke(data)
-                    else onError.invoke(Constant.DATA_NOT_FOUND)
-                }
+            databaseReference.child(id).addValueEventListener(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val data = dataSnapshot.getValue(resources::class.java)
+                        if (data != null) onSuccess.invoke(data)
+                        else onError.invoke(Constant.DATA_NOT_FOUND)
+                    }
 
-                override fun onCancelled(error: DatabaseError) {
-                    onError.invoke(error.message)
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        onError.invoke(error.message)
+                    }
+                })
         }
     }
 

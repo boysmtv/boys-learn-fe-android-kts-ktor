@@ -12,10 +12,14 @@ class AuthRepositoryImpl @Inject constructor(
     private val network: AuthDataSource
 ) : AuthRepository {
 
-    override fun postAuthorization(model: AuthGoogleSignInModel) = flow {
+    override fun postAuthorization(
+        model: AuthGoogleSignInModel,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit
+    ) = flow {
         emit(
             executeWithResponse {
-                network.postAuthorization(model)
+                network.postAuthorization(model, onSuccess, onError)
             }
         )
     }.flowOn(Dispatchers.IO)

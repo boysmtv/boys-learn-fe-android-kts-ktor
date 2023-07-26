@@ -2,6 +2,7 @@ package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -86,16 +87,23 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     }
 
     private fun invokeResultDataAuthSuccess(model: AuthGoogleSignInModel) = with(viewModel) {
-        val stringAuthorization = jsonAdapter.toJson(model)
-        postDataAuthFirebase(model)
-        storeDataAuth(stringAuthorization).launch(this@GreetingsFragment) {
-            invokeDataStoreEvent(it,
-                isFetched = {},
-                isStored = {
-                    authNavigator.fromGreetingsToHome(this@GreetingsFragment)
+        postDataAuthFirebase(model,
+            onSuccess = { key ->
+                model.firebaseId = key
+                storeDataAuth(jsonAdapter.toJson(model)).launch(this@GreetingsFragment) { event ->
+                    invokeDataStoreEvent(event,
+                        isFetched = {},
+                        isStored = {
+                            authNavigator.fromGreetingsToHome(this@GreetingsFragment)
+                        }
+                    )
                 }
-            )
-        }
+            },
+            onError = {
+                Log.e("TAG", "Error Store Data Firebase")
+                Toast.makeText(context, " Error Store Data Firebase ", Toast.LENGTH_SHORT).show()
+            }
+        )
     }
 
     private fun invokeResultDataAuthError(message: String) {
