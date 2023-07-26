@@ -44,7 +44,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                     }, {}
                 )
             }
-        }, 1500)
+        }, 1000)
     }
 
     private fun lunchToHome() {

@@ -12,7 +12,6 @@ import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
 import jp.wasabeef.glide.transformations.BlurTransformation
 
-
 typealias OnClickBannerMovie = (MovieDataModel) -> Unit
 
 class MovieBannerAdapter(private val onClickBannerMovie: OnClickBannerMovie) : BaseBannerAdapter<MovieDataModel>() {
@@ -33,6 +32,14 @@ class MovieBannerAdapter(private val onClickBannerMovie: OnClickBannerMovie) : B
                         .load("${Constant.BASE_URL_IMAGE}${item.posterPath}")
                         .apply(bitmapTransform(BlurTransformation(75, 3)))
                         .into(ivItemHomeBlur)
+
+                    if (it.originalTitle?.length!! <= 15) {
+                        tvItemHomeTitle.maxLines = 1
+                        tvItemHomeDesc.maxLines = 7
+                    } else {
+                        tvItemHomeTitle.maxLines = 2
+                        tvItemHomeDesc.maxLines = 5
+                    }
 
                     tvItemHomeTitle.text = it.originalTitle
                     tvItemHomeDesc.text = it.overview
