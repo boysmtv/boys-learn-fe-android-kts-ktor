@@ -8,6 +8,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.model.MovieDataModel
@@ -40,7 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     lateinit var movieNavigator: MovieNavigator
 
     @Inject
-    lateinit var moshi: Moshi
+    lateinit var jsonUtil: JsonUtil
 
     override fun setupView() {
         setupSwipeRefresh()
@@ -201,7 +202,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         fetchAuthDataStore().launch(this@HomeFragment) { event ->
             invokeDataStoreEvent(event,
                 isFetched = { model ->
-                    moshi.adapter(AuthGoogleSignInModel::class.java).fromJson(model)?.let { dataModel ->
+                    jsonUtil.fromJson<AuthGoogleSignInModel>(model)?.let { dataModel ->
                         fetchAuthDataFirebase(
                             id = dataModel.firebaseId,
                             resources = AuthGoogleSignInModel(),

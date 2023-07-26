@@ -15,29 +15,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class CoreCommonModule {
 
-//    @Singleton
-//    @Provides
-//    fun provideCorePrefManager(@ApplicationContext app: Context) = CorePrefManager(app as Application)
-//
-//    @Singleton
-//    @Provides
-//    fun provideSecurePrefManager(corePrefManager: CorePrefManager) = SecurePrefManager(corePrefManager)
-//
-//    @Singleton
-//    @Provides
-//    fun provideCorePlainPrefManager(@ApplicationContext app: Context) = CorePlainPrefManager(app)
-
     @Singleton
     @Provides
     fun provideMoshi(): Moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
-    @Singleton
-    @Provides
-    fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences(secretPreferences, Context.MODE_PRIVATE)
-    }
-
-    private val secretPreferences = "encrypted-based-preference"
 }

@@ -9,12 +9,21 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.LifecycleOwner
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kotlin.learn.core.common.util.DataStoreCacheEvent
+import com.kotlin.learn.core.data.repository.PreferencesRepository
+import com.kotlin.learn.core.utilities.PreferenceConstants
+import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.notification.R
+import kotlinx.coroutines.flow.flow
 import java.net.URL
+import javax.inject.Inject
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService @Inject constructor(
+    private val preferencesRepository: PreferencesRepository
+) : FirebaseMessagingService() {
     val TAG = "FirebaseMessagingService"
 
     override fun onNewToken(token: String) {
@@ -65,6 +74,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String) {
-        Log.e("FCM TOKEN", "This Token FCM : $token");
+        Log.e("FCM TOKEN", "This Token FCM : $token")
+
+        flow {
+            preferencesRepository.setString(
+                PreferenceConstants.Authorization.PREF_FCM_TOKEN,
+                token
+            )
+            emit(DataStoreCacheEvent.StoreSuccess)
+        }
     }
+
 }

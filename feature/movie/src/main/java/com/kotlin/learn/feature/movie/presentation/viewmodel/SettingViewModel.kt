@@ -25,4 +25,15 @@ class SettingViewModel @Inject constructor(
             )
         }
 
+    fun fetchDataTokenFcm() =
+        flow {
+            emit(
+                DataStoreCacheEvent.FetchSuccess(
+                    preferencesRepository.getString(
+                        PreferenceConstants.Authorization.PREF_FCM_TOKEN
+                    ).getOrNull().orEmpty()
+                )
+            )
+        }
+
 }

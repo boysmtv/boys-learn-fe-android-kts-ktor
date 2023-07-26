@@ -20,8 +20,9 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
-    implementation(project(":core:common"))
+    implementation(project(":core:data"))
     implementation(project(":core:model"))
+    implementation(project(":core:common"))
     implementation(project(":core:utilities"))
 
     implementation(libs.coil.kt)
@@ -30,6 +31,10 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.bundles.ktor)
 
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.activity.ktx)
+    implementation(libs.androidx.activity.fragment.ktx)
+    implementation(libs.androidx.navigation.fragment)
     implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.com.squareup.moshi.moshi.kotlin)
     implementation(libs.androidx.datastore.datastore.preferences)

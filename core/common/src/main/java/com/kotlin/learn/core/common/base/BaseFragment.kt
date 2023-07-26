@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.kotlin.learn.core.common.util.JsonUtil
-import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewBinding>
     (private val bindingInflater: (layoutInflater: LayoutInflater) -> T) : Fragment() {

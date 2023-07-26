@@ -91,9 +91,9 @@ class GoogleSignInExt(
         if (isUserSignedIn()) {
             getGoogleSingInClient().signOut().addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(context, " Signed out ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, " Signed out ", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(context, " Error ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, " Error ", Toast.LENGTH_LONG).show()
                 }
             }
         }
