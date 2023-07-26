@@ -23,7 +23,7 @@ class MovieBannerAdapter(private val onClickBannerMovie: OnClickBannerMovie) : B
         position: Int,
         pageSize: Int
     ) {
-        if (holder is ViewBindingViewHolder) {
+        if (holder is ViewHolder) {
             with(holder.viewBinding) {
                 item?.let {
                     Glide.with(ivItemHomeThumbnail.context)
@@ -54,9 +54,9 @@ class MovieBannerAdapter(private val onClickBannerMovie: OnClickBannerMovie) : B
         itemView: View,
         viewType: Int
     ): BaseViewHolder<MovieDataModel> {
-        return ViewBindingViewHolder(BannerHomeItemBinding.bind(itemView))
+        return ViewHolder(BannerHomeItemBinding.bind(itemView))
     }
 
-    inner class ViewBindingViewHolder(var viewBinding: BannerHomeItemBinding) :
+    inner class ViewHolder(var viewBinding: BannerHomeItemBinding) :
         BaseViewHolder<MovieDataModel>(viewBinding.root)
 }

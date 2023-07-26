@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="@dimen/dp_16"
-    android:layout_marginBottom="@dimen/dp_8"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/dp_8"
+    app:cardCornerRadius="@dimen/dp_16">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        tools:background="@android:color/black">
+        android:layout_height="200dp">
 
         <ImageView
             android:id="@+id/iv_item_home_blur"
@@ -21,11 +19,12 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_item_home_thumbnail"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.5"
             tools:src="@tools:sample/avatars" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,11 +39,12 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="start"
+                android:ellipsize="end"
                 android:hint="Nonton Bareng Ashiap Man 2022"
+                android:maxLines="2"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:maxLines="2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,23 +52,27 @@
                 android:id="@+id/tv_item_home_desc"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:maxLines="4"
-                android:hint="Nobar Livestream Ashiap man 2022 disini"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:ellipsize="end"
+                android:fontFamily="@font/tt_interphases_regular"
+                android:hint="@string/banner_home_desc_hint"
+                android:maxLines="5"
                 android:textColor="#FFFFFF"
-                android:textSize="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="@dimen/sp_12"
                 app:layout_constraintBottom_toTopOf="@+id/btn_click_here"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_item_home_title" />
 
             <Button
                 android:id="@+id/btn_click_here"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Click here"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="cick here"
+                android:textSize="@dimen/sp_12"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

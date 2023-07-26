@@ -23,36 +23,32 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "remoteMessage from: ${remoteMessage.from}")
-        Log.d(TAG, "remoteMessage notification: ${remoteMessage.notification}")
         Log.d(TAG, "remoteMessage title: ${remoteMessage.notification?.title}")
         Log.d(TAG, "remoteMessage body: ${remoteMessage.notification?.body}")
-
         showNotification(remoteMessage)
     }
 
     private fun showNotification(remoteMessage: RemoteMessage) {
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-        var bmp: Bitmap? = null
+        var bitmapImage: Bitmap? = null
         try {
-            val `in` =
+            bitmapImage = BitmapFactory.decodeStream(
                 URL("https://selectra.in/sites/selectra.in/files/2021-04/mobile-recharge-plans.png").openStream()
-            bmp = BitmapFactory.decodeStream(`in`)
+            )
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e("showNotification", "Error: ${e.message}")
         }
-        val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-        } else  PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            PendingIntent.getActivity(this, 0, Intent(), PendingIntent.FLAG_MUTABLE)
+        else PendingIntent.getActivity(this, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT)
 
         val channelId = "Default"
         val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher_discover)
             .setContentTitle(remoteMessage.data["title"])
             .setContentText(remoteMessage.data["body"])
-            .setLargeIcon(bmp)
-            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bmp))
+            .setLargeIcon(bitmapImage)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmapImage))
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 

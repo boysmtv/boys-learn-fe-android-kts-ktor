@@ -37,12 +37,14 @@
         <TextView
             android:id="@+id/tv_title_create"
             style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
             android:fontFamily="@font/tt_interphases_regular"
             android:text="@string/setting_desc"
             android:textColor="@android:color/white"
+            android:layout_marginRight="@dimen/dp_16"
+            app:layout_constraintEnd_toStartOf="@+id/iv_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 

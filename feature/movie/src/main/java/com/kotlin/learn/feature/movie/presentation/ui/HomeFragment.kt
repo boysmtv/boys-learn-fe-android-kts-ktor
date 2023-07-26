@@ -38,10 +38,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    override fun setupView() {
         setupSwipeRefresh()
         subscribeMovie()
         setupAdapter()
+        setupUI()
         setupViewPager()
         subscribeBanner()
         setupAuthorization()
@@ -86,12 +88,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    override fun setupView() = with(binding) {
-        layoutPopular.tvMoviePopularTitle.text = getString(R.string.popular_title)
-        layoutTopRated.tvMoviePopularTitle.text = getString(R.string.top_rated_title)
-        layoutUpComing.tvMoviePopularTitle.text = getString(R.string.up_coming_title)
-    }
-
     private fun setupAdapter() = with(binding) {
         setupAdapterMovie(layoutPopular, adapterPopular, MovieCategories.POPULAR)
 
@@ -105,6 +101,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         ivSetting.setOnClickListener {
             movieNavigator.fromHomeToSetting(this@HomeFragment)
         }
+    }
+
+    private fun setupUI() = with(binding) {
+        layoutPopular.tvMovieTitle.text = getString(R.string.popular_title)
+        layoutTopRated.tvMovieTitle.text = getString(R.string.top_rated_title)
+        layoutUpComing.tvMovieTitle.text = getString(R.string.up_coming_title)
     }
 
     private fun setupAdapterMovie(
@@ -187,7 +189,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun setOnClickMore(layoutBinding: MovieHomeBinding, categories: MovieCategories) =
         with(layoutBinding) {
-            tvMoviePopularMore.setOnClickListener {
+            tvMovieMore.setOnClickListener {
                 movieNavigator.navigateToSeeAllMovie(this@HomeFragment, categories)
             }
         }
