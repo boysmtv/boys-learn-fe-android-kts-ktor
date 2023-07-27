@@ -2,6 +2,7 @@ package com.kotlin.learn.core.common.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.kotlin.learn.core.common.util.security.CorePrefManager
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -20,5 +21,9 @@ class CoreCommonModule {
     fun provideMoshi(): Moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())
         .build()
+
+//    @Singleton
+//    @Provides
+//    fun provideCorePrefManager(@ApplicationContext context: Context) = CorePrefManager(context)
 
 }

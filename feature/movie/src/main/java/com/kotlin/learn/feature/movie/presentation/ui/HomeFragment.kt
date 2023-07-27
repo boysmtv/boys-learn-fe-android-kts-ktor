@@ -22,8 +22,6 @@ import com.kotlin.learn.feature.movie.databinding.FragmentHomeBinding
 import com.kotlin.learn.feature.movie.databinding.MovieHomeBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.HomeViewModel
 import com.kotlin.learn.feature.movie.util.common.MovieLoadStateAdapter
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
 import com.zhpan.bannerview.constants.PageStyle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -199,11 +197,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
     private fun getAuthorization() = with(viewModel) {
-        fetchAuthDataStore().launch(this@HomeFragment) { event ->
+        fetchAuthFromDataStore().launch(this@HomeFragment) { event ->
             invokeDataStoreEvent(event,
                 isFetched = { model ->
                     jsonUtil.fromJson<AuthGoogleSignInModel>(model)?.let { dataModel ->
-                        fetchAuthDataFirebase(
+                        fetchAuthDataFromFirebase(
                             id = dataModel.firebaseId,
                             resources = AuthGoogleSignInModel(),
                             onSuccess = {

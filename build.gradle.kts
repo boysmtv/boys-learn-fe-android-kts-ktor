@@ -15,3 +15,10 @@ plugins {
     alias(libs.plugins.navigation.safeargs) apply false
 }
 true
+
+allprojects {
+    apply {
+        from("$rootDir/buildConfig/local-aar-config.gradle")
+        from("$rootDir/buildConfig/local-aar.gradle")
+    }
+}

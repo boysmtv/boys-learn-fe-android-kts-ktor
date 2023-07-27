@@ -1,5 +1,6 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
+import android.content.Context
 import android.graphics.Paint
 import android.util.Log
 import androidx.fragment.app.viewModels
@@ -9,12 +10,11 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.utilities.PreferenceConstants
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.FragmentSettingBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SettingViewModel
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,8 +46,16 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         fetchDataTokenFcm().launch(this@SettingFragment) {
             invokeDataStoreEvent(it,
                 isFetched = { message ->
-                    Log.e("loadToken", "SettingFragment - Your token : $message")
+                    Log.e("loadToken", "SettingFragment - Your token DataStore: $message")
                 }, {}
+            )
+        }
+
+        binding.etToken.apply {
+            setText(
+                context?.getSharedPreferences(
+                    "PREFERENCE_NAME", Context.MODE_PRIVATE
+                )?.getString(PreferenceConstants.Authorization.PREF_FCM_TOKEN, "")
             )
         }
     }

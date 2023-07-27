@@ -1,7 +1,5 @@
 package com.kotlin.learn.core.data.repository
 
-import android.os.Message
-
 interface PreferencesRepository {
 
     suspend fun setString(key: String, message: String)

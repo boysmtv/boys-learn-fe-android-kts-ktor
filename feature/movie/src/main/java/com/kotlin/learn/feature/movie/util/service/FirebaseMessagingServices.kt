@@ -1,39 +1,36 @@
-package com.kotlin.learn.feature.notification.firebase
+package com.kotlin.learn.feature.movie.util.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleOwner
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.kotlin.learn.core.common.util.DataStoreCacheEvent
-import com.kotlin.learn.core.data.repository.PreferencesRepository
 import com.kotlin.learn.core.utilities.PreferenceConstants
-import com.kotlin.learn.core.utilities.extension.launch
-import com.kotlin.learn.feature.notification.R
-import kotlinx.coroutines.flow.flow
+import com.kotlin.learn.feature.movie.R
 import java.net.URL
-import javax.inject.Inject
 
-class MyFirebaseMessagingService @Inject constructor(
-    private val preferencesRepository: PreferencesRepository
-) : FirebaseMessagingService() {
-    val TAG = "FirebaseMessagingService"
+class FirebaseMessagingServices : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
-        sendRegistrationToServer(token)
+        getSharedPreferences(
+            "PREFERENCE_NAME", Context.MODE_PRIVATE
+        ).edit().putString(
+            PreferenceConstants.Authorization.PREF_FCM_TOKEN, token
+        ).apply()
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d(TAG, "remoteMessage from: ${remoteMessage.from}")
-        Log.d(TAG, "remoteMessage title: ${remoteMessage.notification?.title}")
-        Log.d(TAG, "remoteMessage body: ${remoteMessage.notification?.body}")
+        val tag = "FirebaseMessagingService"
+        Log.e(tag, "remoteMessage from: ${remoteMessage.from}")
+        Log.e(tag, "remoteMessage title: ${remoteMessage.notification?.title}")
+        Log.e(tag, "remoteMessage body: ${remoteMessage.notification?.body}")
         showNotification(remoteMessage)
     }
 
@@ -71,18 +68,6 @@ class MyFirebaseMessagingService @Inject constructor(
             manager.createNotificationChannel(channel)
         }
         manager.notify(0, builder.build())
-    }
-
-    private fun sendRegistrationToServer(token: String) {
-        Log.e("FCM TOKEN", "This Token FCM : $token")
-
-        flow {
-            preferencesRepository.setString(
-                PreferenceConstants.Authorization.PREF_FCM_TOKEN,
-                token
-            )
-            emit(DataStoreCacheEvent.StoreSuccess)
-        }
     }
 
 }

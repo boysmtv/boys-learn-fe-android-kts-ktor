@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun fetchAuthDataStore() = flow {
+    fun fetchAuthFromDataStore() = flow {
         emit(
             DataStoreCacheEvent.FetchSuccess(
                 preferencesRepository.getString(
@@ -61,7 +61,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    fun <Z : Any> fetchAuthDataFirebase(
+    fun <Z : Any> fetchAuthDataFromFirebase(
         id: String,
         resources: Z,
         onSuccess: (Z) -> Unit,
