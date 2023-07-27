@@ -5,20 +5,23 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import com.kotlin.learn.feature.movie.R
-import java.net.URL
 
 class FirebaseMessagingServices : FirebaseMessagingService() {
 
+    private val channelId = "com.kotlin.learn"
+    private val channelName = "com.kotlin.learn"
+    private val notificationName = "Discover"
+
     override fun onNewToken(token: String) {
+        Log.e("FirebaseMessagingService", "onNewToken: $token")
         getSharedPreferences(
             "PREFERENCE_NAME", Context.MODE_PRIVATE
         ).edit().putString(
@@ -27,47 +30,59 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        val tag = "FirebaseMessagingService"
-        Log.e(tag, "remoteMessage from: ${remoteMessage.from}")
-        Log.e(tag, "remoteMessage title: ${remoteMessage.notification?.title}")
-        Log.e(tag, "remoteMessage body: ${remoteMessage.notification?.body}")
-        showNotification(remoteMessage)
+        Log.e("FirebaseMessagingService", "onMessageReceived title: ${remoteMessage.notification?.title}")
+        Log.e("FirebaseMessagingService", "onMessageReceived body: ${remoteMessage.notification?.body}")
+
+        if (remoteMessage.notification != null) {
+            showNotification(remoteMessage.notification!!.title, remoteMessage.notification!!.body)
+        }
     }
 
-    private fun showNotification(remoteMessage: RemoteMessage) {
-        var bitmapImage: Bitmap? = null
-        try {
-            bitmapImage = BitmapFactory.decodeStream(
-                URL("https://selectra.in/sites/selectra.in/files/2021-04/mobile-recharge-plans.png").openStream()
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.e("showNotification", "Error: ${e.message}")
-        }
-        val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            PendingIntent.getActivity(this, 0, Intent(), PendingIntent.FLAG_MUTABLE)
-        else PendingIntent.getActivity(this, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val channelId = "Default"
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher_discover)
-            .setContentTitle(remoteMessage.data["title"])
-            .setContentText(remoteMessage.data["body"])
-            .setLargeIcon(bitmapImage)
-            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmapImage))
+    private fun showNotification(title: String?, message: String?) {
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, Intent(),
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
+        var builder: NotificationCompat.Builder = NotificationCompat.Builder(applicationContext, channelName)
+            .setSmallIcon(R.drawable.ic_movie)
             .setAutoCancel(true)
+            .setVibrate(
+                longArrayOf(
+                    1000, 1000, 1000,
+                    1000, 1000
+                )
+            )
+            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
 
-        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Default channel",
-                NotificationManager.IMPORTANCE_DEFAULT
+        builder = builder.setContent(getCustomDesign(title, message))
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+        if (Build.VERSION.SDK_INT
+            >= Build.VERSION_CODES.O
+        ) {
+            val notificationChannel = NotificationChannel(
+                channelId, notificationName,
+                NotificationManager.IMPORTANCE_HIGH
             )
-            manager.createNotificationChannel(channel)
+            notificationManager!!.createNotificationChannel(
+                notificationChannel
+            )
         }
-        manager.notify(0, builder.build())
+        notificationManager!!.notify(0, builder.build())
+    }
+
+    private fun getCustomDesign(
+        title: String?,
+        message: String?
+    ): RemoteViews {
+        val remoteViews = RemoteViews(applicationContext.packageName, R.layout.notification_firebase)
+        remoteViews.setTextViewText(R.id.title, title)
+        remoteViews.setTextViewText(R.id.description, message)
+        remoteViews.setImageViewResource(
+            R.id.icon,
+            R.drawable.ic_discover
+        )
+        return remoteViews
     }
 
 }

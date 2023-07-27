@@ -1,11 +1,19 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.JsonUtil
@@ -49,6 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupViewPager()
         subscribeBanner()
         getAuthorization()
+        askNotificationPermission()
     }
 
     private fun setupSwipeRefresh() = with(binding) {
@@ -230,7 +239,42 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.layoutBanner.bannerVpHome.stopLoop()
+        requireActivity().finish()
     }
 
+    // Declare the launcher at the top of your Activity/Fragment:
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                // FCM SDK (and your app) can post notifications.
+            } else {
+                // TODO: Inform user that that your app will not show notifications.
+            }
+        }
+
+    private fun askNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                firebaseMessaging()
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    private fun firebaseMessaging() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.e("FirebaseMessaging", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            val token = task.result
+            Log.e("FirebaseMessaging", "Fetching FCM - Your Token : $token")
+        })
+    }
 }

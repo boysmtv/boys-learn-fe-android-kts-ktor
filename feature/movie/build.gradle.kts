@@ -10,7 +10,6 @@ plugins {
 apply {
     from("$rootDir/buildConfig/common-config.gradle")
 }
-apply(plugin = "org.jetbrains.kotlin.android")
 
 android {
     namespace = "com.kotlin.learn.feature.movie"
@@ -60,6 +59,7 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.common.ktx)
     implementation(libs.com.google.firebase.firebase.database.ktx)
     implementation(libs.com.google.firebase.firebase.messaging.ktx)
+    implementation("androidx.test:core-ktx:1.5.0")
 
     kapt(libs.hilt.compiler)
 
