@@ -40,5 +40,7 @@
     <string name="login_instruction">Input your email and password</string>
     <string name="register_instruction">Create an new account ?</string>
 
+    <!-- for firebase messaging -->
     <string name="default_web_client_id">465702451697-bipva1tqhabv79ksbsn2armk6i9njqlv.apps.googleusercontent.com</string>
+
 </resources>

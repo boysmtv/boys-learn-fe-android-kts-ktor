@@ -2,8 +2,11 @@ package com.kotlin.learn.core.network
 
 import io.ktor.resources.Resource
 
-@Resource("movie/popular")
-class Authentication
-
-@Resource("movie/register")
+@Resource("api/movie/register")
 class Register
+
+@Resource("api/movie/login")
+class Login
+
+@Resource("api/movie/profile")
+class Profile

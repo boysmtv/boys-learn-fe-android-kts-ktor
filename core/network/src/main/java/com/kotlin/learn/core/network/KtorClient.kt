@@ -16,6 +16,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.plugins.resources.get
+import io.ktor.client.request.setBody
 import io.ktor.http.URLProtocol
 import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
@@ -27,16 +28,11 @@ class KtorClient(
 
     internal val client = initializeKtor(chuckerInterceptor)
 
-    internal suspend inline fun <reified Z : Any, reified T> sendRequestApi(resources: Z): T {
-        return client
-            .get(resources)
-            .body()
-    }
-
     internal suspend inline fun <reified Z : Any, reified T> sendRequestApiWithQuery(
         resources: Z,
         query: Map<String, String>,
-        path: String? = null
+        path: String? = null,
+        body: Z? = null,
     ): T {
         return client
             .get(resources) {
@@ -46,6 +42,9 @@ class KtorClient(
                     }
                     path?.let {
                         appendPathSegments(it)
+                    }
+                    body?.let {
+                        setBody(body)
                     }
                 }
             }
