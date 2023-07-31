@@ -1,12 +1,9 @@
 package com.kotlin.learn.core.network
 
-import io.ktor.resources.Resource
+object ApiAuthResources {
 
-@Resource("api/movie/register")
-class Register
+    const val REGISTER = "api/movie/register"
+    const val LOGIN = "api/movie/login"
+    const val PROFILE = "api/movie/profile"
 
-@Resource("api/movie/login")
-class Login
-
-@Resource("api/movie/profile")
-class Profile
+}

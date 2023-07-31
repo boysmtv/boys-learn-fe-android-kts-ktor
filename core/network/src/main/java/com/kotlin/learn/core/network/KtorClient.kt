@@ -1,32 +1,47 @@
 package com.kotlin.learn.core.network
 
+import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kotlin.learn.core.utilities.Constant
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.logging.ANDROID
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.plugins.resources.get
+import io.ktor.client.request.header
+import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import java.util.concurrent.TimeUnit
 
 class KtorClient(
     chuckerInterceptor: ChuckerInterceptor,
 ) {
+    private val client = initializeKtor(chuckerInterceptor)
 
-    internal val client = initializeKtor(chuckerInterceptor)
+    private val springUrl = "192.168.0.6:8080"
+    private val springClient = initializeKtor(
+        chuckerInterceptor = chuckerInterceptor,
+        springUrl = springUrl,
+        springHeader = mapOf(
+            "X-Api-Key" to "SECRET"
+        )
+    )
 
     internal suspend inline fun <reified Z : Any, reified T> sendRequestApiWithQuery(
         resources: Z,
@@ -51,12 +66,47 @@ class KtorClient(
             .body()
     }
 
+    internal suspend inline fun <reified Z : Any, reified T> postRequestApi(
+        resources: String,
+        query: Map<String, String>? = null,
+        path: String? = null,
+        body: Z? = null,
+    ): T {
+        return springClient
+            .post(resources) {
+                url {
+                    query?.let {
+                        it.forEach { item ->
+                            parameters.append(item.key, item.value)
+                        }
+                    }
+                    path?.let {
+                        appendPathSegments(it)
+                    }
+                }
+                body?.let {
+                    setBody(body)
+                }
+            }.body()
+    }
+
     companion object {
+
+        private const val timeout = 60L
+
         private fun initializeKtor(
             chuckerInterceptor: ChuckerInterceptor,
+            springUrl: String? = null,
+            springHeader: Map<String, String>? = null,
         ) = HttpClient(OkHttp) {
+
             engine {
                 addInterceptor(chuckerInterceptor)
+                config {
+                    connectTimeout(timeout = timeout, unit = TimeUnit.SECONDS)
+                    writeTimeout(timeout = timeout, unit = TimeUnit.SECONDS)
+                    readTimeout(timeout = timeout, unit = TimeUnit.SECONDS)
+                }
             }
 
             install(ContentNegotiation) {
@@ -70,8 +120,12 @@ class KtorClient(
             }
 
             install(Logging) {
-                logger = Logger.ANDROID
-                level = LogLevel.BODY
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Log.v("Logger Ktor ->", message)
+                    }
+                }
+                level = LogLevel.ALL
             }
 
             install(Auth) {
@@ -82,11 +136,26 @@ class KtorClient(
                 }
             }
 
+            install(ResponseObserver) {
+                onResponse { response ->
+                    Log.d("Http status:", "${response.status.value}")
+                }
+            }
+
+            install(DefaultRequest) {
+                header(HttpHeaders.ContentType, ContentType.Application.Json)
+                springHeader?.let { map ->
+                    map.forEach {
+                        header(it.key, it.value)
+                    }
+                }
+            }
+
             install(Resources)
             defaultRequest {
                 url {
-                    protocol = URLProtocol.HTTPS
-                    host = Constant.BASE_URL
+                    protocol = if (springUrl.isNullOrBlank()) URLProtocol.HTTPS else URLProtocol.HTTP
+                    host = springUrl ?: Constant.BASE_URL
                 }
             }
         }
