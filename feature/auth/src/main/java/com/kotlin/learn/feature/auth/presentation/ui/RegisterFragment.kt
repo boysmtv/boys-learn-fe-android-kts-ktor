@@ -7,6 +7,7 @@ import com.kotlin.learn.core.common.SpringResultResponse
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.invokeSpringResultResponse
 import com.kotlin.learn.core.model.ApiResponse
+import com.kotlin.learn.core.model.BaseError
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -49,25 +50,58 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             }
         }
 
-        registerWithError.launch(this@RegisterFragment) { result->
+        registerWithError.launch(this@RegisterFragment) { result ->
             when (result) {
                 is Result.Loading -> {}
 
                 is Result.Success -> {
 
-                    when(result.data){
+                    when (result.data) {
                         is ApiResponse.Success -> {
+                            val model = (result.data as ApiResponse.Success<RegisterRespModel>).body
 
+                            val content = BaseDataDialog(
+                                title = "Welcome, ${model.fullName}",
+                                content = "Your account already success created",
+                                primaryButtonShow = true,
+                                secondaryButtonText = EMPTY_STRING,
+                                secondaryButtonShow = false,
+                                icon = R.drawable.ic_warning_rounded,
+                                primaryButtonText = "Login"
+                            )
+                            showDialogWithActionButton(
+                                dataToDialog = content,
+                                actionClickPrimary = {},
+                                tag = RegisterFragment::class.simpleName.toString()
+                            )
                         }
-                        is ApiResponse.Error -> {
 
+                        is ApiResponse.Error -> {
+                            when (result.data) {
+                                is ApiResponse.Error.HttpError -> {
+                                    showDialogGeneralError(
+                                        "Http Error",
+                                        (result.data as ApiResponse.Error.HttpError<BaseError>).code.toString()
+                                    )
+                                }
+
+                                is ApiResponse.Error.NetworkError -> {
+                                    showDialogGeneralError("Network Error", "Please check your connection")
+                                }
+
+                                is ApiResponse.Error.SerializationError -> {
+                                    showDialogGeneralError("Error Serialization", "Please check your connection")
+                                }
+
+                                else -> Unit
+                            }
                         }
                     }
 
                 }
 
                 is Result.Error -> {
-
+                    showDialogGeneralError("Error Application", "Please check your connection")
                 }
             }
         }

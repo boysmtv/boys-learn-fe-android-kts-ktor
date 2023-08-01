@@ -1,10 +1,10 @@
 package com.kotlin.learn.core.model
 
-sealed class ApiResponse<out T, out E> {
+sealed class ApiResponse<out O, out E> {
     /**
      * Represents successful network responses (2xx).
      */
-    data class Success<T>(val body: T) : ApiResponse<T, Nothing>()
+    data class Success<O>(val body: O) : ApiResponse<O, Nothing>()
 
     sealed class Error<E> : ApiResponse<Nothing, E>() {
         /**

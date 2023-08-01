@@ -2,7 +2,7 @@ package com.kotlin.learn.core.network
 
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.kotlin.learn.core.network.util.ApiResponse
+import com.kotlin.learn.core.model.ApiResponse
 import com.kotlin.learn.core.network.util.safeRequest
 import com.kotlin.learn.core.utilities.Constant
 import io.ktor.client.HttpClient
