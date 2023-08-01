@@ -6,7 +6,12 @@ import com.kotlin.learn.core.utilities.Constant
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.RedirectResponseException
+import io.ktor.client.plugins.ResponseException
+import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
@@ -21,6 +26,7 @@ import io.ktor.client.plugins.resources.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
@@ -156,6 +162,21 @@ class KtorClient(
                 url {
                     protocol = if (springUrl.isNullOrBlank()) URLProtocol.HTTPS else URLProtocol.HTTP
                     host = springUrl ?: Constant.BASE_URL
+                }
+            }
+
+            HttpResponseValidator {
+                validateResponse { response: HttpResponse ->
+                    val statusCode = response.status.value
+                    when (statusCode) {
+                        in 300..399 -> throw RedirectResponseException(response, "Redirect Response")
+                        in 400..499 -> throw ClientRequestException(response, "Client Request")
+                        in 500..599 -> throw ServerResponseException(response, "Server Response")
+                    }
+
+                    if (statusCode >= 600) {
+                        throw ResponseException(response, "Response Exception")
+                    }
                 }
             }
         }

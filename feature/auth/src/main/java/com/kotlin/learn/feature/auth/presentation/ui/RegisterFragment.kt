@@ -4,9 +4,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.SpringResultResponse
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.invokeResultResponse
+import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
+import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
@@ -31,21 +37,46 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun subscribeRegister() = with(viewModel) {
         register.launch(this@RegisterFragment) {
             when (it) {
-                Result.Loading -> {
-                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
-                }
+                Result.Loading -> { }
 
                 is Result.Success -> {
-                    Toast.makeText(requireContext(), "Register Success", Toast.LENGTH_LONG).show()
-                    Log.e("Tag", "Register-Result.Success: ${it.data}")
+                    parseRegisterSuccess(it.data)
                 }
 
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), "Register Error ${it.throwable.message}", Toast.LENGTH_LONG).show()
-                    Log.e("Tag", "Register-Result.Error: ${it.throwable}")
-                    Log.e("Tag", "Register-Result.Error: ${it.throwable.message}")
+                    showDialogGeneralError("Register Error", it.throwable.message.toString())
                 }
             }
+        }
+    }
+
+    private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
+        invokeResultResponse(response).launch(this@RegisterFragment) {
+            when (it) {
+                is SpringResultResponse.Success -> {
+                    Log.e("Tag", "Register-ResultResponse.Success: ${it.data}")
+                    val content = BaseDataDialog(
+                        title = "Welcome",
+                        content = "Your account already success created",
+                        primaryButtonShow = true,
+                        secondaryButtonText = EMPTY_STRING,
+                        secondaryButtonShow = false,
+                        icon = R.drawable.ic_warning_rounded,
+                        primaryButtonText = "Login"
+                    )
+                    showDialogWithActionButton(
+                        dataToDialog = content,
+                        actionClickPrimary = {},
+                        tag = RegisterFragment::class.simpleName.toString()
+                    )
+                }
+
+                is SpringResultResponse.Error -> {
+                    Log.e("Tag", "Register-ResultResponse.Error: $it")
+                    showDialogGeneralError("Register Error", "Check your connection")
+                }
+            }
+
         }
     }
 

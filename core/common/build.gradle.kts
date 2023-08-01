@@ -14,9 +14,12 @@ android {
     viewBinding.isEnabled = true
 }
 
+val customModulePath: groovy.lang.Closure<Any> by ext
+
 dependencies {
-    implementation(project(":core:utilities"))
-    implementation(project(":core:model"))
+    implementation(customModulePath(":core:ui"))
+    implementation(customModulePath(":core:model"))
+    implementation(customModulePath(":core:utilities"))
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)

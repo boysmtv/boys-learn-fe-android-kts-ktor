@@ -14,8 +14,8 @@ data class RegisterReqModel(
 
 @Serializable
 data class RegisterRespModel(
-    val id: Int? = Constant.ZERO,
-    val fullName: String? = Constant.EMPTY_STRING,
-    val createdAt: String? = Constant.EMPTY_STRING,
-    val updatedAt: String? = Constant.EMPTY_STRING
+    val id: String? = null,
+    val fullName: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null
 )

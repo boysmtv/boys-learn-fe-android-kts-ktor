@@ -1,6 +1,6 @@
 package com.kotlin.learn.core.data.repository
 
-import com.kotlin.learn.core.common.executeWithResponse
+import com.kotlin.learn.core.common.execute
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.network.source.AuthDataSource
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ class AuthRepositoryImpl @Inject constructor(
         onError: () -> Unit
     ) = flow {
         emit(
-            executeWithResponse {
+            execute {
                 network.postAuthorization(model, onSuccess, onError)
             }
         )
@@ -31,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
         onError: (String) -> Unit
     ) = flow {
         emit(
-            executeWithResponse {
+            execute {
                 network.getAuthorization(id, resources, onSuccess, onError)
             }
         )

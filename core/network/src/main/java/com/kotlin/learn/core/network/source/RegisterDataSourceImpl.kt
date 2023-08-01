@@ -1,5 +1,6 @@
 package com.kotlin.learn.core.network.source
 
+import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.network.ApiAuthResources
@@ -12,7 +13,7 @@ class RegisterDataSourceImpl @Inject constructor(
     private val ktorClient: KtorClient,
 ) : RegisterDataSource {
 
-    override suspend fun postRegister(model: RegisterReqModel): RegisterRespModel {
+    override suspend fun postRegister(model: RegisterReqModel): BaseResponse<RegisterRespModel> {
         return withContext(Dispatchers.IO){
             ktorClient.postRequestApi(
                 resources = ApiAuthResources.REGISTER,

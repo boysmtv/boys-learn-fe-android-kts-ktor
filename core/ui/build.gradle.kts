@@ -14,7 +14,10 @@ android {
     viewBinding.isEnabled = true
 }
 
+val customModulePath: groovy.lang.Closure<Any> by ext
+
 dependencies {
+    implementation(customModulePath(":core:utilities"))
     implementation(libs.constraintlayout)
     implementation(libs.kotlinx.datetime)
     implementation(libs.material)

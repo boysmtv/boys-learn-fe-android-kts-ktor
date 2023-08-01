@@ -1,11 +1,11 @@
 package com.kotlin.learn.core.network.source
 
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
 
 interface RegisterDataSource {
 
-    suspend fun postRegister(model: RegisterReqModel): RegisterRespModel
+    suspend fun postRegister(model: RegisterReqModel): BaseResponse<RegisterRespModel>
 
 }
