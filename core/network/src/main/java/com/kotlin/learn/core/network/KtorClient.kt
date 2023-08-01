@@ -100,12 +100,12 @@ class KtorClient(
             }.body()
     }
 
-    internal suspend inline fun <reified T : Any, reified E> postRequestApis(
+    internal suspend inline fun <reified I : Any, reified O: Any, reified E> postRequestApis(
         resources: String,
         query: Map<String, String>? = null,
         path: String? = null,
-        body: T? = null,
-    ): ApiResponse<T, E> {
+        body: I? = null,
+    ): ApiResponse<O, E> {
         return springClient.safeRequest {
             method = HttpMethod.Post
             url {

@@ -6,6 +6,7 @@ import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.SpringResultResponse
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.invokeSpringResultResponse
+import com.kotlin.learn.core.model.ApiResponse
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -36,7 +37,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun subscribeRegister() = with(viewModel) {
         register.launch(this@RegisterFragment) {
             when (it) {
-                Result.Loading -> { }
+                is Result.Loading -> {}
 
                 is Result.Success -> {
                     parseRegisterSuccess(it.data)
@@ -47,6 +48,30 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 }
             }
         }
+
+        registerWithError.launch(this@RegisterFragment) { result->
+            when (result) {
+                is Result.Loading -> {}
+
+                is Result.Success -> {
+
+                    when(result.data){
+                        is ApiResponse.Success -> {
+
+                        }
+                        is ApiResponse.Error -> {
+
+                        }
+                    }
+
+                }
+
+                is Result.Error -> {
+
+                }
+            }
+        }
+
     }
 
     private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
@@ -89,7 +114,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
         btnRegister.setOnClickListener {
-            viewModel.postRegister(
+            viewModel.postRegisterWithError(
                 RegisterReqModel(
                     firstName = etFirstName.text.toString(),
                     lastName = etLastName.text.toString(),
