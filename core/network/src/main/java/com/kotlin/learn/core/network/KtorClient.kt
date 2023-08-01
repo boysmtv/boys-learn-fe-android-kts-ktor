@@ -2,6 +2,8 @@ package com.kotlin.learn.core.network
 
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.kotlin.learn.core.network.util.ApiResponse
+import com.kotlin.learn.core.network.util.safeRequest
 import com.kotlin.learn.core.utilities.Constant
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -26,9 +28,11 @@ import io.ktor.client.plugins.resources.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
@@ -94,6 +98,31 @@ class KtorClient(
                     setBody(body)
                 }
             }.body()
+    }
+
+    internal suspend inline fun <reified T : Any, reified E> postRequestApis(
+        resources: String,
+        query: Map<String, String>? = null,
+        path: String? = null,
+        body: T? = null,
+    ): ApiResponse<T, E> {
+        return springClient.safeRequest {
+            method = HttpMethod.Post
+            url {
+                url(resources)
+                query?.let {
+                    it.forEach { item ->
+                        parameters.append(item.key, item.value)
+                    }
+                }
+                path?.let {
+                    appendPathSegments(it)
+                }
+            }
+            body?.let {
+                setBody(body)
+            }
+        }
     }
 
     companion object {

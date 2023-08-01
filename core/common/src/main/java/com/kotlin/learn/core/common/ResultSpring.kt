@@ -23,7 +23,7 @@ sealed interface SpringResultResponse<out T> {
     class Error<T>(val data: T) : SpringResultResponse<T>
 }
 
-fun <T> invokeResultResponse(
+fun <T> invokeSpringResultResponse(
     response: BaseResponse<T>,
 ) = flow {
     if (response.data != null && response.code == 200) {

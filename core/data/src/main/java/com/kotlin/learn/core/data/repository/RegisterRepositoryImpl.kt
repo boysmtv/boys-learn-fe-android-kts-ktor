@@ -2,10 +2,12 @@ package com.kotlin.learn.core.data.repository
 
 import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.execute
+import com.kotlin.learn.core.model.BaseError
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.network.source.RegisterDataSource
+import com.kotlin.learn.core.network.util.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,10 +18,17 @@ class RegisterRepositoryImpl @Inject constructor(
     private val network: RegisterDataSource
 ) : RegisterRepository {
 
-    override fun postRegister(model: RegisterReqModel): Flow<Result<BaseResponse<RegisterRespModel>>>  = flow {
+    override fun postRegister(model: RegisterReqModel): Flow<Result<BaseResponse<RegisterRespModel>>> = flow {
         emit(execute {
             network.postRegister(model = model)
         })
     }.flowOn(Dispatchers.IO)
+
+    override fun postRegisterWithError(model: RegisterReqModel): Flow<Result<ApiResponse<RegisterRespModel, BaseError>>> =
+        flow {
+            emit(execute {
+                network.postRegisterWithError(model = model)
+            })
+        }.flowOn(Dispatchers.IO)
 
 }

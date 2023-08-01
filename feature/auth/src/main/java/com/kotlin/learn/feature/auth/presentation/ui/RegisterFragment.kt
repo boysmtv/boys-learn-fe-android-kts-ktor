@@ -1,12 +1,11 @@
 package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.SpringResultResponse
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.invokeResultResponse
+import com.kotlin.learn.core.common.invokeSpringResultResponse
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -51,7 +50,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
-        invokeResultResponse(response).launch(this@RegisterFragment) {
+        invokeSpringResultResponse(response).launch(this@RegisterFragment) {
             when (it) {
                 is SpringResultResponse.Success -> {
                     Log.e("Tag", "Register-ResultResponse.Success: ${it.data}")
