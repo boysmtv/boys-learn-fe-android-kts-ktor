@@ -1,33 +1,116 @@
 {
   "project_info": {
-    "project_number": "533998167231",
-    "project_id": "movie-based",
-    "storage_bucket": "movie-based.appspot.com"
+    "project_number": "465702451697",
+    "firebase_url": "https://movie-based-887f6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "movie-based-887f6",
+    "storage_bucket": "movie-based-887f6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:533998167231:android:634e6fadbc410df851920a",
+        "mobilesdk_app_id": "1:465702451697:android:ceac0e0a523f8741956c50",
         "android_client_info": {
           "package_name": "com.kotlin.learn"
         }
       },
       "oauth_client": [
         {
-          "client_id": "533998167231-4eg809nm55hj1b3b8436l91me281a7pg.apps.googleusercontent.com",
+          "client_id": "465702451697-c9llfopso6ssn1hoh2s3rrt4kb9oi5gi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kotlin.learn",
+            "certificate_hash": "17d86833793fbde81d82b46ddf22b467dc2b6927"
+          }
+        },
+        {
+          "client_id": "465702451697-hc107g1h4jdruknre9vk8bc82c13mkq4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAP42fW6wlu_u-lZ64G6XIQpDj-54y5gEs"
+          "current_key": "AIzaSyAlUFCvLcKa_jSOmkIwrNFIiIZqwOcSdCM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "533998167231-4eg809nm55hj1b3b8436l91me281a7pg.apps.googleusercontent.com",
+              "client_id": "465702451697-bipva1tqhabv79ksbsn2armk6i9njqlv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465702451697:android:a589b51481560e58956c50",
+        "android_client_info": {
+          "package_name": "com.kotlin.learn.feature.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465702451697-8d9r33j3plgbt5ak29nqp561eifhqdhp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kotlin.learn.feature.auth",
+            "certificate_hash": "17d86833793fbde81d82b46ddf22b467dc2b6927"
+          }
+        },
+        {
+          "client_id": "465702451697-hc107g1h4jdruknre9vk8bc82c13mkq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlUFCvLcKa_jSOmkIwrNFIiIZqwOcSdCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465702451697-bipva1tqhabv79ksbsn2armk6i9njqlv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465702451697:android:e9fcf429cfa34e4a956c50",
+        "android_client_info": {
+          "package_name": "com.kotlin.learn.feature.notification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465702451697-suffm714v69lufj630k26usgghssoecv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kotlin.learn.feature.notification",
+            "certificate_hash": "17d86833793fbde81d82b46ddf22b467dc2b6927"
+          }
+        },
+        {
+          "client_id": "465702451697-hc107g1h4jdruknre9vk8bc82c13mkq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlUFCvLcKa_jSOmkIwrNFIiIZqwOcSdCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465702451697-bipva1tqhabv79ksbsn2armk6i9njqlv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
