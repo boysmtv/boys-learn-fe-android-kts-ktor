@@ -2,8 +2,6 @@ package com.kotlin.learn.core.data.repository
 
 import com.kotlin.learn.core.common.Result
 import com.kotlin.learn.core.common.execute
-import com.kotlin.learn.core.model.ApiResponse
-import com.kotlin.learn.core.model.BaseError
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -23,12 +21,5 @@ class RegisterRepositoryImpl @Inject constructor(
             network.postRegister(model = model)
         })
     }.flowOn(Dispatchers.IO)
-
-    override fun postRegisterWithError(model: RegisterReqModel): Flow<Result<ApiResponse<RegisterRespModel, BaseError>>> =
-        flow {
-            emit(execute {
-                network.postRegisterWithError(model = model)
-            })
-        }.flowOn(Dispatchers.IO)
 
 }

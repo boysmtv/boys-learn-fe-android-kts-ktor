@@ -91,16 +91,16 @@ class GoogleSignInExt(
 
     fun signOut(
         isSuccess: () -> Unit,
-        isError: () -> Unit,
+        isError: (String?) -> Unit,
     ) {
         if (isUserSignedIn()) {
             getGoogleSingInClient().signOut().addOnCompleteListener {
                 if (it.isSuccessful) {
                     isSuccess.invoke()
                 } else {
-                    isError.invoke()
+                    isError.invoke(it.exception?.message)
                 }
             }
-        } else isError.invoke()
+        } else isError.invoke(null)
     }
 }

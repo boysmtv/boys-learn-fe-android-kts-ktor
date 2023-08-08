@@ -3,11 +3,9 @@ package com.kotlin.learn.feature.auth.presentation.ui
 import android.util.Log
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.Result
-import com.kotlin.learn.core.common.SpringResultResponse
+import com.kotlin.learn.core.common.SpringResult
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.invokeSpringResultResponse
-import com.kotlin.learn.core.model.ApiResponse
-import com.kotlin.learn.core.model.BaseError
+import com.kotlin.learn.core.common.invokeSpringResult
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -49,72 +47,14 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 }
             }
         }
-
-        registerWithError.launch(this@RegisterFragment) { result ->
-            when (result) {
-                is Result.Loading -> {}
-
-                is Result.Success -> {
-
-                    when (result.data) {
-                        is ApiResponse.Success -> {
-                            val model = (result.data as ApiResponse.Success<RegisterRespModel>).body
-
-                            val content = BaseDataDialog(
-                                title = "Welcome, ${model.fullName}",
-                                content = "Your account already success created",
-                                primaryButtonShow = true,
-                                secondaryButtonText = EMPTY_STRING,
-                                secondaryButtonShow = false,
-                                icon = R.drawable.ic_warning_rounded,
-                                primaryButtonText = "Login"
-                            )
-                            showDialogWithActionButton(
-                                dataToDialog = content,
-                                actionClickPrimary = {},
-                                tag = RegisterFragment::class.simpleName.toString()
-                            )
-                        }
-
-                        is ApiResponse.Error -> {
-                            when (result.data) {
-                                is ApiResponse.Error.HttpError -> {
-                                    showDialogGeneralError(
-                                        "Http Error",
-                                        (result.data as ApiResponse.Error.HttpError<BaseError>).code.toString()
-                                    )
-                                }
-
-                                is ApiResponse.Error.NetworkError -> {
-                                    showDialogGeneralError("Network Error", "Please check your connection")
-                                }
-
-                                is ApiResponse.Error.SerializationError -> {
-                                    showDialogGeneralError("Error Serialization", "Please check your connection")
-                                }
-
-                                else -> Unit
-                            }
-                        }
-                    }
-
-                }
-
-                is Result.Error -> {
-                    showDialogGeneralError("Error Application", "Please check your connection")
-                }
-            }
-        }
-
     }
 
     private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
-        invokeSpringResultResponse(response).launch(this@RegisterFragment) {
+        invokeSpringResult(response).launch(this@RegisterFragment) {
             when (it) {
-                is SpringResultResponse.Success -> {
-                    Log.e("Tag", "Register-ResultResponse.Success: ${it.data}")
+                is SpringResult.Success -> {
                     val content = BaseDataDialog(
-                        title = "Welcome",
+                        title = "Welcome, ${it.data?.fullName}",
                         content = "Your account already success created",
                         primaryButtonShow = true,
                         secondaryButtonText = EMPTY_STRING,
@@ -124,17 +64,18 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                     )
                     showDialogWithActionButton(
                         dataToDialog = content,
-                        actionClickPrimary = {},
+                        actionClickPrimary = {
+                            authNavigator.fromRegisterToAuth(this@RegisterFragment)
+                        },
                         tag = RegisterFragment::class.simpleName.toString()
                     )
                 }
 
-                is SpringResultResponse.Error -> {
+                is SpringResult.Error -> {
                     Log.e("Tag", "Register-ResultResponse.Error: $it")
                     showDialogGeneralError("Register Error", "Check your connection")
                 }
             }
-
         }
     }
 
@@ -148,7 +89,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
         btnRegister.setOnClickListener {
-            viewModel.postRegisterWithError(
+            viewModel.postRegister(
                 RegisterReqModel(
                     firstName = etFirstName.text.toString(),
                     lastName = etLastName.text.toString(),

@@ -83,15 +83,21 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
             googleSignInExt.signOut(
                 isSuccess = {
                     Toast.makeText(
-                        requireContext(), "Logout is success",
-                        Toast.LENGTH_SHORT
+                        /* context = */ requireContext(),
+                        /* text = */ "Logout is success",
+                        /* duration = */ Toast.LENGTH_SHORT
                     ).show()
-                    authNavigator.fromSettingToGreetings(this@SettingFragment)
                 },
                 isError = {
-                    Toast.makeText(requireContext(), "Logout is error", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        /* context = */ requireContext(),
+                        /* text = */ "Logout is error : $it",
+                        /* duration = */ Toast.LENGTH_LONG
+                    ).show()
                 }
             )
+            viewModel.clearPreferences()
+            authNavigator.fromSettingToGreetings(this@SettingFragment)
         }
     }
 
