@@ -18,4 +18,8 @@ interface PreferencesRepository {
 
     suspend fun getBoolean(key: String): Result<Boolean>
 
+    suspend fun removePreferences(key: String)
+
+    suspend fun clearPreferences()
+
 }

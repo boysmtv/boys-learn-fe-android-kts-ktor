@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
@@ -17,7 +18,6 @@ import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.GreetingsViewModel
-import com.kotlin.learn.feature.auth.util.common.GoogleSignInExt
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,10 +26,11 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
     private val viewModel: GreetingsViewModel by viewModels()
 
-    private var googleSignInExt: GoogleSignInExt = GoogleSignInExt(
-        resultDataAuthSuccess = this::invokeResultDataAuthSuccess,
-        resultDataAuthError = this::invokeResultDataAuthError
-    )
+    private var googleSignInExt: GoogleSignInExt =
+        GoogleSignInExt(
+            resultDataAuthSuccess = this::invokeResultDataAuthSuccess,
+            resultDataAuthError = this::invokeResultDataAuthError
+        )
 
     @Inject
     lateinit var authNavigator: AuthNavigator

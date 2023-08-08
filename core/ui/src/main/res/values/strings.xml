@@ -32,6 +32,7 @@
     <string name="setting_desc">Below is your information that we have</string>
     <string name="register_label">Register</string>
     <string name="setting_label">Setting</string>
+    <string name="logout_label">LOGOUT</string>
     <string name="tnc_title_label">By creating an account, you accept our</string>
     <string name="tnc_link_label"><![CDATA[Terms & Conditions]]></string>
     <string name="register_login_title_label">Already have an account?</string>

@@ -115,4 +115,20 @@ class PreferencesRepositoryImpl @Inject constructor(
         value
     }
 
+    override suspend fun removePreferences(key: String) {
+        Result.runCatching {
+            userDataStorePreferences.edit {
+                if (it.contains(stringPreferencesKey(name = key))) {
+                    it.remove(stringPreferencesKey(name = key))
+                }
+            }
+        }
+    }
+
+    override suspend fun clearPreferences() {
+        Result.runCatching {
+            userDataStorePreferences.edit { it.clear() }
+        }
+    }
+
 }

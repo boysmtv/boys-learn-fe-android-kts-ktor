@@ -3,13 +3,17 @@ package com.kotlin.learn.feature.movie.presentation.ui
 import android.content.Context
 import android.graphics.Paint
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
@@ -21,15 +25,25 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
 
+    private val viewModel: SettingViewModel by viewModels()
+
     @Inject
     lateinit var jsonUtil: JsonUtil
 
-    private val viewModel: SettingViewModel by viewModels()
+    @Inject
+    lateinit var authNavigator: AuthNavigator
+
+    private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})
 
     override fun setupView() {
+        init()
         loadProfile()
         loadToken()
         setupListener()
+    }
+
+    private fun init() {
+        googleSignInExt.initGoogle(requireContext())
     }
 
     private fun loadProfile() = with(viewModel) {
@@ -63,6 +77,21 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private fun setupListener() = with(binding) {
         ivBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        btnLogout.setOnClickListener {
+            googleSignInExt.signOut(
+                isSuccess = {
+                    Toast.makeText(
+                        requireContext(), "Logout is success",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    authNavigator.fromSettingToGreetings(this@SettingFragment)
+                },
+                isError = {
+                    Toast.makeText(requireContext(), "Logout is error", Toast.LENGTH_LONG).show()
+                }
+            )
         }
     }
 

@@ -1,4 +1,4 @@
-package com.kotlin.learn.feature.auth.util.common
+package com.kotlin.learn.core.common.google
 
 import android.content.Context
 import android.util.Log
@@ -12,8 +12,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.kotlin.learn.core.common.R
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
-import com.kotlin.learn.feature.auth.R
 
 class GoogleSignInExt(
     private val resultDataAuthSuccess: (AuthGoogleSignInModel) -> Unit,
@@ -73,7 +73,9 @@ class GoogleSignInExt(
                 )
                 resultDataAuthSuccess.invoke(accountModel)
             } else {
-                resultDataAuthError.invoke(task.exception?.message ?: "Please check your connection")
+                resultDataAuthError.invoke(
+                    task.exception?.message ?: "Please check your connection"
+                )
             }
         }
 
@@ -85,17 +87,20 @@ class GoogleSignInExt(
             .build()
     )
 
-    private fun isUserSignedIn() = GoogleSignIn.getLastSignedInAccount(context) != null
+    fun isUserSignedIn() = GoogleSignIn.getLastSignedInAccount(context) != null
 
-    private fun signOut() {
+    fun signOut(
+        isSuccess: () -> Unit,
+        isError: () -> Unit,
+    ) {
         if (isUserSignedIn()) {
             getGoogleSingInClient().signOut().addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(context, " Signed out ", Toast.LENGTH_LONG).show()
+                    isSuccess.invoke()
                 } else {
-                    Toast.makeText(context, " Error ", Toast.LENGTH_LONG).show()
+                    isError.invoke()
                 }
             }
-        }
+        } else isError.invoke()
     }
 }
