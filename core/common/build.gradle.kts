@@ -28,6 +28,10 @@ dependencies {
     implementation(libs.androidx.security.security.crypto)
     implementation(libs.com.squareup.moshi.moshi.kotlin)
     implementation(libs.androidx.datastore.datastore.preferences)
+    implementation(libs.com.google.android.gms.play.services.auth)
+    implementation(libs.com.google.firebase.firebase.auth)
+    implementation(libs.com.google.firebase.firebase.common.ktx)
+    implementation(libs.com.google.firebase.firebase.database.ktx)
 
     kapt(libs.hilt.compiler)
 }

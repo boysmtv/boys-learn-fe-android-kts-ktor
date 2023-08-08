@@ -111,6 +111,10 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.kotlin.learn.feature.movie.presentation.ui.SettingFragment"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_greetingsFragment"
+            app:destination="@id/greetingsFragment" />
+    </fragment>
 
 </navigation>

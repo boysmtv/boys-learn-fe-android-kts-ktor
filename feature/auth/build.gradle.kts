@@ -47,10 +47,10 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)
     implementation(libs.androidx.navigation.fragment)
-    implementation(libs.com.google.android.gms.play.services.auth)
-    implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.com.squareup.moshi.moshi.kotlin)
     implementation(libs.androidx.datastore.datastore.preferences)
+    implementation(libs.com.google.android.gms.play.services.auth)
+    implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.com.google.firebase.firebase.common.ktx)
     implementation(libs.com.google.firebase.firebase.database.ktx)
 

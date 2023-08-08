@@ -31,3 +31,31 @@ inline infix fun <T, Value : Any> Result<T>.pagingSucceeded(
         }
     }
 }
+
+
+val Result<*>?.isSucceeded get() = this != null && this is Result.Success && data != null
+
+val Result<*>?.isError get() = this != null && this is Result.Error
+
+val Result<*>?.isLoading get() = this != null && this is Result.Loading
+
+
+inline infix fun <T, Value : Any> Result<T>?.runSucceeded(predicate: (data: T) -> Value): Value? {
+    if (this != null && this.isSucceeded && this is Result.Success && this.data != null) {
+        return predicate.invoke(this.data)
+    }
+    return null
+}
+
+inline infix fun <T> Result<T>.success(predicate: (data: T) -> Unit): Result<T> {
+    if (this is Result.Success && this.data != null) {
+        predicate.invoke(this.data)
+    }
+    return this
+}
+
+inline infix fun <T> Result<T>.error(predicate: (data: Throwable) -> Unit) {
+    if (this is Result.Error) {
+        predicate.invoke(this.throwable)
+    }
+}

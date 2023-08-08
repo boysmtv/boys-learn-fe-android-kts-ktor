@@ -3,32 +3,32 @@ package com.kotlin.learn.core.common
 import com.kotlin.learn.core.model.BaseResponse
 import kotlinx.coroutines.flow.flow
 
-sealed interface SpringResult<out T> {
-    data class Success<T>(val data: T) : SpringResult<T>
-    data class Error(val throwable: Throwable) : SpringResult<Nothing>
-    object Loading : SpringResult<Nothing>
+sealed interface Spring<out T> {
+    data class Success<T>(val data: T) : Spring<T>
+    data class Error(val throwable: Throwable) : Spring<Nothing>
+    object Loading : Spring<Nothing>
 }
 
-inline fun <T> springResultExecute(body: () -> T): SpringResult<T> {
+inline fun <T> executeSpring(body: () -> T): Spring<T> {
     return try {
-        SpringResult.Loading
-        SpringResult.Success(body.invoke())
+        Spring.Loading
+        Spring.Success(body.invoke())
     } catch (throwable: Throwable) {
-        SpringResult.Error(throwable)
+        Spring.Error(throwable)
     }
 }
 
-sealed interface SpringResultResponse<out T> {
-    class Success<T>(val data: T) : SpringResultResponse<T>
-    class Error<T>(val data: T) : SpringResultResponse<T>
+sealed interface SpringResult<out T> {
+    class Success<T>(val data: T) : SpringResult<T>
+    class Error<T>(val data: T) : SpringResult<T>
 }
 
-fun <T> invokeSpringResultResponse(
+fun <T> invokeSpringResult(
     response: BaseResponse<T>,
 ) = flow {
     if (response.data != null && response.code == 200) {
-        emit(SpringResultResponse.Success(response.data))
+        emit(SpringResult.Success(response.data))
     } else {
-        emit(SpringResultResponse.Error(response.data))
+        emit(SpringResult.Error(response.data))
     }
 }
