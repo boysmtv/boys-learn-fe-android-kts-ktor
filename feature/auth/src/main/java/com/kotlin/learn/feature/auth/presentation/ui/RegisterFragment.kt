@@ -2,10 +2,11 @@ package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.util.Log
 import androidx.fragment.app.viewModels
-import com.kotlin.learn.core.common.Result
-import com.kotlin.learn.core.common.SpringResult
+import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.invokeSpringResult
+import com.kotlin.learn.core.common.util.network.ResultSpring
+import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -36,13 +37,17 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun subscribeRegister() = with(viewModel) {
         register.launch(this@RegisterFragment) {
             when (it) {
-                is Result.Loading -> {}
+                is ResultSpring.Loading -> {}
 
-                is Result.Success -> {
+                is ResultSpring.Success -> {
                     parseRegisterSuccess(it.data)
                 }
 
-                is Result.Error -> {
+                is ResultSpring.Exception -> {
+                    parseRegisterSuccess(it.data)
+                }
+
+                is ResultSpring.Error -> {
                     showDialogGeneralError("Register Error", it.throwable.message.toString())
                 }
             }
@@ -50,9 +55,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
-        invokeSpringResult(response).launch(this@RegisterFragment) {
+        invokeSpringParser(response).launch(this@RegisterFragment) {
             when (it) {
-                is SpringResult.Success -> {
+                is SpringParser.Success -> {
                     val content = BaseDataDialog(
                         title = "Welcome, ${it.data?.fullName}",
                         content = "Your account already success created",
@@ -71,7 +76,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                     )
                 }
 
-                is SpringResult.Error -> {
+                is SpringParser.Error -> {
                     Log.e("Tag", "Register-ResultResponse.Error: $it")
                     showDialogGeneralError("Register Error", "Check your connection")
                 }

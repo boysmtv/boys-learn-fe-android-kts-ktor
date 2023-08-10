@@ -2,7 +2,7 @@ package com.kotlin.learn.feature.movie.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.model.MovieDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel

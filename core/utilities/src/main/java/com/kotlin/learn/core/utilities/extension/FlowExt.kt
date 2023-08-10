@@ -1,6 +1,5 @@
 package com.kotlin.learn.core.utilities.extension
 
-import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -10,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 fun <T> MutableStateFlow<T>.launch(
     lifecycleOwner: LifecycleOwner,
@@ -42,7 +42,7 @@ fun <T> Flow<T>.launchWhenStarted(
             try {
                 this@launchWhenStarted.collect()
             } catch (t: Throwable) {
-                Log.e("Error-Collect", "Value: ${t.message}")
+                Timber.tag("launchWhenStarted").e("Error-try-collect : ${t.message}")
             }
         }
     }

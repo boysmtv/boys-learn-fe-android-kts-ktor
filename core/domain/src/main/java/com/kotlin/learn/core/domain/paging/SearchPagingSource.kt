@@ -2,7 +2,7 @@ package com.kotlin.learn.core.domain.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.kotlin.learn.core.common.pagingSucceeded
+import com.kotlin.learn.core.common.util.network.pagingSucceeded
 import com.kotlin.learn.core.data.repository.MovieRepository
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.MovieModel

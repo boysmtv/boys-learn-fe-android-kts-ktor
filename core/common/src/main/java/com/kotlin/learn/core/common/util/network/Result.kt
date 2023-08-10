@@ -1,4 +1,4 @@
-package com.kotlin.learn.core.common
+package com.kotlin.learn.core.common.util.network
 
 import android.content.res.Resources.NotFoundException
 import androidx.paging.PagingSource

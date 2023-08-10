@@ -2,6 +2,8 @@ package com.kotlin.learn.core.network
 
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.kotlin.learn.core.common.util.network.ResultSpring
+import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.utilities.Constant
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -32,7 +34,15 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.ByteReadChannel
+import io.ktor.utils.io.readUTF8Line
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import java.util.concurrent.TimeUnit
 
 class KtorClient(
@@ -40,10 +50,9 @@ class KtorClient(
 ) {
     private val client = initializeKtor(chuckerInterceptor)
 
-    private val springUrl = "192.168.0.6:8080"
     private val springClient = initializeKtor(
         chuckerInterceptor = chuckerInterceptor,
-        springUrl = springUrl,
+        springUrl = "192.168.0.6:8080",
         springHeader = mapOf(
             "X-Api-Key" to "SECRET"
         )
@@ -96,6 +105,46 @@ class KtorClient(
             }.body()
     }
 
+    internal suspend inline fun <reified Z : Any, reified T> postAPIwithException(
+        resources: String,
+        query: Map<String, String>? = null,
+        path: String? = null,
+        body: Z? = null,
+    ): Flow<ResultSpring<BaseResponse<T>>> {
+        return withContext(Dispatchers.IO) {
+            flow {
+                emit(ResultSpring.Loading)
+                val response = springClient
+                    .post(resources) {
+                        url {
+                            query?.let {
+                                it.forEach { item ->
+                                    parameters.append(item.key, item.value)
+                                }
+                            }
+                            path?.let {
+                                appendPathSegments(it)
+                            }
+                        }
+                        body?.let {
+                            setBody(it)
+                        }
+                    }
+                when (response.status.value) {
+                    in 200..299 -> {
+                        emit(ResultSpring.Success(response.body()))
+                        return@flow
+                    }
+
+                    else -> {
+                        emit(ResultSpring.Exception(response.body()))
+                        return@flow
+                    }
+                }
+            }
+        }
+    }
+
     companion object {
 
         private const val timeout = 60L
@@ -121,7 +170,7 @@ class KtorClient(
                         ignoreUnknownKeys = true
                         prettyPrint = true
                         isLenient = true
-                    },
+                    }
                 )
             }
 

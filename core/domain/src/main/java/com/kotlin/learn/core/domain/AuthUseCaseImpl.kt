@@ -1,6 +1,6 @@
 package com.kotlin.learn.core.domain
 
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.data.repository.AuthRepository
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.model.BaseResponse

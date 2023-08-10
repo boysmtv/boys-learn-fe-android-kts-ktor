@@ -1,12 +1,10 @@
 package com.kotlin.learn.core.domain
 
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.AuthGoogleSignInModel
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginReqModel
 import com.kotlin.learn.core.model.LoginRespModel
-import com.kotlin.learn.core.model.RegisterReqModel
-import com.kotlin.learn.core.model.RegisterRespModel
 import kotlinx.coroutines.flow.Flow
 
 interface AuthUseCase {

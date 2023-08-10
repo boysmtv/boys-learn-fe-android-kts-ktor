@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.kotlin.learn.core.common.R
-import com.kotlin.learn.core.common.util.NetworkConnectionLiveData
-import com.kotlin.learn.core.common.util.debounce
+import com.kotlin.learn.core.common.util.network.NetworkConnectionLiveData
+import com.kotlin.learn.core.common.util.network.debounce
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialogGeneral
 import com.kotlin.learn.core.ui.dialog.common.DialogGeneralError

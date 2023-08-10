@@ -1,10 +1,10 @@
 package com.kotlin.learn.feature.auth.presentation.ui
 
 import androidx.fragment.app.viewModels
-import com.kotlin.learn.core.common.Result
-import com.kotlin.learn.core.common.SpringResult
+import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.invokeSpringResult
+import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.model.LoginReqModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.utilities.extension.launch
@@ -32,11 +32,11 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                 is Result.Loading -> {}
 
                 is Result.Success -> {
-                    invokeSpringResult(result.data).launch(lifecycleOwner = this@AuthFragment) {
+                    invokeSpringParser(result.data).launch(lifecycleOwner = this@AuthFragment) {
                         when (it) {
-                            is SpringResult.Success -> authNavigator.fromAuthToHome(fragment = this@AuthFragment)
+                            is SpringParser.Success -> authNavigator.fromAuthToHome(fragment = this@AuthFragment)
 
-                            is SpringResult.Error -> {
+                            is SpringParser.Error -> {
                                 showDialogGeneralError(
                                     title = "Login Error",
                                     message = "Check your connection"
