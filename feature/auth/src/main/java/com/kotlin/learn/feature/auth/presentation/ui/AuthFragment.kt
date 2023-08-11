@@ -4,15 +4,19 @@ import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.util.JsonUtil
+import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginReqModel
 import com.kotlin.learn.core.model.LoginRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.databinding.FragmentAuthBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.AuthViewModel
+import com.kotlin.learn.feature.auth.presentation.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,8 +25,16 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
 
     private val viewModel: AuthViewModel by viewModels()
 
+    private val viewModelRegister: RegisterViewModel by viewModels()
+
     @Inject
     lateinit var authNavigator: AuthNavigator
+
+    @Inject
+    lateinit var jsonUtil: JsonUtil
+
+    private var userModel: UserModel = UserModel()
+
 
     override fun setupView() {
         subscribeLogin()
@@ -74,8 +86,23 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         invokeSpringParser(result.data).launch(lifecycleOwner = this@AuthFragment) {
             when (it) {
                 is SpringParser.Success -> {
-                    storeUserToFirestore()
-                    authNavigator.fromAuthToHome(fragment = this@AuthFragment)
+                    if (it.data != null) {
+                        viewModelRegister.storeUserToDatastore(
+                            jsonUtil.toJson(
+                                userModel.apply {
+                                    id = it.data!!.id ?: Constant.EMPTY_STRING
+                                    displayName = it.data!!.fullName ?: Constant.EMPTY_STRING
+                                }
+                            )
+                        ).launch(this@AuthFragment) { event ->
+                            invokeDataStoreEvent(event,
+                                isFetched = {},
+                                isStored = {
+                                    authNavigator.fromAuthToHome(fragment = this@AuthFragment)
+                                }
+                            )
+                        }
+                    } else showDialogGeneralError("Register Error", "Error store data google register")
                 }
 
                 is SpringParser.Error -> {
@@ -93,20 +120,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         showDialogGeneralError(
             title = "Login Error",
             message = result.message.toString()
-        )
-    }
-
-    private fun storeUserToFirestore() {
-        viewModel.storeUserToFirestore(
-            model = UserModel(
-
-            ),
-            onSuccess = { key ->
-
-            },
-            onError = {
-
-            }
         )
     }
 }

@@ -26,7 +26,7 @@ class GreetingsViewModel @Inject constructor(
     val storeFirebase = _storeFirebase.asStateFlow()
 
     //Notes: Store User Model to Datastore
-    fun storeDataAuth(user: String) =
+    fun storeUserToDatastore(user: String) =
         flow {
             dataStore.setString(
                 PreferenceConstants.Authorization.PREF_USER,

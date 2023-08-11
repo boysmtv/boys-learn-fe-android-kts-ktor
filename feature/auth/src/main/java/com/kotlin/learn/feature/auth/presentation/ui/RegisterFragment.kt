@@ -6,8 +6,10 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.JsonUtil
+import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.common.util.network.parseResultError
+import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -33,7 +35,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     @Inject
     lateinit var jsonUtil: JsonUtil
 
-    private lateinit var userModel: UserModel
+    private var userModel: UserModel = UserModel()
 
     override fun setupView() {
         init()
@@ -42,7 +44,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun init() = with(binding) {
-        userModel = UserModel()
         cvRegister.setBackgroundResource(R.drawable.card_rounded_top)
     }
 
@@ -72,24 +73,30 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                                 id = it.data?.id ?: EMPTY_STRING
                             }
                         )
-                    )
+                    ).launch(this@RegisterFragment) { event ->
+                        invokeDataStoreEvent(event,
+                            isFetched = {},
+                            isStored = {
+                                val content = BaseDataDialog(
+                                    title = "Welcome, ${it.data?.fullName}",
+                                    content = "Your account already success created",
+                                    primaryButtonShow = true,
+                                    secondaryButtonText = EMPTY_STRING,
+                                    secondaryButtonShow = false,
+                                    icon = R.drawable.ic_warning_rounded,
+                                    primaryButtonText = "Login"
+                                )
+                                showDialogWithActionButton(
+                                    dataToDialog = content,
+                                    actionClickPrimary = {
+                                        authNavigator.fromRegisterToAuth(this@RegisterFragment)
+                                    },
+                                    tag = RegisterFragment::class.simpleName.toString()
+                                )
+                            }
+                        )
+                    }
 
-                    val content = BaseDataDialog(
-                        title = "Welcome, ${it.data?.fullName}",
-                        content = "Your account already success created",
-                        primaryButtonShow = true,
-                        secondaryButtonText = EMPTY_STRING,
-                        secondaryButtonShow = false,
-                        icon = R.drawable.ic_warning_rounded,
-                        primaryButtonText = "Login"
-                    )
-                    showDialogWithActionButton(
-                        dataToDialog = content,
-                        actionClickPrimary = {
-                            authNavigator.fromRegisterToAuth(this@RegisterFragment)
-                        },
-                        tag = RegisterFragment::class.simpleName.toString()
-                    )
                 }
 
                 is SpringParser.Error -> {
@@ -126,19 +133,21 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
         btnRegister.setOnClickListener {
-            userModel.apply {
-                idFireStore = EMPTY_STRING
-                idGoogle = EMPTY_STRING
-                idToken = EMPTY_STRING
-                firstName = etFirstName.text.toString()
-                lastName = etLastName.text.toString()
-                displayName = etFirstName.text.toString() + " " + etLastName.text.toString()
-                email = etEmail.text.toString()
-                phone = etPhone.text.toString()
-                photoUrl = EMPTY_STRING
-                password = etPassword.text.toString()
-            }
-            viewModel.postRegister(userModel)
+            viewModel.postRegister(
+                userModel.apply {
+                    idFireStore = EMPTY_STRING
+                    idGoogle = EMPTY_STRING
+                    idToken = EMPTY_STRING
+                    firstName = etFirstName.text.toString()
+                    lastName = etLastName.text.toString()
+                    displayName = etFirstName.text.toString() + " " + etLastName.text.toString()
+                    email = etEmail.text.toString()
+                    phone = etPhone.text.toString()
+                    photoUrl = EMPTY_STRING
+                    password = etPassword.text.toString()
+                    method = AuthMethod.BACKEND.name
+                }
+            )
         }
 
         etFirstName.setText("Dedy")

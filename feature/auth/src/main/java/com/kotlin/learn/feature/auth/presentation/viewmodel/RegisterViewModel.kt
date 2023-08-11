@@ -36,7 +36,7 @@ class RegisterViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun storeUserToDatastore(user: String) {
+    fun storeUserToDatastore(user: String) =
         flow {
             dataStore.setString(
                 PreferenceConstants.Authorization.PREF_USER,
@@ -44,6 +44,5 @@ class RegisterViewModel @Inject constructor(
             )
             emit(DataStoreCacheEvent.StoreSuccess)
         }
-    }
 
 }

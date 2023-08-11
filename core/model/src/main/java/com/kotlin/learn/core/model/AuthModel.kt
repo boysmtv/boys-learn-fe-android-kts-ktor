@@ -34,4 +34,5 @@ data class UserModel(
     @Json(name = "email") var email: String = Constant.EMPTY_STRING,
     @Json(name = "password") var password: String = Constant.EMPTY_STRING,
     @Json(name = "photoUrl") var photoUrl: String = Constant.EMPTY_STRING,
+    @Json(name = "method") var method: String = Constant.EMPTY_STRING,
 )

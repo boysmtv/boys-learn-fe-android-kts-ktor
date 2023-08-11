@@ -13,11 +13,22 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.SpringParser
+import com.kotlin.learn.core.common.util.network.invokeSpringParser
+import com.kotlin.learn.core.common.util.network.parseResultError
+import com.kotlin.learn.core.model.AuthMethod
+import com.kotlin.learn.core.model.BaseResponse
+import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
+import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.GreetingsViewModel
+import com.kotlin.learn.feature.auth.presentation.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,6 +36,8 @@ import javax.inject.Inject
 class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetingsBinding::inflate) {
 
     private val viewModel: GreetingsViewModel by viewModels()
+
+    private val viewModelRegister: RegisterViewModel by viewModels()
 
     private var googleSignInExt: GoogleSignInExt =
         GoogleSignInExt(
@@ -38,19 +51,33 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     @Inject
     lateinit var jsonUtil: JsonUtil
 
+    private var userModel: UserModel = UserModel()
+
     override fun setupView() {
+        init()
         subscribeStoreAuth()
-        setupInit()
         setupListener()
     }
 
-    private fun subscribeStoreAuth() = with(viewModel) {
-        storeFirebase.launch(this@GreetingsFragment) {
+    private fun subscribeStoreAuth() {
+        viewModelRegister.register.launch(this@GreetingsFragment) {
+            when (it) {
+                Result.Waiting -> {}
+
+                is Result.Loading -> showHideProgress(isLoading = true)
+
+                is Result.Success -> parseRegisterSuccess(it.data)
+
+                is Result.Error -> parseRegisterError(it.throwable)
+            }
+        }
+
+        viewModel.storeFirebase.launch(this@GreetingsFragment) {
 
         }
     }
 
-    private fun setupInit() {
+    private fun init() {
         googleSignInExt.initGoogle(requireContext())
     }
 
@@ -83,24 +110,20 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         }
     }
 
-    private fun invokeResultDataAuthSuccess(model: UserModel) = with(viewModel) {
-        storeUserToFirestore(model,
-            onSuccess = { key ->
-                storeDataAuth(jsonUtil.toJson(
-                    model.apply {
-                        idFireStore = key
-                    }
-                )).launch(this@GreetingsFragment) { event ->
-                    invokeDataStoreEvent(event,
-                        isFetched = {},
-                        isStored = {
-                            authNavigator.fromGreetingsToHome(this@GreetingsFragment)
-                        }
-                    )
-                }
-            },
-            onError = {
-                Toast.makeText(context, "Error Store Data Firebase", Toast.LENGTH_LONG).show()
+    private fun invokeResultDataAuthSuccess(model: UserModel) {
+        viewModelRegister.postRegister(
+            userModel.apply {
+                idFireStore = Constant.EMPTY_STRING
+                idGoogle = model.idGoogle
+                idToken = Constant.EMPTY_STRING
+                firstName = model.firstName
+                lastName = model.lastName
+                displayName = model.displayName
+                email = model.email
+                phone = Constant.UNDERSCORE
+                photoUrl = model.photoUrl
+                password = Constant.UNDERSCORE
+                method = AuthMethod.GOOGLE.name
             }
         )
     }
@@ -110,5 +133,68 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         Toast.makeText(context, "Error Invoke Data Auth - Msg : $message", Toast.LENGTH_LONG).show()
     }
     // end region google login
+
+
+    private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
+        showHideProgress(isLoading = false)
+
+        invokeSpringParser(response).launch(this@GreetingsFragment) {
+            when (it) {
+                is SpringParser.Success -> {
+                    viewModel.storeUserToDatastore(
+                        jsonUtil.toJson(
+                            userModel.apply {
+                                id = it.data?.id ?: Constant.EMPTY_STRING
+                            }
+                        )
+                    ).launch(this@GreetingsFragment) { event ->
+                        invokeDataStoreEvent(event,
+                            isFetched = {},
+                            isStored = {
+                                val content = BaseDataDialog(
+                                    title = "Welcome, ${it.data?.fullName}",
+                                    content = "Your account already success created",
+                                    primaryButtonShow = true,
+                                    secondaryButtonText = Constant.EMPTY_STRING,
+                                    secondaryButtonShow = false,
+                                    icon = R.drawable.ic_warning_rounded,
+                                    primaryButtonText = "Login"
+                                )
+                                showDialogWithActionButton(
+                                    dataToDialog = content,
+                                    actionClickPrimary = {
+                                        authNavigator.fromRegisterToAuth(this@GreetingsFragment)
+                                    },
+                                    tag = RegisterFragment::class.simpleName.toString()
+                                )
+                            }
+                        )
+                    }
+
+                }
+
+                is SpringParser.Error -> {
+                    Log.e("Tag", "Register-ResultResponse.Error: $it")
+                    showDialogGeneralError("Register Error", "Check your connection")
+                }
+            }
+        }
+    }
+
+    private fun parseRegisterError(throwable: Throwable) {
+        showHideProgress(isLoading = false)
+
+        parseResultError(throwable).launch(this@GreetingsFragment) { parser ->
+            when (parser) {
+                is SpringParser.Success -> {
+                    showDialogGeneralError("Register failed", parser.data.toString())
+                }
+
+                is SpringParser.Error -> {
+                    showDialogGeneralError("Register error", throwable.message.toString())
+                }
+            }
+        }
+    }
 
 }
