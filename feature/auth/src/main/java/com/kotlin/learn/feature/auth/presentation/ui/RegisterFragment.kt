@@ -5,8 +5,9 @@ import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.util.network.ResultSpring
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
+import com.kotlin.learn.core.common.util.network.parserResultError
+import com.kotlin.learn.core.common.util.network.runSucceeded
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
@@ -37,19 +38,22 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun subscribeRegister() = with(viewModel) {
         register.launch(this@RegisterFragment) {
             when (it) {
-                is ResultSpring.Loading -> {}
+                is Result.Loading -> {}
 
-                is ResultSpring.Success -> {
-                    parseRegisterSuccess(it.data)
-                }
+                is Result.Success -> parseRegisterSuccess(it.data)
 
-                is ResultSpring.Exception -> {
-                    parseRegisterSuccess(it.data)
-                }
+                is Result.Error ->
+                    parserResultError(it.throwable).launch(this@RegisterFragment) { parser ->
+                        when (parser) {
+                            is SpringParser.Success -> {
+                                showDialogGeneralError("Register failed", parser.data.toString())
+                            }
 
-                is ResultSpring.Error -> {
-                    showDialogGeneralError("Register Error", it.throwable.message.toString())
-                }
+                            is SpringParser.Error -> {
+                                showDialogGeneralError("Register error", it.throwable.message.toString())
+                            }
+                        }
+                    }
             }
         }
     }

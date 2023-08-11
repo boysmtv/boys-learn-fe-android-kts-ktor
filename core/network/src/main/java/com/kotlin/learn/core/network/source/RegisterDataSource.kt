@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RegisterDataSource {
 
-    suspend fun postRegister(model: RegisterReqModel): Flow<ResultSpring<BaseResponse<RegisterRespModel>>>
+    suspend fun postRegister(model: RegisterReqModel): BaseResponse<RegisterRespModel>
 
 }

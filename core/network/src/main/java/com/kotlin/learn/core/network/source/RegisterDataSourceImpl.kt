@@ -16,10 +16,12 @@ class RegisterDataSourceImpl @Inject constructor(
     private val ktorClient: KtorClient,
 ) : RegisterDataSource {
 
-    override suspend fun postRegister(model: RegisterReqModel): Flow<ResultSpring<BaseResponse<RegisterRespModel>>> {
-        return ktorClient.postAPIwithException(
-            resources = ApiAuthResources.REGISTER,
-            body = model
-        )
+    override suspend fun postRegister(model: RegisterReqModel): BaseResponse<RegisterRespModel> {
+        return withContext(Dispatchers.IO) {
+            ktorClient.postAPIwithResponse(
+                resources = ApiAuthResources.REGISTER,
+                body = model
+            )
+        }
     }
 }

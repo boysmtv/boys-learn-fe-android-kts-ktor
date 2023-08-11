@@ -12,6 +12,6 @@ import kotlinx.serialization.json.JsonConfiguration
 
 interface RegisterUseCase {
 
-    suspend fun postRegister(model: RegisterReqModel): Flow<ResultSpring<BaseResponse<RegisterRespModel>>>
+    fun postRegister(model: RegisterReqModel): Flow<Result<BaseResponse<RegisterRespModel>>>
 
 }
