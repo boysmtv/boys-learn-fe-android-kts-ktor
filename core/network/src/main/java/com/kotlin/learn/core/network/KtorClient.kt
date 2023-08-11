@@ -2,19 +2,13 @@ package com.kotlin.learn.core.network
 
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.kotlin.learn.core.common.util.network.ResultSpring
-import com.kotlin.learn.core.model.BaseErrorException
-import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.utilities.Constant
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpResponseValidator
-import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ResponseException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
@@ -26,7 +20,6 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.plugins.resources.get
-import io.ktor.client.request.HttpRequest
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -34,15 +27,9 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLProtocol
 import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 
@@ -179,10 +166,16 @@ class KtorClient(
                 validateResponse { response: HttpResponse ->
                     val statusCode = response.status.value
                     when (statusCode) {
-                        in 300..599 -> throw ErrorException(response, response.bodyAsText())
+                        in 300..599 -> throw ErrorException(
+                            response = response,
+                            responseBody = response.bodyAsText()
+                        )
                     }
                     if (statusCode >= 600) {
-                        throw MissingPageException(response, "Error")
+                        throw MissingPageException(
+                            response = response,
+                            responseBody = "Error"
+                        )
                     }
                 }
             }
@@ -191,12 +184,10 @@ class KtorClient(
     }
 }
 
-class MissingPageException(response: HttpResponse, cachedResponseText: String) :
-    ResponseException(response, cachedResponseText) {
+class MissingPageException(response: HttpResponse, responseBody: String) : ResponseException(response, responseBody) {
     override val message: String = response.status.description
 }
 
-class ErrorException(response: HttpResponse, cachedResponseText: String) :
-    ResponseException(response, cachedResponseText) {
-    override val message: String = cachedResponseText
+class ErrorException(response: HttpResponse, responseBody: String) : ResponseException(response, responseBody) {
+    override val message: String = responseBody
 }

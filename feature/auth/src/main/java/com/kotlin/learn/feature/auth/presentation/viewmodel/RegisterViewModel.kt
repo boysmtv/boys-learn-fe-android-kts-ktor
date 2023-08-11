@@ -21,7 +21,7 @@ class RegisterViewModel @Inject constructor(
     private val useCase: RegisterUseCase
 ) : ViewModel() {
 
-    private val _register: MutableStateFlow<Result<BaseResponse<RegisterRespModel>>> = MutableStateFlow(Result.Loading)
+    private val _register: MutableStateFlow<Result<BaseResponse<RegisterRespModel>>> = MutableStateFlow(Result.Waiting)
     val register = _register.asStateFlow()
 
     fun postRegister(model: RegisterReqModel) {

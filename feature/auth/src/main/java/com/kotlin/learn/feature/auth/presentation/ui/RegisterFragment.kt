@@ -38,11 +38,19 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun subscribeRegister() = with(viewModel) {
         register.launch(this@RegisterFragment) {
             when (it) {
-                is Result.Loading -> {}
+                Result.Waiting -> {}
 
-                is Result.Success -> parseRegisterSuccess(it.data)
+                is Result.Loading -> {
+                    showHideProgress(isLoading = true)
+                }
 
-                is Result.Error ->
+                is Result.Success -> {
+                    showHideProgress(isLoading = false)
+                    parseRegisterSuccess(it.data)
+                }
+
+                is Result.Error -> {
+                    showHideProgress(isLoading = false)
                     parserResultError(it.throwable).launch(this@RegisterFragment) { parser ->
                         when (parser) {
                             is SpringParser.Success -> {
@@ -54,6 +62,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                             }
                         }
                     }
+                }
             }
         }
     }

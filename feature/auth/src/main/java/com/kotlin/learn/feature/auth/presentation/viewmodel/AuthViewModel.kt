@@ -19,8 +19,7 @@ class AuthViewModel @Inject constructor(
     private val useCase: AuthUseCase
 ) : ViewModel() {
 
-    private val _login: MutableStateFlow<Result<BaseResponse<LoginRespModel>>> =
-        MutableStateFlow(Result.Loading)
+    private val _login: MutableStateFlow<Result<BaseResponse<LoginRespModel>>> = MutableStateFlow(Result.Waiting)
     val login = _login.asStateFlow()
 
     fun postLogin(model: LoginReqModel) {

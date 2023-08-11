@@ -41,13 +41,13 @@ class DialogWithAction(
 
     override fun onStart() {
         super.onStart()
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.setCancelable(false)
         dialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog?.setCanceledOnTouchOutside(false)
-        dialog?.setCancelable(false)
     }
 
     private fun setupView() = with(binding) {

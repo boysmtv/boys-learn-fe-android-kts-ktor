@@ -29,9 +29,12 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     private fun subscribeLogin() = with(viewModel) {
         login.launch(this@AuthFragment) { result ->
             when (result) {
-                is Result.Loading -> {}
+                Result.Waiting -> {}
+
+                is Result.Loading -> showHideProgress(isLoading = true)
 
                 is Result.Success -> {
+                    showHideProgress(isLoading = false)
                     invokeSpringParser(result.data).launch(lifecycleOwner = this@AuthFragment) {
                         when (it) {
                             is SpringParser.Success -> authNavigator.fromAuthToHome(fragment = this@AuthFragment)
@@ -47,6 +50,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                 }
 
                 is Result.Error -> {
+                    showHideProgress(isLoading = false)
                     showDialogGeneralError(
                         title = "Login Error",
                         message = result.throwable.message.toString()

@@ -82,7 +82,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun subscribeBanner() = with(binding.layoutBanner) {
         viewModel.nowPlayingMovies.launch(this@HomeFragment) {
             when (it) {
-                Result.Loading -> {
+                Result.Waiting -> {}
+
+                is Result.Loading -> {
                     viewAnimator.displayedChild = 0
                 }
 

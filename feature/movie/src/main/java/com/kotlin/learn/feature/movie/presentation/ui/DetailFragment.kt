@@ -40,7 +40,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     private fun subscribeDetail() = with(binding) {
         viewModel.detailMovies.launch(this@DetailFragment) {
             when (it) {
-                Result.Loading -> {
+                Result.Waiting -> {}
+
+                is Result.Loading -> {
                     viewAnimator.displayedChild = Constant.ZERO
                 }
 

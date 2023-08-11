@@ -8,6 +8,7 @@ import com.kotlin.learn.core.model.LoginReqModel
 import com.kotlin.learn.core.model.LoginRespModel
 import com.kotlin.learn.core.network.source.AuthDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -44,6 +45,8 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun postLogin(model: LoginReqModel): Flow<Result<BaseResponse<LoginRespModel>>> =
         flow {
+            emit(Result.Loading)
+            delay(timeMillis = 1000)
             emit(
                 execute {
                     network.postLogin(model = model)

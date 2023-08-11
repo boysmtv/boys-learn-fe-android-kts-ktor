@@ -32,7 +32,9 @@ class CreditsFragment(
     private fun subscribeCredits() = with(binding) {
         viewModel.creditsMovie.launch(this@CreditsFragment) {
             when (it) {
-                Result.Loading -> {
+                Result.Waiting -> {}
+
+                is Result.Loading -> {
                     viewAnimator.displayedChild = 0
                 }
 
