@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.com.google.firebase.firebase.common.ktx)
     implementation(libs.com.google.firebase.firebase.database.ktx)
+    implementation(libs.com.google.firebase.firebase.messaging.ktx)
 
     kapt(libs.hilt.compiler)
 }

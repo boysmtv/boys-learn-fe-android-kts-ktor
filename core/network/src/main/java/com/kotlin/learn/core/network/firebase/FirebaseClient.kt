@@ -15,23 +15,23 @@ class FirebaseClient {
     private var firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.getReference(authTable)
 
-    internal suspend fun <Z : Any> postFirebaseRequest(
+    internal suspend fun <Z : Any> storeRequestToFirestore(
         data: Z,
         onSuccess: (String) -> Unit,
         onError: () -> Unit,
     ) =
         withContext(Dispatchers.IO) {
-            val uId = databaseReference.push().key.toString()
-            databaseReference.child(uId).setValue(data)
+            val idFirestore = databaseReference.push().key.toString()
+            databaseReference.child(idFirestore).setValue(data)
                 .addOnSuccessListener {
-                    onSuccess.invoke(uId)
+                    onSuccess.invoke(idFirestore)
                 }
                 .addOnFailureListener {
                     onError.invoke()
                 }
         }
 
-    internal suspend fun <Z : Any> getFirebaseRequest(
+    internal suspend fun <Z : Any> fetchRequestFromFirestore(
         id: String,
         resources: Z,
         onSuccess: (Z) -> Unit,

@@ -2,10 +2,9 @@ package com.kotlin.learn.feature.auth.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.domain.AuthUseCase
-import com.kotlin.learn.core.model.AuthReqModel
-import com.kotlin.learn.core.model.AuthRespModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginReqModel
 import com.kotlin.learn.core.model.LoginRespModel
@@ -21,13 +20,36 @@ class AuthViewModel @Inject constructor(
     private val useCase: AuthUseCase
 ) : ViewModel() {
 
-    private val _login: MutableStateFlow<Result<BaseResponse<LoginRespModel>>> =
-        MutableStateFlow(Result.Loading)
-    val login = _login.asStateFlow()
+    /*
+    TODO : start region post login
+    */
 
-    fun postLogin(model: LoginReqModel) {
-        useCase.postLogin(model = model)
-            .onEach { _login.value = it }
+    private val _postAuthorization: MutableStateFlow<Result<BaseResponse<LoginRespModel>>> =
+        MutableStateFlow(Result.Waiting)
+    val postAuthorization = _postAuthorization.asStateFlow()
+
+    fun postAuthorization(
+        model: LoginReqModel
+    ) {
+        useCase.postAuthorization(model = model)
+            .onEach { _postAuthorization.value = it }
+            .launchIn(viewModelScope)
+    }
+
+    /*
+    TODO : start region store user to firestore
+    */
+
+    private val _storeFirestore: MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Waiting)
+    val storeFirestore = _storeFirestore.asStateFlow()
+
+    fun storeUserToFirestore(
+        model: UserModel,
+        onSuccess: (String) -> Unit,
+        onError: () -> Unit
+    ) {
+        useCase.storeUserToFirestore(model, onSuccess, onError)
+            .onEach { _storeFirestore.value = it }
             .launchIn(viewModelScope)
     }
 

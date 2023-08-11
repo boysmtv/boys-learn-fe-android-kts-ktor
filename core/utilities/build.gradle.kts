@@ -17,4 +17,5 @@ dependencies{
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.activity.activity.ktx)
     implementation(libs.androidx.activity.fragment.ktx)
+    implementation(libs.timber)
 }

@@ -2,7 +2,8 @@ package com.kotlin.learn.core.utilities
 
 object Constant {
     const val BASE_URL = "api.themoviedb.org/3"
-    const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w500"
+    const val BASE_URL_IMAGE_ORIGINAL = "https://image.tmdb.org/t/p/original"
+    const val BASE_URL_IMAGE_500 = "https://image.tmdb.org/t/p/w500"
     const val BASE_URL_IMAGE_200 = "https://image.tmdb.org/t/p/w200"
     const val TOKEN =
         "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZmIzYTg2OWRkYTIyNjRjNDQ4MjYxY2Q4YWRlMjExMCIsInN1YiI6IjYyZjI0NzExMTUxMWFhMDA3YTdjZjNlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XD4B4kbOGL-p_XqYStuxFeeki8FC3NBYm_RX7zpNEmE"

@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.DataStoreCacheEvent
-import com.kotlin.learn.core.data.repository.PreferencesRepository
+import com.kotlin.learn.core.data.repository.DataStorePreferences
 import com.kotlin.learn.core.domain.AuthUseCase
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.model.MovieDataModel
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val useCase: AuthUseCase,
     private val movieUseCase: MovieUseCase,
-    private val preferencesRepository: PreferencesRepository
+    private val dataStorePreferences: DataStorePreferences
 ) : ViewModel() {
 
     val popularMovies: Flow<PagingData<MovieDataModel>> = movieUseCase.getMovie(MovieCategories.POPULAR)
@@ -54,8 +54,8 @@ class HomeViewModel @Inject constructor(
     fun fetchAuthFromDataStore() = flow {
         emit(
             DataStoreCacheEvent.FetchSuccess(
-                preferencesRepository.getString(
-                    PreferenceConstants.Authorization.PREF_GOOGLE_AUTH
+                dataStorePreferences.getString(
+                    PreferenceConstants.Authorization.PREF_USER
                 ).getOrNull().orEmpty()
             )
         )
@@ -66,7 +66,7 @@ class HomeViewModel @Inject constructor(
         resources: Z,
         onSuccess: (Z) -> Unit,
         onError: (String) -> Unit
-    ) = useCase.getAuthorization(
+    ) = useCase.fetchUserFromFirestore(
         id,
         resources,
         onSuccess,

@@ -11,9 +11,9 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
-import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
-import com.kotlin.learn.core.nav.navigator.MovieNavigator
+import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
@@ -72,6 +72,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                 )?.getString(PreferenceConstants.Authorization.PREF_FCM_TOKEN, "")
             )
         }
+        Log.e(
+            "loadToken", "SettingFragment - Your token Preferences: ${
+                context?.getSharedPreferences(
+                    "PREFERENCE_NAME", Context.MODE_PRIVATE
+                )?.getString(PreferenceConstants.Authorization.PREF_FCM_TOKEN, "")
+            }"
+        )
     }
 
     private fun setupListener() = with(binding) {
@@ -102,10 +109,18 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     }
 
     private fun updateUi(message: String) = with(binding) {
-        jsonUtil.fromJson<AuthGoogleSignInModel>(message)?.let {
-            etFirstName.setText(it.givenName)
-            etLastName.setText(it.familyName)
-            etEmail.setText(it.email)
+        jsonUtil.fromJson<UserModel>(message)?.let {
+            if (it.firstName != Constant.EMPTY_STRING) {
+                etFirstName.setText(it.firstName)
+                etLastName.setText(it.lastName)
+                etEmail.setText(it.email)
+            } else {
+                val displayName = it.displayName.split(" ")
+                if (displayName.size > 1) {
+                    etFirstName.setText(displayName[0])
+                    etLastName.setText(displayName[1])
+                } else etFirstName.setText(displayName[0])
+            }
 
             ivImage.load(it.photoUrl) {
                 val context = root.context

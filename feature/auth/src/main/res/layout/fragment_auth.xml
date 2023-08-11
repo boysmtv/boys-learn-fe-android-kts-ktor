@@ -94,7 +94,7 @@
                         android:paddingTop="@dimen/dp_16"
                         android:paddingBottom="@dimen/dp_20"
                         android:textColor="@color/colorOnButton"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_email" />
 
@@ -131,7 +131,7 @@
                         android:paddingTop="@dimen/dp_16"
                         android:paddingBottom="@dimen/dp_20"
                         android:textColor="@color/colorOnButton"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_password" />
 
@@ -164,7 +164,7 @@
                         android:fontFamily="@font/tt_interphases_regular"
                         android:gravity="center"
                         android:text="@string/register_instruction"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +180,7 @@
                         android:gravity="center"
                         android:text="@string/register_label"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_login_title"
                         app:layout_constraintStart_toEndOf="@+id/tv_login_title"

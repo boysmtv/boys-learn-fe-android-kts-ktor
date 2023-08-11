@@ -1,4 +1,4 @@
-package com.kotlin.learn.core.common.util
+package com.kotlin.learn.core.common.util.network
 
 import android.annotation.TargetApi
 import android.content.BroadcastReceiver

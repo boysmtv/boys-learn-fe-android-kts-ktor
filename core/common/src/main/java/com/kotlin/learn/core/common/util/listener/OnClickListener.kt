@@ -1,4 +1,4 @@
-package com.kotlin.learn.core.common.util
+package com.kotlin.learn.core.common.util.listener
 
 import com.kotlin.learn.core.model.MovieDataModel
 

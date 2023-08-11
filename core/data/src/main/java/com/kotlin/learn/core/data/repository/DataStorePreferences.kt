@@ -1,6 +1,6 @@
 package com.kotlin.learn.core.data.repository
 
-interface PreferencesRepository {
+interface DataStorePreferences {
 
     suspend fun setString(key: String, message: String)
 

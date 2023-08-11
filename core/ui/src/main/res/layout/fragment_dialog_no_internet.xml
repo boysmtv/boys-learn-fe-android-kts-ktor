@@ -5,22 +5,23 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_40"
         app:cardCornerRadius="@dimen/dp_10"
-        app:cardElevation="@dimen/dp_6"
+        app:cardElevation="@dimen/dp_8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_32"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/white"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/dp_24">
 
             <ImageView
                 android:id="@+id/iv_no_internet_connection"
@@ -35,12 +36,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_title_no_internet_connection"
-                style="@style/TextAppearance.MaterialComponents.Headline5"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
                 android:drawableLeft="@drawable/ic_exclamation_black"
                 android:drawablePadding="@dimen/dp_12"
-                android:text="Internet Tidak Tersedia"
+                android:gravity="center"
+                android:text="Internet tidak tersedia"
                 app:layout_constraintBottom_toTopOf="@+id/tv_message_no_internet_connection"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +51,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_message_no_internet_connection"
+                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp_10"

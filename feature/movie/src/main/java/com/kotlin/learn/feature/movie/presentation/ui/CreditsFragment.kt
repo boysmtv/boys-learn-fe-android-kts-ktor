@@ -1,10 +1,8 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.CreditsModel
 import com.kotlin.learn.core.utilities.Constant
@@ -34,7 +32,9 @@ class CreditsFragment(
     private fun subscribeCredits() = with(binding) {
         viewModel.creditsMovie.launch(this@CreditsFragment) {
             when (it) {
-                Result.Loading -> {
+                Result.Waiting -> {}
+
+                is Result.Loading -> {
                     viewAnimator.displayedChild = 0
                 }
 

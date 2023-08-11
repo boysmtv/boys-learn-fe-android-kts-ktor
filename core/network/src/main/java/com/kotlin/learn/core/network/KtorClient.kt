@@ -6,12 +6,9 @@ import com.kotlin.learn.core.utilities.Constant
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpResponseValidator
-import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ResponseException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
@@ -27,6 +24,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
@@ -38,12 +36,11 @@ import java.util.concurrent.TimeUnit
 class KtorClient(
     chuckerInterceptor: ChuckerInterceptor,
 ) {
-    private val client = initializeKtor(chuckerInterceptor)
+    private val ktorClient = initializeKtor(chuckerInterceptor)
 
-    private val springUrl = "192.168.0.6:8080"
     private val springClient = initializeKtor(
         chuckerInterceptor = chuckerInterceptor,
-        springUrl = springUrl,
+        springUrl = "192.168.0.6:8080",
         springHeader = mapOf(
             "X-Api-Key" to "SECRET"
         )
@@ -55,7 +52,7 @@ class KtorClient(
         path: String? = null,
         body: Z? = null,
     ): T {
-        return client
+        return ktorClient
             .get(resources) {
                 url {
                     query.forEach { item ->
@@ -72,7 +69,7 @@ class KtorClient(
             .body()
     }
 
-    internal suspend inline fun <reified Z : Any, reified T> postAPIwithResponse(
+    internal suspend inline fun <reified Z : Any, reified T> postAPIwithResponseFromSpring(
         resources: String,
         query: Map<String, String>? = null,
         path: String? = null,
@@ -121,7 +118,7 @@ class KtorClient(
                         ignoreUnknownKeys = true
                         prettyPrint = true
                         isLenient = true
-                    },
+                    }
                 )
             }
 
@@ -169,16 +166,28 @@ class KtorClient(
                 validateResponse { response: HttpResponse ->
                     val statusCode = response.status.value
                     when (statusCode) {
-                        in 300..399 -> throw RedirectResponseException(response, "Redirect Response")
-                        in 400..499 -> throw ClientRequestException(response, "Client Request")
-                        in 500..599 -> throw ServerResponseException(response, "Server Response")
+                        in 300..599 -> throw ErrorException(
+                            response = response,
+                            responseBody = response.bodyAsText()
+                        )
                     }
-
                     if (statusCode >= 600) {
-                        throw ResponseException(response, "Response Exception")
+                        throw MissingPageException(
+                            response = response,
+                            responseBody = "Error"
+                        )
                     }
                 }
             }
+
         }
     }
+}
+
+class MissingPageException(response: HttpResponse, responseBody: String) : ResponseException(response, responseBody) {
+    override val message: String = response.status.description
+}
+
+class ErrorException(response: HttpResponse, responseBody: String) : ResponseException(response, responseBody) {
+    override val message: String = responseBody
 }

@@ -8,7 +8,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
-import com.kotlin.learn.core.common.util.OnClickMovie
+import com.kotlin.learn.core.common.util.listener.OnClickMovie
 import com.kotlin.learn.core.data.callback.MovieCallback
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.utilities.Constant
@@ -47,7 +47,7 @@ class SeeAllAdapter(private val onClickMovie: OnClickMovie) :
                 tvSeeAllContentDesc.text = item.overview
                 tvSeeAllContentDate.text = "Show time ${item.releaseDate?.convertDateFormat()}"
 
-                ivSeeAllContentMovie.load("${Constant.BASE_URL_IMAGE}${item.backdropPath}") {
+                ivSeeAllContentMovie.load("${Constant.BASE_URL_IMAGE_500}${item.backdropPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
                         strokeWidth = 5f

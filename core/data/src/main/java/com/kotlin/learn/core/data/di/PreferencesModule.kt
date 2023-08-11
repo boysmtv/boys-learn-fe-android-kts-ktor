@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.kotlin.learn.core.data.repository.PreferencesRepository
-import com.kotlin.learn.core.data.repository.PreferencesRepositoryImpl
+import com.kotlin.learn.core.data.repository.DataStorePreferences
+import com.kotlin.learn.core.data.repository.DataStorePreferencesImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,8 +25,8 @@ abstract class PreferencesModule {
     @Binds
     @Singleton
     abstract fun bindUserPreferencesRepository(
-        preferencesRepositoryImpl: PreferencesRepositoryImpl
-    ): PreferencesRepository
+        preferencesRepositoryImpl: DataStorePreferencesImpl
+    ): DataStorePreferences
 
     companion object {
         @Provides

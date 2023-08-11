@@ -41,7 +41,7 @@ sealed class CreditsAdapter {
                 binding.apply {
                     tvName.text = item.name
 
-                    ivThumbnail.load("${Constant.BASE_URL_IMAGE}${item.profilePath}")
+                    ivThumbnail.load("${Constant.BASE_URL_IMAGE_500}${item.profilePath}")
                     {
                         val context = root.context
                         val circularProgressDrawable = CircularProgressDrawable(context).apply {
@@ -93,7 +93,7 @@ sealed class CreditsAdapter {
                 binding.apply {
                     tvName.text = item.name
 
-                    ivThumbnail.load("${Constant.BASE_URL_IMAGE}${item.profilePath}") {
+                    ivThumbnail.load("${Constant.BASE_URL_IMAGE_500}${item.profilePath}") {
                         val context = root.context
                         val circularProgressDrawable = CircularProgressDrawable(context).apply {
                             strokeWidth = 5f

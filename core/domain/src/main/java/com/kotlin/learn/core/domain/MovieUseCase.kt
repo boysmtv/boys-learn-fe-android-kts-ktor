@@ -1,7 +1,7 @@
 package com.kotlin.learn.core.domain
 
 import androidx.paging.PagingData
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.CreditsModel
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.MovieDetailModel

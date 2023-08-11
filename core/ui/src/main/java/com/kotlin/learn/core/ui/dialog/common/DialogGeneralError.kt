@@ -30,11 +30,11 @@ class DialogGeneralError(
 
     override fun onStart() {
         super.onStart()
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog?.window?.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

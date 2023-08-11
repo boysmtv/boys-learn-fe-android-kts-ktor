@@ -26,10 +26,10 @@ class MovieBannerAdapter(private val onClickBannerMovie: OnClickBannerMovie) : B
             with(holder.viewBinding) {
                 item?.let {
                     Glide.with(ivItemHomeThumbnail.context)
-                        .load("${Constant.BASE_URL_IMAGE}${item.posterPath}")
+                        .load("${Constant.BASE_URL_IMAGE_500}${item.posterPath}")
                         .into(ivItemHomeThumbnail)
                     Glide.with(ivItemHomeBlur.context)
-                        .load("${Constant.BASE_URL_IMAGE}${item.posterPath}")
+                        .load("${Constant.BASE_URL_IMAGE_500}${item.posterPath}")
                         .apply(bitmapTransform(BlurTransformation(75, 3)))
                         .into(ivItemHomeBlur)
 

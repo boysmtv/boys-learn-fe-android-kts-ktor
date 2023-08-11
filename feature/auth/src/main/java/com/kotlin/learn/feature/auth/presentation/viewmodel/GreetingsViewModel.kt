@@ -2,11 +2,11 @@ package com.kotlin.learn.feature.auth.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.DataStoreCacheEvent
-import com.kotlin.learn.core.data.repository.PreferencesRepository
+import com.kotlin.learn.core.data.repository.DataStorePreferences
 import com.kotlin.learn.core.domain.AuthUseCase
-import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,29 +19,29 @@ import javax.inject.Inject
 @HiltViewModel
 class GreetingsViewModel @Inject constructor(
     private val useCase: AuthUseCase,
-    private val preferencesRepository: PreferencesRepository
+    private val dataStore: DataStorePreferences
 ) : ViewModel() {
 
-    private val _storeFirebase: MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Loading)
+    private val _storeFirebase: MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Waiting)
     val storeFirebase = _storeFirebase.asStateFlow()
 
-    //Notes: Store Datastore
-    fun storeDataAuth(auth: String) =
+    //Notes: Store User Model to Datastore
+    fun storeUserToDatastore(user: String) =
         flow {
-            preferencesRepository.setString(
-                PreferenceConstants.Authorization.PREF_GOOGLE_AUTH,
-                auth
+            dataStore.setString(
+                PreferenceConstants.Authorization.PREF_USER,
+                user
             )
             emit(DataStoreCacheEvent.StoreSuccess)
         }
 
-    //Notes: Store Firebase
-    fun postDataAuthFirebase(
-        model: AuthGoogleSignInModel,
+    //Notes: Store User Model to Firestore
+    fun storeUserToFirestore(
+        model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     ) {
-        useCase.postAuthorization(model, onSuccess, onError)
+        useCase.storeUserToFirestore(model, onSuccess, onError)
             .onEach { _storeFirebase.value = it }
             .launchIn(viewModelScope)
     }

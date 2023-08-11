@@ -3,7 +3,7 @@ package com.kotlin.learn.core.domain
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.kotlin.learn.core.common.Result
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.data.repository.MovieRepository
 import com.kotlin.learn.core.domain.paging.MoviePagingSource
 import com.kotlin.learn.core.domain.paging.SearchPagingSource

@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.kotlin.learn.core.common.R
-import com.kotlin.learn.core.common.util.NetworkConnectionLiveData
-import com.kotlin.learn.core.common.util.debounce
+import com.kotlin.learn.core.common.util.network.NetworkConnectionLiveData
+import com.kotlin.learn.core.common.util.network.debounce
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialogGeneral
 import com.kotlin.learn.core.ui.dialog.common.DialogGeneralError
@@ -28,7 +28,7 @@ abstract class BaseFragment<T : ViewBinding>
     private var onReconnect: (() -> Unit)? = null
 
     private var dialog: ProgressBarDialog? = null
-    internal var dialogGeneralError: DialogGeneralError? = null
+    private var dialogGeneralError: DialogGeneralError? = null
     private lateinit var dialogNoInternet: DialogNoInternet
     private var needToShowErrorConnection = false
     private var isConnectionAvailable = true
@@ -79,7 +79,7 @@ abstract class BaseFragment<T : ViewBinding>
             dialog = null
         }
 
-    fun showGeneralError(
+    private fun showGeneralError(
         data: BaseDataDialogGeneral,
         actionClick: () -> Unit,
         actionClickSecondary: () -> Unit,
@@ -99,7 +99,7 @@ abstract class BaseFragment<T : ViewBinding>
                 title = title,
                 message = message,
                 icon = R.drawable.ic_connection_error,
-                textPrimaryButton = "Try Again",
+                textPrimaryButton = "OK, Close!",
                 visibleBackToSplash = false,
                 dismissOnAction = true
             ),
@@ -112,7 +112,7 @@ abstract class BaseFragment<T : ViewBinding>
         dialogGeneralError = null
     }
 
-    fun dismissDialogGeneralError() {
+    private fun dismissDialogGeneralError() {
         dialogGeneralError?.dismiss()
         dialogGeneralError = null
     }

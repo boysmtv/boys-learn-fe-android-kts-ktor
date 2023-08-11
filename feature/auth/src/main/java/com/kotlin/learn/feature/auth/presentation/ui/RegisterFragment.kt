@@ -2,13 +2,18 @@ package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.util.Log
 import androidx.fragment.app.viewModels
-import com.kotlin.learn.core.common.Result
-import com.kotlin.learn.core.common.SpringResult
+import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.invokeSpringResult
+import com.kotlin.learn.core.common.util.JsonUtil
+import com.kotlin.learn.core.common.util.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.network.invokeSpringParser
+import com.kotlin.learn.core.common.util.network.parseResultError
+import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
@@ -27,53 +32,92 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     @Inject
     lateinit var authNavigator: AuthNavigator
 
-    override fun setupView() = with(binding) {
-        cvRegister.setBackgroundResource(R.drawable.card_rounded_top)
+    @Inject
+    lateinit var jsonUtil: JsonUtil
+
+    private var userModel: UserModel = UserModel()
+
+    override fun setupView() {
+        init()
         subscribeRegister()
         setupListener()
+    }
+
+    private fun init() = with(binding) {
+        cvRegister.setBackgroundResource(R.drawable.card_rounded_top)
     }
 
     private fun subscribeRegister() = with(viewModel) {
         register.launch(this@RegisterFragment) {
             when (it) {
-                is Result.Loading -> {}
+                Result.Waiting -> {}
 
-                is Result.Success -> {
-                    parseRegisterSuccess(it.data)
-                }
+                is Result.Loading -> showHideProgress(isLoading = true)
 
-                is Result.Error -> {
-                    showDialogGeneralError("Register Error", it.throwable.message.toString())
-                }
+                is Result.Success -> parseRegisterSuccess(it.data)
+
+                is Result.Error -> parseRegisterError(it.throwable)
             }
         }
     }
 
     private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
-        invokeSpringResult(response).launch(this@RegisterFragment) {
+        showHideProgress(isLoading = false)
+
+        invokeSpringParser(response).launch(this@RegisterFragment) {
             when (it) {
-                is SpringResult.Success -> {
-                    val content = BaseDataDialog(
-                        title = "Welcome, ${it.data?.fullName}",
-                        content = "Your account already success created",
-                        primaryButtonShow = true,
-                        secondaryButtonText = EMPTY_STRING,
-                        secondaryButtonShow = false,
-                        icon = R.drawable.ic_warning_rounded,
-                        primaryButtonText = "Login"
-                    )
-                    showDialogWithActionButton(
-                        dataToDialog = content,
-                        actionClickPrimary = {
-                            authNavigator.fromRegisterToAuth(this@RegisterFragment)
-                        },
-                        tag = RegisterFragment::class.simpleName.toString()
-                    )
+                is SpringParser.Success -> {
+                    viewModel.storeUserToDatastore(
+                        jsonUtil.toJson(
+                            userModel.apply {
+                                id = it.data?.id ?: EMPTY_STRING
+                            }
+                        )
+                    ).launch(this@RegisterFragment) { event ->
+                        invokeDataStoreEvent(event,
+                            isFetched = {},
+                            isStored = {
+                                val content = BaseDataDialog(
+                                    title = "Welcome, ${it.data?.fullName}",
+                                    content = "Your account already success created",
+                                    primaryButtonShow = true,
+                                    secondaryButtonText = EMPTY_STRING,
+                                    secondaryButtonShow = false,
+                                    icon = R.drawable.ic_warning_rounded,
+                                    primaryButtonText = "Login"
+                                )
+                                showDialogWithActionButton(
+                                    dataToDialog = content,
+                                    actionClickPrimary = {
+                                        authNavigator.fromRegisterToAuth(this@RegisterFragment)
+                                    },
+                                    tag = RegisterFragment::class.simpleName.toString()
+                                )
+                            }
+                        )
+                    }
+
                 }
 
-                is SpringResult.Error -> {
+                is SpringParser.Error -> {
                     Log.e("Tag", "Register-ResultResponse.Error: $it")
                     showDialogGeneralError("Register Error", "Check your connection")
+                }
+            }
+        }
+    }
+
+    private fun parseRegisterError(throwable: Throwable) {
+        showHideProgress(isLoading = false)
+
+        parseResultError(throwable).launch(this@RegisterFragment) { parser ->
+            when (parser) {
+                is SpringParser.Success -> {
+                    showDialogGeneralError("Register failed", parser.data.toString())
+                }
+
+                is SpringParser.Error -> {
+                    showDialogGeneralError("Register error", throwable.message.toString())
                 }
             }
         }
@@ -90,13 +134,19 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
         btnRegister.setOnClickListener {
             viewModel.postRegister(
-                RegisterReqModel(
-                    firstName = etFirstName.text.toString(),
-                    lastName = etLastName.text.toString(),
-                    phoneNumber = etPhone.text.toString(),
-                    email = etEmail.text.toString(),
+                userModel.apply {
+                    idFireStore = EMPTY_STRING
+                    idGoogle = EMPTY_STRING
+                    idToken = EMPTY_STRING
+                    firstName = etFirstName.text.toString()
+                    lastName = etLastName.text.toString()
+                    displayName = etFirstName.text.toString() + " " + etLastName.text.toString()
+                    email = etEmail.text.toString()
+                    phone = etPhone.text.toString()
+                    photoUrl = EMPTY_STRING
                     password = etPassword.text.toString()
-                )
+                    method = AuthMethod.BACKEND.name
+                }
             )
         }
 

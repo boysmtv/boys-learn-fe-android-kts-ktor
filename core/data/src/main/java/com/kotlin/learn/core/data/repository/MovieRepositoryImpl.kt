@@ -1,7 +1,7 @@
 package com.kotlin.learn.core.data.repository
 
-import com.kotlin.learn.core.common.Result
-import com.kotlin.learn.core.common.execute
+import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.execute
 import com.kotlin.learn.core.model.CreditsModel
 import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.model.MovieSearchModel

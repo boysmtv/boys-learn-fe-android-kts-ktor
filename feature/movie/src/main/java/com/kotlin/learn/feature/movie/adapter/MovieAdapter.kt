@@ -7,10 +7,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
-import com.kotlin.learn.core.common.util.OnClickMovie
+import com.kotlin.learn.core.common.util.listener.OnClickMovie
 import com.kotlin.learn.core.data.callback.MovieCallback
 import com.kotlin.learn.core.model.MovieDataModel
-import com.kotlin.learn.core.utilities.Constant.BASE_URL_IMAGE
+import com.kotlin.learn.core.utilities.Constant.BASE_URL_IMAGE_500
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.MovieHomeItemBinding
 
@@ -38,7 +38,7 @@ class MovieAdapter(private val onClickMovie: OnClickMovie) :
 
         fun bind(item: MovieDataModel) {
             binding.apply {
-                thumbnail.load("$BASE_URL_IMAGE${item.posterPath}") {
+                thumbnail.load("$BASE_URL_IMAGE_500${item.posterPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
                         strokeWidth = 5f
