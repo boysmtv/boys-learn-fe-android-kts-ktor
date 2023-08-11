@@ -2,9 +2,6 @@ package com.kotlin.learn.core.common.util.network
 
 import android.content.res.Resources.NotFoundException
 import androidx.paging.PagingSource
-import com.kotlin.learn.core.model.BaseResponse
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
 
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>
@@ -15,6 +12,7 @@ sealed interface Result<out T> {
 
 inline fun <T> execute(body: () -> T): Result<T> {
     return try {
+        Result.Loading
         Result.Success(body.invoke())
     } catch (throwable: Throwable) {
         Result.Error(throwable)

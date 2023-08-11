@@ -47,7 +47,7 @@ class SeeAllAdapter(private val onClickMovie: OnClickMovie) :
                 tvSeeAllContentDesc.text = item.overview
                 tvSeeAllContentDate.text = "Show time ${item.releaseDate?.convertDateFormat()}"
 
-                ivSeeAllContentMovie.load("${Constant.BASE_URL_IMAGE}${item.backdropPath}") {
+                ivSeeAllContentMovie.load("${Constant.BASE_URL_IMAGE_500}${item.backdropPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
                         strokeWidth = 5f

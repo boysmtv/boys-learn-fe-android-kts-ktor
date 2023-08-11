@@ -13,7 +13,7 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
-import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
@@ -83,12 +83,12 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         }
     }
 
-    private fun invokeResultDataAuthSuccess(model: AuthGoogleSignInModel) = with(viewModel) {
-        postDataAuthFirebase(model,
+    private fun invokeResultDataAuthSuccess(model: UserModel) = with(viewModel) {
+        storeUserToFirestore(model,
             onSuccess = { key ->
                 storeDataAuth(jsonUtil.toJson(
                     model.apply {
-                        firebaseId = key
+                        idFireStore = key
                     }
                 )).launch(this@GreetingsFragment) { event ->
                     invokeDataStoreEvent(event,

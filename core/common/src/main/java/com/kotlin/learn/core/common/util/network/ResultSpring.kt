@@ -39,7 +39,7 @@ fun <T> invokeSpringParser(
     }
 }
 
-fun parserResultError(
+fun parseResultError(
     throwable: Throwable
 ) = flow {
     val jsonType: Type = Types.newParameterizedType(BaseResponse::class.java, String::class.java)

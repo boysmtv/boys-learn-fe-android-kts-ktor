@@ -6,6 +6,7 @@ import com.kotlin.learn.core.data.repository.RegisterRepository
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,7 +17,7 @@ class RegisterUseCaseImpl @Inject constructor(
     private val repository: RegisterRepository
 ) : RegisterUseCase {
 
-    override fun postRegister(model: RegisterReqModel): Flow<Result<BaseResponse<RegisterRespModel>>> {
+    override fun postRegister(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> {
         return repository.postRegister(model = model)
     }
 

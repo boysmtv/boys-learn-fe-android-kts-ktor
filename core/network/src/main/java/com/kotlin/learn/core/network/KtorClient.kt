@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit
 class KtorClient(
     chuckerInterceptor: ChuckerInterceptor,
 ) {
-    private val client = initializeKtor(chuckerInterceptor)
+    private val ktorClient = initializeKtor(chuckerInterceptor)
 
     private val springClient = initializeKtor(
         chuckerInterceptor = chuckerInterceptor,
@@ -52,7 +52,7 @@ class KtorClient(
         path: String? = null,
         body: Z? = null,
     ): T {
-        return client
+        return ktorClient
             .get(resources) {
                 url {
                     query.forEach { item ->
@@ -69,7 +69,7 @@ class KtorClient(
             .body()
     }
 
-    internal suspend inline fun <reified Z : Any, reified T> postAPIwithResponse(
+    internal suspend inline fun <reified Z : Any, reified T> postAPIwithResponseFromSpring(
         resources: String,
         query: Map<String, String>? = null,
         path: String? = null,

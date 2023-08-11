@@ -7,7 +7,7 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
-import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
@@ -44,7 +44,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                 invokeDataStoreEvent(event,
                     isFetched = { data ->
                         if (data.isNotEmpty())
-                            jsonUtil.fromJson<AuthGoogleSignInModel>(data)?.let {
+                            jsonUtil.fromJson<UserModel>(data)?.let {
                                 if (it.displayName != Constant.EMPTY_STRING) launchToHome()
                                 else navigateToGreetings()
                             }

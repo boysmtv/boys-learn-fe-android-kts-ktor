@@ -139,7 +139,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     private fun setupThumbnail(movie: MovieDetailModel) = with(binding) {
         movie.backdropPath?.let {
             Glide.with(this@DetailFragment)
-                .load("${Constant.BASE_URL_IMAGE}${it}")
+                .load("${Constant.BASE_URL_IMAGE_500}${it}")
                 .into(ivDetailPlay)
         }
     }

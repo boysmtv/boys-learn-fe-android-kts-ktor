@@ -15,20 +15,20 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-class PreferencesRepositoryImpl @Inject constructor(
-    private val userDataStorePreferences: DataStore<Preferences>
-) : PreferencesRepository {
+class DataStorePreferencesImpl @Inject constructor(
+    private val dataStore: DataStore<Preferences>
+) : DataStorePreferences {
 
     override suspend fun setString(key: String, message: String) {
         Result.runCatching {
-            userDataStorePreferences.edit { preferences ->
+            dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(name = key)] = message
             }
         }
     }
 
     override suspend fun getString(key: String): Result<String> = Result.runCatching {
-        val flow = userDataStorePreferences.data
+        val flow = dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
                     emit(emptyPreferences())
@@ -45,14 +45,14 @@ class PreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun setInt(key: String, message: Int) {
         Result.runCatching {
-            userDataStorePreferences.edit { preferences ->
+            dataStore.edit { preferences ->
                 preferences[intPreferencesKey(name = key)] = message
             }
         }
     }
 
     override suspend fun getInt(key: String): Result<Int> = Result.runCatching {
-        val flow = userDataStorePreferences.data
+        val flow = dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
                     emit(emptyPreferences())
@@ -69,14 +69,14 @@ class PreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun setLong(key: String, message: Long) {
         Result.runCatching {
-            userDataStorePreferences.edit { preferences ->
+            dataStore.edit { preferences ->
                 preferences[longPreferencesKey(name = key)] = message
             }
         }
     }
 
     override suspend fun getLong(key: String): Result<Long> = Result.runCatching {
-        val flow = userDataStorePreferences.data
+        val flow = dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
                     emit(emptyPreferences())
@@ -93,14 +93,14 @@ class PreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun setBoolean(key: String, message: Boolean) {
         Result.runCatching {
-            userDataStorePreferences.edit { preferences ->
+            dataStore.edit { preferences ->
                 preferences[booleanPreferencesKey(name = key)] = message
             }
         }
     }
 
     override suspend fun getBoolean(key: String): Result<Boolean> = Result.runCatching {
-        val flow = userDataStorePreferences.data
+        val flow = dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
                     emit(emptyPreferences())
@@ -117,7 +117,7 @@ class PreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun removePreferences(key: String) {
         Result.runCatching {
-            userDataStorePreferences.edit {
+            dataStore.edit {
                 if (it.contains(stringPreferencesKey(name = key))) {
                     it.remove(stringPreferencesKey(name = key))
                 }
@@ -127,7 +127,7 @@ class PreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun clearPreferences() {
         Result.runCatching {
-            userDataStorePreferences.edit { it.clear() }
+            dataStore.edit { it.clear() }
         }
     }
 

@@ -17,7 +17,7 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
-import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.MovieCategories
@@ -210,10 +210,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         fetchAuthFromDataStore().launch(this@HomeFragment) { event ->
             invokeDataStoreEvent(event,
                 isFetched = { model ->
-                    jsonUtil.fromJson<AuthGoogleSignInModel>(model)?.let { dataModel ->
+                    jsonUtil.fromJson<UserModel>(model)?.let { dataModel ->
                         fetchAuthDataFromFirebase(
-                            id = dataModel.firebaseId,
-                            resources = AuthGoogleSignInModel(),
+                            id = dataModel.idFireStore,
+                            resources = UserModel(),
                             onSuccess = {
                                 Log.e("BOYS-Home", "getAuthorization - onSuccess Value : $it")
                             },
@@ -243,11 +243,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         requireActivity().finish()
     }
 
-    // Declare the launcher at the top of your Activity/Fragment:
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-                // FCM SDK (and your app) can post notifications.
+                // TODO: FCM SDK (and your app) can post notifications.
             } else {
                 // TODO: Inform user that that your app will not show notifications.
             }

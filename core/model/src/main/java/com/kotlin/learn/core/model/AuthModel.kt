@@ -19,17 +19,19 @@ data class AuthRespModel(
     val lastname: String? = Constant.EMPTY_STRING
 )
 
+
+@Serializable
 @JsonClass(generateAdapter = true)
-data class
-AuthGoogleSignInModel(
-    @Json(name = "firebaseId") var firebaseId: String = Constant.EMPTY_STRING,
-    @Json(name = "id") val id: String = Constant.EMPTY_STRING,
-    @Json(name = "idToken") val idToken: String = Constant.EMPTY_STRING,
-    @Json(name = "email") val email: String = Constant.EMPTY_STRING,
-    @Json(name = "givenName") val givenName: String = Constant.EMPTY_STRING,
-    @Json(name = "familyName") val familyName: String = Constant.EMPTY_STRING,
-    @Json(name = "displayName") val displayName: String = Constant.EMPTY_STRING,
-    @Json(name = "isExpired") val isExpired: String = Constant.EMPTY_STRING,
-    @Json(name = "photoUrl") val photoUrl: String = Constant.EMPTY_STRING,
-    @Json(name = "grantedScopes") val grantedScopes: String = Constant.EMPTY_STRING,
+data class UserModel(
+    @Json(name = "id") var id: String = Constant.EMPTY_STRING,
+    @Json(name = "idFireStore") var idFireStore: String = Constant.EMPTY_STRING,
+    @Json(name = "idGoogle") var idGoogle: String = Constant.EMPTY_STRING,
+    @Json(name = "idToken") var idToken: String = Constant.EMPTY_STRING,
+    @Json(name = "firstName") var firstName: String = Constant.EMPTY_STRING,
+    @Json(name = "lastName") var lastName: String = Constant.EMPTY_STRING,
+    @Json(name = "displayName") var displayName: String = Constant.EMPTY_STRING,
+    @Json(name = "phone") var phone: String = Constant.EMPTY_STRING,
+    @Json(name = "email") var email: String = Constant.EMPTY_STRING,
+    @Json(name = "password") var password: String = Constant.EMPTY_STRING,
+    @Json(name = "photoUrl") var photoUrl: String = Constant.EMPTY_STRING,
 )

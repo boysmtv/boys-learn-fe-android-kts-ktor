@@ -1,6 +1,6 @@
 package com.kotlin.learn.core.network.source
 
-import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginReqModel
 import com.kotlin.learn.core.model.LoginRespModel
@@ -16,24 +16,28 @@ class AuthDataSourceImpl @Inject constructor(
     private val ktorClient: KtorClient
 ) : AuthDataSource {
 
-    override suspend fun postAuthorization(
-        model: AuthGoogleSignInModel,
+    // Start region firestore
+
+    override suspend fun storeUserToFirestore(
+        model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     ) {
-        firebaseClient.postFirebaseRequest(model, onSuccess, onError)
+        firebaseClient.storeRequestToFirestore(model, onSuccess, onError)
     }
 
-    override suspend fun <Z : Any> getAuthorization(
+    override suspend fun <Z : Any> fetchUserFromFirestore(
         id: String,
         resources: Z,
         onSuccess: (Z) -> Unit,
         onError: (String) -> Unit
-    ) = firebaseClient.getFirebaseRequest(id, resources, onSuccess, onError)
+    ) = firebaseClient.fetchRequestFromFirestore(id, resources, onSuccess, onError)
 
-    override suspend fun postLogin(model: LoginReqModel): BaseResponse<LoginRespModel> {
+    // End region firestore
+
+    override suspend fun postAuthorization(model: LoginReqModel): BaseResponse<LoginRespModel> {
         return withContext(Dispatchers.IO) {
-            ktorClient.postAPIwithResponse(
+            ktorClient.postAPIwithResponseFromSpring(
                 resources = ApiAuthResources.LOGIN,
                 body = model
             )

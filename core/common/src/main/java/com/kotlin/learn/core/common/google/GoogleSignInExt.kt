@@ -13,10 +13,10 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kotlin.learn.core.common.R
-import com.kotlin.learn.core.model.AuthGoogleSignInModel
+import com.kotlin.learn.core.model.UserModel
 
 class GoogleSignInExt(
-    private val resultDataAuthSuccess: (AuthGoogleSignInModel) -> Unit,
+    private val resultDataAuthSuccess: (UserModel) -> Unit,
     private val resultDataAuthError: (String) -> Unit,
 ) {
     private lateinit var context: Context
@@ -60,16 +60,14 @@ class GoogleSignInExt(
             )
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val accountModel = AuthGoogleSignInModel(
-                    id = account.id.toString(),
+                val accountModel = UserModel(
+                    idGoogle = account.id.toString(),
                     idToken = account.idToken.toString(),
                     email = account.email.toString(),
-                    givenName = account.givenName.toString(),
-                    familyName = account.familyName.toString(),
+                    firstName = account.givenName.toString(),
+                    lastName = account.familyName.toString(),
                     displayName = account.displayName.toString(),
-                    isExpired = account.isExpired.toString(),
                     photoUrl = account.photoUrl.toString(),
-                    grantedScopes = account.grantedScopes.toString()
                 )
                 resultDataAuthSuccess.invoke(accountModel)
             } else {

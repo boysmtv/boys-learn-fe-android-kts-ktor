@@ -1,4 +1,4 @@
-package com.kotlin.learn.feature.movie.util.service
+package com.kotlin.learn.core.common.util.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,17 +11,18 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kotlin.learn.core.common.R
 import com.kotlin.learn.core.utilities.PreferenceConstants
-import com.kotlin.learn.feature.movie.R
 
 class FirebaseMessagingServices : FirebaseMessagingService() {
 
+    private val tag = this::class.java.simpleName
     private val channelId = "com.kotlin.learn"
     private val channelName = "com.kotlin.learn"
     private val notificationName = "Discover"
 
     override fun onNewToken(token: String) {
-        Log.e("FirebaseMessagingService", "onNewToken: $token")
+        Log.e(tag, "onNewToken: $token")
         getSharedPreferences(
             "PREFERENCE_NAME", Context.MODE_PRIVATE
         ).edit().putString(
@@ -30,8 +31,8 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.e("FirebaseMessagingService", "onMessageReceived title: ${remoteMessage.notification?.title}")
-        Log.e("FirebaseMessagingService", "onMessageReceived body: ${remoteMessage.notification?.body}")
+        Log.e(tag, "onMessageReceived title: ${remoteMessage.notification?.title}")
+        Log.e(tag, "onMessageReceived body: ${remoteMessage.notification?.body}")
 
         if (remoteMessage.notification != null) {
             showNotification(remoteMessage.notification!!.title, remoteMessage.notification!!.body)
