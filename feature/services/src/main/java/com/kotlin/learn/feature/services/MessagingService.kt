@@ -1,4 +1,4 @@
-package com.kotlin.learn.core.common.util.service
+package com.kotlin.learn.feature.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,22 +12,52 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kotlin.learn.core.common.R
+import com.kotlin.learn.core.data.repository.DataStorePreferences
 import com.kotlin.learn.core.utilities.PreferenceConstants
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FirebaseMessagingServices : FirebaseMessagingService() {
+@AndroidEntryPoint
+class MessagingService : FirebaseMessagingService() {
 
     private val tag = this::class.java.simpleName
     private val channelId = "com.kotlin.learn"
     private val channelName = "com.kotlin.learn"
     private val notificationName = "Discover"
 
+    @Inject
+    lateinit var dataStorePreferences: DataStorePreferences
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
+
     override fun onNewToken(token: String) {
-        Log.e(tag, "onNewToken: $token")
-        getSharedPreferences(
-            "PREFERENCE_NAME", Context.MODE_PRIVATE
-        ).edit().putString(
-            PreferenceConstants.Authorization.PREF_FCM_TOKEN, token
-        ).apply()
+        coroutineScope.launch {
+            storeToPreferences(token)
+            Log.e(tag, "Token-thread: $token")
+            Log.e(tag, "Token-store: ${fetchToPreferences()}")
+        }
+    }
+
+    private suspend fun storeToPreferences(token: String) {
+        withContext(Dispatchers.IO) {
+            dataStorePreferences.setString(
+                PreferenceConstants.Authorization.PREF_FCM_TOKEN,
+                token
+            )
+        }
+    }
+
+    private suspend fun fetchToPreferences(): String {
+        return withContext(Dispatchers.IO) {
+            dataStorePreferences.getString(
+                PreferenceConstants.Authorization.PREF_FCM_TOKEN
+            ).getOrNull().orEmpty()
+        }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

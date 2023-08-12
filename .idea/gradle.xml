@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/feature/auth" />
             <option value="$PROJECT_DIR$/feature/movie" />
             <option value="$PROJECT_DIR$/feature/permission" />
+            <option value="$PROJECT_DIR$/feature/services" />
             <option value="$PROJECT_DIR$/feature/splash" />
           </set>
         </option>

@@ -151,22 +151,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
                         invokeDataStoreEvent(event,
                             isFetched = {},
                             isStored = {
-                                val content = BaseDataDialog(
-                                    title = "Welcome, ${it.data?.fullName}",
-                                    content = "Your account already success created",
-                                    primaryButtonShow = true,
-                                    secondaryButtonText = Constant.EMPTY_STRING,
-                                    secondaryButtonShow = false,
-                                    icon = R.drawable.ic_warning_rounded,
-                                    primaryButtonText = "Login"
-                                )
-                                showDialogWithActionButton(
-                                    dataToDialog = content,
-                                    actionClickPrimary = {
-                                        authNavigator.fromRegisterToAuth(this@GreetingsFragment)
-                                    },
-                                    tag = RegisterFragment::class.simpleName.toString()
-                                )
+                                authNavigator.fromGreetingsToHome(this@GreetingsFragment)
                             }
                         )
                     }

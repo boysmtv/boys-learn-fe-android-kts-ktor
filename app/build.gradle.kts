@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":feature:auth"))
     implementation(project(":feature:movie"))
     implementation(project(":feature:splash"))
+    implementation(project(":feature:services"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

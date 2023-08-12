@@ -14,8 +14,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "com.kotlin.learn.feature.auth.presentation.ui.user_preferences"
+val Context.preferencesDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "com.kotlin.learn.feature.auth.presentation.ui.preferences"
 )
 
 @Module
@@ -24,17 +24,17 @@ abstract class PreferencesModule {
 
     @Binds
     @Singleton
-    abstract fun bindUserPreferencesRepository(
+    abstract fun bindPreferencesDataStoreRepository(
         preferencesRepositoryImpl: DataStorePreferencesImpl
     ): DataStorePreferences
 
     companion object {
         @Provides
         @Singleton
-        fun providePreferencesModule(
+        fun providePreferencesDataStoreModule(
             @ApplicationContext applicationContext: Context
         ): DataStore<Preferences> {
-            return applicationContext.userDataStore
+            return applicationContext.preferencesDataStore
         }
     }
 }

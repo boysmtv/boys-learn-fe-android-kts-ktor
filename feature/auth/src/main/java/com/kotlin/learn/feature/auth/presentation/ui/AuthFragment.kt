@@ -7,6 +7,7 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
+import com.kotlin.learn.core.common.util.network.parseResultError
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginReqModel
 import com.kotlin.learn.core.model.LoginRespModel
@@ -115,11 +116,17 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         }
     }
 
-    private fun authorizationErrorHandler(result: Throwable) {
-        showHideProgress(isLoading = false)
-        showDialogGeneralError(
-            title = "Login Error",
-            message = result.message.toString()
-        )
+    private fun authorizationErrorHandler(throwable: Throwable) {
+        parseResultError(throwable).launch(this@AuthFragment) { parser ->
+            when (parser) {
+                is SpringParser.Success -> {
+                    showDialogGeneralError("Login failed", parser.data.toString())
+                }
+
+                is SpringParser.Error -> {
+                    showDialogGeneralError("Login error", throwable.message.toString())
+                }
+            }
+        }
     }
 }
