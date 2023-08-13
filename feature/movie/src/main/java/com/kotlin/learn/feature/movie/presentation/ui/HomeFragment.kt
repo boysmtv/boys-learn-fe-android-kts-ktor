@@ -45,9 +45,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
-    @Inject
-    lateinit var jsonUtil: JsonUtil
-
     override fun setupView() {
         setupSwipeRefresh()
         subscribeMovie()

@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.com.android.support.multidex)
+    implementation(libs.androidx.datastore.datastore.preferences)
 
     kapt(libs.hilt.compiler)
 

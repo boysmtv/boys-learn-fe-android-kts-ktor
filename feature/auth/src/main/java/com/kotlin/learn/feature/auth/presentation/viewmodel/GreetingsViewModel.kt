@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.DataStoreCacheEvent
-import com.kotlin.learn.core.data.repository.DataStorePreferences
+import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.AuthUseCase
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.utilities.PreferenceConstants

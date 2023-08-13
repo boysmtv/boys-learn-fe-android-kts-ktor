@@ -31,9 +31,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     @Inject
     lateinit var authNavigator: AuthNavigator
 
-    @Inject
-    lateinit var jsonUtil: JsonUtil
-
     private var userModel: UserModel = UserModel()
 
 

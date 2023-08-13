@@ -24,9 +24,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     @Inject
     lateinit var authNavigator: AuthNavigator
 
-    @Inject
-    lateinit var jsonUtil: JsonUtil
-
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})
 
     override fun setupView() {

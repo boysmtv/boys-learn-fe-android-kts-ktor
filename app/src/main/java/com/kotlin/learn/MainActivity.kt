@@ -1,14 +1,11 @@
 package com.kotlin.learn
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.os.CountDownTimer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import com.kotlin.learn.core.common.util.isMyServiceRunning
 import com.kotlin.learn.feature.services.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -27,17 +24,24 @@ class MainActivity : AppCompatActivity() {
         setupProfileService()
     }
 
-    private fun setupProfileService(){
-        profileService = ProfileService()
-        profileService.startService(this@MainActivity, "Thread Profile")
+    private fun setupProfileService() {
+        object : CountDownTimer(5000, 1000) {
+            override fun onTick(l: Long) {
+            }
 
-//        val intentService = Intent(this@MainActivity, profileService::class.java)
-//        if (!isMyServiceRunning(this@MainActivity, profileService::class.java)) {
-//            startService(intentService)
-//            Timber.tag(tag).e("intentService: start")
-//        } else {
-//            Timber.tag(tag).e("intentService: can't started")
-//        }
+            override fun onFinish() {
+                profileService = ProfileService()
+                profileService.startService(this@MainActivity, "Thread Profile")
+
+//                val intentService = Intent(this@MainActivity, profileService::class.java)
+//                if (!isMyServiceRunning(this@MainActivity, profileService::class.java)) {
+//                    startService(intentService)
+//                    Timber.tag(tag).e("intentService: start")
+//                } else {
+//                    Timber.tag(tag).e("intentService: can't started")
+//                }
+            }
+        }.start()
     }
 
 }

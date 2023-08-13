@@ -48,9 +48,6 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     @Inject
     lateinit var authNavigator: AuthNavigator
 
-    @Inject
-    lateinit var jsonUtil: JsonUtil
-
     private var userModel: UserModel = UserModel()
 
     override fun setupView() {

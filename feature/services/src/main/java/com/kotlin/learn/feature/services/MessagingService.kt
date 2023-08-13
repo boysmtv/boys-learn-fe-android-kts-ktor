@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kotlin.learn.core.common.R
-import com.kotlin.learn.core.data.repository.DataStorePreferences
+import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope

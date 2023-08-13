@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.DataStoreCacheEvent
-import com.kotlin.learn.core.data.repository.DataStorePreferences
+import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.AuthUseCase
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.model.MovieDataModel

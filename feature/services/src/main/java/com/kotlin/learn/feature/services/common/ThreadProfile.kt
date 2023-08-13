@@ -3,7 +3,7 @@ package com.kotlin.learn.feature.services.common
 import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.kotlin.learn.core.data.repository.DataStorePreferences
+import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.network.KtorClient
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.PreferenceConstants
@@ -22,16 +22,14 @@ class ThreadProfile : AppCompatActivity() {
 
     private lateinit var context: Context
 
-    @Inject
-    lateinit var ktorClient: KtorClient
 
-    @Inject
-    lateinit var dataStorePreferences: DataStorePreferences
+    private lateinit var dataStorePreferences: DataStorePreferences
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
-    fun init(context: Context) {
+    fun initComponent(context: Context, dataStorePreferences: DataStorePreferences) {
         this.context = context
+        this.dataStorePreferences = dataStorePreferences
     }
 
     private fun getToken(): String {

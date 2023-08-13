@@ -28,9 +28,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private val viewModel: SettingViewModel by viewModels()
 
     @Inject
-    lateinit var jsonUtil: JsonUtil
-
-    @Inject
     lateinit var authNavigator: AuthNavigator
 
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})

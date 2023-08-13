@@ -1,4 +1,4 @@
-package com.kotlin.learn.core.data.repository
+package com.kotlin.learn.core.common.util.security
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
