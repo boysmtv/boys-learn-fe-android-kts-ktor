@@ -40,7 +40,7 @@ class KtorClient(
 
     private val springClient = initializeKtor(
         chuckerInterceptor = chuckerInterceptor,
-        springUrl = "192.168.0.6:8080",
+        springUrl = "192.168.0.100:8080",
         springHeader = mapOf(
             "X-Api-Key" to "SECRET"
         )

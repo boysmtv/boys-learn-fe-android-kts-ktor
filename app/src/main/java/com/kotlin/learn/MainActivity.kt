@@ -1,11 +1,15 @@
 package com.kotlin.learn
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.kotlin.learn.core.common.util.isMyServiceRunning
+import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.feature.services.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -16,6 +20,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var profileService: ProfileService
 
+    @Inject
+    lateinit var dataStorePreferences: DataStorePreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,23 +32,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupProfileService() {
-        object : CountDownTimer(5000, 1000) {
-            override fun onTick(l: Long) {
-            }
+        profileService = ProfileService()
 
-            override fun onFinish() {
-                profileService = ProfileService()
-                profileService.startService(this@MainActivity, "Thread Profile")
+        val service = Intent(this@MainActivity, profileService::class.java)
+        if (!isMyServiceRunning(this@MainActivity, profileService::class.java)) {
+            startService(service)
+        } else {
+            Timber.tag(tag).e("profileService: service can't started")
+        }
 
-//                val intentService = Intent(this@MainActivity, profileService::class.java)
-//                if (!isMyServiceRunning(this@MainActivity, profileService::class.java)) {
-//                    startService(intentService)
-//                    Timber.tag(tag).e("intentService: start")
-//                } else {
-//                    Timber.tag(tag).e("intentService: can't started")
-//                }
-            }
-        }.start()
     }
 
 }

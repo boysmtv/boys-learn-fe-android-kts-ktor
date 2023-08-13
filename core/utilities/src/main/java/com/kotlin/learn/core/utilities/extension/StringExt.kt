@@ -6,3 +6,7 @@ fun String.capitalize(): String {
     return this.trim().split("\\s+".toRegex())
         .joinToString(" ") { first -> first.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } }
 }
+
+fun String.isAvailable() : String {
+    return if (this.isEmpty()) "available" else "not available"
+}
