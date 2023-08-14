@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.kotlin.learn.core.common.util.isMyServiceRunning
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
-import com.kotlin.learn.feature.services.MessagingService
 import com.kotlin.learn.feature.services.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             Timber.tag(tag).e("profileService: service can't started")
         }
-
     }
 
 }

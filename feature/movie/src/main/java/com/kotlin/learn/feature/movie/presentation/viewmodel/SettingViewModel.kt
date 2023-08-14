@@ -6,20 +6,23 @@ import com.kotlin.learn.core.common.util.DataStoreCacheEvent
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    private val dataStorePreferences: DataStorePreferences
+    private val dataStore: DataStorePreferences
 ) : ViewModel() {
 
     fun fetchDataAuth() =
         flow {
             emit(
                 DataStoreCacheEvent.FetchSuccess(
-                    dataStorePreferences.getString(
+                    dataStore.getString(
                         PreferenceConstants.Authorization.PREF_USER
                     ).getOrNull().orEmpty()
                 )
@@ -30,16 +33,29 @@ class SettingViewModel @Inject constructor(
         flow {
             emit(
                 DataStoreCacheEvent.FetchSuccess(
-                    dataStorePreferences.getString(
+                    dataStore.getString(
                         PreferenceConstants.Authorization.PREF_FCM_TOKEN
                     ).getOrNull().orEmpty()
                 )
             )
         }
 
-    fun clearPreferences() {
+    fun storeTokenToDataStore(token: String) =
+        flow {
+            dataStore.setString(
+                PreferenceConstants.Authorization.PREF_FCM_TOKEN,
+                token
+            )
+            emit(DataStoreCacheEvent.StoreSuccess)
+        }
+
+    fun clearPreferences(token: String) {
         viewModelScope.launch {
-            dataStorePreferences.clearPreferences()
+            dataStore.clearPreferences()
+            dataStore.setString(
+                PreferenceConstants.Authorization.PREF_FCM_TOKEN,
+                token
+            )
         }
     }
 

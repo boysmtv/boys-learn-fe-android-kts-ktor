@@ -38,12 +38,9 @@ class UserViewModel @Inject constructor(
     val postAuth = _postAuth.asStateFlow()
 
     fun getUser(userModel: UserModel) {
-        useCase.getUser(
-            UserModel().apply {
-                id = userModel.id
-                email = userModel.email
-            }
-        ).onEach { _getUser.value = it }.launchIn(viewModelScope)
+        useCase.getUser(userModel)
+            .onEach { _getUser.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun postUser(model: UserModel) {
@@ -58,16 +55,14 @@ class UserViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun postAuth(
-        model: UserModel
-    ) {
+    fun postAuth(model: UserModel) {
         useCase.postAuth(model = model)
             .onEach { _postAuth.value = it }
             .launchIn(viewModelScope)
     }
 
     /*
-    TODO : start region store user to datastore
+    TODO : start region user datastore
     */
 
     fun storeUserToDatastore(user: String) =
@@ -90,6 +85,17 @@ class UserViewModel @Inject constructor(
             )
         }
 
+    fun fetchTokenFromDatastore() =
+        flow {
+            emit(
+                DataStoreCacheEvent.FetchSuccess(
+                    dataStore.getString(
+                        PreferenceConstants.Authorization.PREF_FCM_TOKEN,
+                    ).getOrNull().orEmpty()
+                )
+            )
+        }
+
     /*
     TODO : start region store user to firestore
     */
@@ -106,5 +112,17 @@ class UserViewModel @Inject constructor(
             .onEach { _storeFirestore.value = it }
             .launchIn(viewModelScope)
     }
+
+    fun <Z : Any> fetchUserFromFirestore(
+        id: String,
+        resources: Z,
+        onSuccess: (Z) -> Unit,
+        onError: (String) -> Unit
+    ) = useCase.fetchUserFromFirestore(
+        id,
+        resources,
+        onSuccess,
+        onError
+    ).launchIn(viewModelScope)
 
 }

@@ -7,6 +7,7 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.common.util.network.parseResultError
+import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginRespModel
 import com.kotlin.learn.core.model.UserModel
@@ -130,6 +131,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             UserModel().apply {
                 id = userModel.id
                 email = userModel.email
+                method = AuthMethod.BACKEND.name
             }
         )
     }

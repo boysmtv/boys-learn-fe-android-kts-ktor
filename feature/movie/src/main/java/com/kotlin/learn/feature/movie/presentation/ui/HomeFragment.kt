@@ -52,7 +52,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupUI()
         setupViewPager()
         subscribeBanner()
-        getAuthorization()
         askNotificationPermission()
     }
 
@@ -202,28 +201,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 movieNavigator.navigateToSeeAllMovie(this@HomeFragment, categories)
             }
         }
-
-    private fun getAuthorization() = with(viewModel) {
-        fetchAuthFromDataStore().launch(this@HomeFragment) { event ->
-            invokeDataStoreEvent(event,
-                isFetched = { model ->
-                    jsonUtil.fromJson<UserModel>(model)?.let { dataModel ->
-                        fetchAuthDataFromFirebase(
-                            id = dataModel.idFireStore ?: Constant.EMPTY_STRING,
-                            resources = UserModel(),
-                            onSuccess = {
-                                Log.e("BOYS-Home", "getAuthorization - onSuccess Value : $it")
-                            },
-                            onError = {
-                                Log.e("BOYS-Home", "getAuthorization - onError Value : $it")
-                            }
-                        )
-                    }
-                },
-                isStored = {}
-            )
-        }
-    }
 
     override fun onPause() {
         binding.layoutBanner.bannerVpHome.stopLoop()

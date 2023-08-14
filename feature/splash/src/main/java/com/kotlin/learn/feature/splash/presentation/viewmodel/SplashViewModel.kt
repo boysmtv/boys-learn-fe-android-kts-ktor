@@ -26,10 +26,4 @@ class SplashViewModel @Inject constructor(
             )
         }
 
-    fun clearPreferences() {
-        viewModelScope.launch {
-            dataStore.clearPreferences()
-        }
-    }
-
 }

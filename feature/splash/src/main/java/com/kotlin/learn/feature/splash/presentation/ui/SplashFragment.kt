@@ -62,7 +62,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     private fun googleSignOut() = googleSignInExt.signOut({}, {})
 
     private fun navigateToGreetings() {
-        viewModel.clearPreferences()
         googleSignOut()
         launchToGreetings()
     }

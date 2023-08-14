@@ -17,6 +17,7 @@ import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.FragmentSettingBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,6 +31,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})
 
     private lateinit var userModel: UserModel
+
+    private var token: String = Constant.EMPTY_STRING
 
     override fun setupView() {
         init()
@@ -60,6 +63,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                     binding.etToken.apply {
                         setText(message)
                     }
+                    token = message
                 }, {}
             )
         }
@@ -88,8 +92,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                         ).show()
                     }
                 )
-
-            viewModel.clearPreferences()
+            viewModel.clearPreferences(token)
             authNavigator.fromSettingToGreetings(this@SettingFragment)
         }
     }

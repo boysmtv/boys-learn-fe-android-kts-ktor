@@ -1,7 +1,5 @@
 package com.kotlin.learn.core.data.di
 
-import com.kotlin.learn.core.data.repository.AuthRepository
-import com.kotlin.learn.core.data.repository.AuthRepositoryImpl
 import com.kotlin.learn.core.data.repository.MovieRepository
 import com.kotlin.learn.core.data.repository.MovieRepositoryImpl
 import com.kotlin.learn.core.data.repository.UserRepository
@@ -19,11 +17,6 @@ interface DataModule {
     fun bindMovieRepository(
         movieRepositoryImpl: MovieRepositoryImpl,
     ): MovieRepository
-
-    @Binds
-    fun bindAuthRepository(
-        authRepositoryImpl: AuthRepositoryImpl,
-    ): AuthRepository
 
     @Binds
     fun bindUserRepository(

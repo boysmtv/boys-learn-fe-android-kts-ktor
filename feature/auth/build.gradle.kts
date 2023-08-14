@@ -18,14 +18,17 @@ android {
     viewBinding.isEnabled = true
 }
 
+val customModulePath: groovy.lang.Closure<Any> by ext
+
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:model"))
-    implementation(project(":core:utilities"))
-    implementation(project(":core:data"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:nav"))
-    implementation(project(":core:ui"))
+    implementation(customModulePath(":core:common"))
+    implementation(customModulePath(":core:model"))
+    implementation(customModulePath(":core:utilities"))
+    implementation(customModulePath(":core:data"))
+    implementation(customModulePath(":core:domain"))
+    implementation(customModulePath(":core:nav"))
+    implementation(customModulePath(":core:ui"))
+    implementation(customModulePath(":feature:services"))
 
     implementation(libs.androidx.activity.activity.ktx)
     implementation(libs.androidx.activity.fragment.ktx)
