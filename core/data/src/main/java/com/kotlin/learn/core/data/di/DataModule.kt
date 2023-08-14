@@ -4,8 +4,8 @@ import com.kotlin.learn.core.data.repository.AuthRepository
 import com.kotlin.learn.core.data.repository.AuthRepositoryImpl
 import com.kotlin.learn.core.data.repository.MovieRepository
 import com.kotlin.learn.core.data.repository.MovieRepositoryImpl
-import com.kotlin.learn.core.data.repository.RegisterRepository
-import com.kotlin.learn.core.data.repository.RegisterRepositoryImpl
+import com.kotlin.learn.core.data.repository.UserRepository
+import com.kotlin.learn.core.data.repository.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,8 +26,8 @@ interface DataModule {
     ): AuthRepository
 
     @Binds
-    fun bindRegisterRepository(
-        registerRepositoryImpl: RegisterRepositoryImpl,
-    ): RegisterRepository
+    fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl,
+    ): UserRepository
 
 }

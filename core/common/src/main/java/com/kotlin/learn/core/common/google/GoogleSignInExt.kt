@@ -85,7 +85,7 @@ class GoogleSignInExt(
             .build()
     )
 
-    fun isUserSignedIn() = GoogleSignIn.getLastSignedInAccount(context) != null
+    private fun isUserSignedIn() = GoogleSignIn.getLastSignedInAccount(context) != null
 
     fun signOut(
         isSuccess: () -> Unit,

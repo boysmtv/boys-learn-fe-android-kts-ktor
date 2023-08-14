@@ -11,7 +11,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
-import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
@@ -22,22 +21,17 @@ import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
-import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
-import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
-import com.kotlin.learn.feature.auth.presentation.viewmodel.GreetingsViewModel
-import com.kotlin.learn.feature.auth.presentation.viewmodel.RegisterViewModel
+import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetingsBinding::inflate) {
 
-    private val viewModel: GreetingsViewModel by viewModels()
-
-    private val viewModelRegister: RegisterViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
 
     private var googleSignInExt: GoogleSignInExt =
         GoogleSignInExt(
@@ -57,7 +51,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     }
 
     private fun subscribeStoreAuth() {
-        viewModelRegister.register.launch(this@GreetingsFragment) {
+        userViewModel.postUser.launch(this@GreetingsFragment) {
             when (it) {
                 Result.Waiting -> {}
 
@@ -67,10 +61,6 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
                 is Result.Error -> parseRegisterError(it.throwable)
             }
-        }
-
-        viewModel.storeFirebase.launch(this@GreetingsFragment) {
-
         }
     }
 
@@ -108,7 +98,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     }
 
     private fun invokeResultDataAuthSuccess(model: UserModel) {
-        viewModelRegister.postRegister(
+        userViewModel.postUser(
             userModel.apply {
                 idFireStore = Constant.EMPTY_STRING
                 idGoogle = model.idGoogle
@@ -129,8 +119,8 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         Log.e("Greetings", "Error Invoke Data Auth - Msg : $message")
         Toast.makeText(context, "Error Invoke Data Auth - Msg : $message", Toast.LENGTH_LONG).show()
     }
-    // end region google login
 
+    // end region google login
 
     private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
         showHideProgress(isLoading = false)
@@ -138,7 +128,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         invokeSpringParser(response).launch(this@GreetingsFragment) {
             when (it) {
                 is SpringParser.Success -> {
-                    viewModel.storeUserToDatastore(
+                    userViewModel.storeUserToDatastore(
                         jsonUtil.toJson(
                             userModel.apply {
                                 id = it.data?.id ?: Constant.EMPTY_STRING

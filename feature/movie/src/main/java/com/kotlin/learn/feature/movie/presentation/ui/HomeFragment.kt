@@ -15,11 +15,11 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
+import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
@@ -209,7 +209,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 isFetched = { model ->
                     jsonUtil.fromJson<UserModel>(model)?.let { dataModel ->
                         fetchAuthDataFromFirebase(
-                            id = dataModel.idFireStore,
+                            id = dataModel.idFireStore ?: Constant.EMPTY_STRING,
                             resources = UserModel(),
                             onSuccess = {
                                 Log.e("BOYS-Home", "getAuthorization - onSuccess Value : $it")

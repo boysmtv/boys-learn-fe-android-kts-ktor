@@ -4,8 +4,8 @@ import com.kotlin.learn.core.domain.AuthUseCase
 import com.kotlin.learn.core.domain.AuthUseCaseImpl
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.domain.MovieUseCaseImpl
-import com.kotlin.learn.core.domain.RegisterUseCase
-import com.kotlin.learn.core.domain.RegisterUseCaseImpl
+import com.kotlin.learn.core.domain.UserUseCase
+import com.kotlin.learn.core.domain.UserUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,8 +26,8 @@ interface DomainModule {
     ): AuthUseCase
 
     @Binds
-    fun bindRegisterUseCase(
-        registerUseCaseImpl: RegisterUseCaseImpl,
-    ): RegisterUseCase
+    fun bindUserUseCase(
+        userUseCaseImpl: UserUseCaseImpl,
+    ): UserUseCase
 
 }

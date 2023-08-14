@@ -22,6 +22,7 @@ import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.plugins.resources.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
@@ -77,6 +78,30 @@ class KtorClient(
     ): T {
         return springClient
             .post(resources) {
+                url {
+                    query?.let {
+                        it.forEach { item ->
+                            parameters.append(item.key, item.value)
+                        }
+                    }
+                    path?.let {
+                        appendPathSegments(it)
+                    }
+                }
+                body?.let {
+                    setBody(it)
+                }
+            }.body()
+    }
+
+    internal suspend inline fun <reified Z : Any, reified T> putAPIwithResponseFromSpring(
+        resources: String,
+        query: Map<String, String>? = null,
+        path: String? = null,
+        body: Z? = null,
+    ): T {
+        return springClient
+            .put(resources) {
                 url {
                     query?.let {
                         it.forEach { item ->

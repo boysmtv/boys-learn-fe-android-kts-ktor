@@ -23,16 +23,16 @@ data class AuthRespModel(
 @Serializable
 @JsonClass(generateAdapter = true)
 data class UserModel(
-    @Json(name = "id") var id: String = Constant.EMPTY_STRING,
-    @Json(name = "idFireStore") var idFireStore: String = Constant.EMPTY_STRING,
-    @Json(name = "idGoogle") var idGoogle: String = Constant.EMPTY_STRING,
-    @Json(name = "idToken") var idToken: String = Constant.EMPTY_STRING,
-    @Json(name = "firstName") var firstName: String = Constant.EMPTY_STRING,
-    @Json(name = "lastName") var lastName: String = Constant.EMPTY_STRING,
-    @Json(name = "displayName") var displayName: String = Constant.EMPTY_STRING,
-    @Json(name = "phone") var phone: String = Constant.EMPTY_STRING,
-    @Json(name = "email") var email: String = Constant.EMPTY_STRING,
-    @Json(name = "password") var password: String = Constant.EMPTY_STRING,
-    @Json(name = "photoUrl") var photoUrl: String = Constant.EMPTY_STRING,
-    @Json(name = "method") var method: String = Constant.EMPTY_STRING,
+    @Json(name = "id") var id: String? = null,
+    @Json(name = "idFireStore") var idFireStore: String? = null,
+    @Json(name = "idGoogle") var idGoogle: String? = null,
+    @Json(name = "idToken") var idToken: String? = null,
+    @Json(name = "firstName") var firstName: String? = null,
+    @Json(name = "lastName") var lastName: String? = null,
+    @Json(name = "displayName") var displayName: String? = null,
+    @Json(name = "phone") var phone: String? = null,
+    @Json(name = "email") var email: String? = null,
+    @Json(name = "password") var password: String? = null,
+    @Json(name = "photoUrl") var photoUrl: String? = null,
+    @Json(name = "method") var method: String? = null,
 )

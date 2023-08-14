@@ -5,13 +5,11 @@ import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.common.util.network.parseResultError
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.RegisterReqModel
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
@@ -20,14 +18,14 @@ import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
-import com.kotlin.learn.feature.auth.presentation.viewmodel.RegisterViewModel
+import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
 
-    private val viewModel: RegisterViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
 
     @Inject
     lateinit var authNavigator: AuthNavigator
@@ -44,8 +42,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         cvRegister.setBackgroundResource(R.drawable.card_rounded_top)
     }
 
-    private fun subscribeRegister() = with(viewModel) {
-        register.launch(this@RegisterFragment) {
+    private fun subscribeRegister() = with(userViewModel) {
+        postUser.launch(this@RegisterFragment) {
             when (it) {
                 Result.Waiting -> {}
 
@@ -64,7 +62,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         invokeSpringParser(response).launch(this@RegisterFragment) {
             when (it) {
                 is SpringParser.Success -> {
-                    viewModel.storeUserToDatastore(
+                    userViewModel.storeUserToDatastore(
                         jsonUtil.toJson(
                             userModel.apply {
                                 id = it.data?.id ?: EMPTY_STRING
@@ -130,7 +128,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
         btnRegister.setOnClickListener {
-            viewModel.postRegister(
+            userViewModel.postUser(
                 userModel.apply {
                     idFireStore = EMPTY_STRING
                     idGoogle = EMPTY_STRING

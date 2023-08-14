@@ -5,7 +5,6 @@ import android.os.Looper
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
-import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
@@ -37,7 +36,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
     private fun setupListener() {
         Handler(Looper.getMainLooper()).postDelayed({
-            viewModel.fetchDataAuth().launch(this) { event ->
+            viewModel.fetchUserFromDatastore().launch(this) { event ->
                 invokeDataStoreEvent(event,
                     isFetched = { data ->
                         if (data.isNotEmpty())
@@ -60,11 +59,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         authNavigator.fromSplashToGreetings(this@SplashFragment)
     }
 
-    private fun signOutGoogle() = googleSignInExt.signOut({}, {})
+    private fun googleSignOut() = googleSignInExt.signOut({}, {})
 
     private fun navigateToGreetings() {
         viewModel.clearPreferences()
-        signOutGoogle()
+        googleSignOut()
         launchToGreetings()
     }
 

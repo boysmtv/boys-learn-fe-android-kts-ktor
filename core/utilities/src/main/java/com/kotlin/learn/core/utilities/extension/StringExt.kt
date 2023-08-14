@@ -8,5 +8,5 @@ fun String.capitalize(): String {
 }
 
 fun String.isAvailable() : String {
-    return if (this.isEmpty()) "available" else "not available"
+    return if (this.isNotEmpty()) "available" else "not available"
 }

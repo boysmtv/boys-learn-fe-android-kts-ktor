@@ -12,23 +12,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val dataStorePreferences: DataStorePreferences
+    private val dataStore: DataStorePreferences
 ) : ViewModel() {
 
-    fun fetchDataAuth() =
+    fun fetchUserFromDatastore() =
         flow {
             emit(
                 DataStoreCacheEvent.FetchSuccess(
-                    dataStorePreferences.getString(PreferenceConstants.Authorization.PREF_USER)
-                        .getOrNull()
-                        .orEmpty()
+                    dataStore.getString(
+                        PreferenceConstants.Authorization.PREF_USER,
+                    ).getOrNull().orEmpty()
                 )
             )
         }
 
     fun clearPreferences() {
         viewModelScope.launch {
-            dataStorePreferences.clearPreferences()
+            dataStore.clearPreferences()
         }
     }
 

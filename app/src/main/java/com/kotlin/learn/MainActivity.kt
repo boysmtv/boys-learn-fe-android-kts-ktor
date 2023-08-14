@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.kotlin.learn.core.common.util.isMyServiceRunning
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.feature.services.MessagingService
 import com.kotlin.learn.feature.services.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -18,10 +19,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navHostFragment: NavHostFragment
 
-    private lateinit var profileService: ProfileService
-
     @Inject
     lateinit var dataStorePreferences: DataStorePreferences
+
+    private lateinit var profileService: ProfileService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
