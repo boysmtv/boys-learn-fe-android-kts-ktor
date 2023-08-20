@@ -14,6 +14,7 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.Genres
 import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.model.VideoDetailModel
+import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.adapter.DetailCreditsAdapter
@@ -23,6 +24,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
@@ -35,6 +37,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private lateinit var videoModel: VideoDetailModel
 
+    private var keyIdMovie = Constant.EMPTY_STRING
+
+    @Inject
+    lateinit var movieNavigator: MovieNavigator
+
     override fun setupView() {
         subscribeDetail()
         loadArguments()
@@ -44,27 +51,14 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private fun setupListener() = with(binding) {
         ivDetailHeaderDownloadIcon.setOnClickListener {
-            Log.e(tag, "This data video : $videoModel")
-            Log.e(tag, "This data video size: ${videoModel.results.size}")
             Toast.makeText(requireContext(), "This feature under development", Toast.LENGTH_SHORT).show()
         }
 
-        ivDetailPlay.setOnClickListener {
-            for (i in 0..videoModel.results.size) {
-                if (videoModel.results[i].name == "Official Trailer") {
-                    videoModel.results[i].key?.let { key ->
-                        lifecycle.addObserver(youtubePlayer)
-                        youtubePlayer.visibility = View.VISIBLE
-                        youtubePlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                            override fun onReady(youTubePlayer: YouTubePlayer) {
-                                youTubePlayer.loadVideo(key, 0f)
-                            }
-                        })
-                    }
-                    break
-                }
-                Log.e(tag, "This data video : ${jsonUtil.toJson(videoModel.results[i])}")
-            }
+        btnDetailPlayNow.setOnClickListener {
+            if (keyIdMovie != Constant.EMPTY_STRING)
+                movieNavigator.fromDetailToVideos(this@DetailFragment, keyIdMovie)
+            else
+                Toast.makeText(requireContext(), "Error get key movie", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -93,7 +87,20 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
                 is Result.Loading -> {}
 
-                is Result.Success -> videoModel = it.data
+                is Result.Success -> {
+                    val model = it.data
+                    for (i in 0..model.results.size) {
+                        model.results[i].key?.let { key ->
+                            keyIdMovie = key
+                        }
+                        if (model.results[i].name == "Official Trailer") {
+                            model.results[i].key?.let { key ->
+                                keyIdMovie = key
+                            }
+                            break
+                        }
+                    }
+                }
 
                 is Result.Error -> {}
             }

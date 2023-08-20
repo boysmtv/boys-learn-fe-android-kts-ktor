@@ -62,7 +62,7 @@ firebaseDatabaseKtx = "20.2.2"
 firebaseFessaging = "17.0.0"
 firebaseFessagingKtx = "23.2.0"
 facebookLogin = "sdk-version-16.0.0"
-androidyoutubeplayerCore = "10.0.5"
+androidyoutubeplayerCore = "12.1.0"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }

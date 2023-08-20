@@ -3,7 +3,9 @@ package com.kotlin.learn.core.nav.navigator
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.kotlin.learn.core.model.MovieDataModel
+import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.utilities.MovieCategories
+import com.kotlin.learn.feature.movie.presentation.ui.DetailFragmentDirections
 import com.kotlin.learn.feature.movie.presentation.ui.HomeFragmentDirections
 import com.kotlin.learn.feature.movie.presentation.ui.SearchFragmentDirections
 import com.kotlin.learn.feature.movie.presentation.ui.SeeAllFragmentDirections
@@ -43,6 +45,12 @@ class MovieNavigator {
     fun fromSearchToDetail(fragment: Fragment, item: MovieDataModel) {
         findNavController(fragment).navigate(
             SearchFragmentDirections.actionSearchFragmentToDetailFragment(item.id.toString())
+        )
+    }
+
+    fun fromDetailToVideos(fragment: Fragment, keyId: String) {
+        findNavController(fragment).navigate(
+            DetailFragmentDirections.actionDetailFragmentToVideoFragment(keyId)
         )
     }
 
