@@ -1,22 +1,26 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.annotation.SuppressLint
-import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.Genres
 import com.kotlin.learn.core.model.MovieDetailModel
+import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.adapter.DetailCreditsAdapter
 import com.kotlin.learn.feature.movie.databinding.FragmentDetailBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.DetailViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 
@@ -27,20 +31,47 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private val args: DetailFragmentArgs by navArgs()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    private lateinit var movieModel: MovieDetailModel
+
+    private lateinit var videoModel: VideoDetailModel
+
+    override fun setupView() {
         subscribeDetail()
         loadArguments()
         setupVpCredits()
+        setupListener()
     }
 
-    override fun setupView() {
+    private fun setupListener() = with(binding) {
+        ivDetailHeaderDownloadIcon.setOnClickListener {
+            Log.e(tag, "This data video : $videoModel")
+            Log.e(tag, "This data video size: ${videoModel.results.size}")
+            Toast.makeText(requireContext(), "This feature under development", Toast.LENGTH_SHORT).show()
+        }
 
+        ivDetailPlay.setOnClickListener {
+            for (i in 0..videoModel.results.size) {
+                if (videoModel.results[i].name == "Official Trailer") {
+                    videoModel.results[i].key?.let { key ->
+                        lifecycle.addObserver(youtubePlayer)
+                        youtubePlayer.visibility = View.VISIBLE
+                        youtubePlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                            override fun onReady(youTubePlayer: YouTubePlayer) {
+                                youTubePlayer.loadVideo(key, 0f)
+                            }
+                        })
+                    }
+                    break
+                }
+                Log.e(tag, "This data video : ${jsonUtil.toJson(videoModel.results[i])}")
+            }
+        }
     }
 
     private fun subscribeDetail() = with(binding) {
         viewModel.detailMovies.launch(this@DetailFragment) {
             when (it) {
-                Result.Waiting -> {}
+                is Result.Waiting -> {}
 
                 is Result.Loading -> {
                     viewAnimator.displayedChild = Constant.ZERO
@@ -56,15 +87,29 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 }
             }
         }
+        viewModel.detailVideos.launch(this@DetailFragment) {
+            when (it) {
+                is Result.Waiting -> {}
+
+                is Result.Loading -> {}
+
+                is Result.Success -> videoModel = it.data
+
+                is Result.Error -> {}
+            }
+        }
     }
 
-    private fun loadContent(it: MovieDetailModel) = with(binding) {
-        tvDetailHeaderTitle.text = it.title
-        tvDetailHeaderRuleGenres.text = convertGenres(it.genres)
-        tvDetailHeaderRuleTime.text = calculateRuntime(it.runtime)
-        tvDetailHeaderRuleYear.text = convertDatetimeToDate(it.releaseDate)
-        tvDetailHeaderDesc.text = it.overview
-        setupThumbnail(it)
+    private fun loadContent(movieDetailModel: MovieDetailModel) = with(binding) {
+        movieModel = movieDetailModel
+        movieModel.let {
+            tvDetailHeaderTitle.text = it.title
+            tvDetailHeaderRuleGenres.text = convertGenres(it.genres)
+            tvDetailHeaderRuleTime.text = calculateRuntime(it.runtime)
+            tvDetailHeaderRuleYear.text = convertDatetimeToDate(it.releaseDate)
+            tvDetailHeaderDesc.text = it.overview
+            setupThumbnail(it)
+        }
     }
 
     private fun setupVpCredits() = with(binding) {
@@ -112,6 +157,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private fun setupView(movieId: String) {
         viewModel.getDetailMovies(movieId = movieId)
+        viewModel.getDetailVideos(movieId = movieId)
     }
 
     private fun calculateRuntime(timeRuntime: Int?): String {

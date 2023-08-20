@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.DetailFragment">
 
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ViewAnimator
         android:id="@+id/view_animator"
         android:layout_width="match_parent"
@@ -213,7 +222,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_16"
-                                android:text="@string/play_now"
+                                android:text="@string/play_trailer"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/cl_detail_header_download_icon"

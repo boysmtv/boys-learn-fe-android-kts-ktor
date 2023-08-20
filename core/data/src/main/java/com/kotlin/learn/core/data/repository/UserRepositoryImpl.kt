@@ -8,6 +8,7 @@ import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.source.UserDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,6 +19,7 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> =
         flow {
+            emit(Result.Loading)
             emit(
                 execute {
                     network.getUser(model = model)
@@ -27,6 +29,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
         flow {
+            emit(Result.Loading)
             emit(
                 execute {
                     network.postUser(model = model)
@@ -36,6 +39,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
         flow {
+            emit(Result.Loading)
             emit(
                 execute {
                     network.putUser(model = model)
@@ -45,6 +49,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>> =
         flow {
+            emit(Result.Loading)
             emit(
                 execute {
                     network.postAuth(model = model)

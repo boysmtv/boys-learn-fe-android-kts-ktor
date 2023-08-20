@@ -2,7 +2,6 @@ package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -26,7 +25,6 @@ import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -57,7 +55,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     private fun subscribeStoreAuth() {
         viewModel.postUser.launch(this@GreetingsFragment) {
             when (it) {
-                Result.Waiting -> {}
+                is Result.Waiting -> {}
 
                 is Result.Loading -> showHideProgress(isLoading = true)
 
@@ -68,7 +66,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         }
         viewModel.getUser.launch(this@GreetingsFragment) {
             when (it) {
-                Result.Waiting -> {}
+                is Result.Waiting -> {}
 
                 is Result.Loading -> showHideProgress(isLoading = true)
 
@@ -90,6 +88,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         btnGoogle.setOnClickListener {
             signInGoogle()
         }
+
         btnEmail.setOnClickListener {
             authNavigator.fromGreetingsToAuth(this@GreetingsFragment)
         }

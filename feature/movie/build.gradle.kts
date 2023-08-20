@@ -59,7 +59,7 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.common.ktx)
     implementation(libs.com.google.firebase.firebase.database.ktx)
     implementation(libs.com.google.firebase.firebase.messaging.ktx)
-    implementation("androidx.test:core-ktx:1.5.0")
+    implementation(libs.com.pierfrancescosoffritti.androidyoutubeplayer.core)
 
     kapt(libs.hilt.compiler)
 

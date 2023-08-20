@@ -12,6 +12,7 @@ import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.model.MovieModel
 import com.kotlin.learn.core.model.MovieSearchModel
+import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.utilities.MovieCategories
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -35,6 +36,10 @@ class MovieUseCaseImpl @Inject constructor(
 
     override fun getDetailMovie(movieId: String, language: String): Flow<Result<MovieDetailModel>> {
         return movieRepository.getDetailMovie(movieId = movieId, language = language)
+    }
+
+    override fun getDetailVideo(movieId: String, language: String): Flow<Result<VideoDetailModel>> {
+        return movieRepository.getDetailVideos(movieId = movieId, language = language)
     }
 
     override fun searchMovie(searchModel: MovieSearchModel): Flow<PagingData<MovieDataModel>> {

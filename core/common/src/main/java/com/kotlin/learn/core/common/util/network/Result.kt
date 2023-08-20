@@ -12,7 +12,6 @@ sealed interface Result<out T> {
 
 inline fun <T> execute(body: () -> T): Result<T> {
     return try {
-        Result.Loading
         Result.Success(body.invoke())
     } catch (throwable: Throwable) {
         Result.Error(throwable)

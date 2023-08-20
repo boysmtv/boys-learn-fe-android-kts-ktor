@@ -5,6 +5,7 @@ import com.kotlin.learn.core.model.CreditsModel
 import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.model.MovieModel
 import com.kotlin.learn.core.model.MovieSearchModel
+import com.kotlin.learn.core.model.VideoDetailModel
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -18,6 +19,8 @@ interface MovieRepository {
     fun getBanner(page: Int): Flow<Result<MovieModel>>
 
     fun getDetailMovie(movieId: String, language: String): Flow<Result<MovieDetailModel>>
+
+    fun getDetailVideos(movieId: String, language: String): Flow<Result<VideoDetailModel>>
 
     suspend fun searchMovie(page: Int, searchModel: MovieSearchModel) : Result<MovieModel>
 

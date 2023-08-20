@@ -45,7 +45,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun subscribeRegister() = with(userViewModel) {
         postUser.launch(this@RegisterFragment) {
             when (it) {
-                Result.Waiting -> {}
+                is Result.Waiting -> {}
 
                 is Result.Loading -> showHideProgress(isLoading = true)
 
@@ -140,7 +140,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                     phone = etPhone.text.toString()
                     photoUrl = EMPTY_STRING
                     password = etPassword.text.toString()
-                    method = AuthMethod.BACKEND.name
+                    method = AuthMethod.EMAIL.name
                 }
             )
         }

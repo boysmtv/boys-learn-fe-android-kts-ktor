@@ -5,6 +5,7 @@ import com.kotlin.learn.core.common.util.network.execute
 import com.kotlin.learn.core.model.CreditsModel
 import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.model.MovieSearchModel
+import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.network.source.MovieDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -47,6 +48,14 @@ class MovieRepositoryImpl @Inject constructor(
         emit(
             execute {
                 network.getDetailMovie(movieId = movieId, language = language)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override fun getDetailVideos(movieId: String, language: String): Flow<Result<VideoDetailModel>> = flow {
+        emit(
+            execute {
+                network.getDetailVideos(movieId = movieId, language = language)
             }
         )
     }.flowOn(Dispatchers.IO)

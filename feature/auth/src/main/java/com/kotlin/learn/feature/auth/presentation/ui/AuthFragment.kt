@@ -37,7 +37,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     private fun subscribeLogin() = with(userViewModel) {
         postAuth.launch(this@AuthFragment) { result ->
             when (result) {
-                Result.Waiting -> {}
+                is Result.Waiting -> {}
 
                 is Result.Loading -> showHideProgress(isLoading = true)
 
@@ -49,9 +49,9 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
 
         getUser.launch(this@AuthFragment) { result ->
             when (result) {
-                Result.Waiting -> {}
+                is Result.Waiting -> {}
 
-                is Result.Loading -> showHideProgress(isLoading = true)
+                is Result.Loading -> { /* TODO: skip loading after success post auth */}
 
                 is Result.Success -> getUserSuccess(result)
 
@@ -87,7 +87,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun postAuthSuccess(result: Result.Success<BaseResponse<LoginRespModel>>) {
-        showHideProgress(isLoading = false)
         invokeSpringParser(result.data).launch(lifecycleOwner = this@AuthFragment) {
             when (it) {
                 is SpringParser.Success -> {
@@ -103,6 +102,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                 }
 
                 is SpringParser.Error -> {
+                    showHideProgress(isLoading = false)
                     showDialogGeneralError(
                         title = "Login Error",
                         message = "Check your connection"
@@ -113,6 +113,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun postAuthError(throwable: Throwable) {
+        showHideProgress(isLoading = false)
         parseResultError(throwable).launch(this@AuthFragment) { parser ->
             when (parser) {
                 is SpringParser.Success -> {
@@ -131,7 +132,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             UserModel().apply {
                 id = userModel.id
                 email = userModel.email
-                method = AuthMethod.BACKEND.name
+                method = AuthMethod.EMAIL.name
             }
         )
     }
@@ -168,6 +169,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun getUserError(throwable: Throwable) {
+        showHideProgress(isLoading = false)
         parseResultError(throwable).launch(this@AuthFragment) { parser ->
             when (parser) {
                 is SpringParser.Success -> {

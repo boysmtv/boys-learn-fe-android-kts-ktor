@@ -5,8 +5,10 @@ import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.network.KtorClient
 import com.kotlin.learn.core.model.MovieModel
 import com.kotlin.learn.core.model.MovieSearchModel
+import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.network.CreditsMovie
 import com.kotlin.learn.core.network.DetailMovie
+import com.kotlin.learn.core.network.DetailVideos
 import com.kotlin.learn.core.network.NowPlayingMovie
 import com.kotlin.learn.core.network.PopularMovie
 import com.kotlin.learn.core.network.SearchMovie
@@ -74,6 +76,18 @@ class MovieDataSourceImpl @Inject constructor(
                     "language" to language
                 ),
                 path = movieId
+            )
+        }
+    }
+
+    override suspend fun getDetailVideos(movieId: String, language: String): VideoDetailModel {
+        return withContext(Dispatchers.IO){
+            ktorClient.sendRequestApiWithQuery(
+                resources = DetailVideos(),
+                query = mapOf(
+                    "language" to language
+                ),
+                path = "$movieId/videos",
             )
         }
     }

@@ -17,6 +17,9 @@ class NowPlayingMovie
 @Resource("movie")
 class DetailMovie
 
+@Resource("movie")
+class DetailVideos
+
 @Resource("search/movie")
 class SearchMovie
 

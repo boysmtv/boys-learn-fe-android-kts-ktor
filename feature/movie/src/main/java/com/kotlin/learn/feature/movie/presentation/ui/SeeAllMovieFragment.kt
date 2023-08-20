@@ -1,9 +1,7 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -26,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding::inflate) {
+class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding::inflate) {
 
     private val seeAllAdapter = SeeAllAdapter(this::onMovieClicked)
     private val viewModel: HomeViewModel by viewModels()
@@ -55,7 +53,7 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
     }
 
     private fun subscribeMovie() = with(viewModel) {
-        with(this@SeeAllFragment) {
+        with(this@SeeAllMovieFragment) {
             when (categories) {
                 MovieCategories.POPULAR.name -> {
                     popularMovies.launch(this) { seeAllAdapter.submitData(it) }
