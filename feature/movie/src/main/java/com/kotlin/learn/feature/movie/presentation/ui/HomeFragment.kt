@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -13,13 +14,10 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.util.invokeDataStoreEvent
-import com.kotlin.learn.core.model.UserModel
+import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
-import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
@@ -32,6 +30,7 @@ import com.kotlin.learn.feature.movie.util.common.MovieLoadStateAdapter
 import com.zhpan.bannerview.constants.PageStyle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
@@ -53,6 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupViewPager()
         subscribeBanner()
         askNotificationPermission()
+        setOnBackPressed()
     }
 
     private fun setupSwipeRefresh() = with(binding) {
@@ -192,13 +192,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         .create()
 
     private fun onMovieClicked(item: MovieDataModel) {
-        movieNavigator.navigateToDetailMovie(this, item)
+        movieNavigator.fromHomeToDetailMovie(this, item)
     }
 
     private fun setOnClickMore(layoutBinding: MovieHomeBinding, categories: MovieCategories) =
         with(layoutBinding) {
             tvMovieMore.setOnClickListener {
-                movieNavigator.navigateToSeeAllMovie(this@HomeFragment, categories)
+                movieNavigator.fromHomeToSeeAllMovie(this@HomeFragment, categories)
             }
         }
 
@@ -251,4 +251,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             Log.e("FirebaseMessaging", "Fetching FCM - Your Token : $token")
         })
     }
+
+    private fun setOnBackPressed(){
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onDestroy()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
 }

@@ -16,7 +16,7 @@ import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.capitalize
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
-import com.kotlin.learn.feature.movie.adapter.SeeAllAdapter
+import com.kotlin.learn.feature.movie.adapter.SeeAllMovieAdapter
 import com.kotlin.learn.feature.movie.databinding.FragmentSeeAllBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.HomeViewModel
 import com.kotlin.learn.feature.movie.util.common.MovieLoadStateAdapter
@@ -26,10 +26,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding::inflate) {
 
-    private val seeAllAdapter = SeeAllAdapter(this::onMovieClicked)
+    private val seeAllMovieAdapter = SeeAllMovieAdapter(this::onMovieClicked)
     private val viewModel: HomeViewModel by viewModels()
 
-    private val args: SeeAllFragmentArgs by navArgs()
+    private val args: SeeAllMovieFragmentArgs by navArgs()
 
     private var categories = Constant.EMPTY_STRING
 
@@ -56,15 +56,15 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
         with(this@SeeAllMovieFragment) {
             when (categories) {
                 MovieCategories.POPULAR.name -> {
-                    popularMovies.launch(this) { seeAllAdapter.submitData(it) }
+                    popularMovies.launch(this) { seeAllMovieAdapter.submitData(it) }
                 }
 
                 MovieCategories.TOP_RATED.name -> {
-                    topRatedMovies.launch(this) { seeAllAdapter.submitData(it) }
+                    topRatedMovies.launch(this) { seeAllMovieAdapter.submitData(it) }
                 }
 
                 MovieCategories.UP_COMING.name -> {
-                    upComingMovies.launch(this) { seeAllAdapter.submitData(it) }
+                    upComingMovies.launch(this) { seeAllMovieAdapter.submitData(it) }
                 }
             }
         }
@@ -76,20 +76,20 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
                 layoutManager = LinearLayoutManager(
                     requireContext(), LinearLayoutManager.VERTICAL, false
                 )
-                adapter = seeAllAdapter.withLoadStateHeaderAndFooter(
-                    MovieLoadStateAdapter { seeAllAdapter.retry() },
-                    MovieLoadStateAdapter { seeAllAdapter.retry() }
+                adapter = seeAllMovieAdapter.withLoadStateHeaderAndFooter(
+                    MovieLoadStateAdapter { seeAllMovieAdapter.retry() },
+                    MovieLoadStateAdapter { seeAllMovieAdapter.retry() }
                 )
             }
 
-            seeAllAdapter.addLoadStateListener { loadState ->
+            seeAllMovieAdapter.addLoadStateListener { loadState ->
                 when (loadState.source.refresh) {
                     is LoadState.Loading -> {
                         viewAnimator.displayedChild = 0
                     }
 
                     is LoadState.NotLoading -> {
-                        if (seeAllAdapter.itemCount == 0) {
+                        if (seeAllMovieAdapter.itemCount == 0) {
                             setViewBasedOnState(loadState, getString(R.string.empty_data_title))
                             viewAnimator.displayedChild = 2
                         } else viewAnimator.displayedChild = 1
@@ -112,7 +112,7 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
                 errorMessage.text = message
                 buttonRetry.apply {
                     isVisible = loadState.source.refresh is LoadState.Error
-                    setOnClickListener { seeAllAdapter.retry() }
+                    setOnClickListener { seeAllMovieAdapter.retry() }
                 }
             }
             viewAnimator.displayedChild = 2
@@ -120,7 +120,7 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
     }
 
     private fun onMovieClicked(item: MovieDataModel) {
-        movieNavigator.fromSeeAllToDetailMovie(this, item)
+        movieNavigator.fromSeeAllMovieToDetailMovie(this, item)
     }
 
 }

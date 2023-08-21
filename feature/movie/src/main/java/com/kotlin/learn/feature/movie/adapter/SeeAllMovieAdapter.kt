@@ -18,9 +18,9 @@ import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.MovieSeeAllItemBinding
 import java.text.SimpleDateFormat
 
-class SeeAllAdapter(private val onClickMovie: OnClickMovie) :
+class SeeAllMovieAdapter(private val onClickMovie: OnClickMovie) :
 
-    PagingDataAdapter<MovieDataModel, SeeAllAdapter.ViewHolder>(MovieCallback()) {
+    PagingDataAdapter<MovieDataModel, SeeAllMovieAdapter.ViewHolder>(MovieCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

@@ -11,7 +11,6 @@ import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.KtorClient
 import com.kotlin.learn.core.utilities.PreferenceConstants
-import com.kotlin.learn.core.utilities.extension.isAvailable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -103,7 +102,7 @@ class ThreadProfile {
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
                 Log.e(tag, "Token-getTokenFirebase: $token")
-                runBlocking {
+                coroutineScope.launch {
                     if (getToken().isEmpty()) {
                         storeToPreferences(token)
                         postToken()
@@ -113,7 +112,7 @@ class ThreadProfile {
         }.addOnFailureListener { _: Exception? -> }.addOnCanceledListener {}
             .addOnCompleteListener { task: Task<String> ->
                 Log.e(tag, "Token-getTokenFirebase: ${task.result}")
-                runBlocking {
+                coroutineScope.launch {
                     if (getToken().isEmpty()) {
                         storeToPreferences(task.result)
                         postToken()

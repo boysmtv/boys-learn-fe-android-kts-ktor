@@ -8,6 +8,7 @@ import com.kotlin.learn.core.model.MovieSearchModel
 import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.network.source.MovieDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

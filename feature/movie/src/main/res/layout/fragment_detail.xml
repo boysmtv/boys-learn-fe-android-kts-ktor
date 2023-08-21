@@ -43,9 +43,9 @@
                     android:id="@+id/iv_detail_play"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
                     android:scaleType="fitXY"
-                    tools:background="@drawable/background_app_1"
-                    android:importantForAccessibility="no" />
+                    tools:background="@drawable/background_app_1" />
 
             </androidx.cardview.widget.CardView>
 
@@ -60,11 +60,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/cv_play_movies">
 
                 <androidx.core.widget.NestedScrollView
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_detail_content"
@@ -78,11 +78,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/tt_interphases_medium"
-                            tools:text="Avatar: The way of Water"
                             android:textColor="@android:color/black"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Avatar: The way of Water" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/cl_detail_header_rule"
@@ -194,12 +194,12 @@
                                     android:id="@+id/iv_detail_header_download_icon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:importantForAccessibility="no"
                                     android:src="@drawable/icon_download_dark"
                                     app:layout_constraintBottom_toTopOf="@+id/tv_detail_header_download_title"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:importantForAccessibility="no" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
                                     android:id="@+id/tv_detail_header_download_title"

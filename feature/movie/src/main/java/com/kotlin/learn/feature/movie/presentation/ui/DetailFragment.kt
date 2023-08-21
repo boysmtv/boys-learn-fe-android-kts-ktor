@@ -1,8 +1,6 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.annotation.SuppressLint
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -13,15 +11,12 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.Genres
 import com.kotlin.learn.core.model.MovieDetailModel
-import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.adapter.DetailCreditsAdapter
 import com.kotlin.learn.feature.movie.databinding.FragmentDetailBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.DetailViewModel
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import javax.inject.Inject
@@ -35,9 +30,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private lateinit var movieModel: MovieDetailModel
 
-    private lateinit var videoModel: VideoDetailModel
+    private var movieKey = Constant.EMPTY_STRING
 
-    private var keyIdMovie = Constant.EMPTY_STRING
+    private var movieId = Constant.EMPTY_STRING
 
     @Inject
     lateinit var movieNavigator: MovieNavigator
@@ -55,10 +50,14 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
 
         btnDetailPlayNow.setOnClickListener {
-            if (keyIdMovie != Constant.EMPTY_STRING)
-                movieNavigator.fromDetailToVideos(this@DetailFragment, keyIdMovie)
+            if (movieKey != Constant.EMPTY_STRING)
+                movieNavigator.fromDetailToVideos(this@DetailFragment, movieKey)
             else
-                Toast.makeText(requireContext(), "Error get key movie", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error get movie key", Toast.LENGTH_SHORT).show()
+        }
+
+        tvDetailCastSeeAll.setOnClickListener {
+            movieNavigator.fromDetailToSeeAllCredits(this@DetailFragment, movieId)
         }
     }
 
@@ -91,11 +90,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                     val model = it.data
                     for (i in 0..model.results.size) {
                         model.results[i].key?.let { key ->
-                            keyIdMovie = key
+                            movieKey = key
                         }
                         if (model.results[i].name == "Official Trailer") {
                             model.results[i].key?.let { key ->
-                                keyIdMovie = key
+                                movieKey = key
                             }
                             break
                         }
@@ -123,15 +122,15 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         val creditsAdapter = DetailCreditsAdapter(activity)
         creditsAdapter.addFragment(
             fragment = CreditsFragment(
-                isCrew = Constant.FALSE,
-                movieId = args.movieId
+                creditsCategory = CreditsCategory.CAST,
+                movieId = movieId
             ),
             title = "Cast"
         )
         creditsAdapter.addFragment(
             fragment = CreditsFragment(
-                isCrew = Constant.TRUE,
-                movieId = args.movieId
+                creditsCategory = CreditsCategory.CREW,
+                movieId = movieId
             ),
             title = "Director & Crew"
         )
@@ -159,10 +158,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     }
 
     private fun loadArguments() {
-        setupView(args.movieId)
+        movieId = args.movieId
+        setupRemoteData(movieId)
     }
 
-    private fun setupView(movieId: String) {
+    private fun setupRemoteData(movieId: String) {
         viewModel.getDetailMovies(movieId = movieId)
         viewModel.getDetailVideos(movieId = movieId)
     }

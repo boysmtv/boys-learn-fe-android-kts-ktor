@@ -15,8 +15,9 @@ import com.kotlin.learn.core.model.CrewModel
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.MovieCreditsItemBinding
+import com.kotlin.learn.feature.movie.databinding.SeeAllCreditsItemBinding
 
-sealed class CreditsAdapter {
+sealed class SeeAllCreditsAdapter {
 
     class Cast(private val onClickCreditsCast: OnClickCreditsCast) :
 
@@ -29,14 +30,14 @@ sealed class CreditsAdapter {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(
-                MovieCreditsItemBinding.inflate(
+                SeeAllCreditsItemBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 ), onClickCreditsCast
             )
         }
 
         inner class ViewHolder(
-            private val binding: MovieCreditsItemBinding,
+            private val binding: SeeAllCreditsItemBinding,
             private val onClickCreditsCast: OnClickCreditsCast
         ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -87,14 +88,14 @@ sealed class CreditsAdapter {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(
-                MovieCreditsItemBinding.inflate(
+                SeeAllCreditsItemBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 ), onClickCreditsCrew
             )
         }
 
         inner class ViewHolder(
-            private val binding: MovieCreditsItemBinding,
+            private val binding: SeeAllCreditsItemBinding,
             private val onClickCreditsCrew: OnClickCreditsCrew
         ) : RecyclerView.ViewHolder(binding.root) {
 

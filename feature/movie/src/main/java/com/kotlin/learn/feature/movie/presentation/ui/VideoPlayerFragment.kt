@@ -1,7 +1,5 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
-import android.app.Activity
-import android.content.pm.ActivityInfo
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
 import com.kotlin.learn.core.common.base.BaseFragment
@@ -10,19 +8,12 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.coroutines.launch
 
-
 class VideoPlayerFragment : BaseFragment<FragmentVideoPlayerBinding>(FragmentVideoPlayerBinding::inflate) {
 
     private val args: VideoPlayerFragmentArgs by navArgs()
 
     override fun setupView() {
-        setupLandscape()
         loadArguments()
-    }
-
-    private fun setupLandscape() {
-        val a: Activity? = activity
-        if (a != null) a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
     }
 
     private fun loadArguments() = with(binding) {
@@ -35,4 +26,5 @@ class VideoPlayerFragment : BaseFragment<FragmentVideoPlayerBinding>(FragmentVid
             })
         }
     }
+
 }

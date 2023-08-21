@@ -25,14 +25,14 @@
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_seeAllFragment"
-            app:destination="@id/seeAllFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
             android:id="@+id/action_homeFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllMovieFragment"
+            app:destination="@id/seeAllMovieFragment" />
     </fragment>
 
     <fragment
@@ -46,17 +46,20 @@
         <action
             android:id="@+id/action_detailFragment_to_videoFragment"
             app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_seeAllCreditsFragment"
+            app:destination="@id/seeAllCreditsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/seeAllFragment"
-        android:name="com.kotlin.learn.feature.movie.presentation.ui.SeeAllFragment"
+        android:id="@+id/seeAllMovieFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SeeAllMovieFragment"
         tools:layout="@layout/fragment_see_all">
         <argument
             android:name="categories"
             app:argType="string" />
         <action
-            android:id="@+id/action_seeAllFragment_to_detailFragment"
+            android:id="@+id/action_seeAllMovieFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
 
@@ -120,12 +123,23 @@
             app:destination="@id/greetingsFragment" />
     </fragment>
 
-    <fragment android:id="@+id/videoFragment"
+    <fragment
+        android:id="@+id/videoFragment"
         android:name="com.kotlin.learn.feature.movie.presentation.ui.VideoPlayerFragment"
         tools:layout="@layout/fragment_video_player">
 
         <argument
             android:name="keyId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/seeAllCreditsFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SeeAllCreditFragment"
+        tools:layout="@layout/fragment_see_all_credit">
+
+        <argument
+            android:name="movieId"
             app:argType="string" />
     </fragment>
 

@@ -2,6 +2,7 @@ package com.kotlin.learn.feature.splash.presentation.ui
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt

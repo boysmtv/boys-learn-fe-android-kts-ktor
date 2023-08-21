@@ -37,7 +37,6 @@
             </intent-filter>
         </activity>
 
-
         <!-- start firebase messaging -->
         <service
             android:name=".feature.services.MessagingService"
