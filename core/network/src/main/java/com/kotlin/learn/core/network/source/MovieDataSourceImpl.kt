@@ -25,7 +25,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getPopular(page: Int): MovieModel {
         return withContext(Dispatchers.IO) {
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = PopularMovie(),
                 query = mapOf(
                     "page" to "$page"
@@ -37,7 +37,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getTopRated(page: Int): MovieModel {
         return withContext(Dispatchers.IO) {
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = TopRatedMovie(),
                 query = mapOf(
                     "page" to "$page"
@@ -48,7 +48,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getUpComing(page: Int): MovieModel {
         return withContext(Dispatchers.IO) {
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = UpComingMovie(),
                 query = mapOf(
                     "page" to "$page"
@@ -59,7 +59,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getNowPlaying(page: Int): MovieModel {
         return withContext(Dispatchers.IO) {
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = NowPlayingMovie(),
                 query = mapOf(
                     "page" to "$page"
@@ -70,7 +70,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getDetailMovie(movieId: String, language: String): MovieDetailModel {
         return withContext(Dispatchers.IO){
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = DetailMovie(),
                 query = mapOf(
                     "language" to language
@@ -82,7 +82,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getDetailVideos(movieId: String, language: String): VideoDetailModel {
         return withContext(Dispatchers.IO){
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = DetailVideos(),
                 query = mapOf(
                     "language" to language
@@ -94,7 +94,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun searchMovie(page: Int, searchModel: MovieSearchModel): MovieModel {
         return withContext(Dispatchers.IO){
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = SearchMovie(),
                 query = mapOf(
                     "page" to "$page",
@@ -106,7 +106,7 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getCredits(movieId: String): CreditsModel {
         return withContext(Dispatchers.IO){
-            ktorClient.sendRequestApiWithQuery(
+            ktorClient.getRequestApiWithQuery(
                 resources = CreditsMovie(),
                 query = emptyMap(),
                 path = "$movieId/credits"

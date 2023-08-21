@@ -25,6 +25,9 @@ class UserViewModel @Inject constructor(
     private val dataStore: DataStorePreferences
 ) : ViewModel() {
 
+    // TODO : start region to spring backend
+    // ===============================================================
+
     private val _getUser: MutableStateFlow<Result<BaseResponse<UserModel>>> = MutableStateFlow(Result.Waiting)
     var getUser = _getUser.asStateFlow()
 
@@ -61,9 +64,8 @@ class UserViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    /*
-    TODO : start region user datastore
-    */
+    // TODO : start region to datastore
+    // ===============================================================
 
     fun storeUserToDatastore(user: String) =
         flow {
@@ -96,21 +98,46 @@ class UserViewModel @Inject constructor(
             )
         }
 
-    /*
-    TODO : start region store user to firestore
-    */
 
-    private val _storeFirestore: MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Waiting)
-    val storeFirestore = _storeFirestore.asStateFlow()
+    // TODO : start region to firebase
+    // ===============================================================
 
-    fun storeUserToFirestore(
+    fun storeUserToFirebase(
         model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     ) {
-        useCase.storeUserToFirestore(model, onSuccess, onError)
-            .onEach { _storeFirestore.value = it }
-            .launchIn(viewModelScope)
+        useCase.storeUserToFirebase(model, onSuccess, onError).launchIn(viewModelScope)
+    }
+
+    fun <Z : Any> fetchUserFromFirebase(
+        id: String,
+        resources: Z,
+        onSuccess: (Z) -> Unit,
+        onError: (String) -> Unit
+    ) = useCase.fetchUserFromFirebase(
+        id,
+        resources,
+        onSuccess,
+        onError
+    ).launchIn(viewModelScope)
+
+
+    // TODO : start region to firestore
+    // ===============================================================
+
+    fun storeUserToFirestore(
+        id: String,
+        model: UserModel,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        useCase.storeUserToFirestore(
+            id = id,
+            model = model,
+            onSuccess = onSuccess,
+            onError = onError
+        ).launchIn(viewModelScope)
     }
 
     fun <Z : Any> fetchUserFromFirestore(
@@ -119,10 +146,10 @@ class UserViewModel @Inject constructor(
         onSuccess: (Z) -> Unit,
         onError: (String) -> Unit
     ) = useCase.fetchUserFromFirestore(
-        id,
-        resources,
-        onSuccess,
-        onError
+        id = id,
+        resources = resources,
+        onSuccess = onSuccess,
+        onError = onError
     ).launchIn(viewModelScope)
 
 }

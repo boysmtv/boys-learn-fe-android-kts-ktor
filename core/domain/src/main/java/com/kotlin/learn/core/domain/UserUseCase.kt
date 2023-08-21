@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserUseCase {
 
+    // TODO : start region to spring backend
+    // ===============================================================
+
     fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>>
 
     fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>>
@@ -17,19 +20,39 @@ interface UserUseCase {
 
     fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>>
 
-    // start region to firestore
 
-    fun storeUserToFirestore(
+    // TODO : start region to firebase
+    // ===============================================================
+
+    fun storeUserToFirebase(
         model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     ): Flow<Result<Unit>>
 
-    fun <Z : Any> fetchUserFromFirestore(
+    fun <Z : Any> fetchUserFromFirebase(
         id: String,
         resources: Z,
         onSuccess: Z.() -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>>
+
+
+    // TODO : start region to firestore
+    // ===============================================================
+
+    fun storeUserToFirestore(
+        id: String,
+        model: UserModel,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) : Flow<Result<Any?>>
+
+    fun <Z : Any> fetchUserFromFirestore(
+        id: String,
+        resources: Z,
+        onSuccess: (Z) -> Unit,
+        onError: (String) -> Unit
+    ) : Flow<Result<Any?>>
 
 }

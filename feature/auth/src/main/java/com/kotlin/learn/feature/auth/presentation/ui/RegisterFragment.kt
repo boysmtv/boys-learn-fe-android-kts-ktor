@@ -1,7 +1,10 @@
 package com.kotlin.learn.feature.auth.presentation.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.GenericTypeIndicator
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.base.BaseFragment
@@ -14,13 +17,18 @@ import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
+import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
+import com.kotlin.learn.core.utilities.TransactionUtil
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.reflect.KClass
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.internal.pcollections.HashPMap
 
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
@@ -31,6 +39,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     lateinit var authNavigator: AuthNavigator
 
     private var userModel: UserModel = UserModel()
+
+    private val transactionId = TransactionUtil.generateTransactionID()
 
     override fun setupView() {
         init()
@@ -72,22 +82,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                         invokeDataStoreEvent(event,
                             isFetched = {},
                             isStored = {
-                                val content = BaseDataDialog(
-                                    title = "Welcome, ${it.data?.fullName}",
-                                    content = "Your account already success created",
-                                    primaryButtonShow = true,
-                                    secondaryButtonText = EMPTY_STRING,
-                                    secondaryButtonShow = false,
-                                    icon = R.drawable.ic_warning_rounded,
-                                    primaryButtonText = "Login"
-                                )
-                                showDialogWithActionButton(
-                                    dataToDialog = content,
-                                    actionClickPrimary = {
-                                        authNavigator.fromRegisterToAuth(this@RegisterFragment)
-                                    },
-                                    tag = RegisterFragment::class.simpleName.toString()
-                                )
+                                showDialogSuccessRegister(it.data?.fullName ?: EMPTY_STRING)
                             }
                         )
                     }
@@ -128,6 +123,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
         btnRegister.setOnClickListener {
+            /*TODO : Disable for move to firestore
             userViewModel.postUser(
                 userModel.apply {
                     idFireStore = EMPTY_STRING
@@ -142,7 +138,48 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                     password = etPassword.text.toString()
                     method = AuthMethod.EMAIL.name
                 }
+            )*/
+
+            showHideProgress(isLoading = true)
+            userViewModel.storeUserToFirestore(
+                id = transactionId,
+                model = userModel.apply {
+                    id = transactionId
+                    idFireStore = EMPTY_STRING
+                    idGoogle = EMPTY_STRING
+                    idToken = EMPTY_STRING
+                    firstName = etFirstName.text.toString()
+                    lastName = etLastName.text.toString()
+                    displayName = etFirstName.text.toString() + " " + etLastName.text.toString()
+                    email = etEmail.text.toString()
+                    phone = etPhone.text.toString()
+                    photoUrl = EMPTY_STRING
+                    password = etPassword.text.toString()
+                    method = AuthMethod.EMAIL.name
+                },
+                onSuccess = {
+                    showHideProgress(isLoading = false)
+                    showDialogSuccessRegister(userModel.displayName ?: EMPTY_STRING)
+                },
+                onError = {
+                    showHideProgress(isLoading = false)
+                    showDialogGeneralError("Register failed", it)
+                }
             )
+
+            userViewModel.fetchUserFromFirestore(
+                id = "",
+                resources = UserModel(),
+                onSuccess = {
+                    showHideProgress(isLoading = false)
+                    showDialogGeneralError("Register success", it.displayName ?: EMPTY_STRING)
+                },
+                onError = {
+                    showHideProgress(isLoading = false)
+                    showDialogGeneralError("Register failed", it)
+                }
+            )
+
         }
 
         etFirstName.setText("Dedy")
@@ -150,6 +187,25 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         etPhone.setText("08989996305")
         etEmail.setText("Boys.mtv@gmail.com")
         etPassword.setText("123456789")
+    }
+
+    private fun showDialogSuccessRegister(name: String) {
+        val content = BaseDataDialog(
+            title = "Welcome, $name",
+            content = "Your account already success created",
+            primaryButtonShow = true,
+            secondaryButtonText = EMPTY_STRING,
+            secondaryButtonShow = false,
+            icon = R.drawable.ic_warning_rounded,
+            primaryButtonText = "Login"
+        )
+        showDialogWithActionButton(
+            dataToDialog = content,
+            actionClickPrimary = {
+                authNavigator.fromRegisterToAuth(this@RegisterFragment)
+            },
+            tag = RegisterFragment::class.simpleName.toString()
+        )
     }
 
 }

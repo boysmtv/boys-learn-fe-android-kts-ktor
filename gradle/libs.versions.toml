@@ -61,6 +61,7 @@ firebaseCommonKtx = "20.3.3"
 firebaseDatabaseKtx = "20.2.2"
 firebaseFessaging = "17.0.0"
 firebaseFessagingKtx = "23.2.0"
+firebaseFirestoreKtx = "24.7.0"
 facebookLogin = "sdk-version-16.0.0"
 androidyoutubeplayerCore = "12.1.0"
 
@@ -176,6 +177,7 @@ com-google-firebase-firebase-common-ktx = { group = "com.google.firebase", name 
 com-google-firebase-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 com-google-firebase-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseFessaging" }
 com-google-firebase-firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseFessagingKtx" }
+com-google-firebase-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 # Moshi
 com-squareup-moshi-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
