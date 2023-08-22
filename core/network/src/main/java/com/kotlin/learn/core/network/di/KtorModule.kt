@@ -5,6 +5,7 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kotlin.learn.core.network.KtorClient
 import com.kotlin.learn.core.network.firebase.FirebaseClient
+import com.kotlin.learn.core.network.firestore.FirestoreClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,4 +42,12 @@ class KtorModule {
     ): FirebaseClient {
         return FirebaseClient()
     }
+
+    @Provides
+    @Singleton
+    fun provideFirestoreClient(
+    ): FirestoreClient {
+        return FirestoreClient()
+    }
+
 }

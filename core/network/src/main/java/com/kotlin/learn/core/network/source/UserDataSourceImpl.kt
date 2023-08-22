@@ -4,9 +4,11 @@ import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginRespModel
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.network.ApiAuthResources
+import com.kotlin.learn.core.network.ApiUserResources
 import com.kotlin.learn.core.network.KtorClient
+import com.kotlin.learn.core.network.ApiFirebaseResources
 import com.kotlin.learn.core.network.firebase.FirebaseClient
+import com.kotlin.learn.core.network.firestore.FirestoreClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -14,11 +16,16 @@ import javax.inject.Inject
 class UserDataSourceImpl @Inject constructor(
     private val ktorClient: KtorClient,
     private val firebaseClient: FirebaseClient,
+    private val firestoreClient: FirestoreClient,
 ) : UserDataSource {
+
+    // TODO : start region to spring backend
+    // ===============================================================
+
     override suspend fun getUser(model: UserModel): BaseResponse<UserModel> {
         return withContext(Dispatchers.IO) {
             ktorClient.postAPIwithResponseFromSpring(
-                resources = ApiAuthResources.PROFILE,
+                resources = ApiUserResources.PROFILE,
                 body = model
             )
         }
@@ -27,7 +34,7 @@ class UserDataSourceImpl @Inject constructor(
     override suspend fun postUser(model: UserModel): BaseResponse<RegisterRespModel> {
         return withContext(Dispatchers.IO) {
             ktorClient.postAPIwithResponseFromSpring(
-                resources = ApiAuthResources.REGISTER,
+                resources = ApiUserResources.REGISTER,
                 body = model
             )
         }
@@ -36,7 +43,7 @@ class UserDataSourceImpl @Inject constructor(
     override suspend fun putUser(model: UserModel): BaseResponse<RegisterRespModel> {
         return withContext(Dispatchers.IO) {
             ktorClient.putAPIwithResponseFromSpring(
-                resources = ApiAuthResources.PROFILE,
+                resources = ApiUserResources.PROFILE,
                 body = model
             )
         }
@@ -45,26 +52,75 @@ class UserDataSourceImpl @Inject constructor(
     override suspend fun postAuth(model: UserModel): BaseResponse<LoginRespModel> {
         return withContext(Dispatchers.IO) {
             ktorClient.postAPIwithResponseFromSpring(
-                resources = ApiAuthResources.LOGIN,
+                resources = ApiUserResources.LOGIN,
                 body = model
             )
         }
     }
 
-    // start region to firestore
 
-    override suspend fun storeUserToFirestore(
+    // TODO : start region to firebase
+    // ===============================================================
+
+    override suspend fun storeUserToFirebase(
         model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     ) {
-        firebaseClient.storeRequestToFirestore(model, onSuccess, onError)
+        firebaseClient.storeRequestToFirebase(
+            data = model,
+            firestoreTable = ApiFirebaseResources.USER,
+            onSuccess = onSuccess,
+            onError = onError
+        )
     }
 
-    override suspend fun <Z : Any> fetchUserFromFirestore(
+    override suspend fun <Z : Any> fetchUserFromFirebase(
         id: String,
         resources: Z,
         onSuccess: Z.() -> Unit,
         onError: (String) -> Unit
-    ) = firebaseClient.fetchRequestFromFirestore(id, resources, onSuccess, onError)
+    ) = firebaseClient.fetchRequestFromFirebase(
+        id = id,
+        firestoreTable = ApiFirebaseResources.USER,
+        resources = resources,
+        onSuccess = onSuccess,
+        onError = onError
+    )
+
+
+    // TODO : start region to firestore
+    // ===============================================================
+
+    override fun storeUserToFirestore(
+        id: String,
+        model: UserModel,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        firestoreClient.storeRequestToFirestore(
+            id = id,
+            data = model,
+            collection = ApiFirebaseResources.USER,
+            onLoad = onLoad,
+            onSuccess = onSuccess,
+            onError = onError
+        )
+    }
+
+    override fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        firestoreClient.fetchUserFromFirestore(
+            filter = filter,
+            collection = ApiFirebaseResources.USER,
+            onLoad = onLoad,
+            onSuccess = onSuccess,
+            onError = onError
+        )
+    }
 }

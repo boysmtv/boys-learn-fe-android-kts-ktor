@@ -8,7 +8,6 @@ import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.source.UserDataSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -17,6 +16,10 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val network: UserDataSource
 ) : UserRepository {
+
+    // TODO : start region to spring backend
+    // ===============================================================
+
     override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> =
         flow {
             emit(Result.Loading)
@@ -57,21 +60,23 @@ class UserRepositoryImpl @Inject constructor(
             )
         }
 
-    // start region to firestore
 
-    override fun storeUserToFirestore(
+    // TODO : start region to firebase
+    // ===============================================================
+
+    override fun storeUserToFirebase(
         model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     ) = flow {
         emit(
             execute {
-                network.storeUserToFirestore(model, onSuccess, onError)
+                network.storeUserToFirebase(model, onSuccess, onError)
             }
         )
     }.flowOn(Dispatchers.IO)
 
-    override fun <Z : Any> fetchUserFromFirestore(
+    override fun <Z : Any> fetchUserFromFirebase(
         id: String,
         resources: Z,
         onSuccess: Z.() -> Unit,
@@ -79,8 +84,42 @@ class UserRepositoryImpl @Inject constructor(
     ) = flow {
         emit(
             execute {
-                network.fetchUserFromFirestore(id, resources, onSuccess, onError)
+                network.fetchUserFromFirebase(id, resources, onSuccess, onError)
             }
         )
     }.flowOn(Dispatchers.IO)
+
+
+    // TODO : start region to firestore
+    // ===============================================================
+
+    override fun storeUserToFirestore(
+        id: String,
+        model: UserModel,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) = flow {
+        emit(
+            execute {
+                network.storeUserToFirestore(id, model, onLoad, onSuccess, onError)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
+        onError: (String) -> Unit
+    ) = flow {
+        emit(
+            execute {
+                network.fetchUserFromFirestore(filter, onLoad, onSuccess, onError)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+
+
 }

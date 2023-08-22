@@ -7,6 +7,9 @@ import com.kotlin.learn.core.model.UserModel
 
 interface UserDataSource {
 
+    // TODO : start region to spring backend
+    // ===============================================================
+
     suspend fun getUser(model: UserModel): BaseResponse<UserModel>
 
     suspend fun postUser(model: UserModel): BaseResponse<RegisterRespModel>
@@ -15,18 +18,39 @@ interface UserDataSource {
 
     suspend fun postAuth(model: UserModel): BaseResponse<LoginRespModel>
 
-    // start region to firestore
 
-    suspend fun storeUserToFirestore(
+    // TODO : start region to firebase
+    // ===============================================================
+
+    suspend fun storeUserToFirebase(
         model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     )
 
-    suspend fun <Z : Any> fetchUserFromFirestore(
+    suspend fun <Z : Any> fetchUserFromFirebase(
         id: String,
         resources: Z,
         onSuccess: Z.() -> Unit,
+        onError: (String) -> Unit
+    )
+
+
+    // TODO : start region to firestore
+    // ===============================================================
+
+    fun storeUserToFirestore(
+        id: String,
+        model: UserModel,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    )
+
+    fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
     )
 

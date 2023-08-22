@@ -47,7 +47,7 @@ class KtorClient(
         )
     )
 
-    internal suspend inline fun <reified Z : Any, reified T> sendRequestApiWithQuery(
+    internal suspend inline fun <reified Z : Any, reified T> getRequestApiWithQuery(
         resources: Z,
         query: Map<String, String>,
         path: String? = null,

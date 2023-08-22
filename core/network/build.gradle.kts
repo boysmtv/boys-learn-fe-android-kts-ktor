@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.com.google.firebase.firebase.common.ktx)
     implementation(libs.com.google.firebase.firebase.database.ktx)
+    implementation(libs.com.google.firebase.firebase.firestore.ktx)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

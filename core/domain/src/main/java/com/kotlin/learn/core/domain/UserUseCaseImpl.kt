@@ -12,6 +12,10 @@ import javax.inject.Inject
 class UserUseCaseImpl @Inject constructor(
     private val repository: UserRepository
 ) : UserUseCase {
+
+    // TODO : start region to spring backend
+    // ===============================================================
+
     override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> {
         return repository.getUser(model = model)
     }
@@ -28,23 +32,47 @@ class UserUseCaseImpl @Inject constructor(
         return repository.postAuth(model = model)
     }
 
-    // start region to firestore
+    // TODO : start region to firebase
+    // ===============================================================
 
-    override fun storeUserToFirestore(
+    override fun storeUserToFirebase(
         model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
     ): Flow<Result<Unit>> {
-        return repository.storeUserToFirestore(model, onSuccess, onError)
+        return repository.storeUserToFirebase(model, onSuccess, onError)
     }
 
-    override fun <Z : Any> fetchUserFromFirestore(
+    override fun <Z : Any> fetchUserFromFirebase(
         id: String,
         resources: Z,
         onSuccess: Z.() -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>> {
-        return repository.fetchUserFromFirestore(id, resources, onSuccess, onError)
+        return repository.fetchUserFromFirebase(id, resources, onSuccess, onError)
+    }
+
+
+    // TODO : start region to firestore
+    // ===============================================================
+
+    override fun storeUserToFirestore(
+        id: String,
+        model: UserModel,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ): Flow<Result<Any?>> {
+        return repository.storeUserToFirestore(id, model, onLoad, onSuccess, onError)
+    }
+
+    override fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
+        onError: (String) -> Unit
+    ): Flow<Result<Any?>> {
+        return repository.fetchUserFromFirestore(filter, onLoad, onSuccess, onError)
     }
 
 }

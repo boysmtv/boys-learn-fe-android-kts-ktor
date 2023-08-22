@@ -21,6 +21,7 @@ import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.TransactionUtil
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
@@ -34,8 +35,8 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
     private var googleSignInExt: GoogleSignInExt =
         GoogleSignInExt(
-            resultDataAuthSuccess = this::invokeResultDataAuthSuccess,
-            resultDataAuthError = this::invokeResultDataAuthError
+            callbackGoogleSignInSuccess = this::invokeGoogleSignInSuccess,
+            callbackGoogleSignInError = this::invokeGoogleSignInError
         )
 
     @Inject
@@ -44,6 +45,8 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     private var userModel: UserModel = UserModel()
 
     private var token: String = Constant.EMPTY_STRING
+
+    private val transactionId = TransactionUtil.generateTransactionID()
 
     override fun setupView() {
         init()
@@ -83,10 +86,11 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
     private fun setupListener() = with(binding) {
         btnFacebook.setOnClickListener {
-
+            showDialogGeneralError(title = "Warning", message = "Under development, please try another way")
         }
+
         btnGoogle.setOnClickListener {
-            signInGoogle()
+            onClickSignInByGoogle()
         }
 
         btnEmail.setOnClickListener {
@@ -94,8 +98,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         }
     }
 
-    // start region google login
-    private fun signInGoogle() = with(googleSignInExt) {
+    private fun onClickSignInByGoogle() = with(googleSignInExt) {
         val signInIntent: Intent = googleSignInClient.signInIntent
         startActivityIntent.launch(signInIntent)
     }
@@ -111,22 +114,25 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         }
     }
 
-    private fun invokeResultDataAuthSuccess(model: UserModel) {
+    private fun invokeGoogleSignInSuccess(model: UserModel) {
         userModel = model
+
+        /* TODO : TODO : Disable for move to firestore
         viewModel.getUser(
             UserModel().apply {
                 id = userModel.idGoogle
                 email = userModel.email
                 method = AuthMethod.GOOGLE.name
             }
-        )
+        )*/
+
+        // TODO : Refactor fo firestore
+        getUserFromFirestore()
     }
 
-    private fun invokeResultDataAuthError(message: String) {
-        showDialogGeneralError("Google Sign Error", message)
+    private fun invokeGoogleSignInError(message: String) {
+        showDialogGeneralError("Google sign error", message)
     }
-
-    // end region google login
 
     private fun postUserSuccess(response: BaseResponse<RegisterRespModel>) {
         showHideProgress(isLoading = false)
@@ -230,6 +236,50 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
                 }, {}
             )
         }
+    }
+
+    private fun getUserFromFirestore() {
+        viewModel.fetchUserFromFirestore(
+            filter = hashMapOf(
+                "email" to userModel.email!!,
+            ),
+            onLoad = {
+                showHideProgress(isLoading = true)
+            },
+            onSuccess = {
+                showHideProgress(isLoading = false)
+                userModel = it
+                storeToDataStore(userModel)
+            },
+            onError = {
+                showHideProgress(isLoading = false)
+                storeUserToFirestore()
+            }
+        )
+    }
+
+    private fun storeUserToFirestore() {
+        viewModel.storeUserToFirestore(
+            id = transactionId,
+            model = userModel.apply {
+                id = transactionId
+                idFireStore = Constant.EMPTY_STRING
+                phone = Constant.UNDERSCORE
+                password = Constant.UNDERSCORE
+                method = AuthMethod.GOOGLE.name
+            },
+            onLoad = {
+                showHideProgress(isLoading = true)
+            },
+            onSuccess = {
+                showHideProgress(isLoading = false)
+                storeToDataStore(userModel)
+            },
+            onError = {
+                showHideProgress(isLoading = false)
+                showDialogGeneralError("Register failed", it)
+            }
+        )
     }
 
 }
