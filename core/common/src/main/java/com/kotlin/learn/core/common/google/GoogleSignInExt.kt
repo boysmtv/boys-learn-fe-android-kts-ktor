@@ -2,7 +2,6 @@ package com.kotlin.learn.core.common.google
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -16,8 +15,8 @@ import com.kotlin.learn.core.common.R
 import com.kotlin.learn.core.model.UserModel
 
 class GoogleSignInExt(
-    private val resultDataAuthSuccess: (UserModel) -> Unit,
-    private val resultDataAuthError: (String) -> Unit,
+    private val callbackGoogleSignInSuccess: (UserModel) -> Unit,
+    private val callbackGoogleSignInError: (String) -> Unit,
 ) {
     private lateinit var context: Context
 
@@ -40,16 +39,16 @@ class GoogleSignInExt(
     fun handleResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
-            if (account != null) {
-                handleDataAuth(account)
-            }
+            if (account != null) handleDataAuth(account)
         } catch (e: ApiException) {
-            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
-            Log.e("", "Error Auth: $e")
             Log.e("", "Error Auth-message: ${e.message}")
             Log.e("", "Error Auth-status: ${e.status}")
             Log.e("", "Error Auth-statusCode: ${e.statusCode}")
             Log.e("", "Error Auth-cause: ${e.cause}")
+
+            if (e.statusCode != 12501){
+                callbackGoogleSignInError.invoke("Under maintenance")
+            }
         }
     }
 
@@ -69,9 +68,9 @@ class GoogleSignInExt(
                     displayName = account.displayName.toString(),
                     photoUrl = account.photoUrl.toString(),
                 )
-                resultDataAuthSuccess.invoke(accountModel)
+                callbackGoogleSignInSuccess.invoke(accountModel)
             } else {
-                resultDataAuthError.invoke(
+                callbackGoogleSignInError.invoke(
                     task.exception?.message ?: "Please check your connection"
                 )
             }

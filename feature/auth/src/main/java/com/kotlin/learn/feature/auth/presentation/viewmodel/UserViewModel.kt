@@ -129,25 +129,27 @@ class UserViewModel @Inject constructor(
     fun storeUserToFirestore(
         id: String,
         model: UserModel,
+        onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ) {
         useCase.storeUserToFirestore(
             id = id,
             model = model,
+            onLoad = onLoad,
             onSuccess = onSuccess,
             onError = onError
         ).launchIn(viewModelScope)
     }
 
-    fun <Z : Any> fetchUserFromFirestore(
-        id: String,
-        resources: Z,
-        onSuccess: (Z) -> Unit,
+    fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
     ) = useCase.fetchUserFromFirestore(
-        id = id,
-        resources = resources,
+        filter = filter,
+        onLoad = onLoad,
         onSuccess = onSuccess,
         onError = onError
     ).launchIn(viewModelScope)

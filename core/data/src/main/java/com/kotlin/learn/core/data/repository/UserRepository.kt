@@ -44,14 +44,15 @@ interface UserRepository {
     fun storeUserToFirestore(
         id: String,
         model: UserModel,
+        onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>>
 
-    fun <Z : Any> fetchUserFromFirestore(
-        id: String,
-        resources: Z,
-        onSuccess: (Z) -> Unit,
+    fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>>
 

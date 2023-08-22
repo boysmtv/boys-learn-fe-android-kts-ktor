@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "465702451697-aefvd8phcpd1d0kh75blljjt65f97gc1.apps.googleusercontent.com",
+          "client_id": "465702451697-v6r8v74d08fr3ngi14mrn5sl20347vnk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kotlin.learn",
-            "certificate_hash": "bbb7414026ae8032e4771731b32b7dd27cb4af7c"
+            "certificate_hash": "15c6769e2b05da2b9820fe8f601d6cfb06246bb8"
           }
         },
         {
@@ -52,11 +52,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "465702451697-dpki7ajhoalrbmsb7tm7bf25fm0bsh8l.apps.googleusercontent.com",
+          "client_id": "465702451697-jb8mfka1ga558ajan15cmotf23p52ube.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kotlin.learn.feature.auth",
-            "certificate_hash": "bbb7414026ae8032e4771731b32b7dd27cb4af7c"
+            "certificate_hash": "15c6769e2b05da2b9820fe8f601d6cfb06246bb8"
           }
         },
         {
@@ -89,11 +89,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "465702451697-tmaillc448hamcrptc62muutidcfo6f8.apps.googleusercontent.com",
+          "client_id": "465702451697-24o448l8jflbld9qe9kjut0s1k8tdc1l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kotlin.learn.feature.notification",
-            "certificate_hash": "bbb7414026ae8032e4771731b32b7dd27cb4af7c"
+            "certificate_hash": "15c6769e2b05da2b9820fe8f601d6cfb06246bb8"
           }
         },
         {

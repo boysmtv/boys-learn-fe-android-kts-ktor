@@ -40,5 +40,8 @@ object Constant {
     const val FALSE = false
     const val TRUE = true
 
-    const val DATA_NOT_FOUND = "DATA_NOT_FOUND"
+    const val DATA_NOT_FOUND = "Data not found, please try again later."
+    const val UNDER_MAINTENANCE = "Under maintenance, please try again later."
+    const val FETCH_DATA_FAILED = "Fetch Failed, please try again later."
+    const val FAILURE_GET_DATA = "Failure, Under maintenance, please try again later."
 }

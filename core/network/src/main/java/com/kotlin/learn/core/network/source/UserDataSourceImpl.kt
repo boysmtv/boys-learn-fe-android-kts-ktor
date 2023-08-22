@@ -92,31 +92,33 @@ class UserDataSourceImpl @Inject constructor(
     // TODO : start region to firestore
     // ===============================================================
 
-    override suspend fun storeUserToFirestore(
+    override fun storeUserToFirestore(
         id: String,
         model: UserModel,
+        onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ) {
         firestoreClient.storeRequestToFirestore(
             id = id,
             data = model,
-            firestoreTable = ApiFirebaseResources.USER,
+            collection = ApiFirebaseResources.USER,
+            onLoad = onLoad,
             onSuccess = onSuccess,
             onError = onError
         )
     }
 
-    override suspend fun <Z : Any> fetchUserFromFirestore(
-        id: String,
-        resources: Z,
-        onSuccess: (Z) -> Unit,
+    override fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
     ) {
-        firestoreClient.fetchRequestToFirestore(
-            id = id,
-            resources = resources,
-            firestoreTable = ApiFirebaseResources.USER,
+        firestoreClient.fetchUserFromFirestore(
+            filter = filter,
+            collection = ApiFirebaseResources.USER,
+            onLoad = onLoad,
             onSuccess = onSuccess,
             onError = onError
         )

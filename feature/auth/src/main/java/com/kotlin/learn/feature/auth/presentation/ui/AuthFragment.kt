@@ -22,7 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::inflate) {
 
-    private val userViewModel: UserViewModel by viewModels()
+    private val viewModel: UserViewModel by viewModels()
 
     @Inject
     lateinit var authNavigator: AuthNavigator
@@ -34,7 +34,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         setupListener()
     }
 
-    private fun subscribeLogin() = with(userViewModel) {
+    private fun subscribeLogin() = with(viewModel) {
         postAuth.launch(this@AuthFragment) { result ->
             when (result) {
                 is Result.Waiting -> {}
@@ -51,7 +51,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             when (result) {
                 is Result.Waiting -> {}
 
-                is Result.Loading -> { /* TODO: skip loading after success post auth */}
+                is Result.Loading -> { /* TODO: skip loading after success post auth */
+                }
 
                 is Result.Success -> getUserSuccess(result)
 
@@ -66,12 +67,17 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                 email = etEmail.text.toString()
                 password = etPassword.text.toString()
             }
+
+            /* TODO : Disable for move to firestore
             userViewModel.postAuth(
                 UserModel().apply {
                     email = userModel.email
                     password = userModel.password
                 }
-            )
+            )*/
+
+            // TODO : Refactor fo firestore
+            getUserFromFirestore()
         }
 
         tvRegister.setOnClickListener {
@@ -128,7 +134,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun getUserFromServer() {
-        userViewModel.getUser(
+        viewModel.getUser(
             UserModel().apply {
                 id = userModel.id
                 email = userModel.email
@@ -144,16 +150,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                 is SpringParser.Success -> {
                     if (it.data != null) {
                         userModel = it.data!!
-                        userViewModel.storeUserToDatastore(
-                            jsonUtil.toJson(userModel)
-                        ).launch(this@AuthFragment) { event ->
-                            invokeDataStoreEvent(event,
-                                isFetched = {},
-                                isStored = {
-                                    authNavigator.fromAuthToHome(fragment = this@AuthFragment)
-                                }
-                            )
-                        }
+                        saveUserToDataStore()
                     } else showDialogGeneralError("Get Profile Error", "Error store data profile")
                 }
 
@@ -183,4 +180,42 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         }
     }
 
+    private fun getUserFromFirestore(){
+        viewModel.fetchUserFromFirestore(
+            filter = hashMapOf(
+                "email" to userModel.email!!,
+            ),
+            onLoad = {
+                showHideProgress(isLoading = true)
+            },
+            onSuccess = {
+                showHideProgress(isLoading = false)
+                if (it.password != null) {
+                    if (it.password.equals(userModel.password)) {
+                        userModel = it
+                        saveUserToDataStore()
+                    } else
+                        showDialogGeneralError("Login failed", "Invalid username or password")
+                } else
+                    showDialogGeneralError("Login failed", "Error get profile")
+            },
+            onError = {
+                showHideProgress(isLoading = false)
+                showDialogGeneralError("Login failed", it)
+            }
+        )
+    }
+
+    private fun saveUserToDataStore(){
+        viewModel.storeUserToDatastore(
+            jsonUtil.toJson(userModel)
+        ).launch(this@AuthFragment) { event ->
+            invokeDataStoreEvent(event,
+                isFetched = {},
+                isStored = {
+                    authNavigator.fromAuthToHome(fragment = this@AuthFragment)
+                }
+            )
+        }
+    }
 }

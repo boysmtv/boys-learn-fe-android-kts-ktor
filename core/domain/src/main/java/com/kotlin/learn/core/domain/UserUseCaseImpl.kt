@@ -59,19 +59,20 @@ class UserUseCaseImpl @Inject constructor(
     override fun storeUserToFirestore(
         id: String,
         model: UserModel,
+        onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>> {
-        return repository.storeUserToFirestore(id, model, onSuccess, onError)
+        return repository.storeUserToFirestore(id, model, onLoad, onSuccess, onError)
     }
 
-    override fun <Z : Any> fetchUserFromFirestore(
-        id: String,
-        resources: Z,
-        onSuccess: (Z) -> Unit,
+    override fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>> {
-        return repository.fetchUserFromFirestore(id, resources, onSuccess, onError)
+        return repository.fetchUserFromFirestore(filter, onLoad, onSuccess, onError)
     }
 
 }

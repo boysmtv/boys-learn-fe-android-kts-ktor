@@ -96,25 +96,26 @@ class UserRepositoryImpl @Inject constructor(
     override fun storeUserToFirestore(
         id: String,
         model: UserModel,
+        onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ) = flow {
         emit(
             execute {
-                network.storeUserToFirestore(id, model, onSuccess, onError)
+                network.storeUserToFirestore(id, model, onLoad, onSuccess, onError)
             }
         )
     }.flowOn(Dispatchers.IO)
 
-    override fun <Z : Any> fetchUserFromFirestore(
-        id: String,
-        resources: Z,
-        onSuccess: (Z) -> Unit,
+    override fun fetchUserFromFirestore(
+        filter: HashMap<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
     ) = flow {
         emit(
             execute {
-                network.fetchUserFromFirestore(id, resources, onSuccess, onError)
+                network.fetchUserFromFirestore(filter, onLoad, onSuccess, onError)
             }
         )
     }.flowOn(Dispatchers.IO)
