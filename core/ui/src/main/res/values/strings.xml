@@ -44,5 +44,6 @@
 
     <!-- for firebase messaging -->
     <string name="default_web_client_id">465702451697-bipva1tqhabv79ksbsn2armk6i9njqlv.apps.googleusercontent.com</string>
+    <string name="default_notification_channel_id">com.kotlin.learn</string>
 
 </resources>

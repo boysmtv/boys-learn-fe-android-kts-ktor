@@ -16,6 +16,11 @@ android {
 
     defaultConfig {
         applicationId = "com.kotlin.learn"
+        minSdk = 24
+        compileSdk = 33
+
+        versionCode = 1
+        versionName = "1.0"
     }
 
     buildTypes {

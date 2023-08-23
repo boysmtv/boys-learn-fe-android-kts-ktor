@@ -149,20 +149,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             )*/
 
             // TODO : Refactor fo firestore
-            storeUserToFirestore()
-        }
-
-        etFirstName.setText("Dedy")
-        etLastName.setText("Wijaya")
-        etPhone.setText("08989996305")
-        etEmail.setText("Boys.mtv@gmail.com")
-        etPassword.setText("123456789")
-    }
-
-    private fun storeUserToFirestore() = with(binding) {
-        viewModel.storeUserToFirestore(
-            id = transactionId,
-            model = userModel.apply {
+            userModel.apply {
                 id = transactionId
                 idFireStore = EMPTY_STRING
                 idGoogle = EMPTY_STRING
@@ -175,7 +162,41 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 photoUrl = EMPTY_STRING
                 password = etPassword.text.toString()
                 method = AuthMethod.EMAIL.name
+            }
+            getUserFromFirestore()
+        }
+
+        etFirstName.setText("Dedy")
+        etLastName.setText("Wijaya")
+        etPhone.setText("08989996305")
+        etEmail.setText("Boys.mtv@gmail.com")
+        etPassword.setText("123456789")
+    }
+
+    private fun getUserFromFirestore() {
+        viewModel.fetchUserFromFirestore(
+            filter = hashMapOf(
+                "email" to userModel.email!!,
+            ),
+            onLoad = {
+                showHideProgress(isLoading = true)
             },
+            onSuccess = {
+                showHideProgress(isLoading = false)
+                userModel = it
+                showDialogGeneralError("Register failed", "Data already created.")
+            },
+            onError = {
+                showHideProgress(isLoading = false)
+                storeUserToFirestore()
+            }
+        )
+    }
+
+    private fun storeUserToFirestore() = with(binding) {
+        viewModel.storeUserToFirestore(
+            id = transactionId,
+            model = userModel,
             onLoad = {
                 showHideProgress(isLoading = true)
             },
