@@ -9,7 +9,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".MovieApplication"
@@ -37,7 +40,7 @@
 
         <!-- start firebase messaging -->
         <service
-            android:name=".feature.services.MessagingService"
+            android:name=".feature.services.messaging.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -47,11 +50,42 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-        <!-- end firebase messaging -->
 
+        <!-- start profile services -->
         <service
-            android:name=".feature.services.ProfileService"
+            android:name=".feature.services.profile.ProfileService"
             android:exported="false" />
+
+        <receiver android:name=".feature.services.profile.ProfileReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- start profile services -->
+        <service
+            android:name=".feature.services.heartbeat.HeartbeatService"
+            android:exported="false" />
+
+        <receiver android:name=".feature.services.heartbeat.HeartbeatReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- start location services -->
+        <service
+            android:name=".feature.services.location.LocationService"
+            android:exported="false" />
+
+        <receiver android:name=".feature.services.location.LocationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

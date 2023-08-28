@@ -1,4 +1,4 @@
-package com.kotlin.learn.feature.services.common
+package com.kotlin.learn.feature.services.profile
 
 import android.content.Context
 import android.text.TextUtils
@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kotlin.learn.core.common.util.JsonUtil
+import com.kotlin.learn.core.common.util.ServiceUtil
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.UserModel
@@ -33,6 +34,8 @@ class ThreadProfile {
 
     private lateinit var useCase: UserUseCase
 
+    private lateinit var serviceUtil: ServiceUtil
+
     private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
     fun initComponent(
@@ -47,9 +50,11 @@ class ThreadProfile {
         this.ktorClient = ktorClient
         this.dataStore = preferences
         this.useCase = useCase
+
+        serviceUtil = ServiceUtil(context)
     }
 
-    private suspend fun getToken(): String = withContext(Dispatchers.IO) {
+    suspend fun getToken(): String = withContext(Dispatchers.IO) {
         dataStore.getString(
             PreferenceConstants.Authorization.PREF_FCM_TOKEN
         ).getOrNull().orEmpty()
@@ -70,15 +75,38 @@ class ThreadProfile {
         }
     }
 
+    fun getTokenFirebase() {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
+            if (!TextUtils.isEmpty(token)) {
+                coroutineScope.launch {
+                    if (getToken().isEmpty()) {
+                        storeToPreferences(token)
+                        postToken()
+                    }
+                }
+            }
+        }.addOnFailureListener { _: Exception? -> }.addOnCanceledListener {}
+            .addOnCompleteListener { task: Task<String> ->
+                coroutineScope.launch {
+                    if (getToken().isEmpty()) {
+                        storeToPreferences(task.result)
+                        postToken()
+                    }
+                }
+            }
+    }
+
     private fun postToken() {
         val token = runBlocking { getToken() }
         val user = runBlocking { getUser() }
+        Log.e(tag, "ThreadProfile-Token: $token")
+        Log.e(tag, "ThreadProfile-User: $user")
+
         if (user.isNotBlank()) {
             try {
                 val userModel = jsonUtil.fromJson<UserModel>(user)
                 if (token.isNotBlank()) {
                     if (userModel != null) {
-                        Log.e(tag, "postToken: user has sent")
                         coroutineScope.launch {
                             withContext(Dispatchers.IO) {
                                 useCase.putUser(
@@ -90,35 +118,12 @@ class ThreadProfile {
                                 ).collect()
                             }
                         }
-                    } else Log.e(tag, "postToken: user model is empty")
-                } else Log.e(tag, "postToken: token is empty")
+                    }
+                }
             } catch (ex: Exception) {
                 Log.e(tag, "postToken: token is error, ${ex.message}")
             }
-        } else Log.e(tag, "postToken: user is empty, $user")
-    }
-
-    fun getTokenFirebase() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
-            if (!TextUtils.isEmpty(token)) {
-                Log.e(tag, "Token-getTokenFirebase: $token")
-                coroutineScope.launch {
-                    if (getToken().isEmpty()) {
-                        storeToPreferences(token)
-                        postToken()
-                    }
-                }
-            }
-        }.addOnFailureListener { _: Exception? -> }.addOnCanceledListener {}
-            .addOnCompleteListener { task: Task<String> ->
-                Log.e(tag, "Token-getTokenFirebase: ${task.result}")
-                coroutineScope.launch {
-                    if (getToken().isEmpty()) {
-                        storeToPreferences(task.result)
-                        postToken()
-                    }
-                }
-            }
+        }
     }
 
 }

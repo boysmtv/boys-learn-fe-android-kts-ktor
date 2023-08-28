@@ -43,6 +43,8 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.common.ktx)
     implementation(libs.com.google.firebase.firebase.database.ktx)
     implementation(libs.com.google.firebase.firebase.messaging.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.play.services.location)
 
     kapt(libs.hilt.compiler)
 }

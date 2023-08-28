@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.com.android.support.multidex)
     implementation(libs.androidx.datastore.datastore.preferences)
+    implementation(libs.play.services.location)
 
     kapt(libs.hilt.compiler)
 

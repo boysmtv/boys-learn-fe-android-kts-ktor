@@ -58,7 +58,6 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.database.ktx)
     implementation(libs.com.google.firebase.firebase.firestore.ktx)
 
-
     kapt(libs.hilt.compiler)
 
     debugImplementation(libs.chucker.debug)
