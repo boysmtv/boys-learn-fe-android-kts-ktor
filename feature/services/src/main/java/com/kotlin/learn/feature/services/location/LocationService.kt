@@ -162,8 +162,8 @@ class LocationService : Service(), LocationListener {
             if (location.isNotEmpty()) {
                 val locationModel = jsonUtil.fromJson<LocationModel>(location)
                 locationModel?.let {
-                    Log.e(tag, "setupCheckLocation - latitude: ${it.latitude}")
-                    Log.e(tag, "setupCheckLocation - longitude: ${it.longitude}")
+                    /*Log.e(tag, "setupCheckLocation - latitude: ${it.latitude}")
+                    Log.e(tag, "setupCheckLocation - longitude: ${it.longitude}")*/
                 }
             }
         }

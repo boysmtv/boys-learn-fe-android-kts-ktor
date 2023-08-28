@@ -59,8 +59,8 @@ class ProfileService : Service() {
             while (isServiceRunning) {
                 try {
                     threadProfile.getTokenFirebase()
-                    setupCheckToken()
                     Thread.sleep(2000)
+                    setupCheckToken()
                 } catch (e: InterruptedException) {
                     Log.e(tag, "ProfileService is error : ${e.message}")
                     e.printStackTrace()
@@ -78,9 +78,11 @@ class ProfileService : Service() {
 
     private fun setupCheckToken() {
         coroutineScope.launch {
-            if (threadProfile.getToken().isNotEmpty()) {
-                isServiceRunning = false
-                stopSelf()
+            if (threadProfile.getUser().isNotEmpty()){
+                if (threadProfile.getToken().isNotEmpty()) {
+                    isServiceRunning = false
+                    stopSelf()
+                }
             }
         }
     }

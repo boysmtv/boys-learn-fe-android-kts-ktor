@@ -11,7 +11,6 @@ import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.KtorClient
-import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -61,7 +60,7 @@ class ThreadProfile {
         ).getOrNull().orEmpty()
     }
 
-    private suspend fun getUser(): String = withContext(Dispatchers.IO) {
+    suspend fun getUser(): String = withContext(Dispatchers.IO) {
         dataStore.getString(
             PreferenceConstants.Authorization.PREF_USER
         ).getOrNull().orEmpty()
@@ -71,6 +70,15 @@ class ThreadProfile {
         withContext(Dispatchers.IO) {
             dataStore.setString(
                 PreferenceConstants.Authorization.PREF_FCM_TOKEN,
+                message
+            )
+        }
+    }
+
+    private suspend fun storeUserToPreferences(message: String) {
+        withContext(Dispatchers.IO) {
+            dataStore.setString(
+                PreferenceConstants.Authorization.PREF_USER,
                 message
             )
         }
@@ -93,9 +101,30 @@ class ThreadProfile {
             }
     }
 
+    private fun updateUserToken(user: String, token: String) {
+        if (user.isNotBlank()) {
+            val userModel = jsonUtil.fromJson<UserModel>(user)
+            if (userModel != null) {
+                coroutineScope.launch {
+                    withContext(Dispatchers.IO) {
+                        storeUserToPreferences(
+                            jsonUtil.toJson(
+                                userModel.apply {
+                                    idToken = token
+                                }
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     private fun postToken() {
         val token = runBlocking { getToken() }
         val user = runBlocking { getUser() }
+        updateUserToken(user, token)
+
         Log.e(tag, "ThreadProfile-Token: $token")
         Log.e(tag, "ThreadProfile-User: $user")
 
