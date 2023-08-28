@@ -54,9 +54,9 @@ class ProfileService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
+        Log.e(tag, "ProfileService is running...")
         Thread {
             while (isServiceRunning) {
-                Log.e(tag, "ProfileService is running...")
                 try {
                     threadProfile.getTokenFirebase()
                     setupCheckToken()

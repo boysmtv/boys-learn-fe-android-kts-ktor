@@ -11,41 +11,40 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import java.util.Timer
-import java.util.TimerTask
+import com.kotlin.learn.core.common.util.LocationUtil
 
 class LocationService : Service(), LocationListener {
 
-    private val TAG = "BookingTrackingService"
-    private var context: Context? = null
-    private var isGPSEnable = false
-    private var isNetworkEnable = false
-    private var latitude = 0.0
-    private var longitude = 0.0
-    private var locationManager: LocationManager? = null
+    private lateinit var locationUtil: LocationUtil
     private var location: Location? = null
-    private var mTimer: Timer? = null
-    private val mHandler: Handler = Handler()
-    private var notify_interval: Long = 30000
 
-    private var track_lat = 0.0
-    private var track_lng = 0.0
-    private var str_receiver = "servicetutorial.service.receiver"
+    private val tag = this::class.java.simpleName
 
-    private var intent: Intent? = null
+    private var trackLatitude = 0.0
+    private var trackLongitude = 0.0
 
     override fun onCreate() {
         super.onCreate()
-
-        mTimer = Timer()
-        mTimer!!.schedule(TimerTaskToGetLocation(), 5, notify_interval)
-        intent = Intent(str_receiver)
+        locationUtil = LocationUtil(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        context = this
+
+        Log.e("Service", "LocationService is running...")
+        Thread {
+            while (true) {
+                try {
+                    getLocation()
+                    Thread.sleep(60000)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+        }.start()
+
         return START_NOT_STICKY
     }
 
@@ -54,114 +53,81 @@ class LocationService : Service(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-        track_lat = location.latitude
-        track_lng = location.longitude
+        trackLatitude = location.latitude
+        trackLongitude = location.longitude
+        Log.e(tag, "onLocationChanged - latitude: $trackLatitude")
+        Log.e(tag, "onLocationChanged - longitude: $trackLongitude")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG, "onDestroy <<")
-        if (mTimer != null) {
-            mTimer!!.cancel()
+    private fun getLocation() {
+        val locationManager = applicationContext.getSystemService(LOCATION_SERVICE) as LocationManager
+        val isGPSEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isNetworkEnable = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        if (!isGPSEnable && !isNetworkEnable) {
+            stopSelf()
+        } else {
+            if (isNetworkEnable) {
+                getLocationFromNetwork(locationManager)
+            }
+            if (isGPSEnable) {
+                getLocationFromGps(locationManager)
+            }
         }
     }
 
-    private fun trackLocation() {
-        Log.e(TAG, "trackLocation")
-        val params: MutableMap<String, String> = HashMap()
-        params["latitude"] = "" + track_lat
-        params["longitude"] = "" + track_lng
-        Log.e(TAG, "param_track_location >> $params")
-        stopSelf()
-        mTimer!!.cancel()
+    private fun getLocationFromNetwork(locationManager: LocationManager) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0f, this)
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            location?.let {
+                trackLatitude = it.latitude
+                trackLongitude = it.longitude
+                Log.e(tag, "getFromNetwork - latitude: $trackLatitude")
+                Log.e(tag, "getFromNetwork - longitude: $trackLongitude")
+            }
+        }, 0)
+    }
+
+    private fun getLocationFromGps(locationManager: LocationManager) {
+        location = null
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0f, this)
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            location?.let {
+                trackLatitude = it.latitude
+                trackLongitude = it.longitude
+                Log.e(tag, "getFromGps - latitude: $trackLatitude")
+                Log.e(tag, "getFromGps - longitude: $trackLongitude")
+            }
+        }, 0)
     }
 
     @Deprecated("Deprecated in Java")
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-
-    }
-
-    /** */
-    private fun fnGetlocation() {
-        locationManager = applicationContext.getSystemService(LOCATION_SERVICE) as LocationManager
-        isGPSEnable = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        isNetworkEnable = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        if (!isGPSEnable && !isNetworkEnable) {
-            Log.e(TAG, "CAN'T GET LOCATION")
-            stopSelf()
-        } else {
-            if (isNetworkEnable) {
-                location = null
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return
-                }
-                locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0f, this)
-                if (locationManager != null) {
-                    location = locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                    if (location != null) {
-                        Log.e(
-                            TAG, """
-     isNetworkEnable latitude${location!!.latitude}
-     longitude${location!!.longitude}
-     """.trimIndent()
-                        )
-                        latitude = location!!.latitude
-                        longitude = location!!.longitude
-                        track_lat = latitude
-                        track_lng = longitude
-                        //                        fn_update(location);
-                    }
-                }
-            }
-            if (isGPSEnable) {
-                location = null
-                locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0f, this)
-                if (locationManager != null) {
-                    location = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                    if (location != null) {
-                        Log.e(
-                            TAG, """
-     isGPSEnable latitude${location!!.latitude}
-     longitude${location!!.longitude}
-     """.trimIndent()
-                        )
-                        latitude = location!!.latitude
-                        longitude = location!!.longitude
-                        track_lat = latitude
-                        track_lng = longitude
-                        //                        fn_update(location);
-                    }
-                }
-            }
-            Log.e(TAG, "START SERVICE")
-            trackLocation()
-        }
-    }
-
-    private fun fnUpdate(location: Location) {
-        intent!!.putExtra("latutide", location.latitude.toString() + "")
-        intent!!.putExtra("longitude", location.longitude.toString() + "")
-        sendBroadcast(intent)
-    }
-
-    private inner class TimerTaskToGetLocation : TimerTask() {
-        override fun run() {
-            mHandler.post { fnGetlocation() }
-        }
+        // TODO : do status changed
     }
 
 }
