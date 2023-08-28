@@ -142,6 +142,22 @@ class UserViewModel @Inject constructor(
         ).launchIn(viewModelScope)
     }
 
+    fun updateUserToFirestore(
+        id: String,
+        model: Map<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        useCase.updateUserToFirestore(
+            id = id,
+            model = model,
+            onLoad = onLoad,
+            onSuccess = onSuccess,
+            onError = onError
+        ).launchIn(viewModelScope)
+    }
+
     fun fetchUserFromFirestore(
         filter: HashMap<String, String>,
         onLoad: () -> Unit,

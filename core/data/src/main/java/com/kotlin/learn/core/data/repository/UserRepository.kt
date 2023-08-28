@@ -49,6 +49,14 @@ interface UserRepository {
         onError: (String) -> Unit
     ): Flow<Result<Any?>>
 
+    fun updateUserToFirestore(
+        id: String,
+        model: Map<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ): Flow<Result<Any?>>
+
     fun fetchUserFromFirestore(
         filter: HashMap<String, String>,
         onLoad: () -> Unit,

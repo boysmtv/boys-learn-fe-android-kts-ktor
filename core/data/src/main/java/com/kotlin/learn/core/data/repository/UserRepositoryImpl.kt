@@ -107,6 +107,20 @@ class UserRepositoryImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
+    override fun updateUserToFirestore(
+        id: String,
+        model: Map<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) = flow {
+        emit(
+            execute {
+                network.updateUserToFirestore(id, model, onLoad, onSuccess, onError)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
     override fun fetchUserFromFirestore(
         filter: HashMap<String, String>,
         onLoad: () -> Unit,

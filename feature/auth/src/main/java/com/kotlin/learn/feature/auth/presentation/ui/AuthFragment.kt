@@ -88,8 +88,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        etEmail.setText("Boys.mtv@gmail.com")
-        etPassword.setText("123456789")
+//        etEmail.setText("Boys.mtv@gmail.com")
+//        etPassword.setText("123456789")
     }
 
     private fun postAuthSuccess(result: Result.Success<BaseResponse<LoginRespModel>>) {

@@ -1,5 +1,6 @@
 package com.kotlin.learn.feature.auth.presentation.ui
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
@@ -10,7 +11,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
+import com.kotlin.learn.core.common.util.LocationUtil
 import com.kotlin.learn.core.common.util.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.listener.EventListener
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
@@ -20,9 +23,11 @@ import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.TransactionUtil
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +52,10 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     private var token: String = Constant.EMPTY_STRING
 
     private val transactionId = TransactionUtil.generateTransactionID()
+
+    private lateinit var locationUtil: LocationUtil
+
+    private lateinit var eventListener: EventListener
 
     override fun setupView() {
         init()
@@ -82,20 +91,52 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
     private fun init() {
         googleSignInExt.initGoogle(requireContext())
+        locationUtil = LocationUtil(context = requireContext())
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            eventListener = context as EventListener
+        } catch (_: ClassCastException) {
+
+        }
+    }
     private fun setupListener() = with(binding) {
         btnFacebook.setOnClickListener {
             showDialogGeneralError(title = "Warning", message = "Under development, please try another way")
         }
 
         btnGoogle.setOnClickListener {
-            onClickSignInByGoogle()
+            if (locationUtil.checkPermissions() && locationUtil.isLocationEnabled())
+                onClickSignInByGoogle()
+            else showWarningLocation()
         }
 
         btnEmail.setOnClickListener {
-            authNavigator.fromGreetingsToAuth(this@GreetingsFragment)
+            if (locationUtil.checkPermissions() && locationUtil.isLocationEnabled())
+                authNavigator.fromGreetingsToAuth(this@GreetingsFragment)
+            else showWarningLocation()
         }
+    }
+
+    private fun showWarningLocation() {
+        val content = BaseDataDialog(
+            title = "Warning",
+            content = "Please allow location to continue application",
+            primaryButtonShow = true,
+            secondaryButtonText = Constant.EMPTY_STRING,
+            secondaryButtonShow = false,
+            icon = R.drawable.ic_warning_rounded,
+            primaryButtonText = "OK"
+        )
+        showDialogWithActionButton(
+            dataToDialog = content,
+            actionClickPrimary = {
+                eventListener.askLocationPermission()
+            },
+            tag = RegisterFragment::class.simpleName.toString()
+        )
     }
 
     private fun onClickSignInByGoogle() = with(googleSignInExt) {

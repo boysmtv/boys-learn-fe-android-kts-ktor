@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.kotlin.learn.core.common.util.LocationUtil
 import com.kotlin.learn.core.common.util.ServiceUtil
+import com.kotlin.learn.core.common.util.listener.EventListener
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.feature.services.heartbeat.HeartbeatService
 import com.kotlin.learn.feature.services.location.LocationService
@@ -20,7 +21,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , EventListener{
 
     private val tag = this::class.java.simpleName
 
@@ -106,14 +107,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun askLocationPermission() {
-        if (locationUtil.checkPermissions()) {
-            if (locationUtil.isLocationEnabled()) {
-                startLocationService()
-            }
-        } else requestPermissions()
-    }
-
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
             this, arrayOf(
@@ -136,4 +129,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun askLocationPermission() {
+        if (locationUtil.checkPermissions()) {
+            if (locationUtil.isLocationEnabled()) {
+                startLocationService()
+            }
+        } else requestPermissions()
+    }
+
 }

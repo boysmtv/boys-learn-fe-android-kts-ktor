@@ -129,7 +129,7 @@ class KtorClient(
         ) = HttpClient(OkHttp) {
 
             engine {
-                addInterceptor(chuckerInterceptor)
+                //addInterceptor(chuckerInterceptor)
                 config {
                     connectTimeout(timeout = timeout, unit = TimeUnit.SECONDS)
                     writeTimeout(timeout = timeout, unit = TimeUnit.SECONDS)

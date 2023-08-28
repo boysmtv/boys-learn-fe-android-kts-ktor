@@ -11,6 +11,7 @@ import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.KtorClient
+import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -79,19 +80,15 @@ class ThreadProfile {
         FirebaseMessaging.getInstance().token.addOnSuccessListener { message: String ->
             if (!TextUtils.isEmpty(message)) {
                 coroutineScope.launch {
-                    if (getToken().isEmpty()) {
-                        storeToPreferences(message)
-                        postToken()
-                    }
+                    storeToPreferences(message)
+                    postToken()
                 }
             }
         }.addOnFailureListener { _: Exception? -> }.addOnCanceledListener {}
             .addOnCompleteListener { task: Task<String> ->
                 coroutineScope.launch {
-                    if (getToken().isEmpty()) {
-                        storeToPreferences(task.result)
-                        postToken()
-                    }
+                    storeToPreferences(task.result)
+                    postToken()
                 }
             }
     }
@@ -109,13 +106,17 @@ class ThreadProfile {
                     if (userModel != null) {
                         coroutineScope.launch {
                             withContext(Dispatchers.IO) {
-                                useCase.putUser(
-                                    userModel.apply {
-                                        id = userModel.id
-                                        email = userModel.email
-                                        idToken = token
-                                    }
-                                ).collect()
+                                userModel.id?.let {
+                                    useCase.updateUserToFirestore(
+                                        id = it,
+                                        model = mapOf(
+                                            "idToken" to token
+                                        ),
+                                        onLoad = { },
+                                        onSuccess = { },
+                                        onError = { }
+                                    ).collect()
+                                }
                             }
                         }
                     }

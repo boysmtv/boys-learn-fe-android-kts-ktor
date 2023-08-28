@@ -109,6 +109,23 @@ class UserDataSourceImpl @Inject constructor(
         )
     }
 
+    override fun updateUserToFirestore(
+        id: String,
+        model: Map<String, String>,
+        onLoad: () -> Unit,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        firestoreClient.updateRequestToFirestore(
+            id = id,
+            data = model,
+            collection = ApiFirebaseResources.USER,
+            onLoad = onLoad,
+            onSuccess = onSuccess,
+            onError = onError
+        )
+    }
+
     override fun fetchUserFromFirestore(
         filter: HashMap<String, String>,
         onLoad: () -> Unit,
