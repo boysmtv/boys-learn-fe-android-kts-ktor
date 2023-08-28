@@ -85,4 +85,9 @@ class ProfileService : Service() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        stopSelf()
+    }
+
 }

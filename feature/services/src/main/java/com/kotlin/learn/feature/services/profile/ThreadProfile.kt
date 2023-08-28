@@ -66,21 +66,21 @@ class ThreadProfile {
         ).getOrNull().orEmpty()
     }
 
-    private suspend fun storeToPreferences(token: String) {
+    private suspend fun storeToPreferences(message: String) {
         withContext(Dispatchers.IO) {
             dataStore.setString(
                 PreferenceConstants.Authorization.PREF_FCM_TOKEN,
-                token
+                message
             )
         }
     }
 
     fun getTokenFirebase() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
-            if (!TextUtils.isEmpty(token)) {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { message: String ->
+            if (!TextUtils.isEmpty(message)) {
                 coroutineScope.launch {
                     if (getToken().isEmpty()) {
-                        storeToPreferences(token)
+                        storeToPreferences(message)
                         postToken()
                     }
                 }

@@ -47,7 +47,7 @@ class GoogleSignInExt(
             Log.e("", "Error Auth-cause: ${e.cause}")
 
             if (e.statusCode != 12501){
-                callbackGoogleSignInError.invoke("Under maintenance")
+                callbackGoogleSignInError.invoke("Please try again!")
             }
         }
     }

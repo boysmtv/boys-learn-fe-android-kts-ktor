@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -55,9 +54,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun startProfileService() {
         if (!serviceUtil.isRunning(ProfileService::class.java)) {
-            val service = Intent(this@MainActivity, ProfileService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                startService(service)
+            val service = Intent(this, ProfileService::class.java)
+            startService(service)
         } else {
             Timber.tag(tag).e("ProfileService: service can't started")
         }
@@ -65,10 +63,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun startHeartbeatService() {
         if (!serviceUtil.isRunning(HeartbeatService::class.java)) {
-            val serviceIntent = Intent(this, HeartbeatService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startService(serviceIntent)
-            }
+            val service = Intent(this, HeartbeatService::class.java)
+            startService(service)
         } else {
             Timber.tag(tag).e("HeartbeatService: service can't started")
         }
@@ -76,10 +72,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationService() {
         if (!serviceUtil.isRunning(LocationService::class.java)) {
-            val serviceIntent = Intent(this, LocationService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startService(serviceIntent)
-            }
+            val service = Intent(this, LocationService::class.java)
+            startService(service)
         } else {
             Timber.tag(tag).e("LocationService: service can't started")
         }
@@ -126,7 +120,7 @@ class MainActivity : AppCompatActivity() {
                 android.Manifest.permission.ACCESS_COARSE_LOCATION,
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
 
-            ), permissionIdLocation
+                ), permissionIdLocation
         )
     }
 
