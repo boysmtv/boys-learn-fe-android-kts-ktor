@@ -165,11 +165,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             getUserFromFirestore()
         }
 
-//        etFirstName.setText("Dedy")
-//        etLastName.setText("Wijaya")
-//        etPhone.setText("08989996305")
-//        etEmail.setText("Boys.mtv@gmail.com")
-//        etPassword.setText("123456789")
+        etFirstName.setText("Dedy")
+        etLastName.setText("Wijaya")
+        etPhone.setText("08989996305")
+        etEmail.setText("Boys.mtv@gmail.com")
+        etPassword.setText("123456789")
     }
 
     private fun getUserFromFirestore() {
