@@ -5,14 +5,17 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.kotlin.learn.core.common.base.BaseActivity
 import com.kotlin.learn.core.common.util.LocationUtil
 import com.kotlin.learn.core.common.util.ServiceUtil
 import com.kotlin.learn.core.common.util.listener.EventListener
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.databinding.ActivityMainBinding
 import com.kotlin.learn.feature.services.heartbeat.HeartbeatService
 import com.kotlin.learn.feature.services.location.LocationService
 import com.kotlin.learn.feature.services.profile.ProfileService
@@ -21,7 +24,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() , EventListener{
+class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     private val tag = this::class.java.simpleName
 
@@ -36,16 +39,52 @@ class MainActivity : AppCompatActivity() , EventListener{
 
     private val permissionIdLocation = 1001
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+    private var scenarioOnBack: String? = Constant.EMPTY_STRING
 
+    private val navController by lazy {
+        supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)?.findNavController()
+    }
+    override fun initBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    override fun initView() {
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         setupInit()
         startProfileService()
         startHeartbeatService()
         askNotificationPermission()
         askLocationPermission()
+    }
+
+    override fun backToLogin() {
+        supportActionBar?.hide()
+        navController?.popBackStack(R.id.greetingsFragment, false)
+    }
+
+    override fun backToSplash() {
+        supportActionBar?.hide()
+    }
+
+    override fun showBackButton(isShow: Boolean) {
+        if (isShow) supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun showTopBar(isShow: Boolean) {
+        if (isShow) supportActionBar?.show()
+        else supportActionBar?.hide()
+    }
+
+    override fun setTopBarTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
+    override fun onBackNavigation(scenario: String?) {
+        scenarioOnBack = scenario
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
     private fun setupInit() {

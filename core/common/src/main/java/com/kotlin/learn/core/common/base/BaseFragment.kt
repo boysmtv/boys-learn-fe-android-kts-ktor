@@ -21,8 +21,8 @@ import com.kotlin.learn.core.ui.util.showDialog
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import javax.inject.Inject
 
-abstract class BaseFragment<T : ViewBinding>
-    (private val bindingInflater: (layoutInflater: LayoutInflater) -> T) : Fragment() {
+abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInflater: LayoutInflater) -> T) :
+    Fragment() {
 
     var binding: T by viewBinding()
 
@@ -53,7 +53,7 @@ abstract class BaseFragment<T : ViewBinding>
         setupCheckConnection()
     }
 
-    private fun setupCheckConnection(){
+    private fun setupCheckConnection() {
         val connectionLiveData = NetworkConnectionLiveData(requireContext())
         connectionLiveData.debounce().observe(viewLifecycleOwner) { isConnected ->
             isConnected?.let {

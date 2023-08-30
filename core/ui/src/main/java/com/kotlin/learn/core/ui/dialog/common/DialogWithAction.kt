@@ -1,5 +1,7 @@
 package com.kotlin.learn.core.ui.dialog.common
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -41,13 +43,10 @@ class DialogWithAction(
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
-        dialog?.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.GRAY).apply { alpha = 150 })
     }
 
     private fun setupView() = with(binding) {

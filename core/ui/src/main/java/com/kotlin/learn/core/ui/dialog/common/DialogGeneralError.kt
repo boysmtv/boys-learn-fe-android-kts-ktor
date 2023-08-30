@@ -1,15 +1,20 @@
 package com.kotlin.learn.core.ui.dialog.common
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.kotlin.learn.core.ui.R
 import com.kotlin.learn.core.ui.databinding.DialogGeneralErrorBinding
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialogGeneral
 import com.kotlin.learn.core.utilities.hide
 import com.kotlin.learn.core.utilities.show
+
 
 class DialogGeneralError(
     private val data: BaseDataDialogGeneral,
@@ -29,13 +34,10 @@ class DialogGeneralError(
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
         dialog?.setCancelable(false)
         dialog?.setCanceledOnTouchOutside(false)
-        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.GRAY).apply { alpha = 150 })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
