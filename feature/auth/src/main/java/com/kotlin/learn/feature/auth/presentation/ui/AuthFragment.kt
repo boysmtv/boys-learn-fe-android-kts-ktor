@@ -2,7 +2,7 @@ package com.kotlin.learn.feature.auth.presentation.ui
 
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.util.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
@@ -180,7 +180,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         }
     }
 
-    private fun getUserFromFirestore(){
+    private fun getUserFromFirestore() {
         viewModel.fetchUserFromFirestore(
             filter = hashMapOf(
                 "email" to userModel.email!!,
@@ -206,12 +206,12 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         )
     }
 
-    private fun saveUserToDataStore(){
+    private fun saveUserToDataStore() {
         viewModel.storeUserToDatastore(
             jsonUtil.toJson(userModel)
         ).launch(this@AuthFragment) { event ->
             invokeDataStoreEvent(event,
-                isFetched = {},
+                {}, {},
                 isStored = {
                     authNavigator.fromAuthToHome(fragment = this@AuthFragment)
                 }

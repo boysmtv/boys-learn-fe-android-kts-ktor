@@ -5,19 +5,18 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import com.kotlin.learn.core.common.util.Device
+import com.kotlin.learn.core.common.util.DeviceUtil
 import com.kotlin.learn.core.common.util.JsonUtil
+import com.kotlin.learn.core.common.util.TransactionUtil
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.HeartbeatUseCase
 import com.kotlin.learn.core.model.HeartbeatModel
 import com.kotlin.learn.core.model.LocationModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -58,10 +57,10 @@ class HeartbeatService : Service() {
                 try {
                     threadHeartbeat.storeHeartbeat(
                         HeartbeatModel().apply {
-                            deviceId = Device.getDeviceID(this@HeartbeatService)
-                            deviceName = Device.getDeviceName()
-                            location = fetchLocation()
-                            createdAt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
+                            deviceId = DeviceUtil.getDeviceID(this@HeartbeatService)
+                            deviceName = DeviceUtil.getDeviceName()
+                            location = runBlocking { threadHeartbeat.getLocation() }
+                            createdAt = TransactionUtil.getTimestampWithFormat()
                         }
                     )
                     Thread.sleep(threadSleepTimer)
@@ -76,17 +75,6 @@ class HeartbeatService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
-    }
-
-    private fun fetchLocation(): LocationModel {
-        val strLocation = runBlocking { threadHeartbeat.getLocation() }
-        if (strLocation.isNotEmpty()) {
-            jsonUtil.fromJson<LocationModel>(strLocation)?.let {
-                return it
-            }
-            return LocationModel()
-        } else
-            return LocationModel()
     }
 
     override fun onDestroy() {

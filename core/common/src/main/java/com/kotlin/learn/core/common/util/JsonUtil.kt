@@ -17,9 +17,10 @@ class JsonUtil @Inject constructor(val moshi: Moshi) {
     inline fun <reified AdapterType> getJSONAdapter(newType: Type?): JsonAdapter<AdapterType> =
         moshi.adapter(newType ?: AdapterType::class.java)
 
-    inline fun <K, V> objectsMapToJson(key: Class<K>, value: Class<V>, json: Any): String? {
+    fun <K, V> objectsMapToJson(key: Class<K>, value: Class<V>, json: Any): String? {
         return moshi
             .adapter<Any>(newParameterizedType(MutableMap::class.java, key, value))
             .toJson(json)
     }
+
 }

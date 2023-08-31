@@ -7,9 +7,10 @@ import com.kotlin.learn.core.common.util.ServiceUtil
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.HeartbeatUseCase
 import com.kotlin.learn.core.model.HeartbeatModel
+import com.kotlin.learn.core.model.LocationModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.utilities.PreferenceConstants
-import com.kotlin.learn.core.utilities.TransactionUtil
+import com.kotlin.learn.core.common.util.TransactionUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -49,14 +50,9 @@ class ThreadHeartbeat {
     }
 
     fun storeHeartbeat(heartbeatModel: HeartbeatModel) {
-        val userData = runBlocking { getUser() }
-        if (userData.isNotEmpty()) {
-            val userModel = jsonUtil.fromJson<UserModel>(userData)
-            userModel?.let {
-                heartbeatModel.apply {
-                    user = it
-                }
-            }
+
+        heartbeatModel.apply {
+            user = runBlocking { getUser() }
         }
 
         try {
@@ -76,16 +72,18 @@ class ThreadHeartbeat {
         }
     }
 
-    suspend fun getLocation(): String = withContext(Dispatchers.IO) {
-        dataStore.getString(
-            PreferenceConstants.Authorization.PREF_LOCATION
-        ).getOrNull().orEmpty()
+    suspend fun getLocation(): LocationModel = withContext(Dispatchers.IO) {
+        val data = dataStore.getString(PreferenceConstants.Authorization.PREF_LOCATION).getOrNull().orEmpty()
+        if (data.isNotEmpty() && data.isNotBlank())
+            jsonUtil.fromJson<LocationModel>(data) ?: LocationModel()
+        else LocationModel()
     }
 
-    private suspend fun getUser(): String = withContext(Dispatchers.IO) {
-        dataStore.getString(
-            PreferenceConstants.Authorization.PREF_USER
-        ).getOrNull().orEmpty()
+    private suspend fun getUser(): UserModel = withContext(Dispatchers.IO) {
+        val data = dataStore.getString(PreferenceConstants.Authorization.PREF_USER).getOrNull().orEmpty()
+        if (data.isNotEmpty() && data.isNotBlank())
+            jsonUtil.fromJson<UserModel>(data) ?: UserModel()
+        else UserModel()
     }
 
     private suspend fun storeToPreferences(message: String) {

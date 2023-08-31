@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.LocationUtil
-import com.kotlin.learn.core.common.util.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.listener.EventListener
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
@@ -25,7 +25,7 @@ import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant
-import com.kotlin.learn.core.utilities.TransactionUtil
+import com.kotlin.learn.core.common.util.TransactionUtil
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
@@ -102,6 +102,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
         }
     }
+
     private fun setupListener() = with(binding) {
         btnFacebook.setOnClickListener {
             showDialogGeneralError(title = "Warning", message = "Under development, please try another way")
@@ -261,7 +262,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         viewModel.storeUserToDatastore(jsonUtil.toJson(userModel))
             .launch(this@GreetingsFragment) { event ->
                 invokeDataStoreEvent(event,
-                    isFetched = {},
+                    {}, {},
                     isStored = {
                         authNavigator.fromGreetingsToHome(this@GreetingsFragment)
                     }
@@ -274,7 +275,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
             invokeDataStoreEvent(it,
                 isFetched = { message ->
                     token = message
-                }, {}
+                }, {}, {}
             )
         }
     }

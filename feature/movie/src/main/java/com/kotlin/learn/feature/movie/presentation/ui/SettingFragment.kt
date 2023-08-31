@@ -7,7 +7,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
-import com.kotlin.learn.core.common.util.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
@@ -17,7 +17,6 @@ import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.FragmentSettingBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -49,9 +48,11 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private fun loadProfile() = with(viewModel) {
         fetchDataAuth().launch(this@SettingFragment) {
             invokeDataStoreEvent(it,
-                isFetched = { message ->
-                    updateUi(message)
-                }, {}
+                isFetched = { data ->
+                    data?.let {
+                        updateUi(data)
+                    }
+                }, {}, {}
             )
         }
     }
@@ -64,7 +65,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                         setText(message)
                     }
                     token = message
-                }, {}
+                }, {}, {}
             )
         }
     }
@@ -97,27 +98,25 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         }
     }
 
-    private fun updateUi(message: String) = with(binding) {
-        jsonUtil.fromJson<UserModel>(message)?.let {
-            userModel = it
+    private fun updateUi(model: UserModel) = with(binding) {
+        userModel = model
 
-            if (it.firstName != Constant.EMPTY_STRING) {
-                etFirstName.setText(it.firstName)
-                etLastName.setText(it.lastName)
-                etEmail.setText(it.email)
-            }
+        if (model.firstName != Constant.EMPTY_STRING) {
+            etFirstName.setText(model.firstName)
+            etLastName.setText(model.lastName)
+            etEmail.setText(model.email)
+        }
 
-            ivImage.load(it.photoUrl) {
-                val context = root.context
-                val circularProgressDrawable = CircularProgressDrawable(context).apply {
-                    strokeWidth = 5f
-                    centerRadius = 30f
-                    strokeCap = Paint.Cap.BUTT
-                    start()
-                }
-                placeholder(circularProgressDrawable)
-                error(R.drawable.ic_baseline_broken_image_24)
+        ivImage.load(model.photoUrl) {
+            val context = root.context
+            val circularProgressDrawable = CircularProgressDrawable(context).apply {
+                strokeWidth = 5f
+                centerRadius = 30f
+                strokeCap = Paint.Cap.BUTT
+                start()
             }
+            placeholder(circularProgressDrawable)
+            error(R.drawable.ic_baseline_broken_image_24)
         }
     }
 

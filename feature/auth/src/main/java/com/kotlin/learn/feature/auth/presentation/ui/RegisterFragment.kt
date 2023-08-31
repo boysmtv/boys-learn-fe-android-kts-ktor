@@ -3,7 +3,7 @@ package com.kotlin.learn.feature.auth.presentation.ui
 import android.util.Log
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.util.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
 import com.kotlin.learn.core.common.util.network.invokeSpringParser
@@ -15,7 +15,7 @@ import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
-import com.kotlin.learn.core.utilities.TransactionUtil
+import com.kotlin.learn.core.common.util.TransactionUtil
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
@@ -53,7 +53,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             invokeDataStoreEvent(it,
                 isFetched = { message ->
                     token = message
-                }, {}
+                }, {}, {}
             )
         }
     }
@@ -86,7 +86,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                         )
                     ).launch(this@RegisterFragment) { event ->
                         invokeDataStoreEvent(event,
-                            isFetched = {},
+                            {}, {},
                             isStored = {
                                 showDialogSuccessRegister(it.data?.fullName ?: EMPTY_STRING)
                             }

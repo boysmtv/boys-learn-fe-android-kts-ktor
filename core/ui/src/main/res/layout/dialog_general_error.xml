@@ -7,15 +7,15 @@
     android:gravity="center">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_32"
+        android:layout_margin="@dimen/dp_40"
         app:cardCornerRadius="@dimen/dp_10"
         app:cardElevation="@dimen/dp_8">
 
         <LinearLayout
             android:id="@+id/dialog_general"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"

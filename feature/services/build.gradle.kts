@@ -26,6 +26,9 @@ dependencies {
     implementation(customModulePath(":core:domain"))
     implementation(customModulePath(":core:network"))
 
+    implementation(libs.bundles.viewmodel)
+    implementation(libs.bundles.play.services)
+    implementation(libs.bundles.firebasse)
     implementation(libs.androidx.activity.activity.ktx)
     implementation(libs.androidx.activity.fragment.ktx)
     implementation(libs.constraintlayout)
@@ -34,17 +37,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.bundles.viewmodel)
     implementation(libs.hilt.android)
     implementation(libs.androidx.databinding.runtime)
     implementation(libs.com.squareup.moshi.moshi.kotlin)
     implementation(libs.androidx.datastore.datastore.preferences)
-    implementation(libs.com.google.firebase.firebase.auth)
-    implementation(libs.com.google.firebase.firebase.common.ktx)
-    implementation(libs.com.google.firebase.firebase.database.ktx)
-    implementation(libs.com.google.firebase.firebase.messaging.ktx)
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.play.services.location)
 
     kapt(libs.hilt.compiler)
 }

@@ -1,4 +1,4 @@
-package com.kotlin.learn.core.utilities
+package com.kotlin.learn.core.common.util
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -6,7 +6,7 @@ import java.util.*
 object TransactionUtil {
 
     fun generateTransactionID(): String {
-        val sdf = SimpleDateFormat("yyyyMMddHHmmssS")
+        val sdf = SimpleDateFormat("yyyyMMddHHmmssS", Locale.getDefault())
         val date = sdf.format(Date())
         val lDate = date.toLong()
         val hexDate = java.lang.Long.toHexString(lDate)
@@ -21,5 +21,8 @@ object TransactionUtil {
 
         return "$a$b$c$d$$hexDate$e$f"
     }
+
+    fun getTimestampWithFormat(format: String = "yyyy-MM-dd HH:mm:ss"): String =
+        SimpleDateFormat(format, Locale.getDefault()).format(Date())
 
 }

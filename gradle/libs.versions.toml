@@ -62,6 +62,7 @@ firebaseDatabaseKtx = "20.2.2"
 firebaseFessaging = "17.0.0"
 firebaseFessagingKtx = "23.2.0"
 firebaseFirestoreKtx = "24.7.0"
+firebaseBom = "32.2.3"
 facebookLogin = "sdk-version-16.0.0"
 androidyoutubeplayerCore = "12.1.0"
 
@@ -170,8 +171,11 @@ jp-wasabeef-glide-transformations = { group = "jp.wasabeef", name = "glide-trans
 com-github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 com-android-support-multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
 
-# Firebase
+# Google services
 com-google-android-gms-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
+com-google-android-gms-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version = "21.0.1" }
+
+# Firebase
 com-google-firebase-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 com-google-firebase-firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
 com-google-firebase-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
@@ -190,7 +194,6 @@ androidx-datastore-datastore-preferences = { group = "androidx.datastore", name 
 #youtube
 com-pierfrancescosoffritti-androidyoutubeplayer-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "androidyoutubeplayerCore" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version = "2.8.1" }
-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version = "21.0.1" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -205,5 +208,8 @@ navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref 
 [bundles]
 ktor = ["ktor-content-negotiation", "ktor-core", "ktor-logging", "ktor-okhttp", "ktor-resources", "ktor-serialization-json", "ktor-serialization-auth"]
 viewmodel = ["androidx-lifecycle-lifecycle-livedata-ktx", "androidx-lifecycle-lifecycle-runtime-ktx", "androidx-lifecycle-lifecycle-viewmodel-savedstate", "androidx-lifecycle-lifecycle-compiler", "androidx-lifecycle-lifecycle-common-java8", "androidx-lifecycle-lifecycle-service", "androidx-lifecycle-lifecycle-process", "androidx-lifecycle-lifecycle-reactivestreams-ktx", "androidx-lifecycle-lifecycle-runtime-testing"]
-
-
+firebasse = ["com-google-firebase-firebase-auth", "com-google-firebase-firebase-common-ktx", "com-google-firebase-firebase-database-ktx", "com-google-firebase-firebase-messaging", "com-google-firebase-firebase-messaging-ktx", "com-google-firebase-firebase-firestore-ktx"]
+moshi = ["com-squareup-moshi-moshi-kotlin", "com-squareup-moshi-moshi-kotlin-codegen"]
+youtube = ["com-pierfrancescosoffritti-androidyoutubeplayer-core", "androidx-work-runtime-ktx"]
+play-services = ["com-google-android-gms-play-services-auth", "com-google-android-gms-play-services-location"]
+facebook = ["facebook-shimmer", "facebook-login"]

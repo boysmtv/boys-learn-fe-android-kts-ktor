@@ -40,6 +40,8 @@ class ProfileService : Service() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
+    private val threadSleepTimer = 2000L
+
     override fun onCreate() {
         super.onCreate()
 
@@ -50,6 +52,7 @@ class ProfileService : Service() {
             preferences = preferences,
             useCase = userUseCase
         )
+
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -59,7 +62,7 @@ class ProfileService : Service() {
             while (isServiceRunning) {
                 try {
                     threadProfile.getTokenFirebase()
-                    Thread.sleep(2000)
+                    Thread.sleep(threadSleepTimer)
                     setupCheckToken()
                 } catch (e: InterruptedException) {
                     Log.e(tag, "ProfileService is error : ${e.message}")
@@ -82,6 +85,7 @@ class ProfileService : Service() {
                 if (threadProfile.getToken().isNotEmpty()) {
                     isServiceRunning = false
                     stopSelf()
+                    Log.e(tag, "ProfileService is stopped...")
                 }
             }
         }

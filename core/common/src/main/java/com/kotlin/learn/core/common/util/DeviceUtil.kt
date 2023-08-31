@@ -3,12 +3,10 @@ package com.kotlin.learn.core.common.util
 import android.content.Context
 import android.os.Build
 import android.provider.Settings
-import android.telephony.TelephonyManager
-import androidx.core.content.ContextCompat.getSystemService
 import java.util.Locale
 
 
-object Device {
+object DeviceUtil {
 
     fun getDeviceName(): String {
         val manufacturer = Build.MANUFACTURER

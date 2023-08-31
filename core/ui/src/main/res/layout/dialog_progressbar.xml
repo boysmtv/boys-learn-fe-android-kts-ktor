@@ -30,8 +30,7 @@
                 android:layout_marginTop="@dimen/dp_8"
                 android:gravity="center"
                 android:text="Please wait ..."
-                android:textColor="@color/blackCharacterHighEmphasis"
-                android:textSize="@dimen/sp_16"
+                android:textSize="@dimen/sp_18"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

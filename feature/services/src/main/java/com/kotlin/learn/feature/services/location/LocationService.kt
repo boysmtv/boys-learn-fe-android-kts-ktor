@@ -44,7 +44,7 @@ class LocationService : Service(), LocationListener {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
-    private val threadSleepTimer = 59000L
+    private val threadSleepTimer = 58000L
 
     override fun onCreate() {
         super.onCreate()
@@ -55,7 +55,7 @@ class LocationService : Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.e("Service", "LocationService is running...")
+        Log.e(tag, "LocationService is running...")
         Thread {
             while (true) {
                 try {
@@ -117,8 +117,8 @@ class LocationService : Service(), LocationListener {
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             location?.let {
                 locationModel.apply {
-                    latitude = it.latitude
-                    longitude = it.longitude
+                    if (it.latitude != 0.0) latitude = it.latitude
+                    if (it.longitude != 0.0) longitude = it.longitude
                 }
                 threadLocation.storeLocation(locationModel)
             }
@@ -143,8 +143,8 @@ class LocationService : Service(), LocationListener {
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             location?.let {
                 locationModel.apply {
-                    latitude = it.latitude
-                    longitude = it.longitude
+                    if (it.latitude != 0.0) latitude = it.latitude
+                    if (it.longitude != 0.0) longitude = it.longitude
                 }
                 threadLocation.storeLocation(locationModel)
             }

@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import com.kotlin.learn.core.ui.R
 import com.kotlin.learn.core.ui.databinding.DialogGeneralErrorBinding
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialogGeneral
 import com.kotlin.learn.core.utilities.hide

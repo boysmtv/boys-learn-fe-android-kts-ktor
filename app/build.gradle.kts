@@ -54,18 +54,18 @@ dependencies {
     implementation(project(":feature:splash"))
     implementation(project(":feature:services"))
 
+    implementation(libs.bundles.ktor)
+    implementation(libs.bundles.play.services)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.datastore.datastore.preferences)
     implementation(libs.material)
     implementation(libs.paging.runtime)
-    implementation(libs.bundles.ktor)
     implementation(libs.constraintlayout)
     implementation(libs.hilt.android)
     implementation(libs.timber)
-    implementation(libs.androidx.navigation.fragment)
     implementation(libs.com.android.support.multidex)
-    implementation(libs.androidx.datastore.datastore.preferences)
-    implementation(libs.play.services.location)
 
     kapt(libs.hilt.compiler)
 
