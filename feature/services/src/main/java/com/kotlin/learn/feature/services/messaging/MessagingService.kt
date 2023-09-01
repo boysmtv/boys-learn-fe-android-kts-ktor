@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class MessagingService : FirebaseMessagingService() {
 
@@ -40,8 +39,6 @@ class MessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         coroutineScope.launch {
             storeToPreferences(token)
-            Log.e(tag, "Token-thread: ${token.isAvailable()}")
-            Log.e(tag, "Token-store: ${fetchToPreferences().isAvailable()}")
         }
     }
 
@@ -117,4 +114,5 @@ class MessagingService : FirebaseMessagingService() {
         )
         return remoteViews
     }
+
 }

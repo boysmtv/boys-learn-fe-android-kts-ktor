@@ -22,8 +22,6 @@ class ThreadLocation {
 
     private lateinit var serviceUtil: ServiceUtil
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
-
     fun initComponent(
         context: Context,
         jsonUtil: JsonUtil,
@@ -36,26 +34,21 @@ class ThreadLocation {
         serviceUtil = ServiceUtil(context)
     }
 
-    fun storeLocation(locationModel: LocationModel) {
-        coroutineScope.launch {
-            storeToPreferences(
+    suspend fun getLocation(): String {
+        return withContext(Dispatchers.IO) {
+            dataStore.getString(
+                PreferenceConstants.Authorization.PREF_LOCATION
+            ).getOrNull().orEmpty()
+        }
+    }
+
+    suspend fun storeLocation(locationModel: LocationModel) {
+        withContext(Dispatchers.IO) {
+            dataStore.setString(
+                PreferenceConstants.Authorization.PREF_LOCATION,
                 jsonUtil.toJson(locationModel)
             )
         }
     }
 
-    suspend fun getLocation(): String = withContext(Dispatchers.IO) {
-        dataStore.getString(
-            PreferenceConstants.Authorization.PREF_LOCATION
-        ).getOrNull().orEmpty()
-    }
-
-    private suspend fun storeToPreferences(message: String) {
-        withContext(Dispatchers.IO) {
-            dataStore.setString(
-                PreferenceConstants.Authorization.PREF_LOCATION,
-                message
-            )
-        }
-    }
 }

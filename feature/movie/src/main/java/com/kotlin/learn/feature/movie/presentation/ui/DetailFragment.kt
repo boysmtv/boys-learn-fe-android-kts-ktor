@@ -1,6 +1,8 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -8,12 +10,17 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.util.ImageUtil
+import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.Genres
 import com.kotlin.learn.core.model.MovieDetailModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.core.utilities.setTextAnimation
+import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.adapter.DetailCreditsAdapter
 import com.kotlin.learn.feature.movie.databinding.FragmentDetailBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.DetailViewModel
@@ -21,12 +28,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
+
+    private val tag = this::class.java.simpleName
 
     private val viewModel: DetailViewModel by viewModels()
 
     private val args: DetailFragmentArgs by navArgs()
+
+    private lateinit var userModel: UserModel
 
     private lateinit var movieModel: MovieDetailModel
 
@@ -37,16 +49,28 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
+    private var isSaved: Boolean = false
+
     override fun setupView() {
         subscribeDetail()
         loadArguments()
+        loadUser()
         setupVpCredits()
         setupListener()
     }
 
     private fun setupListener() = with(binding) {
-        ivDetailHeaderDownloadIcon.setOnClickListener {
-            Toast.makeText(requireContext(), "This feature under development", Toast.LENGTH_SHORT).show()
+
+        clDetailHeaderFavouriteIcon.setOnClickListener {
+            if (isSaved) {
+                isSaved = false
+                setChangeUiFavourite()
+                addOrRemoveToFavourite(isAdded = false, movieId)
+            } else {
+                isSaved = true
+                setChangeUiFavourite()
+                addOrRemoveToFavourite(isAdded = true, movieId)
+            }
         }
 
         btnDetailPlayNow.setOnClickListener {
@@ -58,6 +82,25 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
         tvDetailCastSeeAll.setOnClickListener {
             movieNavigator.fromDetailToSeeAllCredits(this@DetailFragment, movieId)
+        }
+
+    }
+
+    private fun setChangeUiFavourite() = with(binding) {
+        if (isSaved) {
+            ImageUtil.imageViewAnimatedChange(
+                requireContext(),
+                ivDetailHeaderFavouriteIcon,
+                BitmapFactory.decodeResource(requireContext().resources, R.drawable.ic_saved)
+            )
+            tvDetailHeaderFavouriteTitle.setTextAnimation(getString(R.string.saved))
+        } else {
+            ImageUtil.imageViewAnimatedChange(
+                requireContext(),
+                ivDetailHeaderFavouriteIcon,
+                BitmapFactory.decodeResource(requireContext().resources, R.drawable.ic_favourite)
+            )
+            tvDetailHeaderFavouriteTitle.setTextAnimation(getString(R.string.favourite))
         }
     }
 
@@ -167,6 +210,33 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         viewModel.getDetailVideos(movieId = movieId)
     }
 
+    private fun loadUser() = with(viewModel) {
+        fetchUserFromDatastore().launch(requireActivity()) { event ->
+            invokeDataStoreEvent(event,
+                isFetched = { data ->
+                    data?.let { model ->
+                        userModel = model
+                    }
+                }, {}, {}
+            )
+        }
+        setupFavourite()
+    }
+
+    private fun setupFavourite() {
+        userModel.favourite.let {
+            if (it.isNotEmpty()) {
+                for (data in it) {
+                    if (data == movieId) {
+                        isSaved = true
+                        setChangeUiFavourite()
+                        break
+                    }
+                }
+            }
+        }
+    }
+
     private fun calculateRuntime(timeRuntime: Int?): String {
         timeRuntime?.let {
             var startTime = timeRuntime
@@ -195,6 +265,43 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 .load("${Constant.BASE_URL_IMAGE_500}${it}")
                 .into(ivDetailPlay)
         }
+    }
+
+    private fun addOrRemoveToFavourite(isAdded: Boolean, idMovie: String) = with(viewModel) {
+
+        fetchUserFromDatastore().launch(requireActivity()) { event ->
+            invokeDataStoreEvent(event,
+                isFetched = { data ->
+                    data?.let { model ->
+                        userModel = model.apply {
+                            favourite = model.favourite.apply {
+                                if (isAdded) add(idMovie) else remove(idMovie)
+                            }
+                        }
+                    }
+                }, {}, {}
+            )
+        }
+
+        storeUserToDatastore(jsonUtil.toJson(userModel)).launch(requireActivity()) { event ->
+            invokeDataStoreEvent(event,
+                {}, {},
+                isStored = {
+                    userModel.id?.let { id ->
+                        updateUserToFirestore(
+                            id = id,
+                            model = mapOf(
+                                "movieFavourite" to userModel.favourite
+                            ),
+                            onLoad = { },
+                            onSuccess = { },
+                            onError = { }
+                        )
+                    }
+                }
+            )
+        }
+
     }
 
 }

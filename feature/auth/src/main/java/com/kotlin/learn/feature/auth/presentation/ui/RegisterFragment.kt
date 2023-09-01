@@ -92,7 +92,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                             }
                         )
                     }
-
                 }
 
                 is SpringParser.Error -> {

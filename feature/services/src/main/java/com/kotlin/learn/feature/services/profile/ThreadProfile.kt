@@ -88,28 +88,31 @@ class ThreadProfile {
         FirebaseMessaging.getInstance().token.addOnSuccessListener { message: String ->
             if (!TextUtils.isEmpty(message)) {
                 coroutineScope.launch {
-                    storeToPreferences(message)
-                    postToken()
+                    withContext(Dispatchers.IO) {
+                        storeToPreferences(message)
+                        postToken()
+                    }
                 }
             }
         }.addOnFailureListener { _: Exception? -> }.addOnCanceledListener {}
             .addOnCompleteListener { task: Task<String> ->
                 coroutineScope.launch {
-                    storeToPreferences(task.result)
-                    postToken()
+                    withContext(Dispatchers.IO) {
+                        storeToPreferences(task.result)
+                        postToken()
+                    }
                 }
             }
     }
 
     private fun updateUserToken(user: String, token: String) {
-        if (user.isNotBlank()) {
-            val userModel = jsonUtil.fromJson<UserModel>(user)
-            if (userModel != null) {
+        if (user.isNotBlank() && token.isNotBlank()) {
+            jsonUtil.fromJson<UserModel>(user)?.let {
                 coroutineScope.launch {
                     withContext(Dispatchers.IO) {
                         storeUserToPreferences(
                             jsonUtil.toJson(
-                                userModel.apply {
+                                it.apply {
                                     idToken = token
                                 }
                             )
@@ -123,35 +126,26 @@ class ThreadProfile {
     private fun postToken() {
         val token = runBlocking { getToken() }
         val user = runBlocking { getUser() }
+
         updateUserToken(user, token)
 
-        Log.e(tag, "ThreadProfile-Token: $token")
-        Log.e(tag, "ThreadProfile-User: $user")
-
-        if (user.isNotBlank()) {
-            try {
-                val userModel = jsonUtil.fromJson<UserModel>(user)
-                if (token.isNotBlank()) {
-                    if (userModel != null) {
-                        coroutineScope.launch {
-                            withContext(Dispatchers.IO) {
-                                userModel.id?.let {
-                                    useCase.updateUserToFirestore(
-                                        id = it,
-                                        model = mapOf(
-                                            "idToken" to token
-                                        ),
-                                        onLoad = { },
-                                        onSuccess = { },
-                                        onError = { }
-                                    ).collect()
-                                }
-                            }
+        if (user.isNotBlank() && token.isNotBlank()) {
+            jsonUtil.fromJson<UserModel>(user)?.let {
+                coroutineScope.launch {
+                    withContext(Dispatchers.IO) {
+                        it.id?.let {
+                            useCase.updateUserToFirestore(
+                                id = it,
+                                model = mapOf(
+                                    "idToken" to token
+                                ),
+                                onLoad = { },
+                                onSuccess = { },
+                                onError = { }
+                            ).collect()
                         }
                     }
                 }
-            } catch (ex: Exception) {
-                Log.e(tag, "postToken: token is error, ${ex.message}")
             }
         }
     }

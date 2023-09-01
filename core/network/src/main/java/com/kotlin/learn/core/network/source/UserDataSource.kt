@@ -47,9 +47,9 @@ interface UserDataSource {
         onError: (String) -> Unit
     )
 
-    fun updateUserToFirestore(
+    fun <T> updateUserToFirestore(
         id: String,
-        model: Map<String, String>,
+        model: Map<String, T>,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit

@@ -176,14 +176,14 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/cl_detail_header_download"
+                            android:id="@+id/cl_detail_header_favourite"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginTop="@dimen/dp_16"
                             app:layout_constraintTop_toBottomOf="@+id/cl_detail_header_rule">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/cl_detail_header_download_icon"
+                                android:id="@+id/cl_detail_header_favourite_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -191,23 +191,24 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
-                                    android:id="@+id/iv_detail_header_download_icon"
+                                    android:id="@+id/iv_detail_header_favourite_icon"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="30dp"
                                     android:importantForAccessibility="no"
-                                    android:src="@drawable/icon_download_dark"
-                                    app:layout_constraintBottom_toTopOf="@+id/tv_detail_header_download_title"
+                                    android:src="@drawable/ic_favourite"
+                                    app:layout_constraintBottom_toTopOf="@+id/tv_detail_header_favourite_title"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/tv_detail_header_download_title"
+                                    android:id="@+id/tv_detail_header_favourite_title"
                                     android:layout_width="wrap_content"
+                                    android:minWidth="@dimen/dp_64"
                                     android:layout_height="20dp"
                                     android:fontFamily="@font/tt_interphases_regular"
                                     android:gravity="center"
-                                    android:text="@string/download"
+                                    android:text="@string/favourite"
                                     android:textColor="@android:color/black"
                                     android:textSize="@dimen/sp_12"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -221,11 +222,11 @@
                                 android:id="@+id/btn_detail_play_now"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_16"
+                                android:layout_marginLeft="@dimen/dp_8"
                                 android:text="@string/play_trailer"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/cl_detail_header_download_icon"
+                                app:layout_constraintStart_toEndOf="@+id/cl_detail_header_favourite_icon"
                                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -242,7 +243,7 @@
                             android:textAlignment="gravity"
                             android:textColor="@android:color/darker_gray"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/cl_detail_header_download"
+                            app:layout_constraintTop_toBottomOf="@+id/cl_detail_header_favourite"
                             tools:text="@string/sample_desc" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout

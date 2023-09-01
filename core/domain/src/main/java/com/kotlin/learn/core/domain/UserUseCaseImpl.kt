@@ -66,9 +66,9 @@ class UserUseCaseImpl @Inject constructor(
         return repository.storeUserToFirestore(id, model, onLoad, onSuccess, onError)
     }
 
-    override fun updateUserToFirestore(
+    override fun <T> updateUserToFirestore(
         id: String,
-        model: Map<String, String>,
+        model: Map<String, T>,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit

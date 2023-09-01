@@ -50,25 +50,18 @@ class ThreadHeartbeat {
     }
 
     fun storeHeartbeat(heartbeatModel: HeartbeatModel) {
-
         heartbeatModel.apply {
             user = runBlocking { getUser() }
         }
 
-        try {
-            coroutineScope.launch {
-                withContext(Dispatchers.IO) {
-                    useCase.storeHeartbeatToFirestore(
-                        id = TransactionUtil.generateTransactionID(),
-                        model = heartbeatModel,
-                        onLoad = { },
-                        onSuccess = { },
-                        onError = { }
-                    ).collect()
-                }
-            }
-        } catch (ex: Exception) {
-            Log.e(tag, "storeHeartbeat: heartbeat is error, ${ex.message}")
+        coroutineScope.launch {
+            useCase.storeHeartbeatToFirestore(
+                id = TransactionUtil.generateTransactionID(),
+                model = heartbeatModel,
+                onLoad = { },
+                onSuccess = { },
+                onError = { }
+            ).collect()
         }
     }
 

@@ -22,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -80,7 +81,9 @@ class LocationService : Service(), LocationListener {
             latitude = location.latitude
             longitude = location.longitude
         }
-        threadLocation.storeLocation(locationModel)
+        coroutineScope.launch {
+            threadLocation.storeLocation(locationModel)
+        }
     }
 
     private fun getLocation() {
@@ -120,7 +123,9 @@ class LocationService : Service(), LocationListener {
                     if (it.latitude != 0.0) latitude = it.latitude
                     if (it.longitude != 0.0) longitude = it.longitude
                 }
-                threadLocation.storeLocation(locationModel)
+                coroutineScope.launch {
+                    threadLocation.storeLocation(locationModel)
+                }
             }
         }, 0)
     }
@@ -146,7 +151,9 @@ class LocationService : Service(), LocationListener {
                     if (it.latitude != 0.0) latitude = it.latitude
                     if (it.longitude != 0.0) longitude = it.longitude
                 }
-                threadLocation.storeLocation(locationModel)
+                coroutineScope.launch {
+                    threadLocation.storeLocation(locationModel)
+                }
             }
         }, 0)
     }

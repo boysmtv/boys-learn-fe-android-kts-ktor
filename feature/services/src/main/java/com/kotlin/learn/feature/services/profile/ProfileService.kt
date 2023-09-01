@@ -13,9 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.annotation.Nullable
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class ProfileService : Service() {
@@ -58,18 +58,20 @@ class ProfileService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         Log.e(tag, "ProfileService is running...")
-        Thread {
-            while (isServiceRunning) {
-                try {
-                    threadProfile.getTokenFirebase()
-                    Thread.sleep(threadSleepTimer)
-                    setupCheckToken()
-                } catch (e: InterruptedException) {
-                    Log.e(tag, "ProfileService is error : ${e.message}")
-                    e.printStackTrace()
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                while (isServiceRunning) {
+                    try {
+                        threadProfile.getTokenFirebase()
+                        Thread.sleep(threadSleepTimer)
+                        setupCheckToken()
+                    } catch (e: InterruptedException) {
+                        Log.e(tag, "ProfileService is error : ${e.message}")
+                        e.printStackTrace()
+                    }
                 }
             }
-        }.start()
+        }
 
         return START_STICKY
     }
@@ -81,8 +83,8 @@ class ProfileService : Service() {
 
     private fun setupCheckToken() {
         coroutineScope.launch {
-            if (threadProfile.getUser().isNotEmpty()){
-                if (threadProfile.getToken().isNotEmpty()) {
+            withContext(Dispatchers.IO) {
+                if (threadProfile.getUser().isNotEmpty() && threadProfile.getToken().isNotEmpty()) {
                     isServiceRunning = false
                     stopSelf()
                     Log.e(tag, "ProfileService is stopped...")

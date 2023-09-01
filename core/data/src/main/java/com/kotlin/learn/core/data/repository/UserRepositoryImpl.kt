@@ -107,9 +107,9 @@ class UserRepositoryImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override fun updateUserToFirestore(
+    override fun <T> updateUserToFirestore(
         id: String,
-        model: Map<String, String>,
+        model: Map<String, T>,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
@@ -133,7 +133,6 @@ class UserRepositoryImpl @Inject constructor(
             }
         )
     }.flowOn(Dispatchers.IO)
-
 
 
 }

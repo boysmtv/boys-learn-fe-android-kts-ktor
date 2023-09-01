@@ -31,9 +31,9 @@ class FirestoreClient {
             }
     }
 
-    internal fun updateRequestToFirestore(
+    internal fun <T> updateRequestToFirestore(
         id: String,
-        data: Map<String, String>,
+        data: Map<String, T>,
         collection: String,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,

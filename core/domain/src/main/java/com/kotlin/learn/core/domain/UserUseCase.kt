@@ -47,11 +47,11 @@ interface UserUseCase {
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
-    ) : Flow<Result<Any?>>
+    ): Flow<Result<Any?>>
 
-    fun updateUserToFirestore(
+    fun <T> updateUserToFirestore(
         id: String,
-        model: Map<String, String>,
+        model: Map<String, T>,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
@@ -62,6 +62,6 @@ interface UserUseCase {
         onLoad: () -> Unit,
         onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
-    ) : Flow<Result<Any?>>
+    ): Flow<Result<Any?>>
 
 }
