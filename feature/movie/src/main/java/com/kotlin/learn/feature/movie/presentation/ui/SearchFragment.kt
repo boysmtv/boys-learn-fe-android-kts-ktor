@@ -1,13 +1,8 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
@@ -19,14 +14,12 @@ import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.invisible
 import com.kotlin.learn.core.utilities.show
 import com.kotlin.learn.feature.movie.R
-import com.kotlin.learn.feature.movie.databinding.FragmentSearchBinding
 import com.kotlin.learn.feature.movie.adapter.SearchAdapter
-import com.kotlin.learn.feature.movie.databinding.FragmentHomeBinding
+import com.kotlin.learn.feature.movie.databinding.FragmentSearchBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SearchViewModel
 import com.kotlin.learn.feature.movie.util.common.SearchLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
@@ -38,7 +31,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun setupView() {
         subscribeSearch()
         setupEditTextChanged()
         setupAdapter()
@@ -48,10 +41,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         searchMovie.launch(this@SearchFragment) {
             searchAdapter.submitData(it)
         }
-    }
-
-    override fun setupView() {
-
     }
 
     private fun setupEditTextChanged() = with(binding) {

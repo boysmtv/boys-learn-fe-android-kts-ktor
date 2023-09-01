@@ -48,6 +48,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupSwipeRefresh()
         subscribeMovie()
         setupAdapter()
+        setupListener()
         setupUI()
         setupViewPager()
         subscribeBanner()
@@ -103,8 +104,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         setupAdapterMovie(layoutUpComing, adapterUpComing, MovieCategories.UP_COMING)
 
+    }
+
+    private fun setupListener() = with(binding) {
         ivSearch.setOnClickListener {
             movieNavigator.fromHomeToSearch(this@HomeFragment)
+        }
+        ivFavourite.setOnClickListener {
+            movieNavigator.fromHomeToFavourite(this@HomeFragment)
         }
         ivSetting.setOnClickListener {
             movieNavigator.fromHomeToSetting(this@HomeFragment)
@@ -252,7 +259,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         })
     }
 
-    private fun setOnBackPressed(){
+    private fun setOnBackPressed() {
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 onDestroy()
