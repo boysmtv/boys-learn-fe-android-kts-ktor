@@ -213,7 +213,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             invokeDataStoreEvent(event,
                 {}, {},
                 isStored = {
-                    authNavigator.fromAuthToHome(fragment = this@AuthFragment)
+                    authNavigator.fromAuthToMenu(fragment = this@AuthFragment)
                 }
             )
         }

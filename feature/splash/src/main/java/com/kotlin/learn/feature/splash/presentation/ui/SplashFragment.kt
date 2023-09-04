@@ -19,9 +19,6 @@ import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.splash.databinding.FragmentSplashBinding
 import com.kotlin.learn.feature.splash.presentation.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -67,7 +64,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                 invokeDataStoreEvent(event,
                     isFetched = { data ->
                         data?.let {
-                            if (it.displayName != Constant.EMPTY_STRING) launchToHome()
+                            if (it.displayName != Constant.EMPTY_STRING) navigationToMenu()
                             else navigateToGreetings()
                         }
                     },
@@ -79,20 +76,15 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         }, 100)
     }
 
-    private fun launchToHome() {
-        authNavigator.fromSplashToHome(this@SplashFragment)
-    }
-
-    private fun launchToGreetings() {
-        //authNavigator.fromSplashToGreetings(this@SplashFragment)
+    private fun navigationToMenu() {
         authNavigator.fromSplashToMenu(this@SplashFragment)
     }
 
-    private fun googleSignOut() = googleSignInExt.signOut({}, {})
-
     private fun navigateToGreetings() {
         googleSignOut()
-        launchToGreetings()
+        authNavigator.fromSplashToGreetings(this@SplashFragment)
     }
+
+    private fun googleSignOut() = googleSignInExt.signOut({}, {})
 
 }

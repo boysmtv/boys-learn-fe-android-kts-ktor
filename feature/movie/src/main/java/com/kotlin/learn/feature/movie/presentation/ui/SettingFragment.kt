@@ -96,6 +96,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
             viewModel.clearPreferences(token)
             authNavigator.fromSettingToGreetings(this@SettingFragment)
         }
+
     }
 
     private fun updateUi(model: UserModel) = with(binding) {

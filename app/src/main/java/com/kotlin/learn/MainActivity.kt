@@ -41,12 +41,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     private var scenarioOnBack: String? = Constant.EMPTY_STRING
 
+    private val navController by lazy {
+        supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)?.findNavController()
+    }
+
     override fun initBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
 
     override fun initView() {
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         setupInit()
         startProfileService()
         startHeartbeatService()
@@ -56,7 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     override fun backToLogin() {
         supportActionBar?.hide()
-        navHostFragment.findNavController().popBackStack(R.id.greetingsFragment, false)
+        navController?.popBackStack(R.id.greetingsFragment, false)
     }
 
     override fun backToSplash() {
@@ -80,11 +83,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
         scenarioOnBack = scenario
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     private fun setupInit() {
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         serviceUtil = ServiceUtil(context = this)
         locationUtil = LocationUtil(context = this)
     }

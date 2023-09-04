@@ -17,24 +17,6 @@ class MovieNavigator {
         )
     }
 
-    fun fromHomeToSearch(fragment: Fragment) {
-        findNavController(fragment).navigate(
-            HomeFragmentDirections.actionHomeFragmentToSearchFragment()
-        )
-    }
-
-    fun fromHomeToFavourite(fragment: Fragment) {
-        findNavController(fragment).navigate(
-            HomeFragmentDirections.actionHomeFragmentToFavouriteFragment()
-        )
-    }
-
-    fun fromHomeToSetting(fragment: Fragment) {
-        findNavController(fragment).navigate(
-            HomeFragmentDirections.actionHomeFragmentToSettingFragment()
-        )
-    }
-
     fun fromHomeToSeeAllMovie(fragment: Fragment, categories: MovieCategories) {
         findNavController(fragment).navigate(
             HomeFragmentDirections.actionHomeFragmentToSeeAllMovieFragment(categories.name)

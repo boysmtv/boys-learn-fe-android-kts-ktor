@@ -14,7 +14,15 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::infl
 
     private val tag = this::class.java.simpleName
 
+    private val navController by lazy {
+        childFragmentManager.findFragmentById(R.id.nav_host_menu_fragment_container)?.findNavController()
+    }
+
     override fun setupView() {
+        setupInit()
+    }
+
+    private fun setupInit(){
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_menu_fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)

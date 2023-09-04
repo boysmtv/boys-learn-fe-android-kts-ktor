@@ -264,7 +264,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
                 invokeDataStoreEvent(event,
                     {}, {},
                     isStored = {
-                        authNavigator.fromGreetingsToHome(this@GreetingsFragment)
+                        authNavigator.fromGreetingsToMenu(this@GreetingsFragment)
                     }
                 )
             }
