@@ -22,6 +22,12 @@ class AuthNavigator {
         )
     }
 
+    fun fromSplashToMenu(fragment: Fragment) {
+        NavHostFragment.findNavController(fragment).navigate(
+            SplashFragmentDirections.actionSplashFragmentToMenuFragment()
+        )
+    }
+
     fun fromGreetingsToRegister(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
             GreetingsFragmentDirections.actionGreetingsFragmentToRegisterFragment()

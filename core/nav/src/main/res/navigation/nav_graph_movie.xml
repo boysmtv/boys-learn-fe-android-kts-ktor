@@ -6,6 +6,12 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.kotlin.learn.feature.menu.presentation.ui.MenuFragment"
+        tools:layout="@layout/fragment_menu">
+    </fragment>
+
+    <fragment
         android:id="@+id/splashFragment"
         android:name="com.kotlin.learn.feature.splash.presentation.ui.SplashFragment"
         tools:layout="@layout/fragment_splash">
@@ -15,6 +21,9 @@
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
 
     <fragment

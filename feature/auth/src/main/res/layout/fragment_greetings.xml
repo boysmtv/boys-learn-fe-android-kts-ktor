@@ -121,7 +121,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btn_google"
-            style="@style/ShapeAppearance.Image.Rounded"
+            style="@style/ShapeAppearance.Image.Rounded.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
@@ -168,7 +168,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btn_email"
-            style="@style/ShapeAppearance.Image.Rounded"
+            style="@style/ShapeAppearance.Image.Rounded.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_16"
