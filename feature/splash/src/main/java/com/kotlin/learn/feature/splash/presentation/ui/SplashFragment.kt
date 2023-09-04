@@ -84,7 +84,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     }
 
     private fun launchToGreetings() {
-        authNavigator.fromSplashToGreetings(this@SplashFragment)
+        //authNavigator.fromSplashToGreetings(this@SplashFragment)
+        authNavigator.fromSplashToMenu(this@SplashFragment)
     }
 
     private fun googleSignOut() = googleSignInExt.signOut({}, {})

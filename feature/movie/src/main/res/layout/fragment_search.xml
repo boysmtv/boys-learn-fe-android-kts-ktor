@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:shapeAppearance="@style/ShapeAppearance.Image.Rounded">
+        app:shapeAppearance="@style/ShapeAppearance.Image.Rounded.Small">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"

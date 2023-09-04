@@ -23,6 +23,12 @@ class MovieNavigator {
         )
     }
 
+    fun fromHomeToFavourite(fragment: Fragment) {
+        findNavController(fragment).navigate(
+            HomeFragmentDirections.actionHomeFragmentToFavouriteFragment()
+        )
+    }
+
     fun fromHomeToSetting(fragment: Fragment) {
         findNavController(fragment).navigate(
             HomeFragmentDirections.actionHomeFragmentToSettingFragment()

@@ -1,7 +1,5 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -36,14 +34,10 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun setupView() {
         loadArguments()
         subscribeMovie()
         setupAdapterMovie()
-    }
-
-    override fun setupView() {
-
     }
 
     private fun loadArguments() {

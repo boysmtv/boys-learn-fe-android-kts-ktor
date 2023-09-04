@@ -6,6 +6,12 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.kotlin.learn.feature.menu.presentation.ui.MenuFragment"
+        tools:layout="@layout/fragment_menu">
+    </fragment>
+
+    <fragment
         android:id="@+id/splashFragment"
         android:name="com.kotlin.learn.feature.splash.presentation.ui.SplashFragment"
         tools:layout="@layout/fragment_splash">
@@ -15,6 +21,9 @@
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
 
     <fragment
@@ -33,6 +42,9 @@
         <action
             android:id="@+id/action_homeFragment_to_seeAllMovieFragment"
             app:destination="@id/seeAllMovieFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
     </fragment>
 
     <fragment
@@ -141,6 +153,12 @@
         <argument
             android:name="movieId"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.FavouriteFragment"
+        tools:layout="@layout/fragment_favourite">
     </fragment>
 
 </navigation>
