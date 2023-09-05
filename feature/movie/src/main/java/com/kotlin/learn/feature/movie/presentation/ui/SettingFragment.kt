@@ -94,7 +94,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                     }
                 )
             viewModel.clearPreferences(token)
-            authNavigator.fromSettingToGreetings(this@SettingFragment)
+            //authNavigator.fromSettingToGreetings(this@SettingFragment)
         }
 
     }
