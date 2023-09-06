@@ -4,9 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.network.Result
-import com.kotlin.learn.core.model.CastModel
 import com.kotlin.learn.core.model.CreditsModel
-import com.kotlin.learn.core.model.CrewModel
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.adapter.CreditsAdapter
 import com.kotlin.learn.feature.movie.databinding.FragmentCreditsBinding

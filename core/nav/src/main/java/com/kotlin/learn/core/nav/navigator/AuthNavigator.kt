@@ -5,6 +5,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.kotlin.learn.feature.auth.presentation.ui.AuthFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.GreetingsFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.RegisterFragmentDirections
+import com.kotlin.learn.feature.menu.presentation.ui.MenuFragmentDirections
 import com.kotlin.learn.feature.splash.presentation.ui.SplashFragmentDirections
 
 class AuthNavigator {
@@ -66,6 +67,12 @@ class AuthNavigator {
     fun fromAuthToMenu(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
             AuthFragmentDirections.actionAuthFragmentToMenuFragment()
+        )
+    }
+
+    fun fromMenuToGreetings(fragment: Fragment) {
+        NavHostFragment.findNavController(fragment).navigate(
+            MenuFragmentDirections.actionMenuFragmentToGreetingsFragment()
         )
     }
 

@@ -63,6 +63,9 @@
         android:id="@+id/menuFragment"
         android:name="com.kotlin.learn.feature.menu.presentation.ui.MenuFragment"
         tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_menuFragment_to_greetingsFragment"
+            app:destination="@id/greetingsFragment" />
     </fragment>
 
 </navigation>

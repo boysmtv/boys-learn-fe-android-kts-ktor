@@ -29,6 +29,7 @@ dependencies {
 
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.navigation.fragment)
+    implementation(project(mapOf("path" to ":core:common")))
 
     kapt(libs.hilt.compiler)
 }

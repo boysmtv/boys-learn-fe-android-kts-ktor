@@ -1,5 +1,6 @@
 package com.kotlin.learn.core.nav.di
 
+import com.kotlin.learn.core.nav.NavControllerBinder
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import dagger.Module
@@ -19,5 +20,9 @@ class NavigatorModule {
     @Singleton
     @Provides
     fun provideAuthNavigator(): AuthNavigator = AuthNavigator()
+
+    @Singleton
+    @Provides
+    fun provideBinder(): NavControllerBinder = NavControllerBinder()
 
 }

@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.timber)
     implementation(libs.com.android.support.multidex)
+    implementation(libs.com.jakewharton.threetenabp.threetenabp)
 
     kapt(libs.hilt.compiler)
 

@@ -2,7 +2,6 @@ package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -52,11 +51,17 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     private var isSaved: Boolean = false
 
     override fun setupView() {
+        setupInit()
         subscribeDetail()
         loadArguments()
         loadUser()
         setupVpCredits()
         setupListener()
+    }
+
+    private fun setupInit() {
+        userModel = UserModel()
+        movieModel = MovieDetailModel()
     }
 
     private fun setupListener() = with(binding) {

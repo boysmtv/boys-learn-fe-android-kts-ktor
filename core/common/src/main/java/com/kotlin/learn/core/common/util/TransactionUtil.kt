@@ -18,8 +18,10 @@ object TransactionUtil {
         val d = chars[rnd.nextInt(chars.length)]
         val e = chars[rnd.nextInt(chars.length)]
         val f = chars[rnd.nextInt(chars.length)]
+        val g = chars[rnd.nextInt(chars.length)]
+        val h = chars[rnd.nextInt(chars.length)]
 
-        return "$a$b$c$d$$hexDate$e$f"
+        return "$a$b$c$d$hexDate$e$f$g$h"
     }
 
     fun getTimestampWithFormat(format: String = "yyyy-MM-dd HH:mm:ss"): String =

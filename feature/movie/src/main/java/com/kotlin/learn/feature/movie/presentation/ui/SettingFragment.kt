@@ -10,6 +10,7 @@ import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.UserModel
+import com.kotlin.learn.core.nav.data.ITransactionNavigationParent
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
@@ -32,6 +33,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private lateinit var userModel: UserModel
 
     private var token: String = Constant.EMPTY_STRING
+
+    private val parent : ITransactionNavigationParent
 
     override fun setupView() {
         init()
@@ -94,7 +97,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                     }
                 )
             viewModel.clearPreferences(token)
-            //authNavigator.fromSettingToGreetings(this@SettingFragment)
+            parent.navigateToGreetings()
         }
 
     }
