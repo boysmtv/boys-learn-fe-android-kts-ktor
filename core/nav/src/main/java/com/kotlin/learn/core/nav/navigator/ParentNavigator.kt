@@ -8,9 +8,12 @@ import com.kotlin.learn.feature.menu.presentation.ui.MenuFragmentDirections
 
 class ParentNavigator {
 
+    private fun initNavHostFragment(activity: FragmentActivity): NavHostFragment {
+        return activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+    }
+
     fun fromMenuToGreetings(activity: FragmentActivity) {
-        val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-        navHostFragment.findNavController().navigate(
+        initNavHostFragment(activity).findNavController().navigate(
             MenuFragmentDirections.actionMenuFragmentToGreetingsFragment()
         )
     }

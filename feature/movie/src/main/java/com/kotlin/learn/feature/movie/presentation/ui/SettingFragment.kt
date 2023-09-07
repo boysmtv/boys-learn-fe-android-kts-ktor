@@ -3,7 +3,6 @@ package com.kotlin.learn.feature.movie.presentation.ui
 import android.graphics.Paint
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.kotlin.learn.core.common.base.BaseFragment
@@ -11,11 +10,9 @@ import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
-import com.kotlin.learn.feature.menu.presentation.ui.MenuFragmentDirections
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.FragmentSettingBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SettingViewModel
@@ -29,7 +26,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private val viewModel: SettingViewModel by viewModels()
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var parentNavigator: ParentNavigator
 
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})
 
@@ -98,9 +95,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                     }
                 )
             viewModel.clearPreferences(token)
-
-            // move to DI and parent
-            ParentNavigator().fromMenuToGreetings(requireActivity())
+            parentNavigator.fromMenuToGreetings(requireActivity())
         }
 
     }
