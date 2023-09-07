@@ -41,10 +41,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     private var scenarioOnBack: String? = Constant.EMPTY_STRING
 
-    private val navController by lazy {
-        supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)?.findNavController()
-    }
-
     override fun initBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
@@ -59,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     override fun backToLogin() {
         supportActionBar?.hide()
-        navController?.popBackStack(R.id.greetingsFragment, false)
+        navHostFragment.findNavController().popBackStack(R.id.greetingsFragment, false)
     }
 
     override fun backToSplash() {

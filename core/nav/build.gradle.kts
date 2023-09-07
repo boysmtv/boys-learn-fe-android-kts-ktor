@@ -20,6 +20,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:utilities"))
     implementation(project(":core:data"))
+    implementation(project(":core:common"))
 
     implementation(libs.constraintlayout)
     implementation(libs.kotlinx.coroutines.android)
@@ -29,7 +30,6 @@ dependencies {
 
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.navigation.fragment)
-    implementation(project(mapOf("path" to ":core:common")))
 
     kapt(libs.hilt.compiler)
 }

@@ -68,6 +68,7 @@ androidyoutubeplayerCore = "12.1.0"
 viewPump = "2.0.3"
 threeTenABP = "1.4.1"
 i18nLanguagePack = "1.0.0"
+navigationRuntimeKtx = "2.6.0"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -208,7 +209,7 @@ io-github-inflationx-viewpump = { group = "io.github.inflationx", name = "viewpu
 # External
 com-jakewharton-threetenabp-threetenabp = { group = "com.jakewharton.threetenabp", name = "threetenabp", version.ref = "threeTenABP" }
 com-i18next-i18next-android = { group = "com.i18next", name = "i18next-android", version.ref = "i18nLanguagePack" }
-androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version = "2.7.1" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

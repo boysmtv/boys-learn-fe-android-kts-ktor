@@ -3,6 +3,7 @@ package com.kotlin.learn.feature.movie.presentation.ui
 import android.graphics.Paint
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.kotlin.learn.core.common.base.BaseFragment
@@ -10,15 +11,17 @@ import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.nav.data.ITransactionNavigationParent
 import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.feature.menu.presentation.ui.MenuFragmentDirections
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.FragmentSettingBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
@@ -33,8 +36,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private lateinit var userModel: UserModel
 
     private var token: String = Constant.EMPTY_STRING
-
-    private val parent : ITransactionNavigationParent
 
     override fun setupView() {
         init()
@@ -97,7 +98,9 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                     }
                 )
             viewModel.clearPreferences(token)
-            parent.navigateToGreetings()
+
+            // move to DI and parent
+            ParentNavigator().fromMenuToGreetings(requireActivity())
         }
 
     }
