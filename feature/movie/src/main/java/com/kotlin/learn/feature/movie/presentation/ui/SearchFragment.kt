@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
+import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.invisible
 import com.kotlin.learn.core.utilities.show
@@ -19,6 +20,9 @@ import com.kotlin.learn.feature.movie.databinding.FragmentSearchBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SearchViewModel
 import com.kotlin.learn.feature.movie.util.common.SearchLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -36,6 +40,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         subscribeSearch()
         setupEditTextChanged()
         setupAdapter()
+        getInitialMovie()
+    }
+
+    private fun getInitialMovie() {
+        binding.viewAnimator.show()
+        viewModel.searchMovie(Constant.EMPTY_STRING)
     }
 
     private fun subscribeSearch() = with(viewModel) {
@@ -45,8 +55,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun setupEditTextChanged() = with(binding) {
-        viewAnimator.invisible()
-
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
 
