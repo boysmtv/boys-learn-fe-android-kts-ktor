@@ -33,7 +33,8 @@
     <string name="password_label">PASSWORD</string>
     <string name="password_hint">create password</string>
     <string name="create_an_new_account_label">Create an new account</string>
-    <string name="setting_desc">Below is your information that we have</string>
+    <string name="profile_desc">Below is your information that we have</string>
+    <string name="setting_desc">You can change the settings according to the restrictions</string>
     <string name="register_label">Register</string>
     <string name="setting_label">Setting</string>
     <string name="profile_label">Profile</string>

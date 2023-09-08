@@ -18,4 +18,10 @@ class MenuNavigator {
         )
     }
 
+    fun fromMenuToSetting(activity: FragmentActivity) {
+        initNavHostFragment(activity).findNavController().navigate(
+            MenuFragmentDirections.actionMenuFragmentToSettingFragment()
+        )
+    }
+
 }

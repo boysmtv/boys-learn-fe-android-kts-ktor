@@ -1,5 +1,6 @@
 package com.kotlin.learn.feature.menu.presentation.ui
 
+import android.annotation.SuppressLint
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.kotlin.learn.core.common.base.BaseFragment
@@ -21,6 +22,7 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::infl
         setupInit()
     }
 
+    @SuppressLint("CommitTransaction")
     private fun setupInit() {
         val host = childFragmentManager.findFragmentById(R.id.nav_host_menu_fragment_container) as NavHostFragment
         val controller = host.navController

@@ -6,4 +6,7 @@
     <string name="menu_recent">Recent</string>
     <string name="menu_favourite">Favourite</string>
     <string name="menu_profile">Profile</string>
+    <string name="setting_enable_notification">Enable show suggestion notification</string>
+    <string name="setting_enable_favourite">Enable save movie to favourite</string>
+    <string name="setting_enable_auto_login">Enable auto login</string>
 </resources>

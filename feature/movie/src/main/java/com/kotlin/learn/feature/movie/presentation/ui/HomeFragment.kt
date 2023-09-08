@@ -4,13 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.MovieDataModel
+import com.kotlin.learn.core.nav.navigator.MenuNavigator
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.launch
@@ -33,7 +33,6 @@ import com.zhpan.bannerview.constants.PageStyle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
@@ -46,7 +45,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     @Inject
     lateinit var movieNavigator: MovieNavigator
 
+    @Inject
+    lateinit var menuNavigator: MenuNavigator
+
     override fun setupView() {
+        setupListener()
         setupSwipeRefresh()
         subscribeMovie()
         setupAdapter()
@@ -55,6 +58,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         subscribeBanner()
         askNotificationPermission()
         setOnBackPressed()
+    }
+
+    private fun setupListener() = with(binding) {
+        ivSetting.setOnClickListener {
+            menuNavigator.fromMenuToSetting(requireActivity())
+        }
     }
 
     private fun setupSwipeRefresh() = with(binding) {
@@ -104,7 +113,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupAdapterMovie(layoutTopRated, adapterTopRated, MovieCategories.TOP_RATED)
 
         setupAdapterMovie(layoutUpComing, adapterUpComing, MovieCategories.UP_COMING)
-
     }
 
     private fun setupUI() = with(binding) {

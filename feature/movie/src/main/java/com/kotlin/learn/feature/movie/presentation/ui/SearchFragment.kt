@@ -12,7 +12,6 @@ import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
-import com.kotlin.learn.core.utilities.invisible
 import com.kotlin.learn.core.utilities.show
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.adapter.SearchAdapter
@@ -20,11 +19,7 @@ import com.kotlin.learn.feature.movie.databinding.FragmentSearchBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SearchViewModel
 import com.kotlin.learn.feature.movie.util.common.SearchLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
