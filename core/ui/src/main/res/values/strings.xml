@@ -16,6 +16,7 @@
     <string name="dot">.</string>
     <string name="old">18+</string>
     <string name="search">Search</string>
+    <string name="search_label">Search for a list or movie</string>
     <string name="greetings_desc">Lets organize your movies with priority and do everything without stress</string>
     <string name="continue_with_email">Continue with Email</string>
     <string name="continue_with_google">Continue with Google</string>
@@ -35,6 +36,7 @@
     <string name="setting_desc">Below is your information that we have</string>
     <string name="register_label">Register</string>
     <string name="setting_label">Setting</string>
+    <string name="profile_label">Profile</string>
     <string name="logout_label">LOGOUT</string>
     <string name="tnc_title_label">By creating an account, you accept our</string>
     <string name="tnc_link_label"><![CDATA[Terms & Conditions]]></string>

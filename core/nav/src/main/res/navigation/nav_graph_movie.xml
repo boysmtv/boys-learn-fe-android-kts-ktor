@@ -66,6 +66,15 @@
         <action
             android:id="@+id/action_menuFragment_to_greetingsFragment"
             app:destination="@id/greetingsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.kotlin.learn.feature.menu.presentation.ui.SettingFragment"
+        tools:layout="@layout/fragment_setting">
     </fragment>
 
 </navigation>

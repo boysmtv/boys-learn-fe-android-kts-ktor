@@ -11,7 +11,7 @@ import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginRespModel
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.databinding.FragmentAuthBinding
@@ -25,7 +25,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     private val viewModel: UserViewModel by viewModels()
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var parentNavigator: ParentNavigator
 
     private var userModel: UserModel = UserModel()
 
@@ -81,7 +81,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         }
 
         tvRegister.setOnClickListener {
-            authNavigator.fromAuthToRegister(this@AuthFragment)
+            parentNavigator.fromAuthToRegister(this@AuthFragment)
         }
 
         ivBack.setOnClickListener {
@@ -213,7 +213,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             invokeDataStoreEvent(event,
                 {}, {},
                 isStored = {
-                    authNavigator.fromAuthToMenu(fragment = this@AuthFragment)
+                    parentNavigator.fromAuthToMenu(fragment = this@AuthFragment)
                 }
             )
         }

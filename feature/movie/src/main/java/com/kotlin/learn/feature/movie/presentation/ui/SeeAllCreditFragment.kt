@@ -123,7 +123,7 @@ class SeeAllCreditsFragmentView(
 
     private fun setupAdapter() = with(binding) {
         rvSeeAllCredits.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+            layoutManager = GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
             adapter = if (checkCreditsIsCrew(creditsCategory)) crewAdapter else castAdapter
         }
     }

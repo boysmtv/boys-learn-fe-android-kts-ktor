@@ -12,7 +12,7 @@ import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.common.util.TransactionUtil
@@ -29,7 +29,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private val viewModel: UserViewModel by viewModels()
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var parentNavigator: ParentNavigator
 
     private var userModel: UserModel = UserModel()
 
@@ -120,7 +120,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
     private fun setupListener() = with(binding) {
         tvLogin.setOnClickListener {
-            authNavigator.fromRegisterToAuth(this@RegisterFragment)
+            parentNavigator.fromRegisterToAuth(this@RegisterFragment)
         }
 
         ivBack.setOnClickListener {
@@ -222,7 +222,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         showDialogWithActionButton(
             dataToDialog = content,
             actionClickPrimary = {
-                authNavigator.fromRegisterToAuth(this@RegisterFragment)
+                parentNavigator.fromRegisterToAuth(this@RegisterFragment)
             },
             tag = RegisterFragment::class.simpleName.toString()
         )

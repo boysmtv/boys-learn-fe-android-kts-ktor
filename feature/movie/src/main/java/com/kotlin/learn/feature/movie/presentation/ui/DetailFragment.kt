@@ -82,7 +82,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             if (movieKey != Constant.EMPTY_STRING)
                 movieNavigator.fromDetailToVideos(this@DetailFragment, movieKey)
             else
-                Toast.makeText(requireContext(), "Error get movie key", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "The trailer is not available", Toast.LENGTH_SHORT).show()
         }
 
         tvDetailCastSeeAll.setOnClickListener {

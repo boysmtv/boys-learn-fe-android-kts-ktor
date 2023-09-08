@@ -3,21 +3,19 @@ package com.kotlin.learn.feature.menu.presentation.ui
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.nav.data.ITransactionNavigationParent
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.feature.menu.R
 import com.kotlin.learn.feature.menu.databinding.FragmentMenuBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::inflate), ITransactionNavigationParent {
+class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::inflate) {
 
     private val tag = this::class.java.simpleName
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var parentNavigator: ParentNavigator
 
     override fun setupView() {
         setupInit()
@@ -27,10 +25,6 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::infl
         val host = childFragmentManager.findFragmentById(R.id.nav_host_menu_fragment_container) as NavHostFragment
         val controller = host.navController
         binding.bottomNavigationView.setupWithNavController(controller)
-    }
-
-    override fun navigateToGreetings() {
-        authNavigator.fromMenuToGreetings(this@MenuFragment)
     }
 
 }

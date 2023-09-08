@@ -10,10 +10,10 @@
         android:id="@+id/til_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:shapeAppearance="@style/ShapeAppearance.Image.Rounded.Small">
+        app:shapeAppearance="@style/ShapeAppearance.Image.Rounded.Large">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
@@ -24,25 +24,13 @@
             android:drawablePadding="8dp"
             android:fontFamily="@font/tt_interphases_regular"
             android:gravity="center_vertical"
-            android:hint="@string/search"
+            android:hint="@string/search_label"
             android:inputType="text"
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/tv_search_title"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
-        android:fontFamily="@font/tt_interphases_regular"
-        android:text="@string/fragment_movie_search_top_title"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_search" />
 
     <ViewAnimator
         android:id="@+id/view_animator"
@@ -51,7 +39,7 @@
         android:layout_marginTop="@dimen/dp_8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_search_title">
+        app:layout_constraintTop_toBottomOf="@+id/til_search">
 
         <include
             layout="@layout/shimmer_movie_search"

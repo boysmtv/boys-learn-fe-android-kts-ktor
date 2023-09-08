@@ -12,7 +12,7 @@ import com.kotlin.learn.core.common.util.NotificationUtil
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.PermissionModel
 import com.kotlin.learn.core.model.ProfileModel
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.common.util.TransactionUtil
 import com.kotlin.learn.core.utilities.extension.launch
@@ -29,7 +29,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     private val viewModel: SplashViewModel by viewModels()
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var parentNavigator: ParentNavigator
 
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})
 
@@ -77,12 +77,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     }
 
     private fun navigationToMenu() {
-        authNavigator.fromSplashToMenu(this@SplashFragment)
+        parentNavigator.fromSplashToMenu(this@SplashFragment)
     }
 
     private fun navigateToGreetings() {
         googleSignOut()
-        authNavigator.fromSplashToGreetings(this@SplashFragment)
+        parentNavigator.fromSplashToGreetings(this@SplashFragment)
     }
 
     private fun googleSignOut() = googleSignInExt.signOut({}, {})

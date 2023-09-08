@@ -3,22 +3,27 @@
 
     <style name="ShapeAppearance.Image.Movie" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">4dp</item>
+        <item name="cornerSize">@dimen/dp_4</item>
     </style>
 
     <style name="ShapeAppearance.Image.Cut" parent="">
         <item name="cornerFamily">cut</item>
-        <item name="cornerSize">12dp</item>
+        <item name="cornerSize">@dimen/dp_12</item>
     </style>
 
     <style name="ShapeAppearance.Image.Rounded.Small" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
+        <item name="cornerSize">@dimen/dp_8</item>
     </style>
 
     <style name="ShapeAppearance.Image.Rounded.Medium" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16dp</item>
+        <item name="cornerSize">@dimen/dp_16</item>
+    </style>
+
+    <style name="ShapeAppearance.Image.Rounded.Large" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/dp_32</item>
     </style>
 
     <style name="ShapeAppearance.Image.Circle" parent="">

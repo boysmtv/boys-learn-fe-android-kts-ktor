@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
@@ -20,6 +20,7 @@ import com.kotlin.learn.feature.movie.presentation.viewmodel.SearchViewModel
 import com.kotlin.learn.feature.movie.util.common.SearchLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
@@ -69,9 +70,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     private fun setupAdapter() = with(binding) {
         rvSearch.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.VERTICAL, false
-            )
+            layoutManager = GridLayoutManager(activity, 3)
             adapter = searchAdapter.withLoadStateHeaderAndFooter(
                 SearchLoadStateAdapter { searchAdapter.retry() },
                 SearchLoadStateAdapter { searchAdapter.retry() }
