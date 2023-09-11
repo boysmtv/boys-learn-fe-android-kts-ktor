@@ -39,11 +39,16 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
     override fun setupView() {
         init()
+        setupTransactionID()
         setupListener()
     }
 
     private fun init() {
         googleSignInExt.initGoogle(requireContext())
+    }
+
+    private fun setupTransactionID(){
+        viewModel.storeDeviceIdToFirestore(TransactionUtil.generateTransactionID())
     }
 
     private fun setupListener() {
@@ -94,7 +99,19 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                     invokeDataStoreEvent(event,
                         {}, {},
                         isStored = {
-                            navigationToMenu()
+                            viewModel.storeProfileToFirestore(
+                                id = profileModel.id ?: TransactionUtil.generateTransactionID(),
+                                model = profileModel,
+                                onError = {
+                                    showDialogGeneralError("Warning", it)
+                                },
+                                onLoad = {
+                                },
+                                onSuccess = {
+                                    navigationToMenu()
+                                }
+                            )
+
                         }
                     )
                 }

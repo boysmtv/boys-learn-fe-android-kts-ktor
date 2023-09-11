@@ -1,6 +1,7 @@
 package com.kotlin.learn.core.data.repository
 
 import com.kotlin.learn.core.common.util.network.execute
+import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.source.ProfileDataSource
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +16,9 @@ class ProfileRepositoryImpl @Inject constructor(
     // TODO : start region to firestore
     // ===============================================================
 
-    override fun storeProfileToFirestore(
+    override fun <T: Any> storeProfileToFirestore(
         id: String,
-        model: UserModel,
+        model: T,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit

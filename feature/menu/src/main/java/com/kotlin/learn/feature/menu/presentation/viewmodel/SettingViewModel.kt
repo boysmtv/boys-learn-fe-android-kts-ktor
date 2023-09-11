@@ -51,9 +51,9 @@ class SettingViewModel @Inject constructor(
     // TODO : start region to firestore
     // ===============================================================
 
-    fun storeProfileToFirestore(
+    fun <T : Any> storeProfileToFirestore(
         id: String,
-        model: UserModel,
+        model: T,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit

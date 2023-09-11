@@ -1,15 +1,13 @@
 package com.kotlin.learn.core.network.source
 
-import com.kotlin.learn.core.model.UserModel
-
 interface ProfileDataSource {
 
     // TODO : start region to firestore
     // ===============================================================
 
-    fun storeProfileToFirestore(
+    fun <T: Any> storeProfileToFirestore(
         id: String,
-        model: UserModel,
+        model: T,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit

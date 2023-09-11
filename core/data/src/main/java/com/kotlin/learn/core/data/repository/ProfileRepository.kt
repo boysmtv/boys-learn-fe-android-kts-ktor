@@ -1,6 +1,7 @@
 package com.kotlin.learn.core.data.repository
 
 import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
 import kotlinx.coroutines.flow.Flow
 
@@ -9,9 +10,9 @@ interface ProfileRepository {
     // TODO : start region to firestore
     // ===============================================================
 
-    fun storeProfileToFirestore(
+    fun <T: Any> storeProfileToFirestore(
         id: String,
-        model: UserModel,
+        model: T,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit

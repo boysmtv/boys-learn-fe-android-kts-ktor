@@ -1,5 +1,6 @@
 package com.kotlin.learn.core.network.source
 
+import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.ApiFirebaseResources
 import com.kotlin.learn.core.network.firestore.FirestoreClient
@@ -9,9 +10,9 @@ class ProfileDataSourceImpl @Inject constructor(
     private val firestoreClient: FirestoreClient,
 ) : ProfileDataSource {
 
-    override fun storeProfileToFirestore(
+    override fun <T: Any> storeProfileToFirestore(
         id: String,
-        model: UserModel,
+        model: T,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
