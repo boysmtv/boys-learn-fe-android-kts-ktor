@@ -50,6 +50,44 @@ class FirestoreClient {
             }
     }
 
+    internal fun <I : Any> fetchRequestFromFirestore(
+        filter: Pair<String, String>,
+        resources: I,
+        collection: String,
+        onLoad: () -> Unit,
+        onSuccess: (I) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        onLoad.invoke()
+        firestore
+            .collection(collection)
+            .whereEqualTo(filter.first, filter.second)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { documents ->
+                try {
+                    if (documents != null) {
+                        if (!documents.isEmpty) {
+                            for (document in documents) {
+                                try {
+                                    val finalResult = document.toObject(resources::class.java)
+                                    onSuccess.invoke(finalResult)
+                                } catch (ex: Exception) {
+                                    onError.invoke(ex.message.toString())
+                                }
+                            }
+                        } else onError.invoke(Constant.DATA_NOT_FOUND)
+                    } else {
+                        onError.invoke(Constant.DATA_NOT_FOUND)
+                    }
+                } catch (ex: Exception) {
+                    onError.invoke("Error writing document, ${ex.message.toString()}")
+                }
+            }.addOnFailureListener { ex ->
+                onError.invoke("Failure writing document, ${ex.message.toString()}")
+            }
+    }
+
     internal fun fetchUserFromFirestore(
         filter: HashMap<String, String>,
         collection: String,

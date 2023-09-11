@@ -31,11 +31,11 @@ class SplashViewModel @Inject constructor(
             }
         }
 
-    fun storeProfileToDatastore(user: String) =
+    fun storeProfileToDatastore(data: String) =
         flow {
             dataStore.setString(
                 PreferenceConstants.Authorization.PREF_PROFILE,
-                user
+                data
             )
             emit(DataStoreCacheEvent.StoreSuccess)
         }
