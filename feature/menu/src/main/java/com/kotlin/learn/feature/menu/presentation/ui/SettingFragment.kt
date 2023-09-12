@@ -1,8 +1,10 @@
 package com.kotlin.learn.feature.menu.presentation.ui
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.SettingModel
 import com.kotlin.learn.core.utilities.extension.launch
@@ -13,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
 
+    private val tag = this::class.java.simpleName
     private var isAutoLogin = true
     private var isSaveFavourite = true
     private var isShowNotification = true
@@ -22,7 +25,27 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private var profileModel = ProfileModel()
 
     override fun setupView() {
+        subscribeProfile()
         setupSettingProfile()
+        fetchProfileFromFirestore()
+    }
+
+    private fun subscribeProfile() = with(viewModel) {
+        profile.launch(this@SettingFragment) {
+            when (it) {
+                is ResultCallback.Loading -> {
+                    Log.e(tag, "ResultCallback: Loading")
+                }
+
+                is ResultCallback.Success -> {
+                    Log.e(tag, "ResultCallback: Success | ${it.data}")
+                }
+
+                is ResultCallback.Error -> {
+                    Log.e(tag, "ResultCallback: Error | ${it.message}")
+                }
+            }
+        }
     }
 
     private fun setupListener() = with(binding) {
@@ -109,6 +132,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         }
 
         setupListener()
+    }
+
+    private fun fetchProfileFromFirestore() {
+        viewModel.fetchProfileFromFirestore(
+            filter = Pair("id", "0DK4b7ffc2b9e6807C0Y")
+        )
     }
 
 }

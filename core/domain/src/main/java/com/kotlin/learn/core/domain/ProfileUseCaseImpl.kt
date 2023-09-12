@@ -1,6 +1,7 @@
 package com.kotlin.learn.core.domain
 
 import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.data.repository.ProfileRepository
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
@@ -14,7 +15,7 @@ class ProfileUseCaseImpl @Inject constructor(
     // TODO : start region to firestore
     // ===============================================================
 
-    override fun <T: Any> storeProfileToFirestore(
+    override fun <T : Any> storeProfileToFirestore(
         id: String,
         model: T,
         onLoad: () -> Unit,
@@ -37,11 +38,8 @@ class ProfileUseCaseImpl @Inject constructor(
     override fun <T : Any> fetchProfileFromFirestore(
         filter: Pair<String, String>,
         resources: T,
-        onLoad: () -> Unit,
-        onSuccess: (T) -> Unit,
-        onError: (String) -> Unit
-    ): Flow<Result<Any?>> {
-        return repository.fetchProfileFromFirestore(filter, resources, onLoad, onSuccess, onError)
+    ): Flow<ResultCallback<T>> {
+        return repository.fetchProfileFromFirestore(filter, resources)
     }
 
 }

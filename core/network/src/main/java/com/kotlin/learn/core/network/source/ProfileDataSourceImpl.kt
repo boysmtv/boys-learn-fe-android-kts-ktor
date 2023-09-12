@@ -1,16 +1,22 @@
 package com.kotlin.learn.core.network.source
 
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.ApiFirebaseResources
 import com.kotlin.learn.core.network.firestore.FirestoreClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProfileDataSourceImpl @Inject constructor(
     private val firestoreClient: FirestoreClient,
 ) : ProfileDataSource {
 
-    override fun <T: Any> storeProfileToFirestore(
+    override fun <T : Any> storeProfileToFirestore(
         id: String,
         model: T,
         onLoad: () -> Unit,
@@ -46,18 +52,13 @@ class ProfileDataSourceImpl @Inject constructor(
 
     override fun <T : Any> fetchProfileFromFirestore(
         filter: Pair<String, String>,
-        resources: T,
-        onLoad: () -> Unit,
-        onSuccess: (T) -> Unit,
-        onError: (String) -> Unit
-    ) {
-        firestoreClient.fetchRequestFromFirestore(
+        resources: T
+    ): Flow<ResultCallback<T>> {
+        return firestoreClient.fetchDataFromFirestore(
             filter = filter,
             resources = resources,
-            collection = ApiFirebaseResources.PROFILE,
-            onLoad = onLoad,
-            onSuccess = onSuccess,
-            onError = onError
+            collection = ApiFirebaseResources.PROFILE
         )
     }
+
 }

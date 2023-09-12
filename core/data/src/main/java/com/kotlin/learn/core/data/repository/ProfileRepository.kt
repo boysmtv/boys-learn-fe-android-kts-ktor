@@ -1,6 +1,7 @@
 package com.kotlin.learn.core.data.repository
 
 import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
 import kotlinx.coroutines.flow.Flow
@@ -28,10 +29,7 @@ interface ProfileRepository {
 
     fun <T : Any> fetchProfileFromFirestore(
         filter: Pair<String, String>,
-        resources: T,
-        onLoad: () -> Unit,
-        onSuccess: (T) -> Unit,
-        onError: (String) -> Unit
-    ): Flow<Result<Any?>>
+        resources: T
+    ): Flow<ResultCallback<T>>
 
 }

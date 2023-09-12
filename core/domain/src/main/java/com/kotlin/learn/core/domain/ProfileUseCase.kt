@@ -1,6 +1,7 @@
 package com.kotlin.learn.core.domain
 
 import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ interface ProfileUseCase {
     // TODO : start region to firestore
     // ===============================================================
 
-    fun <T: Any> storeProfileToFirestore(
+    fun <T : Any> storeProfileToFirestore(
         id: String,
         model: T,
         onLoad: () -> Unit,
@@ -29,9 +30,6 @@ interface ProfileUseCase {
     fun <T : Any> fetchProfileFromFirestore(
         filter: Pair<String, String>,
         resources: T,
-        onLoad: () -> Unit,
-        onSuccess: (T) -> Unit,
-        onError: (String) -> Unit
-    ): Flow<Result<Any?>>
+    ): Flow<ResultCallback<T>>
 
 }

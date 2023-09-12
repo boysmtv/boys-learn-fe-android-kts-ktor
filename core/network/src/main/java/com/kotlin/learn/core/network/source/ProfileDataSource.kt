@@ -1,5 +1,8 @@
 package com.kotlin.learn.core.network.source
 
+import com.kotlin.learn.core.common.util.network.ResultCallback
+import kotlinx.coroutines.flow.Flow
+
 interface ProfileDataSource {
 
     // TODO : start region to firestore
@@ -21,12 +24,9 @@ interface ProfileDataSource {
         onError: (String) -> Unit
     )
 
-    fun <T : Any> fetchProfileFromFirestore(
+     fun <T : Any> fetchProfileFromFirestore(
         filter: Pair<String, String>,
-        resources: T,
-        onLoad: () -> Unit,
-        onSuccess: (T) -> Unit,
-        onError: (String) -> Unit
-    )
+        resources: T
+    ) : Flow<ResultCallback<T>>
 
 }

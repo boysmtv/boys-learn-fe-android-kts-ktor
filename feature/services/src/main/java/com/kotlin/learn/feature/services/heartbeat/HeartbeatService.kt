@@ -51,7 +51,6 @@ class HeartbeatService : Service() {
     @SuppressLint("SimpleDateFormat")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.e("Service", "HeartbeatService is running...")
         Thread {
             while (true) {
                 try {

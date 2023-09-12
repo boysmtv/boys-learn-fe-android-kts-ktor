@@ -1,10 +1,12 @@
 package com.kotlin.learn.core.data.repository
 
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.common.util.network.execute
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.source.ProfileDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -16,7 +18,7 @@ class ProfileRepositoryImpl @Inject constructor(
     // TODO : start region to firestore
     // ===============================================================
 
-    override fun <T: Any> storeProfileToFirestore(
+    override fun <T : Any> storeProfileToFirestore(
         id: String,
         model: T,
         onLoad: () -> Unit,
@@ -46,17 +48,9 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override fun <T : Any> fetchProfileFromFirestore(
         filter: Pair<String, String>,
-        resources: T,
-        onLoad: () -> Unit,
-        onSuccess: (T) -> Unit,
-        onError: (String) -> Unit
-    ) = flow {
-        emit(
-            execute {
-                network.fetchProfileFromFirestore(filter, resources, onLoad, onSuccess, onError)
-            }
-        )
-    }.flowOn(Dispatchers.IO)
-
+        resources: T
+    ): Flow<ResultCallback<T>> {
+        return network.fetchProfileFromFirestore(filter, resources)
+    }
 
 }
