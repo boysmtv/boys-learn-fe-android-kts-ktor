@@ -4,8 +4,6 @@ import com.kotlin.learn.core.data.repository.HeartbeatRepository
 import com.kotlin.learn.core.data.repository.HeartbeatRepositoryImpl
 import com.kotlin.learn.core.data.repository.MovieRepository
 import com.kotlin.learn.core.data.repository.MovieRepositoryImpl
-import com.kotlin.learn.core.data.repository.ProfileRepository
-import com.kotlin.learn.core.data.repository.ProfileRepositoryImpl
 import com.kotlin.learn.core.data.repository.UserRepository
 import com.kotlin.learn.core.data.repository.UserRepositoryImpl
 import dagger.Binds
@@ -26,11 +24,6 @@ interface DataModule {
     fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl,
     ): UserRepository
-
-    @Binds
-    fun bindProfileRepository(
-        profileRepositoryImpl: ProfileRepositoryImpl,
-    ): ProfileRepository
 
     @Binds
     fun bindHeartbeatRepository(

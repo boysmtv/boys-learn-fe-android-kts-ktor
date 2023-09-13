@@ -3,6 +3,9 @@ package com.kotlin.learn.feature.auth.presentation.ui
 import android.util.Log
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.util.InternetUtil
+import com.kotlin.learn.core.common.util.LocationUtil
+import com.kotlin.learn.core.common.util.NotificationUtil
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.SpringParser
@@ -16,6 +19,9 @@ import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.common.util.TransactionUtil
+import com.kotlin.learn.core.model.PermissionModel
+import com.kotlin.learn.core.model.ProfileModel
+import com.kotlin.learn.core.model.SettingModel
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
@@ -128,25 +134,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
         btnRegister.setOnClickListener {
-
-            /*TODO : Disable for move to firestore
-            userViewModel.postUser(
-                userModel.apply {
-                    idFireStore = EMPTY_STRING
-                    idGoogle = EMPTY_STRING
-                    idToken = EMPTY_STRING
-                    firstName = etFirstName.text.toString()
-                    lastName = etLastName.text.toString()
-                    displayName = etFirstName.text.toString() + " " + etLastName.text.toString()
-                    email = etEmail.text.toString()
-                    phone = etPhone.text.toString()
-                    photoUrl = EMPTY_STRING
-                    password = etPassword.text.toString()
-                    method = AuthMethod.EMAIL.name
-                }
-            )*/
-
-            // TODO : Refactor fo firestore
             userModel.apply {
                 id = transactionId
                 idFireStore = EMPTY_STRING
@@ -160,6 +147,20 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 photoUrl = EMPTY_STRING
                 password = etPassword.text.toString()
                 method = AuthMethod.EMAIL.name
+                profile = ProfileModel().apply {
+                    connection = InternetUtil(requireContext()).getStatusConnectionModel()
+                    permission = PermissionModel().apply {
+                        location = LocationUtil(requireContext()).checkPermissions()
+                        internet = InternetUtil(requireContext()).isNetworkAvailable()
+                        notification = NotificationUtil(requireContext()).isNotificationEnabled()
+                    }
+                    setting = SettingModel(
+                        login = true,
+                        favourite = true,
+                        notification = true
+                    )
+                    updatedAt = TransactionUtil.getTimestampWithFormat()
+                }
             }
             getUserFromFirestore()
         }

@@ -5,11 +5,11 @@ import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.ResultCallback
-import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.SettingModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.feature.common.viewmodel.UserViewModel
 import com.kotlin.learn.feature.menu.databinding.FragmentSettingBinding
-import com.kotlin.learn.feature.menu.presentation.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,29 +20,26 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private var isSaveFavourite = true
     private var isShowNotification = true
 
-    private val viewModel: SettingViewModel by viewModels()
-
-    private var profileModel = ProfileModel()
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun setupView() {
         subscribeProfile()
-        setupSettingProfile()
-        fetchProfileFromFirestore()
+        fetchUserSetting()
     }
 
-    private fun subscribeProfile() = with(viewModel) {
-        profile.launch(this@SettingFragment) {
+    private fun subscribeProfile() = with(userViewModel) {
+        fetchUserFirestore.launch(this@SettingFragment) {
             when (it) {
                 is ResultCallback.Loading -> {
                     Log.e(tag, "ResultCallback: Loading")
                 }
 
                 is ResultCallback.Success -> {
-                    Log.e(tag, "ResultCallback: Success | ${it.data}")
+                    Log.e(tag, "ResultCallback: Success")
                 }
 
                 is ResultCallback.Error -> {
-                    Log.e(tag, "ResultCallback: Error | ${it.message}")
+                    Log.e(tag, "ResultCallback: Error")
                 }
             }
         }
@@ -51,26 +48,23 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private fun setupListener() = with(binding) {
         swAutoLogin.setOnCheckedChangeListener { _, _ ->
             isAutoLogin = !isAutoLogin
-            storeAutoLoginChanges(isAutoLogin = isAutoLogin)
+            setupSwitchedChanges(isAutoLogin = isAutoLogin)
         }
         swSaveMovie.setOnCheckedChangeListener { _, _ ->
             isSaveFavourite = !isSaveFavourite
-            storeAutoLoginChanges(isSaveFavourite = isSaveFavourite)
+            setupSwitchedChanges(isSaveFavourite = isSaveFavourite)
         }
         swNotification.setOnCheckedChangeListener { _, _ ->
             isShowNotification = !isShowNotification
-            storeAutoLoginChanges(isShowNotification = isShowNotification)
+            setupSwitchedChanges(isShowNotification = isShowNotification)
         }
     }
 
-    private fun setupSettingProfile() = with(viewModel) {
-        fetchProfileFromDatastore().launch(this@SettingFragment) { event ->
-            invokeDataStoreEvent(
-                event,
+    private fun fetchUserSetting() = with(userViewModel) {
+        fetchUserFromDatastore().launch(this@SettingFragment) { dataStoreCacheEvent ->
+            invokeDataStoreEvent(dataStoreCacheEvent,
                 isFetched = {
-                    it?.let { model ->
-                        setupSwitchListener(model)
-                    }
+                    setupSwitchListener(it)
                 },
                 isError = {},
                 isStored = {}
@@ -78,36 +72,29 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         }
     }
 
-    private fun storeAutoLoginChanges(
+    private fun setupSwitchedChanges(
         isAutoLogin: Boolean? = null,
         isSaveFavourite: Boolean? = null,
         isShowNotification: Boolean? = null
-    ) = with(viewModel) {
-        fetchProfileFromDatastore().launch(this@SettingFragment) { event ->
-            invokeDataStoreEvent(
-                event,
+    ) {
+        userViewModel.fetchUserFromDatastore().launch(this@SettingFragment) { dataStoreCacheEvent ->
+            invokeDataStoreEvent(dataStoreCacheEvent,
                 isFetched = {
-                    it?.let { model ->
-                        profileModel = model
-                        storeProfileToDatastore(
-                            jsonUtil.toJson(
-                                model.apply {
-                                    setting?.apply {
-                                        if (isAutoLogin != null) login = isAutoLogin
-                                        if (isSaveFavourite != null) favourite = isSaveFavourite
-                                        if (isShowNotification != null) notification = isShowNotification
-                                    }
-                                    if (setting == null) {
-                                        SettingModel().apply {
-                                            if (isAutoLogin != null) login = isAutoLogin
-                                            if (isSaveFavourite != null) favourite = isSaveFavourite
-                                            if (isShowNotification != null) notification = isShowNotification
-                                        }
-                                    }
-                                }
-                            )
-                        )
+                    it.apply {
+                        profile?.setting?.apply {
+                            if (isAutoLogin != null) login = isAutoLogin
+                            if (isSaveFavourite != null) favourite = isSaveFavourite
+                            if (isShowNotification != null) notification = isShowNotification
+                        }
+                        if (profile?.setting == null) {
+                            SettingModel().apply {
+                                if (isAutoLogin != null) login = isAutoLogin
+                                if (isSaveFavourite != null) favourite = isSaveFavourite
+                                if (isShowNotification != null) notification = isShowNotification
+                            }
+                        }
                     }
+                    storeSwitchedChanges(it)
                 },
                 isError = {},
                 isStored = {}
@@ -115,8 +102,31 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         }
     }
 
-    private fun setupSwitchListener(model: ProfileModel) = with(binding) {
-        model.setting?.let { model ->
+    private fun storeSwitchedChanges(it: UserModel) = with(userViewModel) {
+        storeUserToDatastore(jsonUtil.toJson(it)).launch(this@SettingFragment) { event ->
+            invokeDataStoreEvent(
+                event,
+                isFetched = {},
+                isError = {},
+                isStored = {
+                    it.id?.let { id ->
+                        it.profile?.let { profile ->
+                            updateUserFromFirestoreAsync(
+                                id = id,
+                                model = mapOf(
+                                    "profile" to profile
+                                )
+                            )
+                        }
+                    }
+
+                },
+            )
+        }
+    }
+
+    private fun setupSwitchListener(model: UserModel) = with(binding) {
+        model.profile?.setting?.let { model ->
             model.login.let {
                 isAutoLogin = it
                 swAutoLogin.isChecked = it
@@ -132,12 +142,15 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         }
 
         setupListener()
+        fetchProfileFromFirestore(model)
     }
 
-    private fun fetchProfileFromFirestore() {
-        viewModel.fetchProfileFromFirestore(
-            filter = Pair("id", "0DK4b7ffc2b9e6807C0Y")
-        )
+    private fun fetchProfileFromFirestore(model: UserModel) {
+        model.email?.let {
+            userViewModel.fetchUserFromFirestoreAsync(
+                filter = Pair("email", it)
+            )
+        }
     }
 
 }

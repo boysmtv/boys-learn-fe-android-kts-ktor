@@ -1,9 +1,11 @@
-package com.kotlin.learn.feature.auth.presentation.viewmodel
+package com.kotlin.learn.feature.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.event.DataStoreCacheEvent
 import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.BaseResponse
@@ -22,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val useCase: UserUseCase,
-    private val dataStore: DataStorePreferences
+    private val dataStore: DataStorePreferences,
+    private val jsonUtil: JsonUtil
 ) : ViewModel() {
 
     // TODO : start region to spring backend
@@ -65,7 +68,7 @@ class UserViewModel @Inject constructor(
     }
 
     // TODO : start region to datastore
-    // ============================================================================================================ //
+    // ===============================================================
 
     fun storeUserToDatastore(user: String) =
         flow {
@@ -78,24 +81,28 @@ class UserViewModel @Inject constructor(
 
     fun fetchUserFromDatastore() =
         flow {
-            emit(
-                DataStoreCacheEvent.FetchSuccess(
-                    dataStore.getString(
-                        PreferenceConstants.Authorization.PREF_USER,
-                    ).getOrNull().orEmpty()
-                )
-            )
+            val data = dataStore.getString(PreferenceConstants.Authorization.PREF_USER).getOrNull().orEmpty()
+            if (data.isNotEmpty() && data.isNotBlank()) {
+                try {
+                    val model = jsonUtil.fromJson<UserModel>(data)
+                    model?.let {
+                        emit(DataStoreCacheEvent.FetchSuccess(model))
+                    }
+                    if (model == null) emit(DataStoreCacheEvent.FetchError)
+                } catch (e: Exception) {
+                    emit(DataStoreCacheEvent.FetchError)
+                }
+            } else
+                emit(DataStoreCacheEvent.FetchError)
         }
 
     fun fetchTokenFromDatastore() =
         flow {
-            emit(
-                DataStoreCacheEvent.FetchSuccess(
-                    dataStore.getString(
-                        PreferenceConstants.Authorization.PREF_FCM_TOKEN,
-                    ).getOrNull().orEmpty()
-                )
-            )
+            val data = dataStore.getString(PreferenceConstants.Authorization.PREF_FCM_TOKEN).getOrNull().orEmpty()
+            if (data.isNotEmpty() && data.isNotBlank())
+                emit(DataStoreCacheEvent.FetchSuccess(data))
+            else
+                emit(DataStoreCacheEvent.FetchError)
         }
 
 
@@ -144,30 +151,49 @@ class UserViewModel @Inject constructor(
 
     fun updateUserToFirestore(
         id: String,
-        model: Map<String, String>,
+        filter: Map<String, String>,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ) {
         useCase.updateUserToFirestore(
             id = id,
-            filter = model,
+            filter = filter,
             onLoad = onLoad,
             onSuccess = onSuccess,
             onError = onError
         ).launchIn(viewModelScope)
     }
 
-    fun fetchUserFromFirestore(
-        filter: HashMap<String, String>,
-        onLoad: () -> Unit,
-        onSuccess: (UserModel) -> Unit,
-        onError: (String) -> Unit
-    ) = useCase.fetchUserFromFirestore(
-        filter = filter,
-        onLoad = onLoad,
-        onSuccess = onSuccess,
-        onError = onError
-    ).launchIn(viewModelScope)
+    private val _fetchUserFirestore: MutableStateFlow<ResultCallback<UserModel>> =
+        MutableStateFlow(ResultCallback.Loading)
+    val fetchUserFirestore = _fetchUserFirestore.asStateFlow()
+
+    fun fetchUserFromFirestoreAsync(
+        filter: Pair<String, String>,
+    ) {
+        useCase.fetchUserFromFirestoreAsync(
+            filter = filter,
+            resources = UserModel(),
+        ).onEach {
+            _fetchUserFirestore.value = it
+        }.launchIn(viewModelScope)
+    }
+
+    private val _updateUserFirestore: MutableStateFlow<ResultCallback<String>> =
+        MutableStateFlow(ResultCallback.Loading)
+    val updateUserFirestore = _updateUserFirestore.asStateFlow()
+
+    fun <T : Any> updateUserFromFirestoreAsync(
+        id: String,
+        model: Map<String, T>,
+    ) {
+        useCase.updateUserToFirestoreAsync(
+            id = id,
+            model = model
+        ).onEach {
+            _updateUserFirestore.value = it
+        }.launchIn(viewModelScope)
+    }
 
 }

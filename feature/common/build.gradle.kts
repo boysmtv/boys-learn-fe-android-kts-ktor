@@ -11,7 +11,7 @@ apply {
 }
 
 android {
-    namespace = "com.kotlin.learn.feature.menu"
+    namespace = "com.kotlin.learn.feature.common"
     viewBinding.isEnabled = true
 }
 
@@ -26,7 +26,6 @@ dependencies {
     implementation(customModulePath(":core:nav"))
     implementation(customModulePath(":core:ui"))
     implementation(customModulePath(":feature:movie"))
-    implementation(customModulePath(":feature:common"))
 
     implementation(libs.hilt.android)
     implementation(libs.constraintlayout)

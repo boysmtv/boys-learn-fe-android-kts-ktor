@@ -7,12 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @JsonClass(generateAdapter = true)
 data class ProfileModel(
-    @Json(name = "id") var id: String? = null,
-    @Json(name = "userId") var userId: String? = null,
     @Json(name = "connection") var connection: ConnectionModel? = null,
     @Json(name = "permission") var permission: PermissionModel? = null,
     @Json(name = "setting") var setting: SettingModel? = null,
-    @Json(name = "createdAt") var createdAt: String? = null,
     @Json(name = "updatedAt") var updatedAt: String? = null,
 )
 

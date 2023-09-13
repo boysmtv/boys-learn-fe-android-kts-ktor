@@ -19,5 +19,6 @@ data class UserModel(
     @Json(name = "password") var password: String? = null,
     @Json(name = "photoUrl") var photoUrl: String? = null,
     @Json(name = "method") var method: String? = null,
+    @Json(name = "profile") var profile: ProfileModel? = null,
     @Json(name = "favourite") var favourite: MutableList<String> = ArrayList()
 )

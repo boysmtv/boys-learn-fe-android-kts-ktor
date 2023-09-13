@@ -25,6 +25,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:nav"))
     implementation(project(":core:ui"))
+    implementation(project(":feature:common"))
 
     implementation(libs.androidx.activity.activity.ktx)
     implementation(libs.androidx.activity.fragment.ktx)

@@ -4,8 +4,6 @@ import com.kotlin.learn.core.domain.HeartbeatUseCase
 import com.kotlin.learn.core.domain.HeartbeatUseCaseImpl
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.domain.MovieUseCaseImpl
-import com.kotlin.learn.core.domain.ProfileUseCase
-import com.kotlin.learn.core.domain.ProfileUseCaseImpl
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.domain.UserUseCaseImpl
 import dagger.Binds
@@ -26,11 +24,6 @@ interface DomainModule {
     fun bindUserUseCase(
         userUseCaseImpl: UserUseCaseImpl,
     ): UserUseCase
-
-    @Binds
-    fun bindProfileUseCase(
-        profileUseCaseImpl: ProfileUseCaseImpl,
-    ): ProfileUseCase
 
     @Binds
     fun bindHeartbeatUseCase(
