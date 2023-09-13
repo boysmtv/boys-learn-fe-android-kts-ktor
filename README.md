@@ -6,5 +6,9 @@
 Tech stack : MVVM | Kotlin Coroutine + Flow | Hilt | KTOR with Moshi | Chucker | Coil | Timber | Material 3 with Material You
 
 <p align="center">
-  https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/a0885157-2f40-416e-8c26-caddc2c77164
+  
+
+https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/e91d9d1d-109c-4a17-ba66-3f5627d69dab
+
+
 </p>
