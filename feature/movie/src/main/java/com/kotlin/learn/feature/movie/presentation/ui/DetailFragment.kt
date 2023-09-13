@@ -50,6 +50,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private var isSaved: Boolean = false
 
+    private var isPermissionSaved: Boolean = true
+
     override fun setupView() {
         setupInit()
         subscribeDetail()
@@ -67,15 +69,21 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     private fun setupListener() = with(binding) {
 
         clDetailHeaderFavouriteIcon.setOnClickListener {
-            if (isSaved) {
-                isSaved = false
-                setChangeUiFavourite()
-                addOrRemoveToFavourite(isAdded = false, movieId)
-            } else {
-                isSaved = true
-                setChangeUiFavourite()
-                addOrRemoveToFavourite(isAdded = true, movieId)
-            }
+            if (isPermissionSaved)
+                if (isSaved) {
+                    isSaved = false
+                    setChangeUiFavourite()
+                    addOrRemoveToFavourite(isAdded = false, movieId)
+                } else {
+                    isSaved = true
+                    setChangeUiFavourite()
+                    addOrRemoveToFavourite(isAdded = true, movieId)
+                }
+            else
+                showDialogGeneralError(
+                    "Warning",
+                    "This feature is disabled in your settings, please check your settings"
+                )
         }
 
         btnDetailPlayNow.setOnClickListener {
@@ -221,6 +229,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 isFetched = { data ->
                     data?.let { model ->
                         userModel = model
+                        setupEnableAddToFavourite()
                     }
                 }, {}, {}
             )
@@ -307,6 +316,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             )
         }
 
+    }
+
+    private fun setupEnableAddToFavourite() {
+        isPermissionSaved = userModel.profile?.setting?.favourite == true
     }
 
 }
