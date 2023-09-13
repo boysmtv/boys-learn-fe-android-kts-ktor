@@ -42,9 +42,6 @@ class GoogleSignInExt(
             if (account != null) handleDataAuth(account)
         } catch (e: ApiException) {
             Log.e("", "Error Auth-message: ${e.message}")
-            Log.e("", "Error Auth-status: ${e.status}")
-            Log.e("", "Error Auth-statusCode: ${e.statusCode}")
-            Log.e("", "Error Auth-cause: ${e.cause}")
 
             if (e.statusCode != 12501){
                 callbackGoogleSignInError.invoke("Please try again!")

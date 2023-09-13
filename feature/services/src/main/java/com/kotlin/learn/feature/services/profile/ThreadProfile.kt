@@ -2,7 +2,6 @@ package com.kotlin.learn.feature.services.profile
 
 import android.content.Context
 import android.text.TextUtils
-import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kotlin.learn.core.common.util.JsonUtil
@@ -136,7 +135,7 @@ class ThreadProfile {
                         it.id?.let {
                             useCase.updateUserToFirestore(
                                 id = it,
-                                model = mapOf(
+                                filter = mapOf(
                                     "idToken" to token
                                 ),
                                 onLoad = { },

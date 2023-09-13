@@ -3,6 +3,7 @@ package com.kotlin.learn.feature.auth.presentation.ui
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -22,7 +23,7 @@ import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.common.util.TransactionUtil
@@ -45,7 +46,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         )
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var parentNavigator: ParentNavigator
 
     private var userModel: UserModel = UserModel()
 
@@ -62,6 +63,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         fetchTokenFromDatastore()
         subscribeStoreAuth()
         setupListener()
+        setOnBackPressed()
     }
 
     private fun subscribeStoreAuth() {
@@ -116,7 +118,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
         btnEmail.setOnClickListener {
             if (locationUtil.checkPermissions() && locationUtil.isLocationEnabled())
-                authNavigator.fromGreetingsToAuth(this@GreetingsFragment)
+                parentNavigator.fromGreetingsToAuth(this@GreetingsFragment)
             else showWarningLocation()
         }
     }
@@ -264,7 +266,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
                 invokeDataStoreEvent(event,
                     {}, {},
                     isStored = {
-                        authNavigator.fromGreetingsToHome(this@GreetingsFragment)
+                        parentNavigator.fromGreetingsToMenu(this@GreetingsFragment)
                     }
                 )
             }
@@ -324,4 +326,17 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         )
     }
 
+    private fun setOnBackPressed() {
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onDestroy()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().finish()
+    }
 }

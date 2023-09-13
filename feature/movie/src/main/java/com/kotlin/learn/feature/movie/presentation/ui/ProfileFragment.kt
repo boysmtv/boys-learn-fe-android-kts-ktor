@@ -10,22 +10,22 @@ import com.kotlin.learn.core.common.google.GoogleSignInExt
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.nav.navigator.MenuNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
-import com.kotlin.learn.feature.movie.databinding.FragmentSettingBinding
+import com.kotlin.learn.feature.movie.databinding.FragmentProfileBinding
 import com.kotlin.learn.feature.movie.presentation.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
     private val viewModel: SettingViewModel by viewModels()
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var menuNavigator: MenuNavigator
 
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})
 
@@ -46,7 +46,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     }
 
     private fun loadProfile() = with(viewModel) {
-        fetchDataAuth().launch(this@SettingFragment) {
+        fetchDataAuth().launch(this@ProfileFragment) {
             invokeDataStoreEvent(it,
                 isFetched = { data ->
                     data?.let {
@@ -58,7 +58,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     }
 
     private fun loadToken() = with(viewModel) {
-        fetchDataTokenFcm().launch(this@SettingFragment) {
+        fetchDataTokenFcm().launch(this@ProfileFragment) {
             invokeDataStoreEvent(it,
                 isFetched = { message ->
                     binding.etToken.apply {
@@ -71,9 +71,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     }
 
     private fun setupListener() = with(binding) {
-        ivBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
 
         btnLogout.setOnClickListener {
             if (userModel.method == AuthMethod.GOOGLE.name)
@@ -94,8 +91,9 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                     }
                 )
             viewModel.clearPreferences(token)
-            authNavigator.fromSettingToGreetings(this@SettingFragment)
+            menuNavigator.fromMenuToGreetings(requireActivity())
         }
+
     }
 
     private fun updateUi(model: UserModel) = with(binding) {

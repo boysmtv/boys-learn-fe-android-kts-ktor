@@ -38,9 +38,9 @@ class SearchAdapter(private val onClickMovie: OnClickMovie) :
 
         fun bind(item: MovieDataModel) {
             binding.apply {
-                etSearchTitle.text = item.originalTitle
+                tvTitle.text = item.originalTitle
 
-                ivSearch.load("${Constant.BASE_URL_IMAGE_200}${item.backdropPath}") {
+                thumbnail.load("${Constant.BASE_URL_IMAGE_200}${item.posterPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
                         strokeWidth = 5f
@@ -57,6 +57,7 @@ class SearchAdapter(private val onClickMovie: OnClickMovie) :
                 }
             }
         }
+
     }
 
 }

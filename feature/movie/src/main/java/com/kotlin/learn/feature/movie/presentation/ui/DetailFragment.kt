@@ -2,7 +2,6 @@ package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -51,7 +50,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private var isSaved: Boolean = false
 
+    private var isPermissionSaved: Boolean = true
+
     override fun setupView() {
+        setupInit()
         subscribeDetail()
         loadArguments()
         loadUser()
@@ -59,25 +61,36 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         setupListener()
     }
 
+    private fun setupInit() {
+        userModel = UserModel()
+        movieModel = MovieDetailModel()
+    }
+
     private fun setupListener() = with(binding) {
 
         clDetailHeaderFavouriteIcon.setOnClickListener {
-            if (isSaved) {
-                isSaved = false
-                setChangeUiFavourite()
-                addOrRemoveToFavourite(isAdded = false, movieId)
-            } else {
-                isSaved = true
-                setChangeUiFavourite()
-                addOrRemoveToFavourite(isAdded = true, movieId)
-            }
+            if (isPermissionSaved)
+                if (isSaved) {
+                    isSaved = false
+                    setChangeUiFavourite()
+                    addOrRemoveToFavourite(isAdded = false, movieId)
+                } else {
+                    isSaved = true
+                    setChangeUiFavourite()
+                    addOrRemoveToFavourite(isAdded = true, movieId)
+                }
+            else
+                showDialogGeneralError(
+                    "Warning",
+                    "This feature is disabled in your settings, please check your settings"
+                )
         }
 
         btnDetailPlayNow.setOnClickListener {
             if (movieKey != Constant.EMPTY_STRING)
                 movieNavigator.fromDetailToVideos(this@DetailFragment, movieKey)
             else
-                Toast.makeText(requireContext(), "Error get movie key", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "The trailer is not available", Toast.LENGTH_SHORT).show()
         }
 
         tvDetailCastSeeAll.setOnClickListener {
@@ -216,6 +229,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 isFetched = { data ->
                     data?.let { model ->
                         userModel = model
+                        setupEnableAddToFavourite()
                     }
                 }, {}, {}
             )
@@ -302,6 +316,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             )
         }
 
+    }
+
+    private fun setupEnableAddToFavourite() {
+        isPermissionSaved = userModel.profile?.setting?.favourite == true
     }
 
 }

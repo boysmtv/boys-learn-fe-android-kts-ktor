@@ -65,7 +65,7 @@ class UserViewModel @Inject constructor(
     }
 
     // TODO : start region to datastore
-    // ===============================================================
+    // ============================================================================================================ //
 
     fun storeUserToDatastore(user: String) =
         flow {
@@ -151,7 +151,7 @@ class UserViewModel @Inject constructor(
     ) {
         useCase.updateUserToFirestore(
             id = id,
-            model = model,
+            filter = model,
             onLoad = onLoad,
             onSuccess = onSuccess,
             onError = onError

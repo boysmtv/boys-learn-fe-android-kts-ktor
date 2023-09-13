@@ -20,6 +20,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:utilities"))
     implementation(project(":core:data"))
+    implementation(project(":core:common"))
 
     implementation(libs.constraintlayout)
     implementation(libs.kotlinx.coroutines.android)

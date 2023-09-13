@@ -2,8 +2,12 @@ package com.kotlin.learn
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
-import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,14 +18,17 @@ import com.kotlin.learn.core.common.util.LocationUtil
 import com.kotlin.learn.core.common.util.ServiceUtil
 import com.kotlin.learn.core.common.util.listener.EventListener
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.databinding.ActivityMainBinding
+import com.kotlin.learn.feature.auth.presentation.ui.RegisterFragment
 import com.kotlin.learn.feature.services.heartbeat.HeartbeatService
 import com.kotlin.learn.feature.services.location.LocationService
 import com.kotlin.learn.feature.services.profile.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
@@ -41,25 +48,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     private var scenarioOnBack: String? = Constant.EMPTY_STRING
 
-    private val navController by lazy {
-        supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)?.findNavController()
-    }
     override fun initBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
 
     override fun initView() {
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         setupInit()
         startProfileService()
         startHeartbeatService()
         askNotificationPermission()
         askLocationPermission()
+        //checkDrawOverlayPermission()
     }
 
     override fun backToLogin() {
         supportActionBar?.hide()
-        navController?.popBackStack(R.id.greetingsFragment, false)
+        navHostFragment.findNavController().popBackStack(R.id.greetingsFragment, false)
     }
 
     override fun backToSplash() {
@@ -83,11 +87,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
         scenarioOnBack = scenario
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     private fun setupInit() {
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         serviceUtil = ServiceUtil(context = this)
         locationUtil = LocationUtil(context = this)
     }
@@ -166,6 +167,54 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 startLocationService()
             }
+        }
+    }
+
+    private fun checkDrawOverlayPermission() {
+        if (!Settings.canDrawOverlays(this)) {
+            val content = BaseDataDialog(
+                title = "Warning",
+                content = "Please allow overlay to continue playing the trailer",
+                primaryButtonShow = true,
+                secondaryButtonText = Constant.EMPTY_STRING,
+                secondaryButtonShow = false,
+                icon = com.kotlin.learn.feature.auth.R.drawable.ic_warning_rounded,
+                primaryButtonText = "OK"
+            )
+            showDialogWithActionButton(
+                dataToDialog = content,
+                actionClickPrimary = {
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:$packageName")
+                    )
+                    someActivityResultLauncher.launch(intent)
+                },
+                actionClickSecondary = {
+
+                },
+                tag = MainActivity::class.simpleName.toString()
+            )
+            Timber.tag(tag).e("Permission request overlay, $packageName")
+        } else {
+            Timber.tag(tag).e("Permission already granted, $packageName")
+        }
+    }
+
+    private var someActivityResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data: Intent? = result.data
+            data?.let {
+                Timber.tag(tag).e("Permission already granted, data: ${it.data}")
+            }
+            if (Settings.canDrawOverlays(this)) {
+                Timber.tag(tag).e("Permission already granted")
+            }
+        } else {
+            checkDrawOverlayPermission()
+            Timber.tag(tag).e("Failed request overlay: ${result.resultCode}")
         }
     }
 

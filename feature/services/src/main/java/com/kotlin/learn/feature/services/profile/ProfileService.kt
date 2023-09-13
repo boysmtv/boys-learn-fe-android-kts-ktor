@@ -57,7 +57,6 @@ class ProfileService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.e(tag, "ProfileService is running...")
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 while (isServiceRunning) {
@@ -66,7 +65,6 @@ class ProfileService : Service() {
                         Thread.sleep(threadSleepTimer)
                         setupCheckToken()
                     } catch (e: InterruptedException) {
-                        Log.e(tag, "ProfileService is error : ${e.message}")
                         e.printStackTrace()
                     }
                 }
@@ -87,7 +85,6 @@ class ProfileService : Service() {
                 if (threadProfile.getUser().isNotEmpty() && threadProfile.getToken().isNotEmpty()) {
                     isServiceRunning = false
                     stopSelf()
-                    Log.e(tag, "ProfileService is stopped...")
                 }
             }
         }

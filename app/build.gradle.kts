@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
     implementation(project(":core:utilities"))
+    implementation(project(":feature:menu"))
     implementation(project(":feature:auth"))
     implementation(project(":feature:movie"))
     implementation(project(":feature:splash"))
@@ -66,6 +67,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.timber)
     implementation(libs.com.android.support.multidex)
+    implementation(libs.com.jakewharton.threetenabp.threetenabp)
 
     kapt(libs.hilt.compiler)
 

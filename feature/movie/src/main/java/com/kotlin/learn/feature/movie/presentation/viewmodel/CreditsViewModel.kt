@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.model.CreditsModel
+import com.kotlin.learn.core.utilities.extension.runSafeLaunch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

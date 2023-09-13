@@ -35,7 +35,7 @@ class HeartbeatService : Service() {
     @Inject
     lateinit var heartbeatUseCase: HeartbeatUseCase
 
-    private val threadSleepTimer = 60000L
+    private val threadSleepTimer = 300000L
 
     override fun onCreate() {
         super.onCreate()
@@ -51,7 +51,6 @@ class HeartbeatService : Service() {
     @SuppressLint("SimpleDateFormat")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.e("Service", "HeartbeatService is running...")
         Thread {
             while (true) {
                 try {

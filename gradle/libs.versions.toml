@@ -65,6 +65,10 @@ firebaseFirestoreKtx = "24.7.0"
 firebaseBom = "32.2.3"
 facebookLogin = "sdk-version-16.0.0"
 androidyoutubeplayerCore = "12.1.0"
+viewPump = "2.0.3"
+threeTenABP = "1.4.1"
+i18nLanguagePack = "1.0.0"
+navigationRuntimeKtx = "2.6.0"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -162,7 +166,11 @@ androidx-activity-fragment-ktx = { group = "androidx.fragment", name = "fragment
 androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common", version.ref = "lifecycleCommon" }
+
+# Navigation
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version = "navigationFragment" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version = "navigationFragment" }
 
 # External
 com-github-zhpanvip-bannerviewpager = { group = "com.github.zhpanvip", name = "bannerviewpager", version.ref = "bannerViewPager" }
@@ -191,9 +199,17 @@ com-squareup-moshi-moshi-kotlin-codegen = { group = "com.squareup.moshi", name =
 androidx-security-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 androidx-datastore-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
 
-#youtube
+# Youtube
 com-pierfrancescosoffritti-androidyoutubeplayer-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "androidyoutubeplayerCore" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version = "2.8.1" }
+
+# Viewpump
+io-github-inflationx-viewpump = { group = "io.github.inflationx", name = "viewpump", version.ref = "viewPump" }
+
+# External
+com-jakewharton-threetenabp-threetenabp = { group = "com.jakewharton.threetenabp", name = "threetenabp", version.ref = "threeTenABP" }
+com-i18next-i18next-android = { group = "com.i18next", name = "i18next-android", version.ref = "i18nLanguagePack" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

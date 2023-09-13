@@ -1,6 +1,7 @@
 package com.kotlin.learn.core.domain
 
 import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.data.repository.UserRepository
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginRespModel
@@ -68,12 +69,12 @@ class UserUseCaseImpl @Inject constructor(
 
     override fun <T> updateUserToFirestore(
         id: String,
-        model: Map<String, T>,
+        filter: Map<String, T>,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ): Flow<Result<Any?>> {
-        return repository.updateUserToFirestore(id, model, onLoad, onSuccess, onError)
+        return repository.updateUserToFirestore(id, filter, onLoad, onSuccess, onError)
     }
 
     override fun fetchUserFromFirestore(
@@ -83,6 +84,20 @@ class UserUseCaseImpl @Inject constructor(
         onError: (String) -> Unit
     ): Flow<Result<Any?>> {
         return repository.fetchUserFromFirestore(filter, onLoad, onSuccess, onError)
+    }
+
+    override fun <T : Any> fetchUserFromFirestoreAsync(
+        filter: Pair<String, String>,
+        resources: T,
+    ): Flow<ResultCallback<T>> {
+        return repository.fetchUserFromFirestore(filter, resources)
+    }
+
+    override fun <T : Any> updateUserToFirestoreAsync(
+        id: String,
+        model: Map<String, T>
+    ): Flow<ResultCallback<String>> {
+        return repository.updateUserToFirestoreAsync(id, model)
     }
 
 }

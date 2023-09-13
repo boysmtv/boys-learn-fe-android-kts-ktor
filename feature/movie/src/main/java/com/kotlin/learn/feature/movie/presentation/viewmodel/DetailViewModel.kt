@@ -84,7 +84,7 @@ class DetailViewModel @Inject constructor(
     ) {
         userUseCase.updateUserToFirestore(
             id = id,
-            model = model,
+            filter = model,
             onLoad = onLoad,
             onSuccess = onSuccess,
             onError = onError

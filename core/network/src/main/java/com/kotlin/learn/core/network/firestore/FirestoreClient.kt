@@ -2,9 +2,15 @@ package com.kotlin.learn.core.network.firestore
 
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.utilities.Constant
-import java.util.Objects
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.tasks.await
 
 class FirestoreClient {
 
@@ -86,5 +92,63 @@ class FirestoreClient {
                 onError.invoke("Failure writing document, ${ex.message.toString()}")
             }
     }
+
+    fun <T : Any> fetchDataFromFirestoreAsync(
+        filter: Pair<String, String>,
+        resources: T,
+        collection: String,
+    ): Flow<ResultCallback<T>> = callbackFlow {
+        trySend(ResultCallback.Loading)
+        try {
+            val snapshot = firestore.collection(collection)
+                .whereEqualTo(filter.first, filter.second)
+                .limit(1)
+                .get()
+                .await()
+
+            if (snapshot != null) {
+                if (!snapshot.isEmpty) {
+                    for (document in snapshot) {
+                        try {
+                            val finalResult = document.toObject(resources::class.java)
+                            trySend(ResultCallback.Success(finalResult))
+                        } catch (ex: Exception) {
+                            trySend(ResultCallback.Error("Could not get data. " + ex.message.toString()))
+                        }
+                    }
+                } else
+                    trySend(ResultCallback.Error(Constant.DATA_NOT_FOUND))
+            } else
+                trySend(ResultCallback.Error(Constant.DATA_NOT_FOUND))
+
+            close()
+            awaitCancellation()
+        } catch (e: Exception) {
+            trySend(ResultCallback.Error(e.message ?: e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun <T : Any> updateRequestToFirestoreAsync(
+        id: String,
+        data: Map<String, T>,
+        collection: String,
+    ): Flow<ResultCallback<String>> = callbackFlow {
+        trySend(ResultCallback.Loading)
+        try {
+            firestore.collection(collection)
+                .document(id)
+                .update(data)
+                .addOnSuccessListener {
+                    trySend(ResultCallback.Success(id))
+                }.addOnFailureListener {
+                    trySend(ResultCallback.Error("Failed update data " + it.message.toString()))
+                }
+                .await()
+            close()
+            awaitCancellation()
+        } catch (e: Exception) {
+            trySend(ResultCallback.Error(e.message ?: e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 
 }

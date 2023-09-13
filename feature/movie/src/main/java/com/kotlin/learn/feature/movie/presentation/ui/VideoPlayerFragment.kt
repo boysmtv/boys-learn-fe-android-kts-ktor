@@ -1,5 +1,7 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
 import com.kotlin.learn.core.common.base.BaseFragment
@@ -14,6 +16,7 @@ class VideoPlayerFragment : BaseFragment<FragmentVideoPlayerBinding>(FragmentVid
 
     override fun setupView() {
         loadArguments()
+        forcePortrait()
     }
 
     private fun loadArguments() = with(binding) {
@@ -25,6 +28,11 @@ class VideoPlayerFragment : BaseFragment<FragmentVideoPlayerBinding>(FragmentVid
                 }
             })
         }
+    }
+
+    private fun forcePortrait() {
+        val a: Activity? = activity
+        if (a != null) a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
 }

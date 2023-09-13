@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_menu"
+    app:startDestination="@id/homeFragment">
+
+    <!--    list navigation menu-->
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllMovieFragment"
+            app:destination="@id/seeAllMovieFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SearchFragment"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recentFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.RecentFragment"
+        tools:layout="@layout/fragment_recent" />
+
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.FavouriteFragment"
+        tools:layout="@layout/fragment_favourite" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.ProfileFragment"
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
+
+    <!--    navigation to detail movie-->
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_detailFragment_to_videoFragment"
+            app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_seeAllCreditsFragment"
+            app:destination="@id/seeAllCreditsFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/seeAllMovieFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SeeAllMovieFragment"
+        tools:layout="@layout/fragment_see_all">
+        <argument
+            android:name="categories"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seeAllMovieFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.VideoPlayerFragment"
+        tools:layout="@layout/fragment_video_player">
+
+        <argument
+            android:name="keyId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/seeAllCreditsFragment"
+        android:name="com.kotlin.learn.feature.movie.presentation.ui.SeeAllCreditFragment"
+        tools:layout="@layout/fragment_see_all_credit">
+
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

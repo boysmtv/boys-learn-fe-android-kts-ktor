@@ -2,96 +2,114 @@ package com.kotlin.learn.feature.splash.presentation.ui
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.viewModels
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.google.GoogleSignInExt
-import com.kotlin.learn.core.common.util.InternetUtil
-import com.kotlin.learn.core.common.util.LocationUtil
-import com.kotlin.learn.core.common.util.NotificationUtil
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
-import com.kotlin.learn.core.model.PermissionModel
-import com.kotlin.learn.core.model.ProfileModel
-import com.kotlin.learn.core.nav.navigator.AuthNavigator
+import com.kotlin.learn.core.common.util.network.ResultCallback
+import com.kotlin.learn.core.model.UserModel
+import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
-import com.kotlin.learn.core.common.util.TransactionUtil
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.feature.common.viewmodel.UserViewModel
 import com.kotlin.learn.feature.splash.databinding.FragmentSplashBinding
-import com.kotlin.learn.feature.splash.presentation.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
 
-    private val tag = this::class.java.simpleName
-
-    private val viewModel: SplashViewModel by viewModels()
-
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var parentNavigator: ParentNavigator
+
+    private val userViewModel: UserViewModel by viewModels()
 
     private var googleSignInExt: GoogleSignInExt = GoogleSignInExt({}, {})
 
-    private var profileModel = ProfileModel()
-
     override fun setupView() {
         init()
-        setupListener()
+        subscribeUser()
+        setupSplash()
     }
 
     private fun init() {
         googleSignInExt.initGoogle(requireContext())
     }
 
-    private fun setupListener() {
+    private fun subscribeUser() {
+        with(userViewModel) {
+            fetchUserFirestore.launch(this@SplashFragment) {
+                when (it) {
+                    is ResultCallback.Loading -> {
+                        // show loading
+                    }
 
-        profileModel.apply {
-            profileId = TransactionUtil.generateTransactionID()
-            connection = InternetUtil(requireContext()).getStatusConnectionModel()
-            permission = PermissionModel().apply {
-                location = LocationUtil(requireContext()).checkPermissions()
-                internet = InternetUtil(requireContext()).isNetworkAvailable()
-                notification = NotificationUtil(requireContext()).isNotificationEnabled()
+                    is ResultCallback.Success -> {
+                        updateUserToDataStore(it.data)
+                    }
+
+                    is ResultCallback.Error -> {
+                        showDialogGeneralError("Warning", "Error fetch user, ${it.message}")
+                    }
+                }
             }
-            updatedAt = TransactionUtil.getTimestampWithFormat()
-            createdAt = updatedAt
         }
-        Log.e(tag, "ProfileModel : ${jsonUtil.toJson(profileModel)}")
+    }
 
+    private fun setupSplash() {
         Handler(Looper.getMainLooper()).postDelayed({
-            viewModel.fetchUserFromDatastore().launch(this) { event ->
-                invokeDataStoreEvent(event,
-                    isFetched = { data ->
-                        data?.let {
-                            if (it.displayName != Constant.EMPTY_STRING) launchToHome()
-                            else navigateToGreetings()
-                        }
-                    },
-                    isError = {
-                        navigateToGreetings()
-                    }, {}
-                )
-            }
+            fetchUserFromDataStore()
         }, 100)
     }
 
-    private fun launchToHome() {
-        authNavigator.fromSplashToHome(this@SplashFragment)
+    private fun fetchUserFromDataStore() = with(userViewModel) {
+        fetchUserFromDatastore().launch(this@SplashFragment) { dataStoreCacheEvent ->
+            invokeDataStoreEvent(
+                event = dataStoreCacheEvent,
+                isFetched = {
+                    if (it.displayName != Constant.EMPTY_STRING)
+                        if (it.profile?.setting?.login == true)
+                            fetchUserFromFirestore(it)
+                        else
+                            navigateToGreetings()
+                    else
+                        navigateToGreetings()
+                },
+                isError = {
+                    navigateToGreetings()
+                },
+                isStored = {}
+            )
+        }
     }
 
-    private fun launchToGreetings() {
-        authNavigator.fromSplashToGreetings(this@SplashFragment)
+    private fun fetchUserFromFirestore(it: UserModel) {
+        userViewModel.fetchUserFromFirestoreAsync(
+            filter = Pair("email", it.email ?: Constant.EMPTY_STRING)
+        )
     }
 
-    private fun googleSignOut() = googleSignInExt.signOut({}, {})
+    private fun updateUserToDataStore(it: UserModel) = with(userViewModel) {
+        storeUserToDatastore(jsonUtil.toJson(it)).launch(this@SplashFragment) { dataStoreCacheEvent ->
+            invokeDataStoreEvent(dataStoreCacheEvent,
+                isFetched = {},
+                isError = {},
+                isStored = {
+                    navigationToMenu()
+                }
+            )
+        }
+    }
+
+    private fun navigationToMenu() {
+        parentNavigator.fromSplashToMenu(this@SplashFragment)
+    }
 
     private fun navigateToGreetings() {
         googleSignOut()
-        launchToGreetings()
+        parentNavigator.fromSplashToGreetings(this@SplashFragment)
     }
+
+    private fun googleSignOut() = googleSignInExt.signOut({}, {})
 
 }

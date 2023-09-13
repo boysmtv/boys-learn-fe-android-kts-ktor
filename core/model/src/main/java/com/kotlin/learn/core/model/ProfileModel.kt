@@ -7,10 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @JsonClass(generateAdapter = true)
 data class ProfileModel(
-    @Json(name = "profileId") var profileId: String? = null,
     @Json(name = "connection") var connection: ConnectionModel? = null,
     @Json(name = "permission") var permission: PermissionModel? = null,
-    @Json(name = "createdAt") var createdAt: String? = null,
+    @Json(name = "setting") var setting: SettingModel? = null,
     @Json(name = "updatedAt") var updatedAt: String? = null,
 )
 
@@ -29,4 +28,12 @@ data class ConnectionModel(
     @Json(name = "wifi") var wifi: Boolean = false,
     @Json(name = "bluetooth") var bluetooth: Boolean = false,
     @Json(name = "ethernet") var ethernet: Boolean = false,
+)
+
+@Serializable
+@JsonClass(generateAdapter = true)
+data class SettingModel(
+    @Json(name = "login") var login: Boolean = false,
+    @Json(name = "favourite") var favourite: Boolean = false,
+    @Json(name = "notification") var notification: Boolean = false,
 )

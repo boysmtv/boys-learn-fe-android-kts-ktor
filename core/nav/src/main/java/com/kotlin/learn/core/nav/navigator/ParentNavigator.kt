@@ -5,10 +5,10 @@ import androidx.navigation.fragment.NavHostFragment
 import com.kotlin.learn.feature.auth.presentation.ui.AuthFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.GreetingsFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.RegisterFragmentDirections
-import com.kotlin.learn.feature.movie.presentation.ui.SettingFragmentDirections
+import com.kotlin.learn.feature.menu.presentation.ui.MenuFragmentDirections
 import com.kotlin.learn.feature.splash.presentation.ui.SplashFragmentDirections
 
-class AuthNavigator {
+class ParentNavigator {
 
     fun fromSplashToGreetings(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
@@ -16,9 +16,9 @@ class AuthNavigator {
         )
     }
 
-    fun fromSplashToHome(fragment: Fragment) {
+    fun fromSplashToMenu(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
-            SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+            SplashFragmentDirections.actionSplashFragmentToMenuFragment()
         )
     }
 
@@ -34,9 +34,9 @@ class AuthNavigator {
         )
     }
 
-    fun fromGreetingsToHome(fragment: Fragment) {
+    fun fromGreetingsToMenu(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
-            GreetingsFragmentDirections.actionGreetingsFragmentToHomeFragment()
+            GreetingsFragmentDirections.actionGreetingsFragmentToMenuFragment()
         )
     }
 
@@ -64,15 +64,15 @@ class AuthNavigator {
         )
     }
 
-    fun fromAuthToHome(fragment: Fragment) {
+    fun fromAuthToMenu(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
-            AuthFragmentDirections.actionAuthFragmentToHomeFragment()
+            AuthFragmentDirections.actionAuthFragmentToMenuFragment()
         )
     }
 
-    fun fromSettingToGreetings(fragment: Fragment) {
+    fun fromMenuToGreetings(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
-            SettingFragmentDirections.actionSettingFragmentToGreetingsFragment()
+            MenuFragmentDirections.actionMenuFragmentToGreetingsFragment()
         )
     }
 

@@ -107,7 +107,7 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
             BaseDataDialogGeneral(
                 title = title,
                 message = message,
-                icon = R.drawable.ic_connection_error,
+                icon = R.drawable.ic_warning_rounded,
                 textPrimaryButton = "OK, Close!",
                 visibleBackToSplash = false,
                 dismissOnAction = true

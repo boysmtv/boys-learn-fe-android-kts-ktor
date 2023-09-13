@@ -56,7 +56,6 @@ class LocationService : Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.e(tag, "LocationService is running...")
         Thread {
             while (true) {
                 try {
@@ -169,8 +168,7 @@ class LocationService : Service(), LocationListener {
             if (location.isNotEmpty()) {
                 val locationModel = jsonUtil.fromJson<LocationModel>(location)
                 locationModel?.let {
-                    /*Log.e(tag, "setupCheckLocation - latitude: ${it.latitude}")
-                    Log.e(tag, "setupCheckLocation - longitude: ${it.longitude}")*/
+                    // TODO : give action at this
                 }
             }
         }

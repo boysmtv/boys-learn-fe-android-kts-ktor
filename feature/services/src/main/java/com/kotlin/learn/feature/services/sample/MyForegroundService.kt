@@ -14,7 +14,6 @@ class MyForegroundService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Thread {
             while (true) {
-                Log.e("Service", "Service Foreground is running...")
                 try {
                     Thread.sleep(2000)
                 } catch (e: InterruptedException) {
@@ -24,8 +23,7 @@ class MyForegroundService : Service() {
         }.start()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "Foreground Service ID"
-            val channel: NotificationChannel
-            channel = NotificationChannel(
+            val channel = NotificationChannel(
                 channelId,
                 channelId,
                 NotificationManager.IMPORTANCE_LOW

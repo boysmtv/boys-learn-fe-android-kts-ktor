@@ -8,10 +8,12 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
-        gradlePluginPortal()
-        maven( url = uri("https://www.jitpack.io"))
+        maven {
+            url = uri("https://jitpack.io")
+        }
     }
 }
 
@@ -29,3 +31,5 @@ include(":feature:movie")
 include(":feature:auth")
 include(":feature:splash")
 include(":feature:services")
+include(":feature:menu")
+include(":feature:common")
