@@ -3,9 +3,8 @@
 
 ### Are you a fan and seeker of the latest films, has your film been shown in cinemas, do you want to see a snippet of the show? Satisfy yourself showing snippets of films around the world in an application
 
-Tech stack : MVVM | Kotlin Coroutine + Flow | Hilt | Retrofit with Moshi | Chucker | Coil | Timber | Material 3 with Material You
+Tech stack : MVVM | Kotlin Coroutine + Flow | Hilt | KTOR with Moshi | Chucker | Coil | Timber | Material 3 with Material You
 
 
-
-https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/a0885157-2f40-416e-8c26-caddc2c77164
+![1](https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/a0885157-2f40-416e-8c26-caddc2c77164)
 
