@@ -58,7 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
         startHeartbeatService()
         askNotificationPermission()
         askLocationPermission()
-        checkDrawOverlayPermission()
+        //checkDrawOverlayPermission()
     }
 
     override fun backToLogin() {
@@ -217,7 +217,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
             Timber.tag(tag).e("Failed request overlay: ${result.resultCode}")
         }
     }
-
 
     override fun askLocationPermission() {
         if (locationUtil.checkPermissions()) {

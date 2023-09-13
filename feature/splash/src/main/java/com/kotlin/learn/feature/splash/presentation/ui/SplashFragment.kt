@@ -68,7 +68,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                 event = dataStoreCacheEvent,
                 isFetched = {
                     if (it.displayName != Constant.EMPTY_STRING)
-                        fetchUserFromFirestore(it)
+                        if (it.profile?.setting?.login == true)
+                            fetchUserFromFirestore(it)
+                        else
+                            navigateToGreetings()
                     else
                         navigateToGreetings()
                 },
