@@ -16,6 +16,7 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.FavouriteDataModel
 import com.kotlin.learn.core.model.Genres
 import com.kotlin.learn.core.model.MovieDetailModel
+import com.kotlin.learn.core.model.RecentDataModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
@@ -44,6 +45,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     private lateinit var movieModel: MovieDetailModel
 
     private lateinit var favouriteModel: FavouriteDataModel
+
+    private lateinit var recentDataModel: RecentDataModel
 
     private var movieKey = Constant.EMPTY_STRING
 
@@ -132,7 +135,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
                 is Result.Success -> {
                     viewAnimator.displayedChild = Constant.ONE
-                    loadContent(it.data)
+                    setupDetailMovie(it.data)
                 }
 
                 is Result.Error -> {
@@ -166,7 +169,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
     }
 
-    private fun loadContent(movieDetailModel: MovieDetailModel) = with(binding) {
+    private fun setupDetailMovie(movieDetailModel: MovieDetailModel) = with(binding) {
         movieModel = movieDetailModel
         movieModel.let {
             tvDetailHeaderTitle.text = it.title
@@ -176,7 +179,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             tvDetailHeaderDesc.text = it.overview
             setupThumbnail(it)
         }
-        setupFavouriteModel()
+        setupFavouriteAndRecentModel()
     }
 
     private fun setupVpCredits() = with(binding) {
@@ -230,7 +233,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private fun loadUser() = with(viewModel) {
         fetchUserFromDatastore().launch(requireActivity()) { event ->
-            invokeDataStoreEvent(event,
+            invokeDataStoreEvent(
+                event,
                 isFetched = { data ->
                     data?.let { model ->
                         userModel = model
@@ -287,9 +291,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     }
 
     private fun addOrRemoveToFavourite(isAdded: Boolean) = with(viewModel) {
-
         fetchUserFromDatastore().launch(requireActivity()) { event ->
-            invokeDataStoreEvent(event,
+            invokeDataStoreEvent(
+                event,
                 isFetched = { data ->
                     data?.let { model ->
                         userModel = model.apply {
@@ -301,7 +305,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 },
             )
         }
-
         storeUserToDatastore(jsonUtil.toJson(userModel)).launch(requireActivity()) { event ->
             invokeDataStoreEvent(event,
                 isStored = {
@@ -319,10 +322,61 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 }
             )
         }
+    }
+
+    private fun addToRecentMovie() = with(viewModel) {
+        fetchUserFromDatastore().launch(requireActivity()) { event ->
+            invokeDataStoreEvent(
+                event,
+                isFetched = { data ->
+                    data?.let { model ->
+                        if (model.recent.isNotEmpty()) {
+                            var itSame = false
+                            for (recent in model.recent) {
+                                if (recent == recentDataModel) {
+                                    itSame = true
+                                    break
+                                }
+                            }
+                            userModel = model.apply {
+                                recent = model.recent.apply {
+                                    if (itSame) remove(recentDataModel)
+                                    add(0, recentDataModel)
+                                }
+                            }
+                        } else {
+                            userModel = model.apply {
+                                recent = model.recent.apply {
+                                    add(0, recentDataModel)
+                                }
+                            }
+                        }
+
+                        storeUserToDatastore(jsonUtil.toJson(userModel)).launch(requireActivity()) { event ->
+                            invokeDataStoreEvent(event,
+                                isStored = {
+                                    userModel.id?.let { id ->
+                                        updateUserToFirestore(
+                                            id = id,
+                                            model = mapOf(
+                                                "recent" to userModel.recent
+                                            ),
+                                            onLoad = { },
+                                            onSuccess = { },
+                                            onError = { }
+                                        )
+                                    }
+                                }
+                            )
+                        }
+                    }
+                },
+            )
+        }
 
     }
 
-    private fun setupFavouriteModel() {
+    private fun setupFavouriteAndRecentModel() {
         favouriteModel = FavouriteDataModel().apply {
             id = movieModel.id
             originalTitle = movieModel.originalTitle
@@ -331,6 +385,15 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             imdbId = movieModel.imdbId
             title = movieModel.title
         }
+        recentDataModel = RecentDataModel().apply {
+            id = movieModel.id
+            originalTitle = movieModel.originalTitle
+            backdropPath = movieModel.backdropPath
+            posterPath = movieModel.posterPath
+            imdbId = movieModel.imdbId
+            title = movieModel.title
+        }
+        addToRecentMovie()
     }
 
 
