@@ -3,8 +3,20 @@
 
 ### Are you a fan and seeker of the latest films, has your film been shown in cinemas, do you want to see a snippet of the show? Satisfy yourself showing snippets of films around the world in an application
 
-Tech stack : Firestore | MVVM | Kotlin Coroutine + Flow | Hilt | KTOR with Moshi | Chucker | Coil | Timber | Material 3 with Material You
+## Technologies
 
+- [Kotlin](https://kotlinlang.org/) - %100 Kotlin
+- [Firestore](https://firebase.google.com/docs/firestore) for Databases
+- [Material 3](https://m3.material.io/develop/android/mdc-android) for UI design
+- [Coil](https://github.com/coil-kt/coil) for image loading
+- [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for asynchronous operations
+- [StateFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/)
+- [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+- [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) for Dependency Injection
+- [OkHttp](https://github.com/square/okhttp) and [Ktor](https://github.com/ktorio/ktor) for network operations
+- [Moshi](https://github.com/square/moshi) for JSON library
+- [Timber](https://github.com/JakeWharton/timber) for Logging
+- [TheMovieDb(Tmdb) Api](https://developers.themoviedb.org/3) for movies
 
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/2b6bbb0e-f49a-45ab-8673-208e50f2802a" width="300" height="650" />
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/61a80e56-2ed4-440b-9288-79a1244ceeee" width="300" height="650" />
