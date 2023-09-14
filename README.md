@@ -12,7 +12,6 @@ Tech stack : Firestore | MVVM | Kotlin Coroutine + Flow | Hilt | KTOR with Moshi
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/5369bf9e-bfab-4d12-a23a-a5d7131fbf17" width="300" height="650" />
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/2099377c-d096-497b-9490-103dbbab06a1" width="300" height="650" />
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/9d1fbc1b-2b3f-457e-9a0c-514ca35d631c" width="300" height="650" />
-<img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/657e60b7-b55d-474c-934f-41288d5a31b8" width="300" height="650" />
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/f500ba24-5960-4609-81f5-e6d9127f5c13" width="300" height="650" />
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/bd16758f-1137-45c2-a916-063a7d2ef022" width="300" height="650" />
 <img src="https://github.com/boysmtv/boys-learn-fe-android-ktor-movie/assets/30995595/fd26d732-b9eb-4d15-922a-b542e2ede67f" width="300" height="650" />
