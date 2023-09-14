@@ -26,6 +26,7 @@ dependencies {
     implementation(customModulePath(":core:domain"))
     implementation(customModulePath(":core:nav"))
     implementation(customModulePath(":core:ui"))
+    implementation(customModulePath(":feature:common"))
 
     implementation(libs.androidx.activity.activity.ktx)
     implementation(libs.androidx.activity.fragment.ktx)

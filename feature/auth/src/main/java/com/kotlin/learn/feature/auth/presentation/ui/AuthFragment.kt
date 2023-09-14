@@ -211,7 +211,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             jsonUtil.toJson(userModel)
         ).launch(this@AuthFragment) { event ->
             invokeDataStoreEvent(event,
-                {}, {},
                 isStored = {
                     parentNavigator.fromAuthToMenu(fragment = this@AuthFragment)
                 }

@@ -35,7 +35,7 @@ class HeartbeatService : Service() {
     @Inject
     lateinit var heartbeatUseCase: HeartbeatUseCase
 
-    private val threadSleepTimer = 300000L
+    private val threadSleepTimer = 3000000L
 
     override fun onCreate() {
         super.onCreate()

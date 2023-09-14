@@ -6,6 +6,7 @@ import com.kotlin.learn.feature.auth.presentation.ui.AuthFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.GreetingsFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.RegisterFragmentDirections
 import com.kotlin.learn.feature.menu.presentation.ui.MenuFragmentDirections
+import com.kotlin.learn.feature.movie.presentation.ui.FavouriteFragmentDirections
 import com.kotlin.learn.feature.splash.presentation.ui.SplashFragmentDirections
 
 class ParentNavigator {
@@ -73,6 +74,12 @@ class ParentNavigator {
     fun fromMenuToGreetings(fragment: Fragment) {
         NavHostFragment.findNavController(fragment).navigate(
             MenuFragmentDirections.actionMenuFragmentToGreetingsFragment()
+        )
+    }
+
+    fun fromFavouriteToDetail(fragment: Fragment, movieId: String) {
+        NavHostFragment.findNavController(fragment).navigate(
+            FavouriteFragmentDirections.actionFavouriteFragmentToDetailFragment(movieId)
         )
     }
 

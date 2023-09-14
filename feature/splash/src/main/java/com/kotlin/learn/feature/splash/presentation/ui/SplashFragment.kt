@@ -63,13 +63,14 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     }
 
     private fun fetchUserFromDataStore() = with(userViewModel) {
-        fetchUserFromDatastore().launch(this@SplashFragment) { dataStoreCacheEvent ->
+        fetchUserFromDatastore().launch(this@SplashFragment) { event ->
             invokeDataStoreEvent(
-                event = dataStoreCacheEvent,
+                event = event,
                 isFetched = {
                     if (it.displayName != Constant.EMPTY_STRING)
-                        if (it.profile?.setting?.login == true)
+                        if (it.profile?.setting?.login == true){
                             fetchUserFromFirestore(it)
+                        }
                         else
                             navigateToGreetings()
                     else
@@ -90,10 +91,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     }
 
     private fun updateUserToDataStore(it: UserModel) = with(userViewModel) {
-        storeUserToDatastore(jsonUtil.toJson(it)).launch(this@SplashFragment) { dataStoreCacheEvent ->
-            invokeDataStoreEvent(dataStoreCacheEvent,
-                isFetched = {},
-                isError = {},
+        storeUserToDatastore(jsonUtil.toJson(it)).launch(this@SplashFragment) { event ->
+            invokeDataStoreEvent(event,
                 isStored = {
                     navigationToMenu()
                 }

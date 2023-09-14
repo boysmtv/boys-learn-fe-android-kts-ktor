@@ -7,6 +7,20 @@
     tools:context=".presentation.ui.RecentFragment">
 
     <TextView
+        android:id="@+id/tv_recent_title"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Recent"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/under_development"

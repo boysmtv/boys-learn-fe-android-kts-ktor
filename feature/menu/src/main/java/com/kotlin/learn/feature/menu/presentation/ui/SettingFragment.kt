@@ -61,13 +61,11 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     }
 
     private fun fetchUserSetting() = with(userViewModel) {
-        fetchUserFromDatastore().launch(this@SettingFragment) { dataStoreCacheEvent ->
-            invokeDataStoreEvent(dataStoreCacheEvent,
+        fetchUserFromDatastore().launch(this@SettingFragment) { event ->
+            invokeDataStoreEvent(event,
                 isFetched = {
                     setupSwitchListener(it)
                 },
-                isError = {},
-                isStored = {}
             )
         }
     }
@@ -77,8 +75,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         isSaveFavourite: Boolean? = null,
         isShowNotification: Boolean? = null
     ) {
-        userViewModel.fetchUserFromDatastore().launch(this@SettingFragment) { dataStoreCacheEvent ->
-            invokeDataStoreEvent(dataStoreCacheEvent,
+        userViewModel.fetchUserFromDatastore().launch(this@SettingFragment) { event ->
+            invokeDataStoreEvent(event,
                 isFetched = {
                     it.apply {
                         profile?.setting?.apply {
@@ -96,18 +94,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                     }
                     storeSwitchedChanges(it)
                 },
-                isError = {},
-                isStored = {}
             )
         }
     }
 
     private fun storeSwitchedChanges(it: UserModel) = with(userViewModel) {
         storeUserToDatastore(jsonUtil.toJson(it)).launch(this@SettingFragment) { event ->
-            invokeDataStoreEvent(
-                event,
-                isFetched = {},
-                isError = {},
+            invokeDataStoreEvent(event,
                 isStored = {
                     it.id?.let { id ->
                         it.profile?.let { profile ->
@@ -119,7 +112,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                             )
                         }
                     }
-
                 },
             )
         }

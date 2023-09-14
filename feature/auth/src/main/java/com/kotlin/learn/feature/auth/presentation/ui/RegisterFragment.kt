@@ -55,11 +55,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun fetchTokenFromDatastore() = with(viewModel) {
-        fetchTokenFromDatastore().launch(this@RegisterFragment) {
-            invokeDataStoreEvent(it,
+        fetchTokenFromDatastore().launch(this@RegisterFragment) { event ->
+            invokeDataStoreEvent(event,
                 isFetched = { message ->
                     token = message
-                }, {}, {}
+                }
             )
         }
     }
@@ -92,7 +92,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                         )
                     ).launch(this@RegisterFragment) { event ->
                         invokeDataStoreEvent(event,
-                            {}, {},
                             isStored = {
                                 showDialogSuccessRegister(it.data?.fullName ?: EMPTY_STRING)
                             }

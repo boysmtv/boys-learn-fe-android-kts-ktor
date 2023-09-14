@@ -2,6 +2,7 @@ package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -12,6 +13,7 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.common.util.ImageUtil
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.common.util.network.Result
+import com.kotlin.learn.core.model.FavouriteDataModel
 import com.kotlin.learn.core.model.Genres
 import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.model.UserModel
@@ -40,6 +42,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     private lateinit var userModel: UserModel
 
     private lateinit var movieModel: MovieDetailModel
+
+    private lateinit var favouriteModel: FavouriteDataModel
 
     private var movieKey = Constant.EMPTY_STRING
 
@@ -73,11 +77,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 if (isSaved) {
                     isSaved = false
                     setChangeUiFavourite()
-                    addOrRemoveToFavourite(isAdded = false, movieId)
+                    addOrRemoveToFavourite(isAdded = false)
                 } else {
                     isSaved = true
                     setChangeUiFavourite()
-                    addOrRemoveToFavourite(isAdded = true, movieId)
+                    addOrRemoveToFavourite(isAdded = true)
                 }
             else
                 showDialogGeneralError(
@@ -172,6 +176,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             tvDetailHeaderDesc.text = it.overview
             setupThumbnail(it)
         }
+        setupFavouriteModel()
     }
 
     private fun setupVpCredits() = with(binding) {
@@ -231,7 +236,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                         userModel = model
                         setupEnableAddToFavourite()
                     }
-                }, {}, {}
+                },
             )
         }
         setupFavourite()
@@ -241,7 +246,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         userModel.favourite.let {
             if (it.isNotEmpty()) {
                 for (data in it) {
-                    if (data == movieId) {
+                    if (data.id.toString() == movieId) {
                         isSaved = true
                         setChangeUiFavourite()
                         break
@@ -281,7 +286,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
     }
 
-    private fun addOrRemoveToFavourite(isAdded: Boolean, idMovie: String) = with(viewModel) {
+    private fun addOrRemoveToFavourite(isAdded: Boolean) = with(viewModel) {
 
         fetchUserFromDatastore().launch(requireActivity()) { event ->
             invokeDataStoreEvent(event,
@@ -289,23 +294,22 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                     data?.let { model ->
                         userModel = model.apply {
                             favourite = model.favourite.apply {
-                                if (isAdded) add(idMovie) else remove(idMovie)
+                                if (isAdded) add(favouriteModel) else remove(favouriteModel)
                             }
                         }
                     }
-                }, {}, {}
+                },
             )
         }
 
         storeUserToDatastore(jsonUtil.toJson(userModel)).launch(requireActivity()) { event ->
             invokeDataStoreEvent(event,
-                {}, {},
                 isStored = {
                     userModel.id?.let { id ->
                         updateUserToFirestore(
                             id = id,
                             model = mapOf(
-                                "movieFavourite" to userModel.favourite
+                                "favourite" to userModel.favourite
                             ),
                             onLoad = { },
                             onSuccess = { },
@@ -317,6 +321,18 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
 
     }
+
+    private fun setupFavouriteModel() {
+        favouriteModel = FavouriteDataModel().apply {
+            id = movieModel.id
+            originalTitle = movieModel.originalTitle
+            backdropPath = movieModel.backdropPath
+            posterPath = movieModel.posterPath
+            imdbId = movieModel.imdbId
+            title = movieModel.title
+        }
+    }
+
 
     private fun setupEnableAddToFavourite() {
         isPermissionSaved = userModel.profile?.setting?.favourite == true

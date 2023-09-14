@@ -264,7 +264,6 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         viewModel.storeUserToDatastore(jsonUtil.toJson(userModel))
             .launch(this@GreetingsFragment) { event ->
                 invokeDataStoreEvent(event,
-                    {}, {},
                     isStored = {
                         parentNavigator.fromGreetingsToMenu(this@GreetingsFragment)
                     }
@@ -273,11 +272,11 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     }
 
     private fun fetchTokenFromDatastore() = with(viewModel) {
-        fetchTokenFromDatastore().launch(this@GreetingsFragment) {
-            invokeDataStoreEvent(it,
+        fetchTokenFromDatastore().launch(this@GreetingsFragment) { event ->
+            invokeDataStoreEvent(event,
                 isFetched = { message ->
                     token = message
-                }, {}, {}
+                }
             )
         }
     }

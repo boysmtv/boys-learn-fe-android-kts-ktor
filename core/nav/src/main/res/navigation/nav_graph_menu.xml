@@ -36,7 +36,11 @@
     <fragment
         android:id="@+id/favouriteFragment"
         android:name="com.kotlin.learn.feature.movie.presentation.ui.FavouriteFragment"
-        tools:layout="@layout/fragment_favourite" />
+        tools:layout="@layout/fragment_favourite" >
+        <action
+            android:id="@+id/action_favouriteFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"

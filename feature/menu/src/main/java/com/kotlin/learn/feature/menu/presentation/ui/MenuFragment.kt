@@ -24,9 +24,8 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::infl
 
     @SuppressLint("CommitTransaction")
     private fun setupInit() {
-        val host = childFragmentManager.findFragmentById(R.id.nav_host_menu_fragment_container) as NavHostFragment
-        val controller = host.navController
-        binding.bottomNavigationView.setupWithNavController(controller)
+        val fragment = childFragmentManager.findFragmentById(R.id.nav_host_menu_fragment_container) as NavHostFragment
+        binding.bottomNavigationView.setupWithNavController(fragment.navController)
     }
 
 }

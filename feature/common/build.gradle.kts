@@ -25,7 +25,6 @@ dependencies {
     implementation(customModulePath(":core:domain"))
     implementation(customModulePath(":core:nav"))
     implementation(customModulePath(":core:ui"))
-    implementation(customModulePath(":feature:movie"))
 
     implementation(libs.hilt.android)
     implementation(libs.constraintlayout)

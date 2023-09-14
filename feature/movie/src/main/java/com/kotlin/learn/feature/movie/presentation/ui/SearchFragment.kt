@@ -120,4 +120,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     private fun onMovieClicked(item: MovieDataModel) {
         movieNavigator.fromSearchToDetail(this, item)
     }
+
 }

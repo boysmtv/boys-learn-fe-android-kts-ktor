@@ -1,6 +1,7 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.graphics.Paint
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -46,26 +47,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun loadProfile() = with(viewModel) {
-        fetchDataAuth().launch(this@ProfileFragment) {
-            invokeDataStoreEvent(it,
+        fetchDataAuth().launch(this@ProfileFragment) { event ->
+            invokeDataStoreEvent(event,
                 isFetched = { data ->
                     data?.let {
-                        updateUi(data)
+                        updateUi(it)
                     }
-                }, {}, {}
+                },
             )
         }
     }
 
     private fun loadToken() = with(viewModel) {
-        fetchDataTokenFcm().launch(this@ProfileFragment) {
-            invokeDataStoreEvent(it,
+        fetchDataTokenFcm().launch(this@ProfileFragment) {event ->
+            invokeDataStoreEvent(event,
                 isFetched = { message ->
                     binding.etToken.apply {
                         setText(message)
                     }
                     token = message
-                }, {}, {}
+                },
             )
         }
     }

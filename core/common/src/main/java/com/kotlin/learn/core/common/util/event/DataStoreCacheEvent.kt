@@ -10,21 +10,21 @@ sealed interface DataStoreCacheEvent<out T> {
 
 fun <T> invokeDataStoreEvent(
     event: DataStoreCacheEvent<T>,
-    isFetched: (T) -> Unit,
-    isError: () -> Unit,
-    isStored: () -> Unit,
+    isFetched: ((T) -> Unit)? = null,
+    isError: (() -> Unit)? = null,
+    isStored: (() -> Unit)? = null,
 ) {
     when (event) {
         is DataStoreCacheEvent.StoreSuccess -> {
-            isStored.invoke()
+            isStored?.invoke()
         }
 
         is DataStoreCacheEvent.FetchSuccess -> {
-            isFetched.invoke(event.auth)
+            isFetched?.invoke(event.auth)
         }
 
         is DataStoreCacheEvent.FetchError -> {
-            isError.invoke()
+            isError?.invoke()
         }
     }
 }

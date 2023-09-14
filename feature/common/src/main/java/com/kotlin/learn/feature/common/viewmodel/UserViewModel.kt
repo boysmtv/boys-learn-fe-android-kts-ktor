@@ -149,16 +149,16 @@ class UserViewModel @Inject constructor(
         ).launchIn(viewModelScope)
     }
 
-    fun updateUserToFirestore(
+    fun <T> updateUserToFirestore(
         id: String,
-        filter: Map<String, String>,
+        model: Map<String, T>,
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ) {
         useCase.updateUserToFirestore(
             id = id,
-            filter = filter,
+            filter = model,
             onLoad = onLoad,
             onSuccess = onSuccess,
             onError = onError
