@@ -33,8 +33,14 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     private var userModel: UserModel = UserModel()
 
     override fun setupView() {
+        setAutoText()
         subscribeLogin()
         setupListener()
+    }
+
+    private fun setAutoText() = with(binding) {
+        etEmail.setText("Boys.mtv@gmail.com")
+        etPassword.setText("123456789")
     }
 
     private fun subscribeLogin() = with(viewModel) {
@@ -92,9 +98,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         ivBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
-        /*etEmail.setText("Boys.mtv@gmail.com")
-        etPassword.setText("123456789")*/
     }
 
     private fun postAuthSuccess(result: Result.Success<BaseResponse<LoginRespModel>>) {

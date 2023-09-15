@@ -1,5 +1,6 @@
 package com.kotlin.learn.core.common.util.listener
 
+import androidx.viewbinding.ViewBinding
 import com.kotlin.learn.core.model.CastModel
 import com.kotlin.learn.core.model.CrewModel
 import com.kotlin.learn.core.model.FavouriteDataModel

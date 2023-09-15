@@ -383,7 +383,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             originalTitle = movieModel.originalTitle
             backdropPath = movieModel.backdropPath
             posterPath = movieModel.posterPath
-            imdbId = movieModel.imdbId
             title = movieModel.title
         }
         recentDataModel = RecentDataModel().apply {

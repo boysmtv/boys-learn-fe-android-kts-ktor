@@ -1,5 +1,6 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
+import android.graphics.BitmapFactory
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -7,12 +8,16 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.base.BaseFragment
+import com.kotlin.learn.core.common.util.ImageUtil
+import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.MovieDataModel
+import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.capitalize
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.feature.common.viewmodel.UserViewModel
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.adapter.SeeAllMovieAdapter
 import com.kotlin.learn.feature.movie.databinding.FragmentSeeAllBinding
@@ -24,8 +29,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding::inflate) {
 
-    private val seeAllMovieAdapter = SeeAllMovieAdapter(this::onMovieClicked)
+    private lateinit var seeAllMovieAdapter: SeeAllMovieAdapter
+
     private val viewModel: HomeViewModel by viewModels()
+
+    private val userViewModel: UserViewModel by viewModels()
+
+    private var userModel: UserModel = UserModel()
+
+    private var movieModel: MovieDataModel = MovieDataModel()
 
     private val args: SeeAllMovieFragmentArgs by navArgs()
 
@@ -36,14 +48,38 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
 
     override fun setupView() {
         loadArguments()
+        loadUser()
+        setupAdapter()
         subscribeMovie()
         setupAdapterMovie()
     }
 
     private fun loadArguments() {
         categories = args.categories
-
         binding.tvSeeAllTitle.text = categories.replace("_", " ").capitalize()
+    }
+
+    private fun loadUser() {
+        userViewModel.fetchUserFromDatastore().launch(this@SeeAllMovieFragment) { event ->
+            invokeDataStoreEvent(event,
+                isFetched = {
+                    userModel = it
+                },
+                isError = {
+                    showDialogGeneralError("Warning", "Failed to fetch your profile")
+                }
+            )
+        }
+    }
+
+    private fun setupAdapter() {
+        seeAllMovieAdapter = SeeAllMovieAdapter(
+            context = requireContext(),
+            dataStore = dataStorePreferences,
+            jsonUtil = jsonUtil,
+            onClickMovie = this::onMovieClicked,
+            onClickFavourite = this::onMovieFavourite
+        )
     }
 
     private fun subscribeMovie() = with(viewModel) {
@@ -111,6 +147,10 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
             }
             viewAnimator.displayedChild = 2
         }
+    }
+
+    private fun onMovieFavourite(item: MovieDataModel) {
+
     }
 
     private fun onMovieClicked(item: MovieDataModel) {

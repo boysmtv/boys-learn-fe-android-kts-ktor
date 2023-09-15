@@ -47,10 +47,19 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private val transactionId = TransactionUtil.generateTransactionID()
 
     override fun setupView() {
+        setAutoText()
         init()
         fetchTokenFromDatastore()
         subscribeRegister()
         setupListener()
+    }
+
+    private fun setAutoText() = with(binding) {
+        etFirstName.setText("Dedy")
+        etLastName.setText("Wijaya")
+        etPhone.setText("08989996305")
+        etEmail.setText("Boys.mtv@gmail.com")
+        etPassword.setText("123456789")
     }
 
     private fun init() = with(binding) {
@@ -168,12 +177,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 getUserFromFirestore()
             }
         }
-
-        /*etFirstName.setText("Dedy")
-        etLastName.setText("Wijaya")
-        etPhone.setText("08989996305")
-        etEmail.setText("Boys.mtv@gmail.com")
-        etPassword.setText("123456789")*/
     }
 
     private fun getUserFromFirestore() {
