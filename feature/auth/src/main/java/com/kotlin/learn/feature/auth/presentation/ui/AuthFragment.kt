@@ -14,6 +14,9 @@ import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.core.utilities.isValidEmail
+import com.kotlin.learn.core.utilities.validateEmail
+import com.kotlin.learn.core.utilities.validateInput
 import com.kotlin.learn.feature.auth.databinding.FragmentAuthBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,21 +66,23 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
 
     private fun setupListener() = with(binding) {
         btnLogin.setOnClickListener {
-            userModel.apply {
-                email = etEmail.text.toString()
-                password = etPassword.text.toString()
-            }
-
-            /* TODO : Disable for move to firestore
-            userViewModel.postAuth(
-                UserModel().apply {
-                    email = userModel.email
-                    password = userModel.password
+            if (validateInput()) {
+                userModel.apply {
+                    email = etEmail.text.toString()
+                    password = etPassword.text.toString()
                 }
-            )*/
 
-            // TODO : Refactor fo firestore
-            getUserFromFirestore()
+                /* TODO : Disable for move to firestore
+                userViewModel.postAuth(
+                    UserModel().apply {
+                        email = userModel.email
+                        password = userModel.password
+                    }
+                )*/
+
+                // TODO : Refactor fo firestore
+                getUserFromFirestore()
+            }
         }
 
         tvRegister.setOnClickListener {
@@ -88,8 +93,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        etEmail.setText("Boys.mtv@gmail.com")
-        etPassword.setText("123456789")
+        /*etEmail.setText("Boys.mtv@gmail.com")
+        etPassword.setText("123456789")*/
     }
 
     private fun postAuthSuccess(result: Result.Success<BaseResponse<LoginRespModel>>) {
@@ -217,4 +222,20 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             )
         }
     }
+
+    private fun validateInput(): Boolean = with(binding) {
+        val email = etEmail.validateEmail(8, "email")
+        if (!email.first) {
+            showDialogGeneralError("Warning", email.second)
+            return false
+        }
+
+        val password = etPassword.validateInput(9, "password")
+        if (!password.first) {
+            showDialogGeneralError("Warning", password.second)
+            return false
+        }
+        return true
+    }
+
 }

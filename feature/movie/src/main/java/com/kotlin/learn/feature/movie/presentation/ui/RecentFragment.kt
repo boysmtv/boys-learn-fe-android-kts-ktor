@@ -65,7 +65,7 @@ class RecentFragment : BaseFragment<FragmentRecentBinding>(FragmentRecentBinding
     }
 
     private fun onMovieClicked(item: RecentDataModel) {
-        parentNavigator.fromFavouriteToDetail(
+        parentNavigator.fromRecentToDetail(
             fragment = this,
             movieId = item.id.toString()
         )

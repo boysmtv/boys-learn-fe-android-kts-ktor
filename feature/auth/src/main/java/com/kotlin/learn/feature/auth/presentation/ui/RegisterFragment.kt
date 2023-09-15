@@ -23,6 +23,9 @@ import com.kotlin.learn.core.model.PermissionModel
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.SettingModel
 import com.kotlin.learn.core.utilities.extension.launch
+import com.kotlin.learn.core.utilities.validateEmail
+import com.kotlin.learn.core.utilities.validateInput
+import com.kotlin.learn.core.utilities.validatePhone
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentRegisterBinding
 import com.kotlin.learn.feature.auth.presentation.viewmodel.UserViewModel
@@ -133,42 +136,44 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
         btnRegister.setOnClickListener {
-            userModel.apply {
-                id = transactionId
-                idFireStore = EMPTY_STRING
-                idGoogle = EMPTY_STRING
-                idToken = token
-                firstName = etFirstName.text.toString()
-                lastName = etLastName.text.toString()
-                displayName = etFirstName.text.toString() + " " + etLastName.text.toString()
-                email = etEmail.text.toString()
-                phone = etPhone.text.toString()
-                photoUrl = EMPTY_STRING
-                password = etPassword.text.toString()
-                method = AuthMethod.EMAIL.name
-                profile = ProfileModel().apply {
-                    connection = InternetUtil(requireContext()).getStatusConnectionModel()
-                    permission = PermissionModel().apply {
-                        location = LocationUtil(requireContext()).checkPermissions()
-                        internet = InternetUtil(requireContext()).isNetworkAvailable()
-                        notification = NotificationUtil(requireContext()).isNotificationEnabled()
+            if (validateInput()) {
+                userModel.apply {
+                    id = transactionId
+                    idFireStore = EMPTY_STRING
+                    idGoogle = EMPTY_STRING
+                    idToken = token
+                    firstName = etFirstName.text.toString()
+                    lastName = etLastName.text.toString()
+                    displayName = etFirstName.text.toString() + " " + etLastName.text.toString()
+                    email = etEmail.text.toString()
+                    phone = etPhone.text.toString()
+                    photoUrl = EMPTY_STRING
+                    password = etPassword.text.toString()
+                    method = AuthMethod.EMAIL.name
+                    profile = ProfileModel().apply {
+                        connection = InternetUtil(requireContext()).getStatusConnectionModel()
+                        permission = PermissionModel().apply {
+                            location = LocationUtil(requireContext()).checkPermissions()
+                            internet = InternetUtil(requireContext()).isNetworkAvailable()
+                            notification = NotificationUtil(requireContext()).isNotificationEnabled()
+                        }
+                        setting = SettingModel(
+                            login = true,
+                            favourite = true,
+                            notification = true
+                        )
+                        updatedAt = TransactionUtil.getTimestampWithFormat()
                     }
-                    setting = SettingModel(
-                        login = true,
-                        favourite = true,
-                        notification = true
-                    )
-                    updatedAt = TransactionUtil.getTimestampWithFormat()
                 }
+                getUserFromFirestore()
             }
-            getUserFromFirestore()
         }
 
-        etFirstName.setText("Dedy")
+        /*etFirstName.setText("Dedy")
         etLastName.setText("Wijaya")
         etPhone.setText("08989996305")
         etEmail.setText("Boys.mtv@gmail.com")
-        etPassword.setText("123456789")
+        etPassword.setText("123456789")*/
     }
 
     private fun getUserFromFirestore() {
@@ -226,6 +231,35 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             },
             tag = RegisterFragment::class.simpleName.toString()
         )
+    }
+
+    private fun validateInput(): Boolean = with(binding) {
+        val firstname = etFirstName.validateInput(3, "first name")
+        if (!firstname.first) {
+            showDialogGeneralError("Warning", firstname.second)
+            return false
+        }
+        val lastname = etLastName.validateInput(3, "last name")
+        if (!lastname.first) {
+            showDialogGeneralError("Warning", lastname.second)
+            return false
+        }
+        val phone = etPhone.validatePhone(10, "phone")
+        if (!phone.first) {
+            showDialogGeneralError("Warning", phone.second)
+            return false
+        }
+        val email = etEmail.validateEmail(8, "email")
+        if (!email.first) {
+            showDialogGeneralError("Warning", email.second)
+            return false
+        }
+        val password = etPassword.validateInput(9, "password")
+        if (!password.first) {
+            showDialogGeneralError("Warning", password.second)
+            return false
+        }
+        return true
     }
 
 }

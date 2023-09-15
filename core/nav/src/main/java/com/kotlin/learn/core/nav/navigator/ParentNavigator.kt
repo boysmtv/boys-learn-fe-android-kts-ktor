@@ -7,6 +7,7 @@ import com.kotlin.learn.feature.auth.presentation.ui.GreetingsFragmentDirections
 import com.kotlin.learn.feature.auth.presentation.ui.RegisterFragmentDirections
 import com.kotlin.learn.feature.menu.presentation.ui.MenuFragmentDirections
 import com.kotlin.learn.feature.movie.presentation.ui.FavouriteFragmentDirections
+import com.kotlin.learn.feature.movie.presentation.ui.RecentFragmentDirections
 import com.kotlin.learn.feature.splash.presentation.ui.SplashFragmentDirections
 
 class ParentNavigator {
@@ -79,7 +80,13 @@ class ParentNavigator {
 
     fun fromFavouriteToDetail(fragment: Fragment, movieId: String) {
         NavHostFragment.findNavController(fragment).navigate(
-            FavouriteFragmentDirections.actionFavouriteFragmentToDetailFragment(movieId)
+            FavouriteFragmentDirections.actionFavouriteFragmentToDetailFragment(movieId = movieId)
+        )
+    }
+
+    fun fromRecentToDetail(fragment: Fragment, movieId: String) {
+        NavHostFragment.findNavController(fragment).navigate(
+            RecentFragmentDirections.actionRecentFragmentToDetailFragment(movieId = movieId)
         )
     }
 

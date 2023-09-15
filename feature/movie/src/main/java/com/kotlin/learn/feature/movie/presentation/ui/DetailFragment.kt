@@ -301,25 +301,26 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                                 if (isAdded) add(favouriteModel) else remove(favouriteModel)
                             }
                         }
+
+                        storeUserToDatastore(jsonUtil.toJson(userModel)).launch(requireActivity()) { event ->
+                            invokeDataStoreEvent(event,
+                                isStored = {
+                                    userModel.id?.let { id ->
+                                        updateUserToFirestore(
+                                            id = id,
+                                            model = mapOf(
+                                                "favourite" to userModel.favourite
+                                            ),
+                                            onLoad = { },
+                                            onSuccess = { },
+                                            onError = { }
+                                        )
+                                    }
+                                }
+                            )
+                        }
                     }
                 },
-            )
-        }
-        storeUserToDatastore(jsonUtil.toJson(userModel)).launch(requireActivity()) { event ->
-            invokeDataStoreEvent(event,
-                isStored = {
-                    userModel.id?.let { id ->
-                        updateUserToFirestore(
-                            id = id,
-                            model = mapOf(
-                                "favourite" to userModel.favourite
-                            ),
-                            onLoad = { },
-                            onSuccess = { },
-                            onError = { }
-                        )
-                    }
-                }
             )
         }
     }
@@ -395,7 +396,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
         addToRecentMovie()
     }
-
 
     private fun setupEnableAddToFavourite() {
         isPermissionSaved = userModel.profile?.setting?.favourite == true
