@@ -14,13 +14,7 @@ import com.kotlin.learn.core.utilities.Constant.ZERO
 
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
-    var switchToSelfService: (() -> Unit)? = null
-    var switchToDualTablet: (() -> Unit)? = null
     var dialogGeneralError: DialogGeneralError? = null
-
-    var initCustomOnLoadState: (() -> Unit)? = null
-    var initCustomOnSuccessState: (() -> Unit)? = null
-    var initCustomOnErrorState: (() -> Unit)? = null
 
     var listener: CommonListener? = null
     var retryCount = ZERO

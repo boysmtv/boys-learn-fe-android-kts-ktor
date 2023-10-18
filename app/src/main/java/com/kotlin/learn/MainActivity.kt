@@ -5,8 +5,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -21,7 +19,6 @@ import com.kotlin.learn.core.common.util.security.DataStorePreferences
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.databinding.ActivityMainBinding
-import com.kotlin.learn.feature.auth.presentation.ui.RegisterFragment
 import com.kotlin.learn.feature.services.heartbeat.HeartbeatService
 import com.kotlin.learn.feature.services.location.LocationService
 import com.kotlin.learn.feature.services.profile.ProfileService

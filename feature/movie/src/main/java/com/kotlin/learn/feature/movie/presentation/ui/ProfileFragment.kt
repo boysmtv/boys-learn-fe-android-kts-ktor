@@ -1,7 +1,6 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.graphics.Paint
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable

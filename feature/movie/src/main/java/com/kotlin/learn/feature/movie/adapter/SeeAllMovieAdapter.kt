@@ -1,17 +1,14 @@
 package com.kotlin.learn.feature.movie.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.Paint
-import android.util.Log
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
-import com.kotlin.learn.core.common.util.ImageUtil
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.listener.OnClickMovie
 import com.kotlin.learn.core.common.util.security.DataStorePreferences
@@ -23,13 +20,15 @@ import com.kotlin.learn.core.utilities.PreferenceConstants
 import com.kotlin.learn.core.utilities.extension.convertDateFormat
 import com.kotlin.learn.core.utilities.extension.getMonthName
 import com.kotlin.learn.core.utilities.extension.runSafeLaunch
-import com.kotlin.learn.core.utilities.setTextAnimation
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.MovieSeeAllItemBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 
+
 class SeeAllMovieAdapter(
-    private val context: Context,
     private val dataStore: DataStorePreferences,
     private val jsonUtil: JsonUtil,
     private val onClickMovie: OnClickMovie,
@@ -37,18 +36,17 @@ class SeeAllMovieAdapter(
 ) :
     PagingDataAdapter<MovieDataModel, SeeAllMovieAdapter.ViewHolder>(MovieCallback()) {
 
-    private lateinit var binding: MovieSeeAllItemBinding
-
     private var userModel = UserModel()
 
-    private var isSaved: Boolean = false
+    private var lastPositionSaved = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = MovieSeeAllItemBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
         fetchUserModelFromDataStore()
-        return ViewHolder(binding, onClickMovie)
+        return ViewHolder(
+            MovieSeeAllItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ), onClickMovie
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -72,37 +70,28 @@ class SeeAllMovieAdapter(
         }
     }
 
-    fun checkIsFavouriteSaved(item: MovieDataModel, binding: MovieSeeAllItemBinding) {
+    fun checkIsFavouriteSaved(binding: MovieSeeAllItemBinding, item: MovieDataModel) {
         userModel.favourite.let {
             if (it.isNotEmpty()) {
                 for (data in it) {
                     if (data.id == item.id) {
-                        isSaved = true
-                        Log.e("checkIsFavouriteSaved", "data: ${data.id}, item: ${item.id}")
-                        setChangeUiFavourite(binding)
+                        setChangeUiFavourite(binding, true)
                         break
+                    } else {
+                        setChangeUiFavourite(binding, false)
                     }
                 }
             }
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun setChangeUiFavourite(binding: MovieSeeAllItemBinding) = with(binding) {
+    private fun setChangeUiFavourite(binding: MovieSeeAllItemBinding, isSaved: Boolean) = with(binding) {
         if (isSaved) {
-            ImageUtil.imageViewAnimatedChange(
-                context,
-                ivSeeAllContentIconFavourite,
-                BitmapFactory.decodeResource(context.resources, R.drawable.ic_saved)
-            )
-            tvSeeAllContentIconFavourite.setTextAnimation(context.getString(R.string.saved))
+            ivSeeAllContentIconFavourite.setImageResource(R.drawable.ic_saved)
+            tvSeeAllContentIconFavourite.setText(R.string.saved)
         } else {
-            ImageUtil.imageViewAnimatedChange(
-                context,
-                ivSeeAllContentIconFavourite,
-                BitmapFactory.decodeResource(context.resources, R.drawable.ic_favourite)
-            )
-            tvSeeAllContentIconFavourite.setTextAnimation(context.getString(R.string.favourite))
+            ivSeeAllContentIconFavourite.setImageResource(R.drawable.ic_favourite)
+            tvSeeAllContentIconFavourite.setText(R.string.favourite)
         }
     }
 
@@ -113,6 +102,8 @@ class SeeAllMovieAdapter(
 
         @SuppressLint("SetTextI18n", "SimpleDateFormat")
         fun bind(item: MovieDataModel) {
+
+            checkIsFavouriteSaved(binding, item)
 
             binding.apply {
                 tvSeeAllContentTitle.text = item.originalTitle
@@ -146,7 +137,6 @@ class SeeAllMovieAdapter(
                 root.setOnClickListener {
                     onClickMovie(item)
                 }
-                //checkIsFavouriteSaved(item, binding)
             }
         }
     }

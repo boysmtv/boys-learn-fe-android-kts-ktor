@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright © 2020 PT Bank Mandiri (Persero) Tbk.
-  ~
-  ~ Unauthorized copying, publishing of this file, via any medium is strictly prohibited
-  ~ Proprietary and confidential
-  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

@@ -1,6 +1,5 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
-import android.graphics.BitmapFactory
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -8,7 +7,6 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.learn.core.common.base.BaseFragment
-import com.kotlin.learn.core.common.util.ImageUtil
 import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.UserModel
@@ -36,8 +34,6 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
     private val userViewModel: UserViewModel by viewModels()
 
     private var userModel: UserModel = UserModel()
-
-    private var movieModel: MovieDataModel = MovieDataModel()
 
     private val args: SeeAllMovieFragmentArgs by navArgs()
 
@@ -74,7 +70,6 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
 
     private fun setupAdapter() {
         seeAllMovieAdapter = SeeAllMovieAdapter(
-            context = requireContext(),
             dataStore = dataStorePreferences,
             jsonUtil = jsonUtil,
             onClickMovie = this::onMovieClicked,
