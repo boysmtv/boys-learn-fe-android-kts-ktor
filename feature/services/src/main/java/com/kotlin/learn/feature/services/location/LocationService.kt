@@ -11,18 +11,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.LocationUtil
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.model.LocationModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint

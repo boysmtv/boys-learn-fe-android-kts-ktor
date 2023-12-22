@@ -10,9 +10,6 @@ class HeartbeatUseCaseImpl @Inject constructor(
     private val repository: HeartbeatRepository
 ) : HeartbeatUseCase {
 
-    // TODO : start region to firestore
-    // ===============================================================
-
     override fun storeHeartbeatToFirestore(
         id: String,
         model: HeartbeatModel,

@@ -14,7 +14,7 @@ import coil.load
 import com.kotlin.learn.core.common.util.ImageUtil
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.listener.OnClickMovie
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.data.callback.MovieCallback
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.UserModel

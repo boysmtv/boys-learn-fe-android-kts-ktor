@@ -1,9 +1,8 @@
-package com.kotlin.learn.core.common.util.security
+package com.kotlin.learn.core.common.data.preferences
 
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import dagger.hilt.android.qualifiers.ApplicationContext

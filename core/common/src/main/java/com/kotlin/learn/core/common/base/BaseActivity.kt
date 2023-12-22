@@ -10,21 +10,12 @@ import com.kotlin.learn.core.ui.dialog.base.BaseDataDialogGeneral
 import com.kotlin.learn.core.ui.dialog.common.DialogGeneralError
 import com.kotlin.learn.core.ui.dialog.common.DialogLogout
 import com.kotlin.learn.core.ui.dialog.common.DialogWithAction
-import com.kotlin.learn.core.utilities.Constant.ZERO
 
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
-    var switchToSelfService: (() -> Unit)? = null
-    var switchToDualTablet: (() -> Unit)? = null
-    var dialogGeneralError: DialogGeneralError? = null
-
-    var initCustomOnLoadState: (() -> Unit)? = null
-    var initCustomOnSuccessState: (() -> Unit)? = null
-    var initCustomOnErrorState: (() -> Unit)? = null
+    private var dialogGeneralError: DialogGeneralError? = null
 
     var listener: CommonListener? = null
-    var retryCount = ZERO
-    var retryReinvoke = ZERO
 
     lateinit var binding: T
     protected abstract fun initBinding(): T
