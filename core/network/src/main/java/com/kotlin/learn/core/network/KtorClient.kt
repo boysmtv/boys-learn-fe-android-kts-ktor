@@ -150,7 +150,7 @@ class KtorClient(
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
-                        Log.v("Logger Ktor ->", message)
+                        //Log.v("Logger Ktor ->", message)
                     }
                 }
                 level = LogLevel.ALL
@@ -166,7 +166,7 @@ class KtorClient(
 
             install(ResponseObserver) {
                 onResponse { response ->
-                    Log.d("Http status:", "${response.status.value}")
+                    //Log.d("Http status:", "${response.status.value}")
                 }
             }
 
