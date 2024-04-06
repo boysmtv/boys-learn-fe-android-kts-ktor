@@ -77,6 +77,9 @@ dependencies {
     implementation(libs.com.android.support.multidex)
     implementation(libs.com.jakewharton.threetenabp.threetenabp)
 
+    implementation(libs.appcenter.analytics)
+    implementation(libs.appcenter.crashes)
+
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit4)
@@ -85,5 +88,4 @@ dependencies {
 
     debugImplementation(libs.chucker.debug)
     releaseImplementation(libs.chucker.release)
-
 }

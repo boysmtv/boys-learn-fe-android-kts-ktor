@@ -1,7 +1,6 @@
 package com.kotlin.learn.core.common.base
 
 import android.os.Bundle
-import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.kotlin.learn.core.common.util.listener.CommonListener

@@ -25,7 +25,9 @@ import com.kotlin.learn.feature.services.profile.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
-
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
@@ -50,6 +52,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
     }
 
     override fun initView() {
+        setupAppCenter()
         setupInit()
         startProfileService()
         startHeartbeatService()
@@ -221,6 +224,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
                 startLocationService()
             }
         } else requestPermissions()
+    }
+
+
+    private fun setupAppCenter(){
+        AppCenter.configure(application, "ee64823d-88bd-4015-bac7-f2f8c1f1ca5d")
+        if (AppCenter.isConfigured()) {
+            AppCenter.start(Analytics::class.java)
+            AppCenter.start(Crashes::class.java)
+        }
     }
 
 }
