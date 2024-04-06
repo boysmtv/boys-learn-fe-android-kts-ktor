@@ -16,7 +16,7 @@ out/
 release/
 
 # Gradle files
-.gradle/
+#.gradle/
 build/
 */build
 !app/build/outputs/apk/debug/
