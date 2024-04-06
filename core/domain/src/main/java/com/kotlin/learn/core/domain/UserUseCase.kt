@@ -21,7 +21,6 @@ interface UserUseCase {
 
     fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>>
 
-
     // TODO : start region to firebase
     // ===============================================================
 

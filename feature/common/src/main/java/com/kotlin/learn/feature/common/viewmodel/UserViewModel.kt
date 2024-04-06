@@ -6,7 +6,7 @@ import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.event.DataStoreCacheEvent
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.ResultCallback
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginRespModel
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(
     private val useCase: UserUseCase,
     private val dataStore: DataStorePreferences,
-    private val jsonUtil: JsonUtil
+    private val jsonUtil: JsonUtil,
 ) : ViewModel() {
 
     // TODO : start region to spring backend

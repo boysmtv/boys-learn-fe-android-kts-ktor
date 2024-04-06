@@ -6,7 +6,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.ServiceUtil
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.KtorClient

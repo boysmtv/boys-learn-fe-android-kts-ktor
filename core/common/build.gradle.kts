@@ -35,5 +35,10 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.messaging.ktx)
     implementation(libs.androidx.navigation.runtime.ktx)
 
+    implementation(libs.androidx.datastore.datastore.preferences)
+    implementation(libs.androidx.room.room.runtime)
+    implementation(libs.androidx.room.room.ktx)
+
     kapt(libs.hilt.compiler)
+    kapt(libs.androidx.room.room.compiler)
 }

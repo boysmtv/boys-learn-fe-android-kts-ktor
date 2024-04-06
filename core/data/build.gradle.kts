@@ -22,7 +22,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
-    implementation(libs.androidx.datastore.datastore.preferences)
 
     kapt(libs.hilt.compiler)
 }

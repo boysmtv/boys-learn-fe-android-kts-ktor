@@ -3,13 +3,10 @@ package com.kotlin.learn.feature.services.location
 import android.content.Context
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.ServiceUtil
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.model.LocationModel
 import com.kotlin.learn.core.utilities.PreferenceConstants
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ThreadLocation {

@@ -10,7 +10,7 @@ import com.kotlin.learn.core.common.R
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.network.NetworkConnectionLiveData
 import com.kotlin.learn.core.common.util.network.debounce
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialogGeneral
 import com.kotlin.learn.core.ui.dialog.common.DialogGeneralError

@@ -6,9 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface HeartbeatUseCase {
 
-    // TODO : start region to firestore
-    // ===============================================================
-
     fun storeHeartbeatToFirestore(
         id: String,
         model: HeartbeatModel,
