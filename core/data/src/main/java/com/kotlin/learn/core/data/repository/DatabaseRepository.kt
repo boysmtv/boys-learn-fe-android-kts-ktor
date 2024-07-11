@@ -14,10 +14,10 @@ interface DatabaseRepository {
 
     fun getFavourite(): Flow<Result<List<FavouriteEntity>>>
 
-    fun addUser(data: List<UserEntity>): Flow<Result<String>>
+    fun addUser(data: UserEntity): Flow<Result<String>>
 
-    fun addHeartbeat(data: List<HeartbeatEntity>): Flow<Result<String>>
+    fun addHeartbeat(data: HeartbeatEntity): Flow<Result<String>>
 
-    fun addFavourite(data: List<FavouriteEntity>): Flow<Result<String>>
+    fun addFavourite(data: FavouriteEntity): Flow<Result<String>>
 
 }

@@ -48,7 +48,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-    override fun addUser(data: List<UserEntity>): Flow<Result<String>> =
+    override fun addUser(data: UserEntity): Flow<Result<String>> =
         flow {
             emit(Result.Loading)
             val value = userDao.addUser(data)
@@ -60,7 +60,7 @@ class DatabaseRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
 
 
-    override fun addHeartbeat(data: List<HeartbeatEntity>): Flow<Result<String>> =
+    override fun addHeartbeat(data: HeartbeatEntity): Flow<Result<String>> =
         flow {
             emit(Result.Loading)
             val value = userDao.addHeartbeat(data)
@@ -71,7 +71,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-    override fun addFavourite(data: List<FavouriteEntity>): Flow<Result<String>> =
+    override fun addFavourite(data: FavouriteEntity): Flow<Result<String>> =
         flow {
             emit(Result.Loading)
             val value = userDao.addFavorite(data)

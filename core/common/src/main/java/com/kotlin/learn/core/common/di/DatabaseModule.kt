@@ -20,4 +20,8 @@ class DatabaseModule {
         return Room.databaseBuilder(context, UserDB::class.java, "UserDB").build()
     }
 
+    @Singleton
+    @Provides
+    fun provideYourDao(db: UserDB) = db.getUserDao()
+
 }

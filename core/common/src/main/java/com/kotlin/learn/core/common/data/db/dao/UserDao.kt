@@ -11,13 +11,13 @@ import com.kotlin.learn.core.model.db.UserEntity
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addUser(user: List<UserEntity>): Long
+    suspend fun addUser(user: UserEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addHeartbeat(heartbeat: List<HeartbeatEntity>): Long
+    suspend fun addHeartbeat(heartbeat: HeartbeatEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addFavorite(favourite: List<FavouriteEntity>): Long
+    suspend fun addFavorite(favourite: FavouriteEntity): Long
 
     @Query("SELECT * FROM UserEntity")
     suspend fun getUser(): List<UserEntity>
