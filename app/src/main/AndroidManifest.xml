@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>
+    <!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -20,7 +20,7 @@
     <application
         android:name=".MovieApplication"
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:dataExtractionRules="@xml/appcenter_backup_rule"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher_discover"
         android:label="@string/app_name"
@@ -40,24 +40,25 @@
         </activity>
 
         <!-- start firebase messaging -->
-        <service
-            android:name=".feature.services.messaging.MessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+        <!--        <service-->
+        <!--            android:name=".feature.services.messaging.MessagingService"-->
+        <!--            android:exported="false">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+        <!--            </intent-filter>-->
+        <!--        </service>-->
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
+        <!--        <meta-data-->
+        <!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+        <!--            android:value="@string/default_notification_channel_id" />-->
 
         <!-- start profile services -->
         <service
             android:name=".feature.services.profile.ProfileService"
             android:exported="false" />
 
-        <receiver android:name=".feature.services.profile.ProfileReceiver"
+        <receiver
+            android:name=".feature.services.profile.ProfileReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -69,7 +70,8 @@
             android:name=".feature.services.heartbeat.HeartbeatService"
             android:exported="false" />
 
-        <receiver android:name=".feature.services.heartbeat.HeartbeatReceiver"
+        <receiver
+            android:name=".feature.services.heartbeat.HeartbeatReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -81,7 +83,8 @@
             android:name=".feature.services.location.LocationService"
             android:exported="false" />
 
-        <receiver android:name=".feature.services.location.LocationReceiver"
+        <receiver
+            android:name=".feature.services.location.LocationReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

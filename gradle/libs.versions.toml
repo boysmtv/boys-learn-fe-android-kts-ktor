@@ -19,6 +19,8 @@ androidxTestExt = "1.1.5"
 androidxTestRules = "1.5.0"
 androidxTestRunner = "1.5.2"
 androidxWebkit = "1.7.0"
+appcenterAnalytics = "5.0.4"
+appcenterCrashes = "5.0.4"
 chucker = "3.5.2"
 coil = "2.3.0"
 hilt = "2.45"
@@ -110,6 +112,8 @@ androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.r
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 anddridx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "androidxWebkit" }
+appcenter-analytics = { module = "com.microsoft.appcenter:appcenter-analytics", version.ref = "appcenterAnalytics" }
+appcenter-crashes = { module = "com.microsoft.appcenter:appcenter-crashes", version.ref = "appcenterCrashes" }
 chucker-debug = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
 chucker-release = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
 coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }

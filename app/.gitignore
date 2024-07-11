@@ -16,9 +16,10 @@ out/
 release/
 
 # Gradle files
-.gradle/
+#.gradle/
 build/
 */build
+!app/build/outputs/apk/debug/
 
 # Local configuration file (sdk path, etc)
 local.properties
