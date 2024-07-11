@@ -55,7 +55,7 @@ captures/
 .idea/navEditor.xml
 # Sonar
 .idea/sonarIssues.xml
-
+.idea/shelf/
 .idea/misc.xml
 .idea/inspectionProfiles
 

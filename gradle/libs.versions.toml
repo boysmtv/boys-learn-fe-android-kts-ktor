@@ -71,7 +71,7 @@ viewPump = "2.0.3"
 threeTenABP = "1.4.1"
 i18nLanguagePack = "1.0.0"
 navigationRuntimeKtx = "2.6.0"
-room = "2.6.1"
+room = "2.4.2"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
