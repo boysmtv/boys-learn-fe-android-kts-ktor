@@ -71,6 +71,7 @@ viewPump = "2.0.3"
 threeTenABP = "1.4.1"
 i18nLanguagePack = "1.0.0"
 navigationRuntimeKtx = "2.6.0"
+room = "2.6.1"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -214,6 +215,11 @@ io-github-inflationx-viewpump = { group = "io.github.inflationx", name = "viewpu
 com-jakewharton-threetenabp-threetenabp = { group = "com.jakewharton.threetenabp", name = "threetenabp", version.ref = "threeTenABP" }
 com-i18next-i18next-android = { group = "com.i18next", name = "i18next-android", version.ref = "i18nLanguagePack" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+
+# Room
+androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

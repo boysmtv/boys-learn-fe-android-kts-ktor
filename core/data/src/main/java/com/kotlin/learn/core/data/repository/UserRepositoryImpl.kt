@@ -1,12 +1,17 @@
 package com.kotlin.learn.core.data.repository
 
+import com.kotlin.learn.core.common.data.db.dao.UserDao
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.ResultCallback
+import com.kotlin.learn.core.common.util.network.databaseFlow
 import com.kotlin.learn.core.common.util.network.execute
 import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginRespModel
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
+import com.kotlin.learn.core.model.db.FavouriteEntity
+import com.kotlin.learn.core.model.db.HeartbeatEntity
+import com.kotlin.learn.core.model.db.UserEntity
 import com.kotlin.learn.core.network.source.UserDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +20,8 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val network: UserDataSource
+    private val network: UserDataSource,
+    private val userDao: UserDao
 ) : UserRepository {
 
     // TODO : start region to spring backend
@@ -138,15 +144,11 @@ class UserRepositoryImpl @Inject constructor(
     override fun <T : Any> fetchUserFromFirestore(
         filter: Pair<String, String>,
         resources: T
-    ): Flow<ResultCallback<T>> {
-        return network.fetchUserFromFirestore(filter, resources)
-    }
+    ): Flow<ResultCallback<T>> = network.fetchUserFromFirestore(filter, resources)
 
     override fun <T : Any> updateUserToFirestoreAsync(
         id: String,
         model: Map<String, T>
-    ): Flow<ResultCallback<String>> {
-        return network.updateUserToFirestoreAsync(id, model)
-    }
+    ): Flow<ResultCallback<String>> = network.updateUserToFirestoreAsync(id, model)
 
 }

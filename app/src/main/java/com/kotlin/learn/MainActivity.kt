@@ -15,7 +15,7 @@ import com.kotlin.learn.core.common.base.BaseActivity
 import com.kotlin.learn.core.common.util.LocationUtil
 import com.kotlin.learn.core.common.util.ServiceUtil
 import com.kotlin.learn.core.common.util.listener.EventListener
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.databinding.ActivityMainBinding

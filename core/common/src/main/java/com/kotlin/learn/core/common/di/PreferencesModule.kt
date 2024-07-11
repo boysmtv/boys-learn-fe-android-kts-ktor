@@ -1,11 +1,11 @@
-package com.kotlin.learn.core.data.di
+package com.kotlin.learn.core.common.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
-import com.kotlin.learn.core.common.util.security.DataStorePreferencesImpl
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferencesImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

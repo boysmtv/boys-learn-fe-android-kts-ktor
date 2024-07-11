@@ -1,5 +1,7 @@
 package com.kotlin.learn.core.data.di
 
+import com.kotlin.learn.core.data.repository.DatabaseRepository
+import com.kotlin.learn.core.data.repository.DatabaseRepositoryImpl
 import com.kotlin.learn.core.data.repository.HeartbeatRepository
 import com.kotlin.learn.core.data.repository.HeartbeatRepositoryImpl
 import com.kotlin.learn.core.data.repository.MovieRepository
@@ -29,5 +31,10 @@ interface DataModule {
     fun bindHeartbeatRepository(
         heartbeatRepositoryImpl: HeartbeatRepositoryImpl,
     ): HeartbeatRepository
+
+    @Binds
+    fun bindDatabaseRepository(
+        databaseRepositoryImpl: DatabaseRepositoryImpl,
+    ): DatabaseRepository
 
 }

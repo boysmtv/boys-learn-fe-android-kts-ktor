@@ -7,6 +7,7 @@ import com.kotlin.learn.core.model.BaseResponse
 import com.kotlin.learn.core.model.LoginRespModel
 import com.kotlin.learn.core.model.RegisterRespModel
 import com.kotlin.learn.core.model.UserModel
+import com.kotlin.learn.core.model.db.UserEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -17,21 +18,17 @@ class UserUseCaseImpl @Inject constructor(
     // TODO : start region to spring backend
     // ===============================================================
 
-    override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> {
-        return repository.getUser(model = model)
-    }
+    override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> =
+        repository.getUser(model = model)
 
-    override fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> {
-        return repository.postUser(model = model)
-    }
+    override fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
+        repository.postUser(model = model)
 
-    override fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> {
-        return repository.putUser(model = model)
-    }
+    override fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
+        repository.putUser(model = model)
 
-    override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>> {
-        return repository.postAuth(model = model)
-    }
+    override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>> =
+        repository.postAuth(model = model)
 
     // TODO : start region to firebase
     // ===============================================================
@@ -40,18 +37,14 @@ class UserUseCaseImpl @Inject constructor(
         model: UserModel,
         onSuccess: (String) -> Unit,
         onError: () -> Unit
-    ): Flow<Result<Unit>> {
-        return repository.storeUserToFirebase(model, onSuccess, onError)
-    }
+    ): Flow<Result<Unit>> = repository.storeUserToFirebase(model, onSuccess, onError)
 
     override fun <Z : Any> fetchUserFromFirebase(
         id: String,
         resources: Z,
         onSuccess: Z.() -> Unit,
         onError: (String) -> Unit
-    ): Flow<Result<Any?>> {
-        return repository.fetchUserFromFirebase(id, resources, onSuccess, onError)
-    }
+    ): Flow<Result<Any?>> = repository.fetchUserFromFirebase(id, resources, onSuccess, onError)
 
 
     // TODO : start region to firestore
@@ -63,9 +56,7 @@ class UserUseCaseImpl @Inject constructor(
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
-    ): Flow<Result<Any?>> {
-        return repository.storeUserToFirestore(id, model, onLoad, onSuccess, onError)
-    }
+    ): Flow<Result<Any?>> = repository.storeUserToFirestore(id, model, onLoad, onSuccess, onError)
 
     override fun <T> updateUserToFirestore(
         id: String,
@@ -73,31 +64,23 @@ class UserUseCaseImpl @Inject constructor(
         onLoad: () -> Unit,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
-    ): Flow<Result<Any?>> {
-        return repository.updateUserToFirestore(id, filter, onLoad, onSuccess, onError)
-    }
+    ): Flow<Result<Any?>> = repository.updateUserToFirestore(id, filter, onLoad, onSuccess, onError)
 
     override fun fetchUserFromFirestore(
         filter: HashMap<String, String>,
         onLoad: () -> Unit,
         onSuccess: (UserModel) -> Unit,
         onError: (String) -> Unit
-    ): Flow<Result<Any?>> {
-        return repository.fetchUserFromFirestore(filter, onLoad, onSuccess, onError)
-    }
+    ): Flow<Result<Any?>> = repository.fetchUserFromFirestore(filter, onLoad, onSuccess, onError)
 
     override fun <T : Any> fetchUserFromFirestoreAsync(
         filter: Pair<String, String>,
         resources: T,
-    ): Flow<ResultCallback<T>> {
-        return repository.fetchUserFromFirestore(filter, resources)
-    }
+    ): Flow<ResultCallback<T>> = repository.fetchUserFromFirestore(filter, resources)
 
     override fun <T : Any> updateUserToFirestoreAsync(
         id: String,
         model: Map<String, T>
-    ): Flow<ResultCallback<String>> {
-        return repository.updateUserToFirestoreAsync(id, model)
-    }
+    ): Flow<ResultCallback<String>> = repository.updateUserToFirestoreAsync(id, model)
 
 }

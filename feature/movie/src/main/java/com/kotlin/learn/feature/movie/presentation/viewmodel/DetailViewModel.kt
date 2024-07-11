@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.event.DataStoreCacheEvent
 import com.kotlin.learn.core.common.util.network.Result
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.MovieDetailModel

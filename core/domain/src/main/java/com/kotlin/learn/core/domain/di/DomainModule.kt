@@ -1,5 +1,7 @@
 package com.kotlin.learn.core.domain.di
 
+import com.kotlin.learn.core.domain.DatabaseUseCase
+import com.kotlin.learn.core.domain.DatabaseUseCaseImpl
 import com.kotlin.learn.core.domain.HeartbeatUseCase
 import com.kotlin.learn.core.domain.HeartbeatUseCaseImpl
 import com.kotlin.learn.core.domain.MovieUseCase
@@ -29,5 +31,10 @@ interface DomainModule {
     fun bindHeartbeatUseCase(
         heartbeatUseCaseImpl: HeartbeatUseCaseImpl
     ): HeartbeatUseCase
+
+    @Binds
+    fun bindDatabaseUseCase(
+        databaseUseCaseImpl: DatabaseUseCaseImpl
+    ): DatabaseUseCase
 
 }

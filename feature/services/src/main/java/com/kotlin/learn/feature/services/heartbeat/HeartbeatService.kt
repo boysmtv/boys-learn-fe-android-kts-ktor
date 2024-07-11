@@ -4,19 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
 import com.kotlin.learn.core.common.util.DeviceUtil
 import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.TransactionUtil
-import com.kotlin.learn.core.common.util.security.DataStorePreferences
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.domain.HeartbeatUseCase
 import com.kotlin.learn.core.model.HeartbeatModel
-import com.kotlin.learn.core.model.LocationModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
