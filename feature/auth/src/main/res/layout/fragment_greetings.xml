@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/iv_greetings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:importantForAccessibility="no"
             android:src="@drawable/icon_greetings"
             android:layout_marginTop="@dimen/dp_16"
@@ -34,12 +34,12 @@
             android:layout_marginTop="@dimen/dp_16"
             android:fontFamily="@font/tt_interphases_bold"
             android:text="@string/greetings_title"
+            android:layout_marginBottom="@dimen/dp_8"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/sp_28"
             app:layout_constraintBottom_toTopOf="@id/tv_desc"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_greetings" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/tv_desc"
@@ -48,6 +48,7 @@
             android:layout_marginTop="@dimen/dp_16"
             android:fontFamily="@font/tt_interphases_regular"
             android:gravity="center"
+            android:layout_marginBottom="@dimen/dp_16"
             android:lineHeight="@dimen/dp_32"
             android:paddingStart="@dimen/dp_16"
             android:paddingEnd="@dimen/dp_16"
@@ -56,7 +57,6 @@
             app:layout_constraintBottom_toTopOf="@+id/iv_dot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             tools:targetApi="p" />
 
         <ImageView
@@ -68,8 +68,7 @@
             android:src="@drawable/ic_dot"
             app:layout_constraintBottom_toTopOf="@+id/btn_facebook"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btn_facebook"
