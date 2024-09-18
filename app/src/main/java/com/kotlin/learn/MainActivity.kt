@@ -17,6 +17,7 @@ import com.kotlin.learn.core.common.util.ServiceUtil
 import com.kotlin.learn.core.common.util.listener.EventListener
 import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
+import com.kotlin.learn.core.ui.util.setupLightMode
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.databinding.ActivityMainBinding
 import com.kotlin.learn.feature.services.heartbeat.HeartbeatService
@@ -54,6 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
     override fun initView() {
         setupAppCenter()
         setupInit()
+        setupLightMode()
         startProfileService()
         startHeartbeatService()
         askNotificationPermission()
@@ -148,13 +150,30 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
     }
 
     private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            this, arrayOf(
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+        locationPermissionRequest.launch(
+            arrayOf(
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
-
-                ), permissionIdLocation
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         )
+    }
+
+    private val locationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions.getOrDefault(android.Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                // TODO: Precise location access granted.
+            }
+
+            permissions.getOrDefault(android.Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                // TODO: Only approximate location access granted.
+            }
+
+            else -> {
+                // TODO: No location access granted.
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -219,15 +238,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
     }
 
     override fun askLocationPermission() {
-        if (locationUtil.checkPermissions()) {
-            if (locationUtil.isLocationEnabled()) {
-                startLocationService()
-            }
-        } else requestPermissions()
+        if (locationUtil.checkPermissions() && locationUtil.isLocationEnabled())
+            startLocationService() else requestPermissions()
     }
 
-
-    private fun setupAppCenter(){
+    private fun setupAppCenter() {
         AppCenter.configure(application, "ee64823d-88bd-4015-bac7-f2f8c1f1ca5d")
         if (AppCenter.isConfigured()) {
             AppCenter.start(Analytics::class.java)

@@ -17,6 +17,7 @@ import com.kotlin.learn.core.ui.dialog.common.DialogGeneralError
 import com.kotlin.learn.core.ui.dialog.common.DialogNoInternet
 import com.kotlin.learn.core.ui.dialog.common.DialogWithAction
 import com.kotlin.learn.core.ui.dialog.common.ProgressBarDialog
+import com.kotlin.learn.core.ui.util.setupLightMode
 import com.kotlin.learn.core.ui.util.showDialog
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import javax.inject.Inject
@@ -49,6 +50,7 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupLightMode()
         setupView()
         setupCheckConnection()
     }
