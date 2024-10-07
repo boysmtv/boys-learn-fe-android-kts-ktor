@@ -111,13 +111,13 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         }
 
         btnGoogle.setOnClickListener {
-            if (locationUtil.checkPermissions() && locationUtil.isLocationEnabled())
+            if (locationUtil.isLocationPermissions() && locationUtil.isGpsLocationEnable())
                 onClickSignInByGoogle()
             else showWarningLocation()
         }
 
         btnEmail.setOnClickListener {
-            if (locationUtil.checkPermissions() && locationUtil.isLocationEnabled())
+            if (locationUtil.isLocationPermissions() && locationUtil.isGpsLocationEnable())
                 parentNavigator.fromGreetingsToAuth(this@GreetingsFragment)
             else showWarningLocation()
         }
@@ -136,7 +136,8 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
         showDialogWithActionButton(
             dataToDialog = content,
             actionClickPrimary = {
-                eventListener.askLocationPermission()
+                if (!locationUtil.isLocationPermissions()) eventListener.askLocationPermission()
+                if (!locationUtil.isGpsLocationEnable()) eventListener.askGpsPermission()
             },
             tag = RegisterFragment::class.simpleName.toString()
         )

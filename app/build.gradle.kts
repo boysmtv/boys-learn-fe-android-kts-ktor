@@ -26,17 +26,9 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
 
@@ -77,9 +69,6 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.com.android.support.multidex)
     implementation(libs.com.jakewharton.threetenabp.threetenabp)
-
-    implementation(libs.appcenter.analytics)
-    implementation(libs.appcenter.crashes)
 
     kapt(libs.hilt.compiler)
 

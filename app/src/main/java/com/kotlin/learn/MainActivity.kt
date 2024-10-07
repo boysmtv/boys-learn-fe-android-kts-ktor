@@ -7,15 +7,13 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.kotlin.learn.core.common.base.BaseActivity
+import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.common.util.LocationUtil
 import com.kotlin.learn.core.common.util.ServiceUtil
 import com.kotlin.learn.core.common.util.listener.EventListener
-import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.ui.util.setupLightMode
 import com.kotlin.learn.core.utilities.Constant
@@ -26,9 +24,7 @@ import com.kotlin.learn.feature.services.profile.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
-import com.microsoft.appcenter.AppCenter
-import com.microsoft.appcenter.analytics.Analytics
-import com.microsoft.appcenter.crashes.Crashes
+
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
@@ -53,14 +49,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
     }
 
     override fun initView() {
-        setupAppCenter()
         setupInit()
         setupLightMode()
         startProfileService()
         startHeartbeatService()
-        askNotificationPermission()
         askLocationPermission()
-        //checkDrawOverlayPermission()
     }
 
     override fun backToLogin() {
@@ -122,41 +115,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
         }
     }
 
-    private fun askNotificationPermission() {
+    private fun requestLocationPermissions() = locationPermissionRequest.launch(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) ==
-                PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: FCM SDK (and your app) can post notifications.
-            } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
-                // TODO: display an educational UI explaining to the user the features that will be enabled
-                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
-                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
-                //       If the user selects "No thanks," allow the user to continue without notifications.
-            } else {
-                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            // TODO: FCM SDK (and your app) can post notifications.
-        } else {
-            // TODO: Inform user that that your app will not show notifications.
-        }
-    }
-
-    private fun requestPermissions() {
-        locationPermissionRequest.launch(
-            arrayOf(
+            if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) arrayOf(
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            ) else arrayOf(
+                android.Manifest.permission.POST_NOTIFICATIONS,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
             )
+        } else arrayOf(
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
         )
-    }
+    )
 
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -170,11 +143,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
                 // TODO: Only approximate location access granted.
             }
 
+            permissions.getOrDefault(android.Manifest.permission.POST_NOTIFICATIONS, false) -> {
+                // TODO: Only approximate post notification granted.
+            }
+
             else -> {
-                // TODO: No location access granted.
+                // TODO: No one access granted.
             }
         }
     }
+
+    private fun requestGpsPermissions() = startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -238,16 +217,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
     }
 
     override fun askLocationPermission() {
-        if (locationUtil.checkPermissions() && locationUtil.isLocationEnabled())
-            startLocationService() else requestPermissions()
+        if (!locationUtil.isLocationPermissions()) requestLocationPermissions()
     }
 
-    private fun setupAppCenter() {
-        AppCenter.configure(application, "ee64823d-88bd-4015-bac7-f2f8c1f1ca5d")
-        if (AppCenter.isConfigured()) {
-            AppCenter.start(Analytics::class.java)
-            AppCenter.start(Crashes::class.java)
-        }
+    override fun askGpsPermission() {
+        if (!locationUtil.isGpsLocationEnable()) requestGpsPermissions() else startLocationService()
     }
 
 }

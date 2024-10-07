@@ -162,7 +162,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                     profile = ProfileModel().apply {
                         connection = InternetUtil(requireContext()).getStatusConnectionModel()
                         permission = PermissionModel().apply {
-                            location = LocationUtil(requireContext()).checkPermissions()
+                            location = LocationUtil(requireContext()).isLocationPermissions()
                             internet = InternetUtil(requireContext()).isNetworkAvailable()
                             notification = NotificationUtil(requireContext()).isNotificationEnabled()
                         }

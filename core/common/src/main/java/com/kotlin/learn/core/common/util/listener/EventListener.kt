@@ -4,4 +4,6 @@ interface EventListener {
 
     fun askLocationPermission()
 
+    fun askGpsPermission()
+
 }
