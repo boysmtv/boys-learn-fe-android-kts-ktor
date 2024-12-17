@@ -41,19 +41,6 @@
             </intent-filter>
         </activity>
 
-        <!-- start firebase messaging -->
-        <!--        <service-->
-        <!--            android:name=".feature.services.messaging.MessagingService"-->
-        <!--            android:exported="false">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-        <!--            </intent-filter>-->
-        <!--        </service>-->
-
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-        <!--            android:value="@string/default_notification_channel_id" />-->
-
         <!-- start profile services -->
         <service
             android:name=".feature.services.profile.ProfileService"
@@ -67,7 +54,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- start profile services -->
+        <!-- start heartbeat services -->
         <service
             android:name=".feature.services.heartbeat.HeartbeatService"
             android:exported="false" />
@@ -92,6 +79,20 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+
+        <!-- start firebase messaging -->
+        <!--        <service-->
+        <!--            android:name=".feature.services.messaging.MessagingService"-->
+        <!--            android:exported="false">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+        <!--            </intent-filter>-->
+        <!--        </service>-->
+
+        <!--        <meta-data-->
+        <!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+        <!--            android:value="@string/default_notification_channel_id" />-->
 
     </application>
 

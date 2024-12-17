@@ -17,8 +17,6 @@ class ThreadLocation {
 
     private lateinit var dataStore: DataStorePreferences
 
-    private lateinit var serviceUtil: ServiceUtil
-
     fun initComponent(
         context: Context,
         jsonUtil: JsonUtil,
@@ -27,8 +25,6 @@ class ThreadLocation {
         this.context = context
         this.jsonUtil = jsonUtil
         this.dataStore = preferences
-
-        serviceUtil = ServiceUtil(context)
     }
 
     suspend fun getLocation(): String {

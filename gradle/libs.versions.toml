@@ -44,7 +44,7 @@ shimmer = "0.5.0"
 annotationJvm = "1.6.0"
 swiperefreshlayout = "1.1.0"
 lifecycleCommon = "2.6.1"
-navigationFragment = "2.6.0"
+navigationFragment = "2.5.2"
 bannerViewPager = "3.5.11"
 blurry = "4.0.1"
 glide = "4.15.1"
@@ -71,6 +71,7 @@ i18nLanguagePack = "1.0.0"
 navigationRuntimeKtx = "2.6.0"
 room = "2.4.2"
 appcompat = "1.7.0"
+detekt = "1.21.0"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -212,6 +213,7 @@ io-github-inflationx-viewpump = { group = "io.github.inflationx", name = "viewpu
 com-jakewharton-threetenabp-threetenabp = { group = "com.jakewharton.threetenabp", name = "threetenabp", version.ref = "threeTenABP" }
 com-i18next-i18next-android = { group = "com.i18next", name = "i18next-android", version.ref = "i18nLanguagePack" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+io-gitlab-arturbosch-detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 
 # Room
 androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -223,6 +225,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.8.10" }

@@ -55,7 +55,6 @@ class ProfileService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 while (isServiceRunning) {
@@ -69,7 +68,6 @@ class ProfileService : Service() {
                 }
             }
         }
-
         return START_STICKY
     }
 

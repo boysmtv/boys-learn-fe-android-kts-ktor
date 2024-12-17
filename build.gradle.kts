@@ -21,6 +21,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.kapt) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.navigation.safeargs) apply false
+    alias(libs.plugins.detekt) apply false
 }
 true
 
@@ -29,4 +30,5 @@ allprojects {
         from("$rootDir/buildConfig/local-aar-config.gradle")
         from("$rootDir/buildConfig/local-aar.gradle")
     }
+    apply(plugin = "io.gitlab.arturbosch.detekt")
 }

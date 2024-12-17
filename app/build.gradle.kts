@@ -8,6 +8,7 @@ plugins {
 
 apply {
     from("$rootDir/buildConfig/common-config.gradle")
+    from("$rootDir/gradle/install-git-hooks.gradle")
 }
 
 android {
