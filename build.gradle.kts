@@ -1,7 +1,8 @@
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
-        classpath("com.google.gms:google-services:4.3.15")
+        classpath(libs.kotlin.gradlePlugin)
+        classpath(libs.google.services.gradlePlugin)
+        classpath(libs.detekt.gradlePlugin)
     }
     repositories {
         gradlePluginPortal()
@@ -12,7 +13,7 @@ buildscript {
         }
     }
 }
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -21,7 +22,6 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.kapt) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.navigation.safeargs) apply false
-    alias(libs.plugins.detekt) apply false
 }
 true
 
@@ -29,6 +29,10 @@ allprojects {
     apply {
         from("$rootDir/buildConfig/local-aar-config.gradle")
         from("$rootDir/buildConfig/local-aar.gradle")
+        plugin("io.gitlab.arturbosch.detekt")
     }
-    apply(plugin = "io.gitlab.arturbosch.detekt")
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }

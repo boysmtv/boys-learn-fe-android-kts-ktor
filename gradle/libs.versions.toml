@@ -24,7 +24,7 @@ coil = "2.3.0"
 hilt = "2.45"
 hiltExt = "1.0.0"
 junit4 = "4.13.2"
-kotlin = "1.8.21"
+kotlin = "1.8.20"
 kotlinxCoroutines = "1.6.4"
 kotlinxDatetime = "0.4.0"
 kotlinxSerializationJson = "1.5.1"
@@ -72,6 +72,7 @@ navigationRuntimeKtx = "2.6.0"
 room = "2.4.2"
 appcompat = "1.7.0"
 detekt = "1.21.0"
+googleServices = "4.3.15"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -150,6 +151,8 @@ facebook-login = { group = "com.facebook.android", name = "facebook-login", vers
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
+google-services-gradlePlugin = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
@@ -213,7 +216,6 @@ io-github-inflationx-viewpump = { group = "io.github.inflationx", name = "viewpu
 com-jakewharton-threetenabp-threetenabp = { group = "com.jakewharton.threetenabp", name = "threetenabp", version.ref = "threeTenABP" }
 com-i18next-i18next-android = { group = "com.i18next", name = "i18next-android", version.ref = "i18nLanguagePack" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
-io-gitlab-arturbosch-detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 
 # Room
 androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -225,7 +227,6 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.8.10" }
