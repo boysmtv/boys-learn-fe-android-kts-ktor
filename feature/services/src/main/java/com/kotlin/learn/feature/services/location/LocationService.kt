@@ -53,7 +53,6 @@ class LocationService : Service(), LocationListener {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         Thread {
             while (true) {
                 try {

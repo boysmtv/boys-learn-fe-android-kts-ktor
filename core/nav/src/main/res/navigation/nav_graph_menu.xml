@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.kotlin.learn.feature.movie.presentation.ui.SearchFragment"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/recentFragment"
         android:name="com.kotlin.learn.feature.movie.presentation.ui.RecentFragment"
-        tools:layout="@layout/fragment_recent" >
+        tools:layout="@layout/fragment_recent">
         <action
             android:id="@+id/action_recentFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/favouriteFragment"
         android:name="com.kotlin.learn.feature.movie.presentation.ui.FavouriteFragment"
-        tools:layout="@layout/fragment_favourite" >
+        tools:layout="@layout/fragment_favourite">
         <action
             android:id="@+id/action_favouriteFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -49,8 +49,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.kotlin.learn.feature.movie.presentation.ui.ProfileFragment"
-        tools:layout="@layout/fragment_profile" >
-    </fragment>
+        tools:layout="@layout/fragment_profile"></fragment>
 
     <!--    navigation to detail movie-->
 

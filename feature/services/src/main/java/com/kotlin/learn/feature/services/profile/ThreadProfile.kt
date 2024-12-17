@@ -33,8 +33,6 @@ class ThreadProfile {
 
     private lateinit var useCase: UserUseCase
 
-    private lateinit var serviceUtil: ServiceUtil
-
     private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
     fun initComponent(
@@ -49,8 +47,6 @@ class ThreadProfile {
         this.ktorClient = ktorClient
         this.dataStore = preferences
         this.useCase = useCase
-
-        serviceUtil = ServiceUtil(context)
     }
 
     suspend fun getToken(): String = withContext(Dispatchers.IO) {
