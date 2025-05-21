@@ -9,7 +9,7 @@ class HeartbeatDataSourceImpl @Inject constructor(
     private val firestoreClient: FirestoreClient,
 ) : HeartbeatDataSource {
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     override fun storeHeartbeatToFirestore(

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    // TODO : start region to spring backend
+    // start region to spring backend
     // ===============================================================
 
     fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>>
@@ -22,7 +22,7 @@ interface UserRepository {
     fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginModel>>>
 
 
-    // TODO : start region to firebase
+    // start region to firebase
     // ===============================================================
 
     fun storeUserToFirebase(
@@ -39,7 +39,7 @@ interface UserRepository {
     ): Flow<Result<Any?>>
 
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     fun storeUserToFirestore(

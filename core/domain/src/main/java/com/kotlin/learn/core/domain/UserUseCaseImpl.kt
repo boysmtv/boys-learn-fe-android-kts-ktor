@@ -14,7 +14,7 @@ class UserUseCaseImpl @Inject constructor(
     private val repository: UserRepository
 ) : UserUseCase {
 
-    // TODO : start region to spring backend
+    // start region to spring backend
     // ===============================================================
 
     override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> =
@@ -29,7 +29,7 @@ class UserUseCaseImpl @Inject constructor(
     override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginModel>>> =
         repository.postAuth(model = model)
 
-    // TODO : start region to firebase
+    // start region to firebase
     // ===============================================================
 
     override fun storeUserToFirebase(
@@ -46,7 +46,7 @@ class UserUseCaseImpl @Inject constructor(
     ): Flow<Result<Any?>> = repository.fetchUserFromFirebase(id, resources, onSuccess, onError)
 
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     override fun storeUserToFirestore(

@@ -16,6 +16,8 @@ import com.kotlin.learn.core.data.callback.MovieCallback
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.FIVE_FLOAT
+import com.kotlin.learn.core.utilities.Constant.THIRTY_FLOAT
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import com.kotlin.learn.core.utilities.extension.convertDateFormat
 import com.kotlin.learn.core.utilities.extension.getMonthName
@@ -101,8 +103,8 @@ class SeeAllMovieAdapter(
                 ivSeeAllContentMovie.load("${Constant.BASE_URL_IMAGE_500}${item.backdropPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
-                        strokeWidth = 5f
-                        centerRadius = 30f
+                        strokeWidth = FIVE_FLOAT
+                        centerRadius = THIRTY_FLOAT
                         strokeCap = Paint.Cap.BUTT
                         start()
                     }

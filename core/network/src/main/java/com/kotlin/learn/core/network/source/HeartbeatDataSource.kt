@@ -4,7 +4,7 @@ import com.kotlin.learn.core.model.HeartbeatModel
 
 interface HeartbeatDataSource {
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     fun storeHeartbeatToFirestore(

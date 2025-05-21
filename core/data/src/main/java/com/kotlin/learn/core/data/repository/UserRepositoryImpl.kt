@@ -20,7 +20,7 @@ class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao
 ) : UserRepository {
 
-    // TODO : start region to spring backend
+    // start region to spring backend
     // ===============================================================
 
     override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> =
@@ -64,7 +64,7 @@ class UserRepositoryImpl @Inject constructor(
         }
 
 
-    // TODO : start region to firebase
+    // start region to firebase
     // ===============================================================
 
     override fun storeUserToFirebase(
@@ -93,7 +93,7 @@ class UserRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     override fun storeUserToFirestore(

@@ -46,7 +46,7 @@ class DetailViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    // TODO : start region to datastore
+    // start region to datastore
     // ===============================================================
 
     fun storeUserToDatastore(user: String) =
@@ -72,7 +72,7 @@ class DetailViewModel @Inject constructor(
             }
         }
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     fun <T> updateUserToFirestore(

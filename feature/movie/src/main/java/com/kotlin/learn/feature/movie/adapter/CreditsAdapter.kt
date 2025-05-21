@@ -13,6 +13,8 @@ import com.kotlin.learn.core.common.util.listener.OnClickCreditsCrew
 import com.kotlin.learn.core.model.CastModel
 import com.kotlin.learn.core.model.CrewModel
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.FIVE_FLOAT
+import com.kotlin.learn.core.utilities.Constant.THIRTY_FLOAT
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.MovieCreditsItemBinding
 
@@ -48,8 +50,8 @@ sealed class CreditsAdapter {
                     {
                         val context = root.context
                         val circularProgressDrawable = CircularProgressDrawable(context).apply {
-                            strokeWidth = 5f
-                            centerRadius = 30f
+                            strokeWidth = FIVE_FLOAT
+                            centerRadius = THIRTY_FLOAT
                             strokeCap = Paint.Cap.BUTT
                             start()
                         }
@@ -105,8 +107,8 @@ sealed class CreditsAdapter {
                     ivThumbnail.load("${Constant.BASE_URL_IMAGE_500}${item.profilePath}") {
                         val context = root.context
                         val circularProgressDrawable = CircularProgressDrawable(context).apply {
-                            strokeWidth = 5f
-                            centerRadius = 30f
+                            strokeWidth = FIVE_FLOAT
+                            centerRadius = THIRTY_FLOAT
                             strokeCap = Paint.Cap.BUTT
                             start()
                         }

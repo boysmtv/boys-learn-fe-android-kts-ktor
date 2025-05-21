@@ -20,6 +20,8 @@ import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.SIXTY
+import com.kotlin.learn.core.utilities.Constant.SIXTY_LONG
 import com.kotlin.learn.core.utilities.Constant.WARNING_MESSAGE
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.setTextAnimation
@@ -247,15 +249,15 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             var startTime = timeRuntime
             var startHour = Constant.ZERO
             for (i in 0..startTime) {
-                if (startTime < 60) {
+                if (startTime < SIXTY) {
                     break
                 } else {
-                    startTime -= 60
+                    startTime -= SIXTY
                     startHour++
                     continue
                 }
             }
-            return "${startHour}h ${timeRuntime % 60}m"
+            return "${startHour}h ${timeRuntime % SIXTY}m"
         }
         return Constant.EMPTY_STRING
     }

@@ -7,6 +7,7 @@ import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.FavouriteDataModel
 import com.kotlin.learn.core.model.RecentDataModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
+import com.kotlin.learn.core.utilities.Constant.THREE
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.hide
 import com.kotlin.learn.core.utilities.show
@@ -44,7 +45,7 @@ class RecentFragment : BaseFragment<FragmentRecentBinding>(FragmentRecentBinding
 
     private fun setupAdapter() = with(binding) {
         rvRecent.apply {
-            layoutManager = GridLayoutManager(activity, 3)
+            layoutManager = GridLayoutManager(activity, THREE)
             adapter = recentAdapter
         }
     }

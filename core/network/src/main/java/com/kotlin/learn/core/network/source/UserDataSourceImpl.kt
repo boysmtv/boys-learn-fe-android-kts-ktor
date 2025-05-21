@@ -21,7 +21,7 @@ class UserDataSourceImpl @Inject constructor(
     private val firestoreClient: FirestoreClient,
 ) : UserDataSource {
 
-    // TODO : start region to spring backend
+    // start region to spring backend
     // ===============================================================
 
     override suspend fun getUser(model: UserModel): BaseResponse<UserModel> {
@@ -61,7 +61,7 @@ class UserDataSourceImpl @Inject constructor(
     }
 
 
-    // TODO : start region to firebase
+    // start region to firebase
     // ===============================================================
 
     override suspend fun storeUserToFirebase(
@@ -91,7 +91,7 @@ class UserDataSourceImpl @Inject constructor(
     )
 
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     override fun storeUserToFirestore(

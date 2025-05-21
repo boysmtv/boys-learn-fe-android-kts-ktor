@@ -19,6 +19,7 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MenuNavigator
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
+import com.kotlin.learn.core.utilities.Constant.ZERO_POINT_NINE_FLOAT
 import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
@@ -184,7 +185,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setupViewPager() = binding.layoutBanner.bannerVpHome
-        .setPageStyle(PageStyle.MULTI_PAGE_SCALE, 0.9f)
+        .setPageStyle(PageStyle.MULTI_PAGE_SCALE, ZERO_POINT_NINE_FLOAT)
         .setRevealWidth(
             resources.getDimensionPixelOffset(R.dimen.dp_16),
             resources.getDimensionPixelOffset(R.dimen.dp_16)
@@ -223,9 +224,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-                // TODO: FCM SDK (and your app) can post notifications.
+                // FCM SDK (and your app) can post notifications.
             } else {
-                // TODO: Inform user that that your app will not show notifications.
+                // Inform user that that your app will not show notifications.
             }
         }
 

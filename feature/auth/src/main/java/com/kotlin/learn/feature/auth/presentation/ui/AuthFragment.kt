@@ -82,7 +82,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                     password = etPassword.text.toString()
                 }
 
-                /* TODO : Disable for move to firestore
+                /* Disable for move to firestore
                 userViewModel.postAuth(
                     UserModel().apply {
                         email = userModel.email
@@ -90,7 +90,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                     }
                 )*/
 
-                // TODO : Refactor fo firestore
+                // Refactor fo firestore
                 getUserFromFirestore()
             }
         }

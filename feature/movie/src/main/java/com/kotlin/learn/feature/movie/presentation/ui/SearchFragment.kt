@@ -1,8 +1,7 @@
 package com.kotlin.learn.feature.movie.presentation.ui
 
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
@@ -11,6 +10,10 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.ONE
+import com.kotlin.learn.core.utilities.Constant.THREE
+import com.kotlin.learn.core.utilities.Constant.TWO
+import com.kotlin.learn.core.utilities.Constant.ZERO
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.show
 import com.kotlin.learn.feature.movie.R
@@ -50,30 +53,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun setupEditTextChanged() = with(binding) {
-        etSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {}
-
-            override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
-            ) {
+        etSearch.doOnTextChanged { text, _, _, _ ->
+            if (!text.isNullOrEmpty()) {
+                viewAnimator.show()
+                viewModel.searchMovie(text.toString())
             }
-
-            override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
-            ) {
-                if (s.isNotEmpty()) {
-                    viewAnimator.show()
-                    viewModel.searchMovie(s.toString())
-                }
-            }
-        })
+        }
     }
 
     private fun setupAdapter() = with(binding) {
         rvSearch.apply {
-            layoutManager = GridLayoutManager(activity, 3)
+            layoutManager = GridLayoutManager(activity, THREE)
             adapter = searchAdapter.withLoadStateHeaderAndFooter(
                 SearchLoadStateAdapter { searchAdapter.retry() },
                 SearchLoadStateAdapter { searchAdapter.retry() }
@@ -83,14 +73,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         searchAdapter.addLoadStateListener { loadState ->
             when (loadState.source.refresh) {
                 is LoadState.Loading -> {
-                    viewAnimator.displayedChild = 0
+                    viewAnimator.displayedChild = ZERO
                 }
 
                 is LoadState.NotLoading -> {
-                    if (searchAdapter.itemCount == 0) {
+                    if (searchAdapter.itemCount == ZERO) {
                         setViewBasedOnState(loadState, getString(R.string.empty_data_title))
-                        viewAnimator.displayedChild = 2
-                    } else viewAnimator.displayedChild = 1
+                        viewAnimator.displayedChild = TWO
+                    } else viewAnimator.displayedChild = ONE
                 }
 
                 is LoadState.Error -> {
@@ -113,7 +103,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                     setOnClickListener { searchAdapter.retry() }
                 }
             }
-            viewAnimator.displayedChild = 2
+            viewAnimator.displayedChild = TWO
         }
     }
 

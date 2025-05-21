@@ -13,6 +13,10 @@ import com.kotlin.learn.core.common.util.event.invokeDataStoreEvent
 import com.kotlin.learn.core.model.FavouriteDataModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
+import com.kotlin.learn.core.utilities.Constant.THREE
+import com.kotlin.learn.core.utilities.Constant.THREE_THOUSAND_LONG
+import com.kotlin.learn.core.utilities.Constant.TWO_THOUSAND_FIFTY_LONG
+import com.kotlin.learn.core.utilities.Constant.ZERO
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.hide
 import com.kotlin.learn.core.utilities.show
@@ -55,7 +59,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>(FragmentFavouri
 
     private fun setupAdapter() = with(binding) {
         rvFavourite.apply {
-            layoutManager = GridLayoutManager(activity, 3)
+            layoutManager = GridLayoutManager(activity, THREE)
             adapter = favouriteAdapter
         }
     }
@@ -133,16 +137,16 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>(FragmentFavouri
         val handler = Handler(Looper.getMainLooper())
         val runnable: Runnable = object : Runnable {
             override fun run() {
-                if (favouriteModelToRemove.size == 0) {
+                if (favouriteModelToRemove.size == ZERO) {
                     mStopHandler = true
                 }
                 if (!mStopHandler) {
-                    val v: View = binding.rvFavourite.findViewHolderForAdapterPosition(0)!!.itemView
+                    val v: View = binding.rvFavourite.findViewHolderForAdapterPosition(ZERO)!!.itemView
                     removeItemFavourite(v, favouriteModelToRemove)
                 } else {
                     handler.removeCallbacksAndMessages(null)
                 }
-                handler.postDelayed(this, 250)
+                handler.postDelayed(this, TWO_THOUSAND_FIFTY_LONG)
             }
         }
         requireActivity().runOnUiThread(runnable)
@@ -154,15 +158,15 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>(FragmentFavouri
             requireContext(),
             R.anim.slide_out_right
         )
-        anim.duration = 300
+        anim.duration = THREE_THOUSAND_LONG
         rowView.startAnimation(anim)
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            if (favourite.size == 0) {
-                updateUiOrEmptyList(favourite) // adding empty view instead of the RecyclerView
+            if (favourite.size == ZERO) {
+                updateUiOrEmptyList(favourite)
                 return@Runnable
             }
-            favourite.removeAt(0) //Remove the current content from the array
-            favouriteAdapter.notifyDataSetChanged() //Refresh list
+            favourite.removeAt(ZERO)
+            favouriteAdapter.notifyDataSetChanged()
         }, anim.duration)
     }
 }

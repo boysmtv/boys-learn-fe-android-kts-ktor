@@ -8,6 +8,10 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.CastModel
 import com.kotlin.learn.core.model.CreditsModel
 import com.kotlin.learn.core.model.CrewModel
+import com.kotlin.learn.core.utilities.Constant.ONE
+import com.kotlin.learn.core.utilities.Constant.THREE
+import com.kotlin.learn.core.utilities.Constant.TWO
+import com.kotlin.learn.core.utilities.Constant.ZERO
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.adapter.SeeAllCreditsAdapter
 import com.kotlin.learn.feature.movie.databinding.SeeAllCreditsListBinding
@@ -37,16 +41,16 @@ class SeeAllCreditsViewFragment(
                 is Result.Waiting -> {}
 
                 is Result.Loading -> {
-                    viewAnimator.displayedChild = 0
+                    viewAnimator.displayedChild = ZERO
                 }
 
                 is Result.Success -> {
-                    viewAnimator.displayedChild = 1
+                    viewAnimator.displayedChild = ONE
                     loadContent(it.data)
                 }
 
                 is Result.Error -> {
-                    viewAnimator.displayedChild = 2
+                    viewAnimator.displayedChild = TWO
                     showErrorView(
                         it.throwable.message
                             ?: "Error occurred when fetching data from server. Please try again"
@@ -69,7 +73,7 @@ class SeeAllCreditsViewFragment(
 
     private fun setupAdapter() = with(binding) {
         rvSeeAllCredits.apply {
-            layoutManager = GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
+            layoutManager = GridLayoutManager(requireContext(), THREE, RecyclerView.VERTICAL, false)
             adapter = if (checkCreditsIsCrew(creditsCategory)) crewAdapter else castAdapter
         }
     }
@@ -86,11 +90,11 @@ class SeeAllCreditsViewFragment(
     }
 
     private fun onClickCreditsCrew(item: CrewModel) {
-
+        // will be implement
     }
 
     private fun onClickCreditsCast(item: CastModel) {
-
+        // will be implement
     }
 
 }

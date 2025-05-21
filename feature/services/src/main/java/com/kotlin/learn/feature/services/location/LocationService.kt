@@ -156,7 +156,7 @@ class LocationService : Service(), LocationListener {
 
     @Deprecated("Deprecated in Java")
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-        // TODO : do status changed
+        // do status changed
     }
 
     private fun setupCheckLocation() {
@@ -165,7 +165,7 @@ class LocationService : Service(), LocationListener {
             if (location.isNotEmpty()) {
                 val locationModel = jsonUtil.fromJson<LocationModel>(location)
                 locationModel?.let {
-                    // TODO : give action at this
+                    // give action at this
                 }
             }
         }

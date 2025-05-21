@@ -25,7 +25,7 @@ class UserViewModel @Inject constructor(
     private val dataStore: DataStorePreferences
 ) : ViewModel() {
 
-    // TODO : start region to spring backend
+    // start region to spring backend
     // ===============================================================
 
     private val _getUser: MutableStateFlow<Result<BaseResponse<UserModel>>> = MutableStateFlow(Result.Waiting)
@@ -64,7 +64,7 @@ class UserViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    // TODO : start region to datastore
+    // start region to datastore
     // ============================================================================================================ //
 
     fun storeUserToDatastore(user: String) =
@@ -99,7 +99,7 @@ class UserViewModel @Inject constructor(
         }
 
 
-    // TODO : start region to firebase
+    // start region to firebase
     // ===============================================================
 
     fun storeUserToFirebase(
@@ -123,7 +123,7 @@ class UserViewModel @Inject constructor(
     ).launchIn(viewModelScope)
 
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     fun storeUserToFirestore(

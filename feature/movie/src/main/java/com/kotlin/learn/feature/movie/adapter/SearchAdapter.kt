@@ -11,6 +11,8 @@ import com.kotlin.learn.core.common.util.listener.OnClickMovie
 import com.kotlin.learn.core.data.callback.MovieCallback
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.FIVE_FLOAT
+import com.kotlin.learn.core.utilities.Constant.THIRTY_FLOAT
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.MovieSearchItemBinding
 
@@ -43,8 +45,8 @@ class SearchAdapter(private val onClickMovie: OnClickMovie) :
                 thumbnail.load("${Constant.BASE_URL_IMAGE_200}${item.posterPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
-                        strokeWidth = 5f
-                        centerRadius = 30f
+                        strokeWidth = FIVE_FLOAT
+                        centerRadius = THIRTY_FLOAT
                         strokeCap = Paint.Cap.BUTT
                         start()
                     }

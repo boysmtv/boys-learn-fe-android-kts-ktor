@@ -162,7 +162,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
     private fun invokeGoogleSignInSuccess(model: UserModel) {
         userModel = model
 
-        /* TODO : TODO : Disable for move to firestore
+        /* Disable for move to firestore
         viewModel.getUser(
             UserModel().apply {
                 id = userModel.idGoogle
@@ -171,7 +171,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
             }
         )*/
 
-        // TODO : Refactor fo firestore
+        // Refactor fo firestore
         getUserFromFirestore()
     }
 

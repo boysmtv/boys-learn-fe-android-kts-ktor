@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserDataSource {
 
-    // TODO : start region to spring backend
+    // start region to spring backend
     // ===============================================================
 
     suspend fun getUser(model: UserModel): BaseResponse<UserModel>
@@ -21,7 +21,7 @@ interface UserDataSource {
     suspend fun postAuth(model: UserModel): BaseResponse<LoginModel>
 
 
-    // TODO : start region to firebase
+    // start region to firebase
     // ===============================================================
 
     suspend fun storeUserToFirebase(
@@ -38,7 +38,7 @@ interface UserDataSource {
     )
 
 
-    // TODO : start region to firestore
+    // start region to firestore
     // ===============================================================
 
     fun storeUserToFirestore(

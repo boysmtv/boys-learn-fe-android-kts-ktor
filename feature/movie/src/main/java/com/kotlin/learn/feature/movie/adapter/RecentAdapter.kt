@@ -9,6 +9,8 @@ import coil.load
 import com.kotlin.learn.core.common.util.listener.OnClickRecent
 import com.kotlin.learn.core.model.RecentDataModel
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.FIVE_FLOAT
+import com.kotlin.learn.core.utilities.Constant.THIRTY_FLOAT
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.MovieSearchItemBinding
 
@@ -52,8 +54,8 @@ class RecentAdapter(private val clickMovie: OnClickRecent) :
                 thumbnail.load("${Constant.BASE_URL_IMAGE_200}${item.posterPath}") {
                     val context = root.context
                     val circularProgressDrawable = CircularProgressDrawable(context).apply {
-                        strokeWidth = 5f
-                        centerRadius = 30f
+                        strokeWidth = FIVE_FLOAT
+                        centerRadius = THIRTY_FLOAT
                         strokeCap = android.graphics.Paint.Cap.BUTT
                         start()
                     }

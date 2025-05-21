@@ -12,6 +12,8 @@ import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.MenuNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.FIVE_FLOAT
+import com.kotlin.learn.core.utilities.Constant.THIRTY_FLOAT
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.FragmentProfileBinding
@@ -108,8 +110,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         ivImage.load(model.photoUrl) {
             val context = root.context
             val circularProgressDrawable = CircularProgressDrawable(context).apply {
-                strokeWidth = 5f
-                centerRadius = 30f
+                strokeWidth = FIVE_FLOAT
+                centerRadius = THIRTY_FLOAT
                 strokeCap = Paint.Cap.BUTT
                 start()
             }
