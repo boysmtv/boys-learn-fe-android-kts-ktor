@@ -16,6 +16,10 @@ import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.LocationUtil
 import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.model.LocationModel
+import com.kotlin.learn.core.utilities.Constant.ONE_HUNDRED_LONG
+import com.kotlin.learn.core.utilities.Constant.THREAD_SLEEP_TIMER_58_SECOND
+import com.kotlin.learn.core.utilities.Constant.ZERO_FLOAT
+import com.kotlin.learn.core.utilities.Constant.ZERO_LONG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +47,7 @@ class LocationService : Service(), LocationListener {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
-    private val threadSleepTimer = 58000L
+    private val threadSleepTimer = THREAD_SLEEP_TIMER_58_SECOND
 
     override fun onCreate() {
         super.onCreate()
@@ -112,7 +116,7 @@ class LocationService : Service(), LocationListener {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0f, this)
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_HUNDRED_LONG, ZERO_FLOAT, this)
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             location?.let {
                 locationModel.apply {
@@ -140,7 +144,7 @@ class LocationService : Service(), LocationListener {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0f, this)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_HUNDRED_LONG, ZERO_FLOAT, this)
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             location?.let {
                 locationModel.apply {
@@ -151,7 +155,7 @@ class LocationService : Service(), LocationListener {
                     threadLocation.storeLocation(locationModel)
                 }
             }
-        }, 0)
+        }, ZERO_LONG)
     }
 
     @Deprecated("Deprecated in Java")

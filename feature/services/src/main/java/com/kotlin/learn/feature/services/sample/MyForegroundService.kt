@@ -7,7 +7,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
+import com.kotlin.learn.core.utilities.Constant.ONE_HUNDRED_ONE
+import com.kotlin.learn.core.utilities.Constant.THREAD_SLEEP_TIMER_2_SECOND
 import com.kotlin.learn.feature.services.R
 
 class MyForegroundService : Service() {
@@ -15,7 +16,7 @@ class MyForegroundService : Service() {
         Thread {
             while (true) {
                 try {
-                    Thread.sleep(2000)
+                    Thread.sleep(THREAD_SLEEP_TIMER_2_SECOND)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
@@ -33,7 +34,7 @@ class MyForegroundService : Service() {
                 .setContentText("Service Foreground is running")
                 .setContentTitle("Service Foreground enabled")
                 .setSmallIcon(R.drawable.ic_discover)
-            startForeground(1001, notification.build())
+            startForeground(ONE_HUNDRED_ONE, notification.build())
         }
         return super.onStartCommand(intent, flags, startId)
     }

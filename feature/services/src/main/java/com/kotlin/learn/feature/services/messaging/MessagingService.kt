@@ -13,6 +13,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kotlin.learn.core.common.R
 import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
+import com.kotlin.learn.core.utilities.Constant.ONE_HUNDRED_LONG
+import com.kotlin.learn.core.utilities.Constant.ZERO
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -69,7 +71,7 @@ class MessagingService : FirebaseMessagingService() {
 
     private fun showNotification(title: String?, message: String?) {
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, Intent(),
+            this, ZERO, Intent(),
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
         var builder: NotificationCompat.Builder = NotificationCompat.Builder(applicationContext, channelName)
@@ -77,8 +79,8 @@ class MessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
             .setVibrate(
                 longArrayOf(
-                    1000, 1000, 1000,
-                    1000, 1000
+                    ONE_HUNDRED_LONG, ONE_HUNDRED_LONG, ONE_HUNDRED_LONG,
+                    ONE_HUNDRED_LONG, ONE_HUNDRED_LONG
                 )
             )
             .setOnlyAlertOnce(true)
@@ -97,7 +99,7 @@ class MessagingService : FirebaseMessagingService() {
                 notificationChannel
             )
         }
-        notificationManager!!.notify(0, builder.build())
+        notificationManager!!.notify(ZERO, builder.build())
     }
 
     private fun getCustomDesign(

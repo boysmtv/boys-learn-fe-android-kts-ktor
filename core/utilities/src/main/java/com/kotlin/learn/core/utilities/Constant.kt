@@ -32,17 +32,25 @@ object Constant {
     const val THREE_THOUSAND = 300
     const val FIVE_THOUSAND_NINETY_NINE = 599
     const val SIX_THOUSAND = 600
+    const val ONE_HUNDRED_ONE = 1001
 
+    const val ZERO_FLOAT = 0f
     const val ZERO_POINT_NINE_FLOAT = 0.9f
     const val FIVE_FLOAT = 5f
     const val THIRTY_FLOAT = 30f
 
     const val ZERO_DOUBLE = 0.0
+    const val ZERO_LONG = 0L
     const val TWO_THOUSAND_FIFTY_LONG = 250L
     const val THREE_THOUSAND_LONG = 300L
     const val FIVE_HUNDRED_LONG = 500L
     const val SIXTY_LONG = 60L
+    const val ONE_HUNDRED_LONG = 1000L
+
     const val MAX_CONTENT_LENGTH_INTERCEPTION = 250000L
+    const val THREAD_SLEEP_TIMER_2_SECOND = 2000L
+    const val THREAD_SLEEP_TIMER_58_SECOND = 58000L
+    const val THREAD_SLEEP_TIMER_5_MINUTES = 3000000L
 
     const val STRIP = "-"
     const val UNDERSCORE = "_"

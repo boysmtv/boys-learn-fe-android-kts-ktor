@@ -10,6 +10,7 @@ import com.kotlin.learn.core.common.util.TransactionUtil
 import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.domain.HeartbeatUseCase
 import com.kotlin.learn.core.model.HeartbeatModel
+import com.kotlin.learn.core.utilities.Constant.THREAD_SLEEP_TIMER_5_MINUTES
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class HeartbeatService : Service() {
     @Inject
     lateinit var heartbeatUseCase: HeartbeatUseCase
 
-    private val threadSleepTimer = 3000000L
+    private val threadSleepTimer = THREAD_SLEEP_TIMER_5_MINUTES
 
     override fun onCreate() {
         super.onCreate()

@@ -7,6 +7,7 @@ import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.network.KtorClient
+import com.kotlin.learn.core.utilities.Constant.THREAD_SLEEP_TIMER_2_SECOND
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +19,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileService : Service() {
-
-    private val tag = this::class.java.simpleName
 
     private var threadProfile: ThreadProfile = ThreadProfile()
 
@@ -39,7 +38,7 @@ class ProfileService : Service() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
-    private val threadSleepTimer = 2000L
+    private val threadSleepTimer = THREAD_SLEEP_TIMER_2_SECOND
 
     override fun onCreate() {
         super.onCreate()
