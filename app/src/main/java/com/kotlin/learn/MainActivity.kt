@@ -24,6 +24,7 @@ import com.kotlin.learn.feature.services.profile.ProfileService
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 
 @AndroidEntryPoint
@@ -40,7 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     private lateinit var locationUtil: LocationUtil
 
-    private val permissionIdLocation = 1001
+    private val permissionIdLocation = Constant.PERMISSION_ID_LOCATION_CODE
 
     private var scenarioOnBack: String? = Constant.EMPTY_STRING
 
@@ -136,19 +137,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
     ) { permissions ->
         when {
             permissions.getOrDefault(android.Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                // TODO: Precise location access granted.
+                //  Precise location access granted.
             }
 
             permissions.getOrDefault(android.Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                // TODO: Only approximate location access granted.
+                // Only approximate location access granted.
             }
 
             permissions.getOrDefault(android.Manifest.permission.POST_NOTIFICATIONS, false) -> {
-                // TODO: Only approximate post notification granted.
+                // Only approximate post notification granted.
             }
 
             else -> {
-                // TODO: No one access granted.
+                // No one access granted.
             }
         }
     }
@@ -184,7 +185,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
                 actionClickPrimary = {
                     val intent = Intent(
                         Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:$packageName")
+                        "package:$packageName".toUri()
                     )
                     someActivityResultLauncher.launch(intent)
                 },

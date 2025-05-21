@@ -40,6 +40,8 @@ object Constant {
     const val FALSE = false
     const val TRUE = true
 
+    const val PERMISSION_ID_LOCATION_CODE = 1001
+
     const val DATA_NOT_FOUND = "Data not found, please try again later."
     const val UNDER_MAINTENANCE = "Under maintenance, please try again later."
     const val FETCH_DATA_FAILED = "Fetch Failed, please try again later."
