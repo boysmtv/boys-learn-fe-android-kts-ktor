@@ -75,8 +75,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         isSaveFavourite: Boolean? = null,
         isShowNotification: Boolean? = null
     ) {
-        userViewModel.fetchUserFromDatastore().launch(this@SettingFragment) { event ->
-            invokeDataStoreEvent(event,
+        userViewModel.fetchUserFromDatastore().launch(this@SettingFragment) { event -> invokeDataStoreEvent(event,
                 isFetched = {
                     it.apply {
                         profile?.setting?.apply {
