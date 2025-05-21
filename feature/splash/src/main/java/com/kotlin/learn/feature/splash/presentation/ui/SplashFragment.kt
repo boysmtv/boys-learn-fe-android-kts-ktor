@@ -10,6 +10,8 @@ import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
+import com.kotlin.learn.core.utilities.Constant.ONE_THOUSAND_LONG
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.common.viewmodel.UserViewModel
 import com.kotlin.learn.feature.splash.databinding.FragmentSplashBinding
@@ -59,7 +61,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     private fun setupSplash() {
         Handler(Looper.getMainLooper()).postDelayed({
             fetchUserFromDataStore()
-        }, 100)
+        }, ONE_THOUSAND_LONG)
     }
 
     private fun fetchUserFromDataStore() = with(userViewModel) {
@@ -67,7 +69,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
             invokeDataStoreEvent(
                 event = event,
                 isFetched = {
-                    if (it.displayName != Constant.EMPTY_STRING)
+                    if (it.displayName != EMPTY_STRING)
                         if (it.profile?.setting?.login == true){
                             fetchUserFromFirestore(it)
                         }
@@ -86,7 +88,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
     private fun fetchUserFromFirestore(it: UserModel) {
         userViewModel.fetchUserFromFirestoreAsync(
-            filter = Pair("email", it.email ?: Constant.EMPTY_STRING)
+            filter = Pair("email", it.email ?: EMPTY_STRING)
         )
     }
 

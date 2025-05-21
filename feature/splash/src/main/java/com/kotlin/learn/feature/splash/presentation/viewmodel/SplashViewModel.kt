@@ -10,7 +10,4 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val dataStore: DataStorePreferences,
     private val jsonUtil: JsonUtil
-) : ViewModel() {
-
-
-}
+) : ViewModel() 

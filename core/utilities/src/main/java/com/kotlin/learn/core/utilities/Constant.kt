@@ -41,10 +41,11 @@ object Constant {
 
     const val ZERO_DOUBLE = 0.0
     const val ZERO_LONG = 0L
+    const val SIXTY_LONG = 60L
+    const val ONE_THOUSAND_LONG = 100L
     const val TWO_THOUSAND_FIFTY_LONG = 250L
     const val THREE_THOUSAND_LONG = 300L
-    const val FIVE_HUNDRED_LONG = 500L
-    const val SIXTY_LONG = 60L
+    const val FIVE_THOUSAND_LONG = 500L
     const val ONE_HUNDRED_LONG = 1000L
 
     const val MAX_CONTENT_LENGTH_INTERCEPTION = 250000L
