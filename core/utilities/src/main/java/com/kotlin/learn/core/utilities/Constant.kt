@@ -25,6 +25,7 @@ object Constant {
 
     const val ZERO_DOUBLE = 0.0
     const val FIVE_HUNDRED_LONG = 500L
+    const val SIXTY_LONG = 60L
 
     const val STRIP = "-"
     const val UNDERSCORE = "_"
@@ -51,4 +52,5 @@ object Constant {
     const val FETCH_DATA_FAILED = "Fetch Failed, please try again later."
     const val FAILURE_GET_DATA = "Failure, Under maintenance, please try again later."
     const val DATA_IS_EMPTY = "Data is empty."
+    const val ERROR_MESSAGE = "Error"
 }

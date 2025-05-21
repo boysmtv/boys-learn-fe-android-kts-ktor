@@ -3,9 +3,13 @@ package com.kotlin.learn.core.network
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.ERROR_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.SIXTY_LONG
 import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.okhttp.OkHttpConfig
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.ResponseException
@@ -120,91 +124,115 @@ class KtorClient(
 
     companion object {
 
-        private const val timeout = 60L
-
         private fun initializeKtor(
             chuckerInterceptor: ChuckerInterceptor,
             springUrl: String? = null,
             springHeader: Map<String, String>? = null,
         ) = HttpClient(OkHttp) {
+            callEngineKtor(this, chuckerInterceptor)
+            callInstallKtor(this, springHeader)
+            callDefaultRequest(this, springUrl)
+            callHttpResponseValidator(this)
+        }
 
-            engine {
-                //addInterceptor(chuckerInterceptor)
-                config {
-                    connectTimeout(timeout = timeout, unit = TimeUnit.SECONDS)
-                    writeTimeout(timeout = timeout, unit = TimeUnit.SECONDS)
-                    readTimeout(timeout = timeout, unit = TimeUnit.SECONDS)
-                }
-            }
-
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                        prettyPrint = true
-                        isLenient = true
-                    }
-                )
-            }
-
-            install(Logging) {
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        //Log.v("Logger Ktor ->", message)
-                    }
-                }
-                level = LogLevel.ALL
-            }
-
-            install(Auth) {
-                bearer {
-                    loadTokens {
-                        BearerTokens(Constant.TOKEN, Constant.EMPTY_STRING)
+        private fun callEngineKtor(
+            httpClientConfig: HttpClientConfig<OkHttpConfig>,
+            chuckerInterceptor: ChuckerInterceptor
+        ) {
+            httpClientConfig.apply {
+                engine {
+                    addInterceptor(chuckerInterceptor)
+                    config {
+                        connectTimeout(timeout = SIXTY_LONG, unit = TimeUnit.SECONDS)
+                        writeTimeout(timeout = SIXTY_LONG, unit = TimeUnit.SECONDS)
+                        readTimeout(timeout = SIXTY_LONG, unit = TimeUnit.SECONDS)
                     }
                 }
             }
+        }
 
-            install(ResponseObserver) {
-                onResponse { response ->
-                    //Log.d("Http status:", "${response.status.value}")
+        private fun callInstallKtor(
+            httpClientConfig: HttpClientConfig<OkHttpConfig>,
+            springHeader: Map<String, String>?
+        ) {
+            httpClientConfig.apply {
+                install(ContentNegotiation) {
+                    json(
+                        Json {
+                            ignoreUnknownKeys = true
+                            prettyPrint = true
+                            isLenient = true
+                        }
+                    )
                 }
-            }
 
-            install(DefaultRequest) {
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-                springHeader?.let { map ->
-                    map.forEach {
-                        header(it.key, it.value)
+                install(Logging) {
+                    logger = object : Logger {
+                        override fun log(message: String) {
+                            Log.v("Logger Ktor ->", message)
+                        }
+                    }
+                    level = LogLevel.ALL
+                }
+
+                install(Auth) {
+                    bearer {
+                        loadTokens {
+                            BearerTokens(Constant.TOKEN, Constant.EMPTY_STRING)
+                        }
+                    }
+                }
+
+                install(ResponseObserver) {
+                    onResponse { response ->
+                        Log.d("Http status:", "${response.status.value}")
+                    }
+                }
+
+                install(DefaultRequest) {
+                    header(HttpHeaders.ContentType, ContentType.Application.Json)
+                    springHeader?.let { map ->
+                        map.forEach {
+                            header(it.key, it.value)
+                        }
+                    }
+                }
+
+                install(Resources)
+            }
+        }
+
+        private fun callDefaultRequest(httpClientConfig: HttpClientConfig<OkHttpConfig>, springUrl: String?) {
+            httpClientConfig.apply {
+                defaultRequest {
+                    url {
+                        protocol = if (springUrl.isNullOrBlank()) URLProtocol.HTTPS else URLProtocol.HTTP
+                        host = springUrl ?: Constant.BASE_URL
                     }
                 }
             }
+        }
 
-            install(Resources)
-            defaultRequest {
-                url {
-                    protocol = if (springUrl.isNullOrBlank()) URLProtocol.HTTPS else URLProtocol.HTTP
-                    host = springUrl ?: Constant.BASE_URL
-                }
-            }
-
-            HttpResponseValidator {
-                validateResponse { response: HttpResponse ->
-                    val statusCode = response.status.value
-                    when (statusCode) {
-                        in 300..599 -> throw ErrorException(
-                            response = response,
-                            responseBody = response.bodyAsText()
-                        )
-                    }
-                    if (statusCode >= 600) {
-                        throw MissingPageException(
-                            response = response,
-                            responseBody = "Error"
-                        )
+        private fun callHttpResponseValidator(httpClientConfig: HttpClientConfig<OkHttpConfig>) {
+            httpClientConfig.apply {
+                HttpResponseValidator {
+                    validateResponse { response: HttpResponse ->
+                        val statusCode = response.status.value
+                        when (statusCode) {
+                            in 300..599 -> throw ErrorException(
+                                response = response,
+                                responseBody = response.bodyAsText()
+                            )
+                        }
+                        if (statusCode >= 600) {
+                            throw MissingPageException(
+                                response = response,
+                                responseBody = ERROR_MESSAGE
+                            )
+                        }
                     }
                 }
             }
-
         }
     }
 }
