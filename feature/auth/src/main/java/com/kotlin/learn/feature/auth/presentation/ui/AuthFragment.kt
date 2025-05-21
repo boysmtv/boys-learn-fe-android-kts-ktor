@@ -13,6 +13,11 @@ import com.kotlin.learn.core.model.LoginModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EIGHT
+import com.kotlin.learn.core.utilities.Constant.EMAIL_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.NINE
+import com.kotlin.learn.core.utilities.Constant.PASSWORD_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.WARNING_MESSAGE
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.validateEmail
 import com.kotlin.learn.core.utilities.validateInput
@@ -59,7 +64,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
             when (result) {
                 is Result.Waiting -> {}
 
-                is Result.Loading -> { /* TODO: skip loading after success post auth */
+                is Result.Loading -> { /* skip loading after success post auth */
                 }
 
                 is Result.Success -> getUserSuccess(result)
@@ -217,7 +222,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         viewModel.storeUserToDatastore(
             jsonUtil.toJson(userModel)
         ).launch(this@AuthFragment) { event ->
-            invokeDataStoreEvent(event,
+            invokeDataStoreEvent(
+                event,
                 isStored = {
                     parentNavigator.fromAuthToMenu(fragment = this@AuthFragment)
                 }
@@ -226,15 +232,15 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun validateInput(): Boolean = with(binding) {
-        val email = etEmail.validateEmail(8, "email")
+        val email = etEmail.validateEmail(EIGHT, EMAIL_MESSAGE)
         if (!email.first) {
-            showDialogGeneralError("Warning", email.second)
+            showDialogGeneralError(WARNING_MESSAGE, email.second)
             return false
         }
 
-        val password = etPassword.validateInput(9, "password")
+        val password = etPassword.validateInput(NINE, PASSWORD_MESSAGE)
         if (!password.first) {
-            showDialogGeneralError("Warning", password.second)
+            showDialogGeneralError(WARNING_MESSAGE, password.second)
             return false
         }
         return true

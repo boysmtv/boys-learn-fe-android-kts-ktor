@@ -22,6 +22,16 @@ import com.kotlin.learn.core.common.util.TransactionUtil
 import com.kotlin.learn.core.model.PermissionModel
 import com.kotlin.learn.core.model.ProfileModel
 import com.kotlin.learn.core.model.SettingModel
+import com.kotlin.learn.core.utilities.Constant.NINE
+import com.kotlin.learn.core.utilities.Constant.EIGHT
+import com.kotlin.learn.core.utilities.Constant.EMAIL_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.FIRST_NAME_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.LAST_NAME_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.PASSWORD_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.PHONE_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.TEN
+import com.kotlin.learn.core.utilities.Constant.THREE
+import com.kotlin.learn.core.utilities.Constant.WARNING_MESSAGE
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.validateEmail
 import com.kotlin.learn.core.utilities.validateInput
@@ -68,7 +78,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
     private fun fetchTokenFromDatastore() = with(viewModel) {
         fetchTokenFromDatastore().launch(this@RegisterFragment) { event ->
-            invokeDataStoreEvent(event,
+            invokeDataStoreEvent(
+                event,
                 isFetched = { message ->
                     token = message
                 }
@@ -103,7 +114,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                             }
                         )
                     ).launch(this@RegisterFragment) { event ->
-                        invokeDataStoreEvent(event,
+                        invokeDataStoreEvent(
+                            event,
                             isStored = {
                                 showDialogSuccessRegister(it.data?.fullName ?: EMPTY_STRING)
                             }
@@ -237,29 +249,29 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun validateInput(): Boolean = with(binding) {
-        val firstname = etFirstName.validateInput(3, "first name")
+        val firstname = etFirstName.validateInput(THREE, FIRST_NAME_MESSAGE)
         if (!firstname.first) {
-            showDialogGeneralError("Warning", firstname.second)
+            showDialogGeneralError(WARNING_MESSAGE, firstname.second)
             return false
         }
-        val lastname = etLastName.validateInput(3, "last name")
+        val lastname = etLastName.validateInput(THREE, LAST_NAME_MESSAGE)
         if (!lastname.first) {
-            showDialogGeneralError("Warning", lastname.second)
+            showDialogGeneralError(WARNING_MESSAGE, lastname.second)
             return false
         }
-        val phone = etPhone.validatePhone(10, "phone")
+        val phone = etPhone.validatePhone(TEN, PHONE_MESSAGE)
         if (!phone.first) {
-            showDialogGeneralError("Warning", phone.second)
+            showDialogGeneralError(WARNING_MESSAGE, phone.second)
             return false
         }
-        val email = etEmail.validateEmail(8, "email")
+        val email = etEmail.validateEmail(EIGHT, EMAIL_MESSAGE)
         if (!email.first) {
-            showDialogGeneralError("Warning", email.second)
+            showDialogGeneralError(WARNING_MESSAGE, email.second)
             return false
         }
-        val password = etPassword.validateInput(9, "password")
+        val password = etPassword.validateInput(NINE, PASSWORD_MESSAGE)
         if (!password.first) {
-            showDialogGeneralError("Warning", password.second)
+            showDialogGeneralError(WARNING_MESSAGE, password.second)
             return false
         }
         return true

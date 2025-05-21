@@ -60,6 +60,14 @@ object Constant {
     const val FAILURE_GET_DATA = "Failure, Under maintenance, please try again later."
     const val DATA_IS_EMPTY = "Data is empty."
     const val ERROR_MESSAGE = "Error"
+    const val WARNING_MESSAGE = "Warning"
+
+    const val EMAIL_MESSAGE = "email"
+    const val PASSWORD_MESSAGE = "password"
+    const val PHONE_MESSAGE = "phone"
+    const val FIRST_NAME_MESSAGE = "first name"
+    const val LAST_NAME_MESSAGE = "last name"
+
     const val CLOSE_APPS_MESSAGE = "Tutup Aplikasi"
 
     const val QUERY_PARAM_PAGE = "page"
