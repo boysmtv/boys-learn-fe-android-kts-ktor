@@ -31,7 +31,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = PopularMovie(),
                 query = mapOf(
-                    QUERY_PARAM_PAGE to "$page"
+                    QUERY_PARAM_PAGE to page.toString()
                 )
             )
         }
@@ -42,7 +42,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = TopRatedMovie(),
                 query = mapOf(
-                    QUERY_PARAM_PAGE to "$page"
+                    QUERY_PARAM_PAGE to page.toString()
                 )
             )
         }
@@ -53,7 +53,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = UpComingMovie(),
                 query = mapOf(
-                    QUERY_PARAM_PAGE to "$page"
+                    QUERY_PARAM_PAGE to page.toString()
                 )
             )
         }
@@ -64,7 +64,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = NowPlayingMovie(),
                 query = mapOf(
-                    QUERY_PARAM_PAGE to "$page"
+                    QUERY_PARAM_PAGE to page.toString()
                 )
             )
         }
@@ -99,7 +99,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = SearchMovie(),
                 query = mapOf(
-                    QUERY_PARAM_PAGE to "$page",
+                    QUERY_PARAM_PAGE to page.toString(),
                     QUERY_PARAM_QUERY to searchModel.title,
                 )
             )
