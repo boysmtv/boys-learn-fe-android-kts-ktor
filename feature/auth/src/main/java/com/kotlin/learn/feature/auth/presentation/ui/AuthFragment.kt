@@ -14,7 +14,6 @@ import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.extension.launch
-import com.kotlin.learn.core.utilities.isValidEmail
 import com.kotlin.learn.core.utilities.validateEmail
 import com.kotlin.learn.core.utilities.validateInput
 import com.kotlin.learn.feature.auth.databinding.FragmentAuthBinding
