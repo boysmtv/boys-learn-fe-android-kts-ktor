@@ -6,7 +6,9 @@ object Constant {
     const val BASE_URL_IMAGE_500 = "https://image.tmdb.org/t/p/w500"
     const val BASE_URL_IMAGE_200 = "https://image.tmdb.org/t/p/w200"
     const val TOKEN =
-        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZmIzYTg2OWRkYTIyNjRjNDQ4MjYxY2Q4YWRlMjExMCIsInN1YiI6IjYyZjI0NzExMTUxMWFhMDA3YTdjZjNlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XD4B4kbOGL-p_XqYStuxFeeki8FC3NBYm_RX7zpNEmE"
+        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZmIzYTg2OWRkYTIyNjRjNDQ4MjYxY2Q4YWRlMjExMCIsInN1YiI6IjYyZjI0NzExMTUxM" +
+                "WFhMDA3YTdjZjNlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XD4B4kbOGL-p_XqYStuxFeeki8FC" +
+                "3NBYm_RX7zpNEmE"
 
     const val MOVIE_LANGUAGE = "en-US"
 

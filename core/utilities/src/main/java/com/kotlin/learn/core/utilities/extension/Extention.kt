@@ -5,7 +5,9 @@ import android.net.Uri
 import com.kotlin.learn.core.utilities.Constant
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 /**
  * Double
@@ -149,6 +151,7 @@ fun String.myAnimeListStatusApiFormat(): String {
         .replace(Constant.BLANK_SPACE, Constant.UNDERSCORE)
 }
 
+@SuppressLint("SimpleDateFormat")
 fun Int.getMonthName(): String {
     val calendar = Calendar.getInstance()
     val monthDate = SimpleDateFormat("MMM")
@@ -156,6 +159,7 @@ fun Int.getMonthName(): String {
     return monthDate.format(calendar.time)
 }
 
+@SuppressLint("SimpleDateFormat")
 fun String.convertDateFormat(
     oldFormat: String = "yyyy-MM-dd",
     newFormat: String = "dd MMM yyyy",

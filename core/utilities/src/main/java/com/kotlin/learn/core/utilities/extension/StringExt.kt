@@ -4,9 +4,13 @@ import java.util.Locale
 
 fun String.capitalize(): String {
     return this.trim().split("\\s+".toRegex())
-        .joinToString(" ") { first -> first.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } }
+        .joinToString(" ") { first ->
+            first.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString()
+            }
+        }
 }
 
-fun String.isAvailable() : String {
+fun String.isAvailable(): String {
     return if (this.isNotEmpty()) "available" else "not available"
 }
