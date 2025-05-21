@@ -14,14 +14,28 @@ object ImageUtil {
         val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         animOut.setAnimationListener(object : AnimationListener {
-            override fun onAnimationStart(animation: Animation) {}
-            override fun onAnimationRepeat(animation: Animation) {}
+            override fun onAnimationStart(animation: Animation) {
+                // no needed yet
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                // no needed yet
+            }
+
             override fun onAnimationEnd(animation: Animation) {
                 imageView.setImageBitmap(newImage)
                 animIn.setAnimationListener(object : AnimationListener {
-                    override fun onAnimationStart(animation: Animation) {}
-                    override fun onAnimationRepeat(animation: Animation) {}
-                    override fun onAnimationEnd(animation: Animation) {}
+                    override fun onAnimationStart(animation: Animation) {
+                        // no needed yet
+                    }
+
+                    override fun onAnimationRepeat(animation: Animation) {
+                        // no needed yet
+                    }
+
+                    override fun onAnimationEnd(animation: Animation) {
+                        // no needed yet
+                    }
                 })
                 imageView.startAnimation(animIn)
             }
