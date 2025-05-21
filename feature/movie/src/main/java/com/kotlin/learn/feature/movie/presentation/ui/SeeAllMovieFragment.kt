@@ -145,7 +145,7 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
     }
 
     private fun onMovieFavourite(item: MovieDataModel) {
-
+        // will be implement
     }
 
     private fun onMovieClicked(item: MovieDataModel) {
