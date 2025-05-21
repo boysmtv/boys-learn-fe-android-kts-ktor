@@ -10,8 +10,4 @@ import javax.inject.Inject
 class SettingViewModel @Inject constructor(
     private val dataStore: DataStorePreferences,
     private val jsonUtil: JsonUtil
-) : ViewModel() {
-
-
-
-}
+) : ViewModel()
