@@ -16,8 +16,6 @@ class FirestoreClient {
 
     private val firestore = Firebase.firestore
 
-    private val TAG = this::class.java.simpleName
-
     internal fun <Z : Any> storeRequestToFirestore(
         id: String,
         data: Z,

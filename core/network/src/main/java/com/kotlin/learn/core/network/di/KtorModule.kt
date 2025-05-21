@@ -6,6 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kotlin.learn.core.network.KtorClient
 import com.kotlin.learn.core.network.firebase.FirebaseClient
 import com.kotlin.learn.core.network.firestore.FirestoreClient
+import com.kotlin.learn.core.utilities.Constant.MAX_CONTENT_LENGTH_INTERCEPTION
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,7 @@ class KtorModule {
         @ApplicationContext context: Context,
     ): ChuckerInterceptor = ChuckerInterceptor.Builder(context)
         .collector(ChuckerCollector(context))
-        .maxContentLength(250000L)
+        .maxContentLength(MAX_CONTENT_LENGTH_INTERCEPTION)
         .redactHeaders(emptySet())
         .alwaysReadResponseBody(false)
         .build()

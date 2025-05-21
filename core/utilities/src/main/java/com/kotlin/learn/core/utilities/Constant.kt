@@ -22,10 +22,14 @@ object Constant {
     const val EIGHT = 8
     const val NINE = 9
     const val TEN = 10
+    const val THREE_THOUSAND = 300
+    const val FIVE_THOUSAND_NINETY_NINE = 599
+    const val SIX_THOUSAND = 600
 
     const val ZERO_DOUBLE = 0.0
     const val FIVE_HUNDRED_LONG = 500L
     const val SIXTY_LONG = 60L
+    const val MAX_CONTENT_LENGTH_INTERCEPTION = 250000L
 
     const val STRIP = "-"
     const val UNDERSCORE = "_"
@@ -53,4 +57,8 @@ object Constant {
     const val FAILURE_GET_DATA = "Failure, Under maintenance, please try again later."
     const val DATA_IS_EMPTY = "Data is empty."
     const val ERROR_MESSAGE = "Error"
+
+    const val QUERY_PARAM_PAGE = "page"
+    const val QUERY_PARAM_LANGUAGE = "language"
+    const val QUERY_PARAM_QUERY = "query"
 }

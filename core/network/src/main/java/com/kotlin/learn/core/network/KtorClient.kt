@@ -4,7 +4,10 @@ import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.Constant.ERROR_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.FIVE_THOUSAND_NINETY_NINE
 import com.kotlin.learn.core.utilities.Constant.SIXTY_LONG
+import com.kotlin.learn.core.utilities.Constant.SIX_THOUSAND
+import com.kotlin.learn.core.utilities.Constant.THREE_THOUSAND
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.body
@@ -219,12 +222,12 @@ class KtorClient(
                     validateResponse { response: HttpResponse ->
                         val statusCode = response.status.value
                         when (statusCode) {
-                            in 300..599 -> throw ErrorException(
+                            in THREE_THOUSAND..FIVE_THOUSAND_NINETY_NINE -> throw ErrorException(
                                 response = response,
                                 responseBody = response.bodyAsText()
                             )
                         }
-                        if (statusCode >= 600) {
+                        if (statusCode >= SIX_THOUSAND) {
                             throw MissingPageException(
                                 response = response,
                                 responseBody = ERROR_MESSAGE

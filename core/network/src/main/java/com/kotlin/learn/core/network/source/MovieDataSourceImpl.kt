@@ -14,6 +14,9 @@ import com.kotlin.learn.core.network.PopularMovie
 import com.kotlin.learn.core.network.SearchMovie
 import com.kotlin.learn.core.network.TopRatedMovie
 import com.kotlin.learn.core.network.UpComingMovie
+import com.kotlin.learn.core.utilities.Constant.QUERY_PARAM_LANGUAGE
+import com.kotlin.learn.core.utilities.Constant.QUERY_PARAM_PAGE
+import com.kotlin.learn.core.utilities.Constant.QUERY_PARAM_QUERY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -28,19 +31,18 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = PopularMovie(),
                 query = mapOf(
-                    "page" to "$page"
+                    QUERY_PARAM_PAGE to "$page"
                 )
             )
         }
     }
-
 
     override suspend fun getTopRated(page: Int): MovieModel {
         return withContext(Dispatchers.IO) {
             ktorClient.getRequestApiWithQuery(
                 resources = TopRatedMovie(),
                 query = mapOf(
-                    "page" to "$page"
+                    QUERY_PARAM_PAGE to "$page"
                 )
             )
         }
@@ -51,7 +53,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = UpComingMovie(),
                 query = mapOf(
-                    "page" to "$page"
+                    QUERY_PARAM_PAGE to "$page"
                 )
             )
         }
@@ -62,7 +64,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = NowPlayingMovie(),
                 query = mapOf(
-                    "page" to "$page"
+                    QUERY_PARAM_PAGE to "$page"
                 )
             )
         }
@@ -73,7 +75,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = DetailMovie(),
                 query = mapOf(
-                    "language" to language
+                    QUERY_PARAM_LANGUAGE to language
                 ),
                 path = movieId
             )
@@ -85,7 +87,7 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = DetailVideos(),
                 query = mapOf(
-                    "language" to language
+                    QUERY_PARAM_LANGUAGE to language
                 ),
                 path = "$movieId/videos",
             )
@@ -97,8 +99,8 @@ class MovieDataSourceImpl @Inject constructor(
             ktorClient.getRequestApiWithQuery(
                 resources = SearchMovie(),
                 query = mapOf(
-                    "page" to "$page",
-                    "query" to searchModel.title,
+                    QUERY_PARAM_PAGE to "$page",
+                    QUERY_PARAM_QUERY to searchModel.title,
                 )
             )
         }
