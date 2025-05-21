@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kotlin.learn.core.common.R
 import com.kotlin.learn.core.model.UserModel
+import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.GOOGLE_STATUS_CODE_12501
 
 class GoogleSignInExt(
     private val callbackGoogleSignInSuccess: (UserModel) -> Unit,
@@ -43,7 +45,7 @@ class GoogleSignInExt(
         } catch (e: ApiException) {
             Log.e("", "Error Auth-message: ${e.message}")
 
-            if (e.statusCode != 12501){
+            if (e.statusCode != GOOGLE_STATUS_CODE_12501){
                 callbackGoogleSignInError.invoke("Please try again!")
             }
         }

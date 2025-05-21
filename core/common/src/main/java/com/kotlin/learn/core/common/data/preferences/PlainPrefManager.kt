@@ -3,47 +3,48 @@ package com.kotlin.learn.core.common.data.preferences
 
 import android.content.SharedPreferences
 import javax.inject.Inject
+import androidx.core.content.edit
 
 class PlainPrefManager @Inject constructor(private val sharedPref: SharedPreferences) {
 
-    fun save(KEY_NAME: String, text: String) {
-        val editor: SharedPreferences.Editor = sharedPref.edit()
-        editor.putString(KEY_NAME, text)
-        editor.apply()
+    fun save(keyName: String, text: String) {
+        sharedPref.edit {
+            putString(keyName, text)
+        }
     }
 
-    fun save(KEY_NAME: String, value: Int) {
-        val editor: SharedPreferences.Editor = sharedPref.edit()
-        editor.putInt(KEY_NAME, value)
-        editor.apply()
+    fun save(keyName: String, value: Int) {
+        sharedPref.edit {
+            putInt(keyName, value)
+        }
     }
 
-    fun save(KEY_NAME: String, value: Float) {
-        val editor: SharedPreferences.Editor = sharedPref.edit()
-        editor.putFloat(KEY_NAME, value)
-        editor.apply()
+    fun save(keyName: String, value: Float) {
+        sharedPref.edit {
+            putFloat(keyName, value)
+        }
     }
 
-    fun save(KEY_NAME: String, status: Boolean) {
-        val editor: SharedPreferences.Editor = sharedPref.edit()
-        editor.putBoolean(KEY_NAME, status)
-        editor.apply()
+    fun save(keyName: String, status: Boolean) {
+        sharedPref.edit {
+            putBoolean(keyName, status)
+        }
     }
 
-    fun getInt(KEY_NAME: String): Int {
-        return sharedPref.getInt(KEY_NAME, 0)
+    fun getInt(keyName: String): Int {
+        return sharedPref.getInt(keyName, 0)
     }
 
-    fun getBoolean(KEY_NAME: String, defaultValue: Boolean): Boolean {
-        return sharedPref.getBoolean(KEY_NAME, defaultValue)
+    fun getBoolean(keyName: String, defaultValue: Boolean): Boolean {
+        return sharedPref.getBoolean(keyName, defaultValue)
     }
 
-    fun getString(KEY_NAME: String): String? {
-        return sharedPref.getString(KEY_NAME, "")
+    fun getString(keyName: String): String? {
+        return sharedPref.getString(keyName, "")
     }
 
-    fun getFloat(KEY_NAME: String): Float {
-        return sharedPref.getFloat(KEY_NAME, 0.0f)
+    fun getFloat(keyName: String): Float {
+        return sharedPref.getFloat(keyName, 0.0f)
     }
 
     fun clearSharedPreference() {
@@ -52,9 +53,9 @@ class PlainPrefManager @Inject constructor(private val sharedPref: SharedPrefere
         editor.apply()
     }
 
-    fun removeValue(KEY_NAME: String) {
+    fun removeValue(keyName: String) {
         val editor: SharedPreferences.Editor = sharedPref.edit()
-        editor.remove(KEY_NAME)
+        editor.remove(keyName)
         editor.apply()
     }
 }

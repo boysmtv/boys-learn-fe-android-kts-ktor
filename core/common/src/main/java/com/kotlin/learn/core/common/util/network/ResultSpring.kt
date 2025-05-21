@@ -1,6 +1,7 @@
 package com.kotlin.learn.core.common.util.network
 
 import com.kotlin.learn.core.model.BaseResponse
+import com.kotlin.learn.core.utilities.Constant.RESPONSE_CODE_200
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -32,7 +33,7 @@ sealed interface SpringParser<out T> {
 fun <T> invokeSpringParser(
     response: BaseResponse<T>,
 ) = flow {
-    if (response.data != null && response.code == 200) {
+    if (response.data != null && response.code == RESPONSE_CODE_200) {
         emit(SpringParser.Success(response.data))
     } else {
         emit(SpringParser.Error(response.data))

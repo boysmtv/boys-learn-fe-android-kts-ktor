@@ -10,8 +10,8 @@ import java.lang.reflect.Method
 
 class NotificationUtil(private val context: Context) {
 
-    private val CHECK_OP_NO_THROW = "checkOpNoThrow"
-    private val OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION"
+    private val checkOpNoThrow = "checkOpNoThrow"
+    private val onPostNotification = "OP_POST_NOTIFICATION"
 
     fun isNotificationEnabled(): Boolean {
         val mAppOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
@@ -22,10 +22,10 @@ class NotificationUtil(private val context: Context) {
         try {
             appOpsClass = Class.forName(AppOpsManager::class.java.name)
             val checkOpNoThrowMethod: Method = appOpsClass.getMethod(
-                CHECK_OP_NO_THROW, Integer.TYPE, Integer.TYPE,
+                checkOpNoThrow, Integer.TYPE, Integer.TYPE,
                 String::class.java
             )
-            val opPostNotificationValue: Field = appOpsClass.getDeclaredField(OP_POST_NOTIFICATION)
+            val opPostNotificationValue: Field = appOpsClass.getDeclaredField(onPostNotification)
             val value = opPostNotificationValue.get(Int::class.java) as Int
             return checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) as Int == AppOpsManager.MODE_ALLOWED
         } catch (e: ClassNotFoundException) {
