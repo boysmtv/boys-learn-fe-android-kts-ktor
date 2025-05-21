@@ -2,7 +2,6 @@ package com.kotlin.learn.feature.movie.presentation.ui
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -18,8 +17,10 @@ import com.kotlin.learn.core.model.Genres
 import com.kotlin.learn.core.model.MovieDetailModel
 import com.kotlin.learn.core.model.RecentDataModel
 import com.kotlin.learn.core.model.UserModel
+import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.WARNING_MESSAGE
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.setTextAnimation
 import com.kotlin.learn.feature.movie.R
@@ -34,7 +35,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
 
-    private val tag = this::class.java.simpleName
+    @Inject
+    lateinit var movieNavigator: MovieNavigator
 
     private val viewModel: DetailViewModel by viewModels()
 
@@ -51,9 +53,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     private var movieKey = Constant.EMPTY_STRING
 
     private var movieId = Constant.EMPTY_STRING
-
-    @Inject
-    lateinit var movieNavigator: MovieNavigator
 
     private var isSaved: Boolean = false
 
@@ -88,7 +87,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 }
             else
                 showDialogGeneralError(
-                    "Warning",
+                    WARNING_MESSAGE,
                     "This feature is disabled in your settings, please check your settings"
                 )
         }
@@ -126,46 +125,36 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private fun subscribeDetail() = with(binding) {
         viewModel.detailMovies.launch(this@DetailFragment) {
-            when (it) {
-                is Result.Waiting -> {}
-
-                is Result.Loading -> {
-                    viewAnimator.displayedChild = Constant.ZERO
-                }
-
-                is Result.Success -> {
-                    viewAnimator.displayedChild = Constant.ONE
-                    setupDetailMovie(it.data)
-                }
-
-                is Result.Error -> {
-                    viewAnimator.displayedChild = Constant.TWO
-                }
-            }
+            handleMovieResult(it)
         }
+
         viewModel.detailVideos.launch(this@DetailFragment) {
-            when (it) {
-                is Result.Waiting -> {}
+            handleVideoResult(it)
+        }
+    }
 
-                is Result.Loading -> {}
-
-                is Result.Success -> {
-                    val model = it.data
-                    for (i in 0..model.results.size) {
-                        model.results[i].key?.let { key ->
-                            movieKey = key
-                        }
-                        if (model.results[i].name == "Official Trailer") {
-                            model.results[i].key?.let { key ->
-                                movieKey = key
-                            }
-                            break
-                        }
-                    }
-                }
-
-                is Result.Error -> {}
+    private fun handleMovieResult(result: Result<MovieDetailModel>) = with(binding) {
+        when (result) {
+            is Result.Loading -> viewAnimator.displayedChild = Constant.ZERO
+            is Result.Success -> {
+                viewAnimator.displayedChild = Constant.ONE
+                setupDetailMovie(result.data)
             }
+            is Result.Error -> viewAnimator.displayedChild = Constant.TWO
+            else -> Unit
+        }
+    }
+
+    private fun handleVideoResult(result: Result<VideoDetailModel>) {
+        if (result !is Result.Success) return
+
+        result.data.results.firstOrNull { it.name == "Official Trailer" && it.key != null }?.key?.let {
+            movieKey = it
+            return
+        }
+
+        result.data.results.firstOrNull { it.key != null }?.key?.let {
+            movieKey = it
         }
     }
 
@@ -247,16 +236,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     }
 
     private fun setupFavourite() {
-        userModel.favourite.let {
-            if (it.isNotEmpty()) {
-                for (data in it) {
-                    if (data.id.toString() == movieId) {
-                        isSaved = true
-                        setChangeUiFavourite()
-                        break
-                    }
-                }
-            }
+        isSaved = userModel.favourite.any { it.id.toString() == movieId }
+        if (isSaved) {
+            setChangeUiFavourite()
         }
     }
 

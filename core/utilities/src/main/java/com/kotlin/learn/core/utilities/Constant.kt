@@ -24,6 +24,8 @@ object Constant {
     const val EIGHT = 8
     const val NINE = 9
     const val TEN = 10
+    const val FIFTEEN = 15
+    const val SEVENTY_FIVE = 75
     const val ONE_THOUSAND_FIFTY = 150
     const val THREE_THOUSAND = 300
     const val FIVE_THOUSAND_NINETY_NINE = 599

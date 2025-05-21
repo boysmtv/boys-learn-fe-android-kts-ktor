@@ -38,8 +38,6 @@ class SeeAllMovieAdapter(
 
     private var userModel = UserModel()
 
-    private var lastPositionSaved = -1
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         fetchUserModelFromDataStore()
         return ViewHolder(
@@ -71,18 +69,8 @@ class SeeAllMovieAdapter(
     }
 
     fun checkIsFavouriteSaved(binding: MovieSeeAllItemBinding, item: MovieDataModel) {
-        userModel.favourite.let {
-            if (it.isNotEmpty()) {
-                for (data in it) {
-                    if (data.id == item.id) {
-                        setChangeUiFavourite(binding, true)
-                        break
-                    } else {
-                        setChangeUiFavourite(binding, false)
-                    }
-                }
-            }
-        }
+        val isFavourite = userModel.favourite.any { it.id == item.id }
+        setChangeUiFavourite(binding, isFavourite)
     }
 
     private fun setChangeUiFavourite(binding: MovieSeeAllItemBinding, isSaved: Boolean) = with(binding) {

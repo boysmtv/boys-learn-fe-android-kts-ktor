@@ -6,6 +6,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.FIFTEEN
+import com.kotlin.learn.core.utilities.Constant.FIVE
+import com.kotlin.learn.core.utilities.Constant.ONE
+import com.kotlin.learn.core.utilities.Constant.SEVEN
+import com.kotlin.learn.core.utilities.Constant.SEVENTY_FIVE
+import com.kotlin.learn.core.utilities.Constant.THREE
+import com.kotlin.learn.core.utilities.Constant.TWO
+import com.kotlin.learn.core.utilities.Constant.ZERO
 import com.kotlin.learn.feature.movie.R
 import com.kotlin.learn.feature.movie.databinding.BannerHomeItemBinding
 import com.zhpan.bannerview.BaseBannerAdapter
@@ -22,31 +30,28 @@ class MovieBannerAdapter(private val onClickBannerMovie: OnClickBannerMovie) : B
         position: Int,
         pageSize: Int
     ) {
-        if (holder is ViewHolder) {
+        if (holder is ViewHolder && item != null) {
             with(holder.viewBinding) {
-                item?.let {
-                    Glide.with(ivItemHomeThumbnail.context)
-                        .load("${Constant.BASE_URL_IMAGE_500}${item.posterPath}")
-                        .into(ivItemHomeThumbnail)
-                    Glide.with(ivItemHomeBlur.context)
-                        .load("${Constant.BASE_URL_IMAGE_500}${item.posterPath}")
-                        .apply(bitmapTransform(BlurTransformation(75, 3)))
-                        .into(ivItemHomeBlur)
+                val posterUrl = "${Constant.BASE_URL_IMAGE_500}${item.posterPath}"
 
-                    if (it.originalTitle?.length!! <= 15) {
-                        tvItemHomeTitle.maxLines = 1
-                        tvItemHomeDesc.maxLines = 7
-                    } else {
-                        tvItemHomeTitle.maxLines = 2
-                        tvItemHomeDesc.maxLines = 5
-                    }
+                Glide.with(ivItemHomeThumbnail.context)
+                    .load(posterUrl)
+                    .into(ivItemHomeThumbnail)
 
-                    tvItemHomeTitle.text = it.originalTitle
-                    tvItemHomeDesc.text = it.overview
+                Glide.with(ivItemHomeBlur.context)
+                    .load(posterUrl)
+                    .apply(bitmapTransform(BlurTransformation(SEVENTY_FIVE, THREE)))
+                    .into(ivItemHomeBlur)
 
-                    btnClickHere.setOnClickListener { _ ->
-                        onClickBannerMovie(it)
-                    }
+                val isShortTitle = (item.originalTitle?.length ?: ZERO) <= FIFTEEN
+                tvItemHomeTitle.maxLines = if (isShortTitle) ONE else TWO
+                tvItemHomeDesc.maxLines = if (isShortTitle) SEVEN else FIVE
+
+                tvItemHomeTitle.text = item.originalTitle
+                tvItemHomeDesc.text = item.overview
+
+                btnClickHere.setOnClickListener {
+                    onClickBannerMovie(item)
                 }
             }
         }
