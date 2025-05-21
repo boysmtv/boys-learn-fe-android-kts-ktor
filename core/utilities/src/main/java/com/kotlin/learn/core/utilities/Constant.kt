@@ -22,6 +22,7 @@ object Constant {
     const val EIGHT = 8
     const val NINE = 9
     const val TEN = 10
+    const val ONE_THOUSAND_FIFTY = 150
     const val THREE_THOUSAND = 300
     const val FIVE_THOUSAND_NINETY_NINE = 599
     const val SIX_THOUSAND = 600
@@ -57,6 +58,7 @@ object Constant {
     const val FAILURE_GET_DATA = "Failure, Under maintenance, please try again later."
     const val DATA_IS_EMPTY = "Data is empty."
     const val ERROR_MESSAGE = "Error"
+    const val CLOSE_APPS_MESSAGE = "Tutup Aplikasi"
 
     const val QUERY_PARAM_PAGE = "page"
     const val QUERY_PARAM_LANGUAGE = "language"

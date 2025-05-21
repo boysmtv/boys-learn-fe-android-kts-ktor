@@ -13,6 +13,8 @@ import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.utilities.hide
 import com.kotlin.learn.core.utilities.setOnSingleClickListener
 import com.kotlin.learn.core.utilities.show
+import androidx.core.graphics.drawable.toDrawable
+import com.kotlin.learn.core.utilities.Constant.ONE_THOUSAND_FIFTY
 
 class DialogWithAction(
     private val onClickButtonPrimary: () -> Unit,
@@ -46,7 +48,7 @@ class DialogWithAction(
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.GRAY).apply { alpha = 150 })
+        dialog?.window?.setBackgroundDrawable(Color.GRAY.toDrawable().apply { alpha = ONE_THOUSAND_FIFTY })
     }
 
     private fun setupView() = with(binding) {
