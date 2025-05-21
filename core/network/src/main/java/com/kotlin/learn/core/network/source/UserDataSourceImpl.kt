@@ -2,8 +2,8 @@ package com.kotlin.learn.core.network.source
 
 import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.LoginRespModel
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.LoginModel
+import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.ApiUserResources
 import com.kotlin.learn.core.network.KtorClient
@@ -33,7 +33,7 @@ class UserDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun postUser(model: UserModel): BaseResponse<RegisterRespModel> {
+    override suspend fun postUser(model: UserModel): BaseResponse<RegisterModel> {
         return withContext(Dispatchers.IO) {
             ktorClient.postAPIwithResponseFromSpring(
                 resources = ApiUserResources.REGISTER,
@@ -42,7 +42,7 @@ class UserDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun putUser(model: UserModel): BaseResponse<RegisterRespModel> {
+    override suspend fun putUser(model: UserModel): BaseResponse<RegisterModel> {
         return withContext(Dispatchers.IO) {
             ktorClient.putAPIwithResponseFromSpring(
                 resources = ApiUserResources.PROFILE,
@@ -51,7 +51,7 @@ class UserDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun postAuth(model: UserModel): BaseResponse<LoginRespModel> {
+    override suspend fun postAuth(model: UserModel): BaseResponse<LoginModel> {
         return withContext(Dispatchers.IO) {
             ktorClient.postAPIwithResponseFromSpring(
                 resources = ApiUserResources.LOGIN,

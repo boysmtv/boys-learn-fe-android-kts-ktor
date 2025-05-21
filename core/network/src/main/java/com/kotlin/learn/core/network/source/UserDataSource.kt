@@ -2,8 +2,8 @@ package com.kotlin.learn.core.network.source
 
 import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.LoginRespModel
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.LoginModel
+import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
 import kotlinx.coroutines.flow.Flow
 
@@ -14,11 +14,11 @@ interface UserDataSource {
 
     suspend fun getUser(model: UserModel): BaseResponse<UserModel>
 
-    suspend fun postUser(model: UserModel): BaseResponse<RegisterRespModel>
+    suspend fun postUser(model: UserModel): BaseResponse<RegisterModel>
 
-    suspend fun putUser(model: UserModel): BaseResponse<RegisterRespModel>
+    suspend fun putUser(model: UserModel): BaseResponse<RegisterModel>
 
-    suspend fun postAuth(model: UserModel): BaseResponse<LoginRespModel>
+    suspend fun postAuth(model: UserModel): BaseResponse<LoginModel>
 
 
     // TODO : start region to firebase

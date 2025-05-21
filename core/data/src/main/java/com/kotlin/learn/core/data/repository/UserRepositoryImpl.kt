@@ -5,8 +5,8 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.common.util.network.execute
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.LoginRespModel
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.LoginModel
+import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.network.source.UserDataSource
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +33,7 @@ class UserRepositoryImpl @Inject constructor(
             )
         }
 
-    override fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
+    override fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterModel>>> =
         flow {
             emit(Result.Loading)
             emit(
@@ -43,7 +43,7 @@ class UserRepositoryImpl @Inject constructor(
             )
         }
 
-    override fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
+    override fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterModel>>> =
         flow {
             emit(Result.Loading)
             emit(
@@ -53,7 +53,7 @@ class UserRepositoryImpl @Inject constructor(
             )
         }
 
-    override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>> =
+    override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginModel>>> =
         flow {
             emit(Result.Loading)
             emit(

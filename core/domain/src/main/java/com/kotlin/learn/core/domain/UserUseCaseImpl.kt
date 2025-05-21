@@ -4,10 +4,9 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.data.repository.UserRepository
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.LoginRespModel
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.LoginModel
+import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
-import com.kotlin.learn.core.model.db.UserEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -21,13 +20,13 @@ class UserUseCaseImpl @Inject constructor(
     override fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>> =
         repository.getUser(model = model)
 
-    override fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
+    override fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterModel>>> =
         repository.postUser(model = model)
 
-    override fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>> =
+    override fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterModel>>> =
         repository.putUser(model = model)
 
-    override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>> =
+    override fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginModel>>> =
         repository.postAuth(model = model)
 
     // TODO : start region to firebase

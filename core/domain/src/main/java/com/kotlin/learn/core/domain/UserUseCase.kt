@@ -3,8 +3,8 @@ package com.kotlin.learn.core.domain
 import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.util.network.ResultCallback
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.LoginRespModel
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.LoginModel
+import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
 import kotlinx.coroutines.flow.Flow
 
@@ -15,11 +15,11 @@ interface UserUseCase {
 
     fun getUser(model: UserModel): Flow<Result<BaseResponse<UserModel>>>
 
-    fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>>
+    fun postUser(model: UserModel): Flow<Result<BaseResponse<RegisterModel>>>
 
-    fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterRespModel>>>
+    fun putUser(model: UserModel): Flow<Result<BaseResponse<RegisterModel>>>
 
-    fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginRespModel>>>
+    fun postAuth(model: UserModel): Flow<Result<BaseResponse<LoginModel>>>
 
     // TODO : start region to firebase
     // ===============================================================

@@ -13,7 +13,7 @@ import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.common.util.network.parseResultError
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
@@ -90,7 +90,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
     }
 
-    private fun parseRegisterSuccess(response: BaseResponse<RegisterRespModel>) {
+    private fun parseRegisterSuccess(response: BaseResponse<RegisterModel>) {
         showHideProgress(isLoading = false)
 
         invokeSpringParser(response).launch(this@RegisterFragment) {

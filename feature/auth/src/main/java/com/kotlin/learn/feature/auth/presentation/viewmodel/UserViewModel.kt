@@ -7,8 +7,8 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
 import com.kotlin.learn.core.domain.UserUseCase
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.LoginRespModel
-import com.kotlin.learn.core.model.RegisterRespModel
+import com.kotlin.learn.core.model.LoginModel
+import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.utilities.PreferenceConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,13 +31,13 @@ class UserViewModel @Inject constructor(
     private val _getUser: MutableStateFlow<Result<BaseResponse<UserModel>>> = MutableStateFlow(Result.Waiting)
     var getUser = _getUser.asStateFlow()
 
-    private val _postUser: MutableStateFlow<Result<BaseResponse<RegisterRespModel>>> = MutableStateFlow(Result.Waiting)
+    private val _postUser: MutableStateFlow<Result<BaseResponse<RegisterModel>>> = MutableStateFlow(Result.Waiting)
     val postUser = _postUser.asStateFlow()
 
-    private val _putUser: MutableStateFlow<Result<BaseResponse<RegisterRespModel>>> = MutableStateFlow(Result.Waiting)
+    private val _putUser: MutableStateFlow<Result<BaseResponse<RegisterModel>>> = MutableStateFlow(Result.Waiting)
     var putUser = _putUser.asStateFlow()
 
-    private val _postAuth: MutableStateFlow<Result<BaseResponse<LoginRespModel>>> = MutableStateFlow(Result.Waiting)
+    private val _postAuth: MutableStateFlow<Result<BaseResponse<LoginModel>>> = MutableStateFlow(Result.Waiting)
     val postAuth = _postAuth.asStateFlow()
 
     fun getUser(userModel: UserModel) {

@@ -9,7 +9,7 @@ import com.kotlin.learn.core.common.util.network.invokeSpringParser
 import com.kotlin.learn.core.common.util.network.parseResultError
 import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.BaseResponse
-import com.kotlin.learn.core.model.LoginRespModel
+import com.kotlin.learn.core.model.LoginModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
@@ -99,7 +99,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         }
     }
 
-    private fun postAuthSuccess(result: Result.Success<BaseResponse<LoginRespModel>>) {
+    private fun postAuthSuccess(result: Result.Success<BaseResponse<LoginModel>>) {
         invokeSpringParser(result.data).launch(lifecycleOwner = this@AuthFragment) {
             when (it) {
                 is SpringParser.Success -> {
