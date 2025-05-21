@@ -50,4 +50,5 @@ object Constant {
     const val UNDER_MAINTENANCE = "Under maintenance, please try again later."
     const val FETCH_DATA_FAILED = "Fetch Failed, please try again later."
     const val FAILURE_GET_DATA = "Failure, Under maintenance, please try again later."
+    const val DATA_IS_EMPTY = "Data is empty."
 }

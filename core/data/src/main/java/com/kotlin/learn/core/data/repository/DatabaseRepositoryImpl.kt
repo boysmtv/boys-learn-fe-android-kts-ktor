@@ -5,6 +5,7 @@ import com.kotlin.learn.core.common.util.network.Result
 import com.kotlin.learn.core.model.db.FavouriteEntity
 import com.kotlin.learn.core.model.db.HeartbeatEntity
 import com.kotlin.learn.core.model.db.UserEntity
+import com.kotlin.learn.core.utilities.Constant.DATA_IS_EMPTY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,7 +23,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             if (value.isNotEmpty()) {
                 emit(Result.Success(value))
             } else {
-                emit(Result.Error(Exception("Data is empty")))
+                emit(Result.Error(Exception(DATA_IS_EMPTY)))
             }
         }.flowOn(Dispatchers.IO)
 
@@ -33,7 +34,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             if (value.isNotEmpty()) {
                 emit(Result.Success(value))
             } else {
-                emit(Result.Error(Exception("Data is empty")))
+                emit(Result.Error(Exception(DATA_IS_EMPTY)))
             }
         }.flowOn(Dispatchers.IO)
 
@@ -44,7 +45,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             if (value.isNotEmpty()) {
                 emit(Result.Success(value))
             } else {
-                emit(Result.Error(Exception("Data is empty")))
+                emit(Result.Error(Exception(DATA_IS_EMPTY)))
             }
         }.flowOn(Dispatchers.IO)
 
@@ -55,7 +56,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             if (value > 0) {
                 emit(Result.Success("Success"))
             } else {
-                emit(Result.Error(Exception("Data is empty")))
+                emit(Result.Error(Exception(DATA_IS_EMPTY)))
             }
         }.flowOn(Dispatchers.IO)
 
@@ -67,7 +68,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             if (value > 0) {
                 emit(Result.Success("Success"))
             } else {
-                emit(Result.Error(Exception("Data is empty")))
+                emit(Result.Error(Exception(DATA_IS_EMPTY)))
             }
         }.flowOn(Dispatchers.IO)
 
@@ -78,7 +79,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             if (value > 0) {
                 emit(Result.Success("Success"))
             } else {
-                emit(Result.Error(Exception("Data is empty")))
+                emit(Result.Error(Exception(DATA_IS_EMPTY)))
             }
         }.flowOn(Dispatchers.IO)
 
