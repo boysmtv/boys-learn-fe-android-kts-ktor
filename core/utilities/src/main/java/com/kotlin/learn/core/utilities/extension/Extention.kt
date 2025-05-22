@@ -3,7 +3,9 @@ package com.kotlin.learn.core.utilities.extension
 import android.annotation.SuppressLint
 import android.net.Uri
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.BLANK_SPACE
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
+import com.kotlin.learn.core.utilities.Constant.UNDERSCORE
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -134,7 +136,7 @@ fun String?.getSubReddit(): String {
 fun String?.myAnimeListStatusFormatted(ifBlank: String = EMPTY_STRING): String {
     return this
         .replaceIfNull()
-        .replace(UNDERSCORE, Constant.BLANK_SPACE)
+        .replace(UNDERSCORE, BLANK_SPACE)
         .capitalizeWords()
         .ifBlank { ifBlank }
 }
