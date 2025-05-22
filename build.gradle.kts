@@ -22,6 +22,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.kapt) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.navigation.safeargs) apply false
+    alias(libs.plugins.sonarqube)
 }
 true
 
@@ -30,6 +31,20 @@ allprojects {
         from("$rootDir/buildConfig/local-aar-config.gradle")
         from("$rootDir/buildConfig/local-aar.gradle")
         plugin("io.gitlab.arturbosch.detekt")
+    }
+
+    apply {
+        sonarqube {
+            properties {
+                property("sonar.projectKey", "boys-learn-fe-android-kts-ktor")
+                property("sonar.organization", "boysmtv")
+                property("sonar.host.url", "https://sonarcloud.io")
+                property("sonar.sources", "src")
+                property("sonar.language", "kotlin")
+                property("sonar.sourceEncoding", "UTF-8")
+            }
+        }
+
     }
 }
 

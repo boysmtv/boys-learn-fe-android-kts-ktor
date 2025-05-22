@@ -73,6 +73,7 @@ room = "2.4.2"
 appcompat = "1.7.0"
 detekt = "1.21.0"
 googleServices = "4.3.15"
+sonarQube = "4.4.1.3373"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -232,6 +233,8 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.8.10" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationFragment" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarQube" }
+
 
 [bundles]
 ktor = ["ktor-content-negotiation", "ktor-core", "ktor-logging", "ktor-okhttp", "ktor-resources", "ktor-serialization-json", "ktor-serialization-auth"]
