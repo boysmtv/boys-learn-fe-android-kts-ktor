@@ -44,7 +44,6 @@ allprojects {
                 property("sonar.sourceEncoding", "UTF-8")
             }
         }
-
     }
 }
 

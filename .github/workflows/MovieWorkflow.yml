@@ -7,7 +7,7 @@ on:
     branches: [ feature/060424-Pipeline ]
 
 jobs:
-  sonarcloud:
+  analyze:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -45,6 +45,17 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    sonarqube {
+        properties {
+            property("sonar.projectKey", "boys-learn-fe-android-kts-ktor")
+            property("sonar.organization", "boysmtv")
+            property("sonar.host.url", "https://sonarcloud.io")
+            property("sonar.sources", "src")
+            property("sonar.language", "kotlin")
+            property("sonar.sourceEncoding", "UTF-8")
+        }
+    }
 }
 
 dependencies {
