@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 import androidx.core.net.toUri
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 
 
 @AndroidEntryPoint
@@ -43,7 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
 
     private val permissionIdLocation = Constant.PERMISSION_ID_LOCATION_CODE
 
-    private var scenarioOnBack: String? = Constant.EMPTY_STRING
+    private var scenarioOnBack: String? = EMPTY_STRING
 
     override fun initBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
@@ -175,7 +176,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EventListener {
                 title = "Warning",
                 content = "Please allow overlay to continue playing the trailer",
                 primaryButtonShow = true,
-                secondaryButtonText = Constant.EMPTY_STRING,
+                secondaryButtonText = EMPTY_STRING,
                 secondaryButtonShow = false,
                 icon = com.kotlin.learn.feature.auth.R.drawable.ic_warning_rounded,
                 primaryButtonText = "OK"

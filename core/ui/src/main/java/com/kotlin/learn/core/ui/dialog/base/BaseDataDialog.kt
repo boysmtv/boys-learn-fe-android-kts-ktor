@@ -1,7 +1,7 @@
 package com.kotlin.learn.core.ui.dialog.base
 
 import androidx.annotation.DrawableRes
-import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 
 class BaseDataDialog(
     val title: String,
@@ -14,6 +14,6 @@ class BaseDataDialog(
     @DrawableRes val secondaryButtonIcon: Int? = null,
     @DrawableRes val icon: Int? = null,
     val buttonWithIconShow: Boolean = false,
-    val buttonWithIconText: String = Constant.EMPTY_STRING,
+    val buttonWithIconText: String = EMPTY_STRING,
     val isIconShow: Boolean = false
 )

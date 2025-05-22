@@ -10,6 +10,7 @@ import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.Constant.ONE
 import com.kotlin.learn.core.utilities.Constant.THREE
 import com.kotlin.learn.core.utilities.Constant.TWO
@@ -43,7 +44,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     private fun getInitialMovie() {
         binding.viewAnimator.show()
-        viewModel.searchMovie(Constant.EMPTY_STRING)
+        viewModel.searchMovie(EMPTY_STRING)
     }
 
     private fun subscribeSearch() = with(viewModel) {

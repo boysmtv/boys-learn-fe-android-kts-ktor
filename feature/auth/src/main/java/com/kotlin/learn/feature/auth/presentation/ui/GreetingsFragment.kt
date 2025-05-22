@@ -25,8 +25,9 @@ import com.kotlin.learn.core.model.RegisterModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
-import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.common.util.TransactionUtil
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
+import com.kotlin.learn.core.utilities.Constant.UNDERSCORE
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.feature.auth.R
 import com.kotlin.learn.feature.auth.databinding.FragmentGreetingsBinding
@@ -50,7 +51,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
 
     private var userModel: UserModel = UserModel()
 
-    private var token: String = Constant.EMPTY_STRING
+    private var token: String = EMPTY_STRING
 
     private val transactionId = TransactionUtil.generateTransactionID()
 
@@ -128,7 +129,7 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
             title = "Warning",
             content = "Please allow location to continue application",
             primaryButtonShow = true,
-            secondaryButtonText = Constant.EMPTY_STRING,
+            secondaryButtonText = EMPTY_STRING,
             secondaryButtonShow = false,
             icon = R.drawable.ic_warning_rounded,
             primaryButtonText = "OK"
@@ -246,9 +247,9 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
                 is SpringParser.Success -> {
                     viewModel.postUser(
                         userModel.apply {
-                            idFireStore = Constant.EMPTY_STRING
-                            phone = Constant.UNDERSCORE
-                            password = Constant.UNDERSCORE
+                            idFireStore = EMPTY_STRING
+                            phone = UNDERSCORE
+                            password = UNDERSCORE
                             method = AuthMethod.GOOGLE.name
                         }
                     )
@@ -307,9 +308,9 @@ class GreetingsFragment : BaseFragment<FragmentGreetingsBinding>(FragmentGreetin
             id = transactionId,
             model = userModel.apply {
                 id = transactionId
-                idFireStore = Constant.EMPTY_STRING
-                phone = Constant.UNDERSCORE
-                password = Constant.UNDERSCORE
+                idFireStore = EMPTY_STRING
+                phone = UNDERSCORE
+                password = UNDERSCORE
                 method = AuthMethod.GOOGLE.name
             },
             onLoad = {

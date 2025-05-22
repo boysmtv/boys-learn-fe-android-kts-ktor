@@ -3,11 +3,13 @@ package com.kotlin.learn.core.network
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.Constant.ERROR_MESSAGE
 import com.kotlin.learn.core.utilities.Constant.FIVE_THOUSAND_NINETY_NINE
 import com.kotlin.learn.core.utilities.Constant.SIXTY_LONG
 import com.kotlin.learn.core.utilities.Constant.SIX_THOUSAND
 import com.kotlin.learn.core.utilities.Constant.THREE_THOUSAND
+import com.kotlin.learn.core.utilities.Constant.TOKEN
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.body
@@ -181,7 +183,7 @@ class KtorClient(
                 install(Auth) {
                     bearer {
                         loadTokens {
-                            BearerTokens(Constant.TOKEN, Constant.EMPTY_STRING)
+                            BearerTokens(TOKEN, EMPTY_STRING)
                         }
                     }
                 }

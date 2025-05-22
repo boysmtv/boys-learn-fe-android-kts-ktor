@@ -12,6 +12,7 @@ import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.MovieCategories
 import com.kotlin.learn.core.utilities.extension.capitalize
 import com.kotlin.learn.core.utilities.extension.launch
@@ -37,7 +38,7 @@ class SeeAllMovieFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBi
 
     private val args: SeeAllMovieFragmentArgs by navArgs()
 
-    private var categories = Constant.EMPTY_STRING
+    private var categories = EMPTY_STRING
 
     @Inject
     lateinit var movieNavigator: MovieNavigator

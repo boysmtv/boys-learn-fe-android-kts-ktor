@@ -7,7 +7,7 @@ import androidx.paging.cachedIn
 import com.kotlin.learn.core.domain.MovieUseCase
 import com.kotlin.learn.core.model.MovieDataModel
 import com.kotlin.learn.core.model.MovieSearchModel
-import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.MovieCategories
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +27,7 @@ class SearchViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val searchMovie: Flow<PagingData<MovieDataModel>> =
         _movieSearchModel.flatMapLatest { model ->
-            if (model.title != Constant.EMPTY_STRING)
+            if (model.title != EMPTY_STRING)
                 movieUseCase.searchMovie(model)
             else movieUseCase.getMovie(MovieCategories.UP_COMING)
         }.cachedIn(viewModelScope)

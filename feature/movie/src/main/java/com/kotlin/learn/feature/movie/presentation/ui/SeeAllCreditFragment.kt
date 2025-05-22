@@ -5,6 +5,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kotlin.learn.core.common.base.BaseFragment
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.feature.movie.adapter.DetailCreditsAdapter
 import com.kotlin.learn.feature.movie.databinding.FragmentSeeAllCreditBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,7 +15,7 @@ class SeeAllCreditFragment : BaseFragment<FragmentSeeAllCreditBinding>(FragmentS
 
     private val args: SeeAllCreditFragmentArgs by navArgs()
 
-    private var movieId = Constant.EMPTY_STRING
+    private var movieId = EMPTY_STRING
 
     override fun setupView() {
         loadArguments()

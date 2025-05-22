@@ -20,8 +20,8 @@ import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.model.VideoDetailModel
 import com.kotlin.learn.core.nav.navigator.MovieNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.Constant.SIXTY
-import com.kotlin.learn.core.utilities.Constant.SIXTY_LONG
 import com.kotlin.learn.core.utilities.Constant.WARNING_MESSAGE
 import com.kotlin.learn.core.utilities.extension.launch
 import com.kotlin.learn.core.utilities.setTextAnimation
@@ -52,9 +52,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     private lateinit var recentDataModel: RecentDataModel
 
-    private var movieKey = Constant.EMPTY_STRING
+    private var movieKey = EMPTY_STRING
 
-    private var movieId = Constant.EMPTY_STRING
+    private var movieId = EMPTY_STRING
 
     private var isSaved: Boolean = false
 
@@ -95,7 +95,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
 
         btnDetailPlayNow.setOnClickListener {
-            if (movieKey != Constant.EMPTY_STRING)
+            if (movieKey != EMPTY_STRING)
                 movieNavigator.fromDetailToVideos(this@DetailFragment, movieKey)
             else
                 Toast.makeText(requireContext(), "The trailer is not available", Toast.LENGTH_SHORT).show()
@@ -209,7 +209,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             val currFormatter = SimpleDateFormat("yyyy")
             return currFormatter.format(currFormatter.parse(releaseDate)!!)
         }
-        return Constant.EMPTY_STRING
+        return EMPTY_STRING
     }
 
     private fun loadArguments() {
@@ -259,7 +259,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             }
             return "${startHour}h ${timeRuntime % SIXTY}m"
         }
-        return Constant.EMPTY_STRING
+        return EMPTY_STRING
     }
 
     private fun convertGenres(genres: ArrayList<Genres>): String {

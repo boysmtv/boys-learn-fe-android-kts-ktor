@@ -15,6 +15,7 @@ import com.kotlin.learn.core.nav.navigator.ParentNavigator
 import com.kotlin.learn.core.utilities.Constant
 import com.kotlin.learn.core.utilities.Constant.EIGHT
 import com.kotlin.learn.core.utilities.Constant.EMAIL_MESSAGE
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.Constant.NINE
 import com.kotlin.learn.core.utilities.Constant.PASSWORD_MESSAGE
 import com.kotlin.learn.core.utilities.Constant.WARNING_MESSAGE
@@ -111,8 +112,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                     if (it.data != null) {
                         jsonUtil.toJson(
                             userModel.apply {
-                                id = it.data!!.id ?: Constant.EMPTY_STRING
-                                displayName = it.data!!.fullName ?: Constant.EMPTY_STRING
+                                id = it.data!!.id ?: EMPTY_STRING
+                                displayName = it.data!!.fullName ?: EMPTY_STRING
                             }
                         )
                         getUserFromServer()

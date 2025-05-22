@@ -3,6 +3,7 @@ package com.kotlin.learn.core.utilities.extension
 import android.annotation.SuppressLint
 import android.net.Uri
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -51,7 +52,7 @@ fun Int?.toAnimeScoreFormat(): String {
         Constant.EIGHT -> "(8) - Very Good"
         Constant.NINE -> "(9) - Great"
         Constant.TEN -> "(10) - Masterpiece"
-        else -> Constant.EMPTY_STRING
+        else -> EMPTY_STRING
     }
 }
 
@@ -68,7 +69,7 @@ fun <T> List<T>?.replaceIfNull(replacementValue: List<T> = emptyList()): List<T>
 /**
  * String
  */
-fun String?.replaceIfNull(replacementValue: String = Constant.EMPTY_STRING): String {
+fun String?.replaceIfNull(replacementValue: String = EMPTY_STRING): String {
     if (this == null)
         return replacementValue
     return this
@@ -130,10 +131,10 @@ fun String?.getSubReddit(): String {
     )
 }
 
-fun String?.myAnimeListStatusFormatted(ifBlank: String = Constant.EMPTY_STRING): String {
+fun String?.myAnimeListStatusFormatted(ifBlank: String = EMPTY_STRING): String {
     return this
         .replaceIfNull()
-        .replace(Constant.UNDERSCORE, Constant.BLANK_SPACE)
+        .replace(UNDERSCORE, Constant.BLANK_SPACE)
         .capitalizeWords()
         .ifBlank { ifBlank }
 }
@@ -148,7 +149,7 @@ fun String.myAnimeListStatusApiFormat(): String {
     return this
         .lowerCaseWords()
         .replace(Constant.STRIP, Constant.BLANK_SPACE)
-        .replace(Constant.BLANK_SPACE, Constant.UNDERSCORE)
+        .replace(Constant.BLANK_SPACE, UNDERSCORE)
 }
 
 @SuppressLint("SimpleDateFormat")

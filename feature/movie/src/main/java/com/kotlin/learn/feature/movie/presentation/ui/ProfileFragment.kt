@@ -12,6 +12,7 @@ import com.kotlin.learn.core.model.AuthMethod
 import com.kotlin.learn.core.model.UserModel
 import com.kotlin.learn.core.nav.navigator.MenuNavigator
 import com.kotlin.learn.core.utilities.Constant
+import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
 import com.kotlin.learn.core.utilities.Constant.FIVE_FLOAT
 import com.kotlin.learn.core.utilities.Constant.THIRTY_FLOAT
 import com.kotlin.learn.core.utilities.extension.launch
@@ -33,7 +34,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     private lateinit var userModel: UserModel
 
-    private var token: String = Constant.EMPTY_STRING
+    private var token: String = EMPTY_STRING
 
     override fun setupView() {
         init()
@@ -101,7 +102,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun updateUi(model: UserModel) = with(binding) {
         userModel = model
 
-        if (model.firstName != Constant.EMPTY_STRING) {
+        if (model.firstName != EMPTY_STRING) {
             etFirstName.setText(model.firstName)
             etLastName.setText(model.lastName)
             etEmail.setText(model.email)
