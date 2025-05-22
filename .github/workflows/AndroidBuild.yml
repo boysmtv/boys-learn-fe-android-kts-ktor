@@ -26,3 +26,10 @@ jobs:
         with:
           name: movie-based.apk
           path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
